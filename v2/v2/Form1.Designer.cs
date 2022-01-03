@@ -46,7 +46,7 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(628, 56);
+            this.chart1.Location = new System.Drawing.Point(594, 56);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -68,7 +68,7 @@
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(412, 300);
+            this.chart1.Size = new System.Drawing.Size(446, 387);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 

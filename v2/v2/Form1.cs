@@ -85,8 +85,9 @@ namespace v2
             chart1.Series["Series3"].LegendText = " k = " + k_val[2];
             chart1.Series["Series4"].LegendText = " k = " + k_val[3];
 
-
-
+            // chart labels added 
+            chart1.ChartAreas[0].AxisX.Title = "Time (days)";
+            chart1.ChartAreas[0].AxisY.Title = "Lys0/LysTotal";
         }
 
         public void loadGridarea()
@@ -106,9 +107,13 @@ namespace v2
             dt.Rows.Add("sample Peptide 7");
             dt.Rows.Add("sample Peptide 8");
             dt.Rows.Add("sample Peptide 9");
-
+            
             //Bind data to grid view
             dataGridView1.DataSource = dt;
+
+
+            // hide row selector
+            dataGridView1.RowHeadersVisible = false;
         }
     }
 }
