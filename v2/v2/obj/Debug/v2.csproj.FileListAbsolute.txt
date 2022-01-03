@@ -1,0 +1,36 @@
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\v2.exe.config
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\v2.exe
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\v2.pdb
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\obj\Debug\v2.csprojResolveAssemblyReference.cache
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\obj\Debug\v2.Form1.resources
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\obj\Debug\v2.Properties.Resources.resources
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\obj\Debug\v2.csproj.GenerateResource.Cache
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\obj\Debug\v2.exe
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\obj\Debug\v2.pdb
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.dll
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.WinForms.dll
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.Wpf.dll
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.pdb
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.xml
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.WinForms.pdb
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.WinForms.xml
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.Wpf.pdb
+c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.Wpf.xml
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.exe.config
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.exe
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.pdb
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.exe
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.pdb
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.dll
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.WinForms.dll
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.Wpf.dll
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.pdb
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.xml
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.WinForms.pdb
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.WinForms.xml
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.Wpf.pdb
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.Wpf.xml
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csprojResolveAssemblyReference.cache
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Form1.resources
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Properties.Resources.resources
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.GenerateResource.Cache
