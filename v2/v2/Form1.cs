@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace v2
 {
@@ -21,6 +23,38 @@ namespace v2
         {
             loadcharts();
             loadGridarea();
+
+
+            //Console.WriteLine(File.Exists(path) ? "File exists." : "File does not exist.");
+            string path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
+            if (File.Exists(path))
+            {
+                Console.WriteLine("==> file found");
+
+                string[] lines = System.IO.File.ReadAllLines(path);
+
+                // Display the file contents by using a foreach loop.
+                System.Console.WriteLine("Contents of WriteLines2.txt = ");
+                foreach (string line in lines)
+                {
+                    // remove all extra spaces from the text file.
+                    // the assumption is that the text file is one space separted to indicate each column
+                    var temp = line.Trim();
+                    temp=Regex.Replace(temp, @"\s+", " ");
+
+                    var rowvalues= temp.Split(' ');
+                    
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("***> file not found");
+            }
+
+
+
+
         }
 
         public void loadcharts()
@@ -257,7 +291,7 @@ namespace v2
                             new Font(FontFamily.GenericSerif, 10, FontStyle.Bold),
                             new SolidBrush(Color.Red), new PointF(10, 10));
                     }
-                    im.Save("F:\\workplace\\d2ome_v2\\"+name+".jpeg");
+                    im.Save("F:\\workplace\\d2ome_v2\\" + name + ".jpeg");
                 }
 
                 return true;
@@ -309,7 +343,8 @@ namespace v2
 
                 MessageBox.Show("Completed successfully");
             }
-            catch (Exception er) {
+            catch (Exception er)
+            {
 
                 MessageBox.Show("error =", er.Message);
             }
