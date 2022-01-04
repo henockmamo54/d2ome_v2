@@ -128,8 +128,8 @@ namespace v2
                 double[] k_val = { 0.23, 0.25, 0.31, 0.35 };
                 int[] t_val = { 0, 1, 3, 5, 7, 21 };
 
-                t_val = t_val.Select(x => x * (1+rowIndex)).ToArray();
-                k_val = k_val.Select(x => x + (x/(rowIndex+1))).ToArray();
+                t_val = t_val.Select(x => x * (1 + rowIndex)).ToArray();
+                k_val = k_val.Select(x => x + (x / (rowIndex + 1))).ToArray();
 
                 loadcharts(k_val, t_val);
 
@@ -151,7 +151,7 @@ namespace v2
                 series.Points.Clear();
                 chart1.Update();
 
-                
+
             }
 
 
@@ -219,7 +219,8 @@ namespace v2
             chart1.Update();
         }
 
-        public bool exportchart() {
+        public bool exportchart()
+        {
             try
             {
                 using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
@@ -237,7 +238,32 @@ namespace v2
                 }
                 return true;
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool exportchart(string name)
+        {
+            try
+            {
+                using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                {
+                    chart1.DrawToBitmap(im, new Rectangle(0, 0, chart1.Width, chart1.Height));
+                    using (Graphics gr = Graphics.FromImage(im))
+                    {
+                        gr.DrawString(name,
+                            new Font(FontFamily.GenericSerif, 10, FontStyle.Bold),
+                            new SolidBrush(Color.Red), new PointF(10, 10));
+                    }
+                    im.Save("F:\\workplace\\d2ome_v2\\"+name+".jpeg");
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
                 return false;
             }
         }
@@ -248,9 +274,46 @@ namespace v2
             {
                 MessageBox.Show("chart generated");
             }
-            else {
+            else
+            {
                 MessageBox.Show("! file not genrated");
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // update the datasouce for the chart
+            // export the chart as jpeg file
+
+            try
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    int rowIndex = i;
+                    if (rowIndex >= 0)
+                    {
+                        DataGridViewRow row = dataGridView1.Rows[rowIndex];
+                        var temp = dataGridView1.Rows[rowIndex].Cells[0].Value.ToString();
+
+                        double[] k_val = { 0.23, 0.25, 0.31, 0.35 };
+                        int[] t_val = { 0, 1, 3, 5, 7, 21 };
+
+                        t_val = t_val.Select(x => x * (1 + rowIndex)).ToArray();
+                        k_val = k_val.Select(x => x + (x / (rowIndex + 1))).ToArray();
+
+                        loadcharts(k_val, t_val);
+                        exportchart(temp);
+
+                    }
+                }
+
+                MessageBox.Show("Completed successfully");
+            }
+            catch (Exception er) {
+
+                MessageBox.Show("error =", er.Message);
+            }
+
         }
     }
 }
