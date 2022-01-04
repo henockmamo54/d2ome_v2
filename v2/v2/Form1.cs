@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using v2.Helper;
 
 namespace v2
 {
@@ -24,37 +25,8 @@ namespace v2
             loadcharts();
             loadGridarea();
 
-
-            //Console.WriteLine(File.Exists(path) ? "File exists." : "File does not exist.");
-            string path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
-            if (File.Exists(path))
-            {
-                Console.WriteLine("==> file found");
-
-                string[] lines = System.IO.File.ReadAllLines(path);
-
-                // Display the file contents by using a foreach loop.
-                System.Console.WriteLine("Contents of WriteLines2.txt = ");
-                foreach (string line in lines)
-                {
-                    // remove all extra spaces from the text file.
-                    // the assumption is that the text file is one space separted to indicate each column
-                    var temp = line.Trim();
-                    temp=Regex.Replace(temp, @"\s+", " ");
-
-                    var rowvalues= temp.Split(' ');
-                    
-                }
-
-            }
-            else
-            {
-                Console.WriteLine("***> file not found");
-            }
-
-
-
-
+            ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
+            
         }
 
         public void loadcharts()
