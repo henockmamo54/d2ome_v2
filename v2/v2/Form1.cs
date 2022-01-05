@@ -26,8 +26,10 @@ namespace v2
             loadGridarea();
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
-            ReadExperiments experiInfoReader= new ReadExperiments();
-            
+            //ReadExperiments experiInfoReader = new ReadExperiments();
+            ReadRateConstants experiInfoReader = new ReadRateConstants();
+
+
         }
 
         public void loadcharts()
