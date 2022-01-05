@@ -16,18 +16,19 @@ namespace v2.Helper
         public List<string> experimentIDs = new List<string>();
         public List<FileContent> filecontents = new List<FileContent>();
 
+        //public ReadFilesInfo_txt()
+        //{
+        //    readFile(this.path);
+        //}
 
-
-        public ReadFilesInfo_txt()
-        {
-            readFile(this.path);
-        }
         public ReadFilesInfo_txt(string path)
         {
             this.path = path;
+        }
+        public void readFile()
+        {
             readFile(this.path);
         }
-
         public void readFile(string path)
         {
             //Extracts the information from files.txt
@@ -71,7 +72,6 @@ namespace v2.Helper
                 }
                 catch (Exception e)
                 {
-
                     Console.WriteLine("error ==>" + e.Message);
                     MessageBox.Show("error reading files.txt ==> " + e.Message);
                 }
@@ -84,10 +84,10 @@ namespace v2.Helper
             }
 
         }
-        
+
         public struct FileContent
         {
-            public int time; 
+            public int time;
             public string mzML_path;
             public string mzid_path;
             public double BWE;

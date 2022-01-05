@@ -17,15 +17,19 @@ namespace v2.Helper
         public List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
         public List<string> experimentNames = new List<string>();
 
-        public ReadExperiments()
-        {
-            readExperimentCSVFile(path);
-        }
+        //public ReadExperiments()
+        //{
+        //    readExperimentCSVFile(path);
+        //}
 
         public ReadExperiments(string path)
         {
             this.path = path;
-            readExperimentCSVFile(path);
+        }
+
+        public void readExperimentCSVFile()
+        {
+            readExperimentCSVFile(this.path);
         }
 
         public void readExperimentCSVFile(string path)
@@ -181,11 +185,8 @@ namespace v2.Helper
 
             catch (Exception e)
             {
-
                 Console.WriteLine("error ==>" + e.Message);
-
-                MessageBox.Show("error reading files.txt ==> " + e.Message);
-                return null;
+                MessageBox.Show("error reading files.txt ==> " + e.Message);                
             }
 
 

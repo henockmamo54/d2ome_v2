@@ -42,16 +42,20 @@ namespace v2
             this.RateConst_csv_path = RateConst_csv_path;
         }
 
-        public void loadAllExperimentData() {
+        public void loadAllExperimentData()
+        {
 
             //Files.txt reader
             ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt(files_txt_path);
+            filesinfo.readFile();
+
             this.Experiment_time = filesinfo.time;
             this.experimentIDs = filesinfo.experimentIDs;
             this.filecontents = filesinfo.filecontents;
 
             //Protein.Quant.csv reader
             ReadExperiments experiInfoReader = new ReadExperiments(quant_csv_path);
+            experiInfoReader.readExperimentCSVFile();
 
             this.peptides = experiInfoReader.peptides;
             this.experimentRecords = experiInfoReader.experimentRecords;
@@ -59,14 +63,13 @@ namespace v2
 
             //Protein.Quant.csv reader
             ReadRateConstants rateConstInfoReader = new ReadRateConstants(RateConst_csv_path);
+            rateConstInfoReader.readRateConstantsCSV();
 
-            List<RateConstant> rateConstants = rateConstInfoReader.rateConstants;
+            this.rateConstants = rateConstInfoReader.rateConstants;
             this.MeanRateConst_CorrCutOff_mean = rateConstInfoReader.MeanRateConst_CorrCutOff_mean;
             this.MeanRateConst_CorrCutOff_median = rateConstInfoReader.MeanRateConst_CorrCutOff_median;
-
             this.MedianRateConst_RMSSCutOff_mean = rateConstInfoReader.MedianRateConst_RMSSCutOff_mean;
             this.MedianRateConst_RMSSCutOff_median = rateConstInfoReader.MedianRateConst_RMSSCutOff_median;
-
             this.StandDev_NumberPeptides_mean = rateConstInfoReader.StandDev_NumberPeptides_mean;
             this.StandDev_NumberPeptides_median = rateConstInfoReader.StandDev_NumberPeptides_median;
             this.TotalIonCurrent_1 = rateConstInfoReader.TotalIonCurrent_1;

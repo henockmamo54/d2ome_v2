@@ -17,20 +17,25 @@ namespace v2.Helper
         public double? MedianRateConst_RMSSCutOff_median;
         public double? StandDev_NumberPeptides_mean;
         public double? StandDev_NumberPeptides_median;
-        public double? TotalIonCurrent_1 ;
+        public double? TotalIonCurrent_1;
         public string path = @"";
 
-        public ReadRateConstants()
-        {
-            readRateConstantsCSV();
-        }
+        //public ReadRateConstants()
+        //{
+        //    readRateConstantsCSV();
+        //}
         public ReadRateConstants(string path)
         {
             this.path = path;
-            readRateConstantsCSV();
+            
         }
 
         public void readRateConstantsCSV()
+        {
+            readRateConstantsCSV(this.path);
+        }
+
+        public void readRateConstantsCSV(string path)
         {
             //Extracts the information from csv file
 
