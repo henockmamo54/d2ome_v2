@@ -70,7 +70,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ReadExperiments.cs" />
     <Compile Include="Helper\ReadFilesInfo_txt.cs" />
+    <Compile Include="Model\ExperimentRecord.cs" />
+    <Compile Include="Model\Peptide.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
