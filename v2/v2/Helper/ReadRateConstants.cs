@@ -10,15 +10,15 @@ namespace v2.Helper
 {
     public class ReadRateConstants
     {
-        List<RateConstant> rateConstants = new List<RateConstant>();
-        double? MeanRateConst_CorrCutOff_mean;
-        double? MeanRateConst_CorrCutOff_median;
-        double? MedianRateConst_RMSSCutOff_mean;
-        double? MedianRateConst_RMSSCutOff_median;
-        double? StandDev_NumberPeptides_mean;
-        double? StandDev_NumberPeptides_median;
-        double? TotalIonCurrent_1 ;
-        string path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
+        public List<RateConstant> rateConstants = new List<RateConstant>();
+        public double? MeanRateConst_CorrCutOff_mean;
+        public double? MeanRateConst_CorrCutOff_median;
+        public double? MedianRateConst_RMSSCutOff_mean;
+        public double? MedianRateConst_RMSSCutOff_median;
+        public double? StandDev_NumberPeptides_mean;
+        public double? StandDev_NumberPeptides_median;
+        public double? TotalIonCurrent_1 ;
+        public string path = @"";
 
         public ReadRateConstants()
         {
@@ -26,8 +26,8 @@ namespace v2.Helper
         }
         public ReadRateConstants(string path)
         {
-            readRateConstantsCSV();
             this.path = path;
+            readRateConstantsCSV();
         }
 
         public void readRateConstantsCSV()

@@ -15,6 +15,11 @@ namespace v2
 {
     public partial class Form1 : Form
     {
+
+        string files_txt_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
+        string quant_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
+        string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
+
         public Form1()
         {
             InitializeComponent();
@@ -25,9 +30,14 @@ namespace v2
             loadcharts();
             loadGridarea();
 
+            ProteinExperimentDataReader proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+            proteinExperimentData.loadAllExperimentData();
+
+
+
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
             //ReadExperiments experiInfoReader = new ReadExperiments();
-            ReadRateConstants experiInfoReader = new ReadRateConstants();
+            //ReadRateConstants experiInfoReader = new ReadRateConstants();
 
 
         }

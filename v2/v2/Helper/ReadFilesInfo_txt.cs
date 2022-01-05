@@ -11,7 +11,7 @@ namespace v2.Helper
 {
     public class ReadFilesInfo_txt
     {
-        public string path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
+        public string path = @"";
         public List<int> time = new List<int>(); //contains unique time values
         public List<string> experimentIDs = new List<string>();
         public List<FileContent> filecontents = new List<FileContent>();
