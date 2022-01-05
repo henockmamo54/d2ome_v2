@@ -81,7 +81,22 @@ namespace v2.Helper
                 // the first 12 columns are peptide information
                 Peptide p = getPeptideInfo(columns);
                 peptides.Add(p);
-                                
+
+                //read all the experiment values from the row
+                //each experiment has 16 columns
+                // starting from the 13th column (index = 12) read the experiment values by block of 16
+                int start_index = 12;
+                int current_index = 0;
+                for (int i = 0; i < experimentNames.Count; i++)
+                {
+                    current_index = start_index + (i * 16);
+                    ExperimentRecord experimentRecord = getExperimentsValuePerPeptide(columns, current_index);
+                    experimentRecord.PeptideSeq = p.PeptideSeq;
+                    experimentRecord.experimentName = experimentNames[i];
+                    experimentRecords.Add(experimentRecord);
+                }
+
+
             }
 
             catch (Exception e)
@@ -101,12 +116,13 @@ namespace v2.Helper
             return line3.Split(' ').ToList();
         }
 
-        public Peptide getPeptideInfo(string[] columns) {
+        public Peptide getPeptideInfo(string[] columns)
+        {
 
 
             try
             {
-                
+
                 // the first 12 columns are peptide information
                 Peptide p = new Peptide();
                 p.PeptideSeq = columns[0];
@@ -134,6 +150,47 @@ namespace v2.Helper
                 return null;
             }
 
+        }
+
+        public ExperimentRecord getExperimentsValuePerPeptide(string[] columns, int index)
+        {
+            try
+            {
+
+                ExperimentRecord experimentRecord = new ExperimentRecord();
+
+                if (columns[index].Trim().Length != 0) experimentRecord.SpecMass = double.Parse(columns[index]);
+                if (columns[index + 1].Trim().Length != 0) experimentRecord.IonScore = double.Parse(columns[index + 1]);
+                if (columns[index + 2].Trim().Length != 0) experimentRecord.Expectn = double.Parse(columns[index + 2]);
+                if (columns[index + 3].Trim().Length != 0) experimentRecord.Error = double.Parse(columns[index + 3]);
+                if (columns[index + 4].Trim().Length != 0) experimentRecord.Scan = double.Parse(columns[index + 4]);
+                if (columns[index + 5].Trim().Length != 0) experimentRecord.I0 = double.Parse(columns[index + 5]);
+                if (columns[index + 6].Trim().Length != 0) experimentRecord.I1 = double.Parse(columns[index + 6]);
+                if (columns[index + 7].Trim().Length != 0) experimentRecord.I2 = double.Parse(columns[index + 7]);
+                if (columns[index + 8].Trim().Length != 0) experimentRecord.I3 = double.Parse(columns[index + 8]);
+                if (columns[index + 9].Trim().Length != 0) experimentRecord.I4 = double.Parse(columns[index + 9]);
+                if (columns[index + 10].Trim().Length != 0) experimentRecord.I5 = double.Parse(columns[index + 10]);
+                if (columns[index + 11].Trim().Length != 0) experimentRecord.Start_Elution = double.Parse(columns[index + 11]);
+                if (columns[index + 12].Trim().Length != 0) experimentRecord.End_Elution = double.Parse(columns[index + 12]);
+                if (columns[index + 13].Trim().Length != 0) experimentRecord.I0_Peak_Width = double.Parse(columns[index + 13]);
+                if (columns[index + 14].Trim().Length != 0) experimentRecord.Total_Labeling = double.Parse(columns[index + 14]);
+                if (columns[index + 15].Trim().Length != 0) experimentRecord.Net_Labeling = double.Parse(columns[index + 15]);
+
+
+                return experimentRecord;
+            }
+
+            catch (Exception e)
+            {
+
+                Console.WriteLine("error ==>" + e.Message);
+
+                MessageBox.Show("error reading files.txt ==> " + e.Message);
+                return null;
+            }
+
+
+            return null;
         }
     }
 }
