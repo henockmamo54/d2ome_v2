@@ -93,7 +93,7 @@ namespace v2.Helper
             public int time;
             public string mzML_path;
             public string mzid_path;
-            public double value;
+            public double BWE;
 
             public string experimentID;
 
@@ -102,7 +102,7 @@ namespace v2.Helper
                 this.time = time;
                 this.mzML_path = mzml;
                 this.mzid_path = mzid;
-                this.value = val;
+                this.BWE = val;
                 this.experimentID = experimentID;
             }
         }
