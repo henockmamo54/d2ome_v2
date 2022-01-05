@@ -12,7 +12,7 @@ namespace v2.Helper
     public class ReadFilesInfo_txt
     {
         public string path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
-        public List<int> time = new List<int>();
+        public List<int> time = new List<int>(); //contains unique time values
         public List<string> experimentIDs = new List<string>();
         public List<FileContent> filecontents = new List<FileContent>();
 
@@ -73,7 +73,6 @@ namespace v2.Helper
                 {
 
                     Console.WriteLine("error ==>" + e.Message);
-
                     MessageBox.Show("error reading files.txt ==> " + e.Message);
                 }
 
@@ -81,20 +80,17 @@ namespace v2.Helper
             else
             {
                 Console.WriteLine("***> file not found");
+                MessageBox.Show("error reading files.txt ==> file not found");
             }
 
         }
-        //public void readfile() {
-
-        //}
-
+        
         public struct FileContent
         {
-            public int time;
+            public int time; 
             public string mzML_path;
             public string mzid_path;
             public double BWE;
-
             public string experimentID;
 
             public FileContent(int time, string mzml, string mzid, double val, string experimentID)

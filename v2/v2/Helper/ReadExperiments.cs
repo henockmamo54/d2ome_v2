@@ -13,7 +13,6 @@ namespace v2.Helper
     public class ReadExperiments
     {
         string path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
-
         List<Peptide> peptides = new List<Peptide>();
         List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
         List<string> experimentNames = new List<string>();
