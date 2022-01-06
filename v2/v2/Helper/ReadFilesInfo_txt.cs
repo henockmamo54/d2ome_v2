@@ -49,8 +49,8 @@ namespace v2.Helper
                         temp = Regex.Replace(temp, @"\s+", " ");
                         var rowvalues = temp.Split(' ');
 
-                        FileContent fc = new FileContent(int.Parse(rowvalues[0]), rowvalues[1], rowvalues[2], double.Parse(rowvalues[3]), rowvalues[1]);
-                        filecontents.Add(fc);
+                        FileContent fc = new FileContent(int.Parse(rowvalues[0]), rowvalues[1], rowvalues[2], double.Parse(rowvalues[3]), "");
+                        
 
                         // get the time
                         time.Add(fc.time);
@@ -59,6 +59,9 @@ namespace v2.Helper
                         var temp_id = fc.mzML_path.Trim().Split('\\');
                         var e_id = temp_id[temp_id.Length - 1].Replace(".mzML", string.Empty);
                         experimentIDs.Add(e_id);
+
+                        fc.experimentID=e_id;
+                        filecontents.Add(fc);
                     }
 
                     //extract distict time list

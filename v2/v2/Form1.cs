@@ -32,13 +32,15 @@ namespace v2
 
             ProteinExperimentDataReader proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
             proteinExperimentData.loadAllExperimentData();
-
-
+            proteinExperimentData.computeRIAPerExperiment();
+            proteinExperimentData.mergeMultipleRIAPerDay();
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
             //ReadExperiments experiInfoReader = new ReadExperiments();
             //ReadRateConstants experiInfoReader = new ReadRateConstants();
 
+            var test = proteinExperimentData.mergedRIAvalues.Where(x=>x.peptideSeq == "TSVNVVR");
+            
 
         }
 
