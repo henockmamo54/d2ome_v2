@@ -70,12 +70,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\BasicFunctions.cs" />
     <Compile Include="Helper\ReadExperiments.cs" />
     <Compile Include="Helper\ReadFilesInfo_txt.cs" />
     <Compile Include="Helper\ReadRateConstants.cs" />
     <Compile Include="Model\ExperimentRecord.cs" />
     <Compile Include="Model\Peptide.cs" />
     <Compile Include="Model\RateConstant.cs" />
+    <Compile Include="Model\RIA.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProteinExperimentDataReader.cs" />
