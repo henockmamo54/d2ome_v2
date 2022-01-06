@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using v2.Helper;
 using v2.Model;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace v2
 {
@@ -361,6 +362,25 @@ namespace v2
             }
         }
 
+        public bool exportchart(string path, string name)
+        {
+            try
+            {
+                using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                {
+                    chart1.DrawToBitmap(im, new Rectangle(0, 0, chart1.Width, chart1.Height));
+
+                    im.Save(path + @"\" + name + ".jpeg");
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (exportchart())
@@ -417,6 +437,96 @@ namespace v2
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.SelectedPath;
+
+                if (exportchart(path, chart1.Titles[0].Text))
+                {
+                    MessageBox.Show("Chart Exported!");
+                }
+                else
+                {
+                    MessageBox.Show("! file not genrated");
+                }
+            }
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.SelectedPath;
+                //copy chart1
+                System.IO.MemoryStream myStream = new System.IO.MemoryStream();
+                Chart chart2 = new Chart();
+                chart1.Serializer.Save(myStream);
+                chart2.Serializer.Load(myStream);
+
+                foreach (Peptide p in proteinExperimentData.peptides)
+                {
+
+                    //clear chart area
+                    chart2.Titles.Clear();
+
+                    #region experimental data plot
+
+                    // prepare the chart data
+                    var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
+                    chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+
+                    #endregion
+
+                    #region expected data plot 
+
+                    var expected_chart_data = this.proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
+                    chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
+
+                    #endregion
+
+                    // remove grid lines
+                    chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+                    chart2.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+                    chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+                    chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+
+                    // chart labels added 
+                    chart2.ChartAreas[0].AxisX.Title = "Time (days)";
+                    chart2.ChartAreas[0].AxisY.Title = "RIA";
+
+                    // chart add legend
+                    chart2.Series["Series3"].LegendText = "Expected Value";
+                    chart2.Series["Series1"].LegendText = "Experimental value";
+
+                    // chart title
+                    chart2.Titles.Add(p.PeptideSeq);
+
+                    try
+                    {
+                        using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                        {
+                            chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
+
+                            im.Save(path + @"\" + p.PeptideSeq + ".jpeg");
+                        }
+
+                    }
+                    catch (Exception he)
+                    {
+
+                    }
+
+                    
+
+                }
+
+                MessageBox.Show("done!!");
+
+            }
+
 
         }
     }
