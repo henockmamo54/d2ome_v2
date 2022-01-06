@@ -20,14 +20,9 @@ namespace v2.Helper
         public double? TotalIonCurrent_1;
         public string path = @"";
 
-        //public ReadRateConstants()
-        //{
-        //    readRateConstantsCSV();
-        //}
         public ReadRateConstants(string path)
         {
             this.path = path;
-            
         }
 
         public void readRateConstantsCSV()
@@ -53,11 +48,11 @@ namespace v2.Helper
 
                     for (int i = 1; i < lines.Length; i++)
                     {
-                        string line = lines[i].Trim();
-
                         // this csv file has structured table data on the top and 
                         //four paramters at the end of the files. first check for those
                         //paramters.
+
+                        string line = lines[i].Trim();
 
                         if (line.Contains("MeanRateConst/CorrCutOff"))
                         {
@@ -93,16 +88,12 @@ namespace v2.Helper
                             if (columns[4].Trim().Length != 0) rateConstant.RootMeanRSS = double.Parse(columns[4].Trim());
                             if (columns[5].Trim().Length != 0) rateConstant.AbsoluteIsotopeError = double.Parse(columns[5].Trim());
                             rateConstants.Add(rateConstant);
-
-
                         }
-
                     }
                 }
 
                 catch (Exception e)
                 {
-
                     Console.WriteLine("error ==>" + e.Message);
                     MessageBox.Show("error reading files.txt ==> " + e.Message);
                 }

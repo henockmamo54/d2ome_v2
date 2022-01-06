@@ -16,11 +16,6 @@ namespace v2.Helper
         public List<string> experimentIDs = new List<string>();
         public List<FileContent> filecontents = new List<FileContent>();
 
-        //public ReadFilesInfo_txt()
-        //{
-        //    readFile(this.path);
-        //}
-
         public ReadFilesInfo_txt(string path)
         {
             this.path = path;

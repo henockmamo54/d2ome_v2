@@ -74,8 +74,6 @@ namespace v2
             this.StandDev_NumberPeptides_median = rateConstInfoReader.StandDev_NumberPeptides_median;
             this.TotalIonCurrent_1 = rateConstInfoReader.TotalIonCurrent_1;
 
-
-
         }
 
 
