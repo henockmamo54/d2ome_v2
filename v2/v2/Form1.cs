@@ -55,18 +55,24 @@ namespace v2
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns["UniqueToProtein"].Visible = false;
             dataGridView1.Columns["Exchangeable_Hydrogens"].Visible = false;
-            dataGridView1.Columns["M0"].Visible = false;
-            dataGridView1.Columns["M1"].Visible = false;
-            dataGridView1.Columns["M2"].Visible = false;
-            dataGridView1.Columns["M3"].Visible = false;
-            dataGridView1.Columns["M4"].Visible = false;
-            dataGridView1.Columns["M5"].Visible = false;
+            //dataGridView1.Columns["M0"].Visible = false;
+            //dataGridView1.Columns["M1"].Visible = false;
+            //dataGridView1.Columns["M2"].Visible = false;
+            //dataGridView1.Columns["M3"].Visible = false;
+            //dataGridView1.Columns["M4"].Visible = false;
+            //dataGridView1.Columns["M5"].Visible = false;
+
 
             dataGridView1.Columns["PeptideSeq"].HeaderText = "Peptide";
             dataGridView1.Columns["SeqMass"].HeaderText = "m/z";
             dataGridView1.Columns["Total_Labeling"].HeaderText = "Total Labeling";
 
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.MinimumWidth = 70;
+            }
             dataGridView1.Columns["Charge"].Width = 50;
+            dataGridView1.Columns["PeptideSeq"].MinimumWidth = 140;
         }
 
         public void loadMultiplePeptideChart(List<string> peptideSeqs, List<RIA> mergedRIAvalues)
@@ -405,6 +411,11 @@ namespace v2
         }
 
         private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
         {
 
         }
