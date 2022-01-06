@@ -17,11 +17,6 @@ namespace v2.Helper
         public List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
         public List<string> experimentNames = new List<string>();
 
-        //public ReadExperiments()
-        //{
-        //    readExperimentCSVFile(path);
-        //}
-
         public ReadExperiments(string path)
         {
             this.path = path;
@@ -53,7 +48,6 @@ namespace v2.Helper
                     //line #3 contains the name of the experiments
                     experimentNames = getExperimentNames(lines[2].Trim());
 
-
                     //extract the experimental data line by line
                     //the experimental data starts from line 5 (index=4)
                     for (int i = 4; i < lines.Length; i++)
@@ -61,13 +55,10 @@ namespace v2.Helper
                         readRow(lines[i]);
                     }
 
-
                 }
                 catch (Exception e)
                 {
-
                     Console.WriteLine("error ==>" + e.Message);
-
                     MessageBox.Show("error reading files.txt ==> " + e.Message);
                 }
             }
@@ -121,11 +112,8 @@ namespace v2.Helper
 
         public Peptide getPeptideInfo(string[] columns)
         {
-
-
             try
             {
-
                 // the first 12 columns are peptide information
                 Peptide p = new Peptide();
                 p.PeptideSeq = columns[0];
@@ -146,9 +134,7 @@ namespace v2.Helper
 
             catch (Exception e)
             {
-
                 Console.WriteLine("error ==>" + e.Message);
-
                 MessageBox.Show("error reading files.txt ==> " + e.Message);
                 return null;
             }
@@ -159,9 +145,7 @@ namespace v2.Helper
         {
             try
             {
-
                 ExperimentRecord experimentRecord = new ExperimentRecord();
-
                 if (columns[index].Trim().Length != 0) experimentRecord.SpecMass = double.Parse(columns[index]);
                 if (columns[index + 1].Trim().Length != 0) experimentRecord.IonScore = double.Parse(columns[index + 1]);
                 if (columns[index + 2].Trim().Length != 0) experimentRecord.Expectn = double.Parse(columns[index + 2]);
@@ -179,16 +163,14 @@ namespace v2.Helper
                 if (columns[index + 14].Trim().Length != 0) experimentRecord.Total_Labeling = double.Parse(columns[index + 14]);
                 if (columns[index + 15].Trim().Length != 0) experimentRecord.Net_Labeling = double.Parse(columns[index + 15]);
 
-
                 return experimentRecord;
             }
 
             catch (Exception e)
             {
                 Console.WriteLine("error ==>" + e.Message);
-                MessageBox.Show("error reading files.txt ==> " + e.Message);                
+                MessageBox.Show("error reading files.txt ==> " + e.Message);
             }
-
 
             return null;
         }
