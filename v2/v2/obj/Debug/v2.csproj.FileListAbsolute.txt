@@ -16,8 +16,14 @@ c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveChar
 c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.WinForms.xml
 c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.Wpf.pdb
 c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveCharts.Wpf.xml
-F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.exe
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.SuggestedBindingRedirects.cache
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Form1.resources
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Properties.Resources.resources
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.GenerateResource.cache
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.CoreCompileInputs.cache
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.exe.config
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.exe
+F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.pdb
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.dll
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.WinForms.dll
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.Wpf.dll
@@ -27,13 +33,7 @@ F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.WinForms.pdb
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.WinForms.xml
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.Wpf.pdb
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\LiveCharts.Wpf.xml
-F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.SuggestedBindingRedirects.cache
-F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Form1.resources
-F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Properties.Resources.resources
-F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.GenerateResource.cache
-F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.CoreCompileInputs.cache
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.CopyComplete
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.exe
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.pdb
-F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.pdb
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.AssemblyReference.cache

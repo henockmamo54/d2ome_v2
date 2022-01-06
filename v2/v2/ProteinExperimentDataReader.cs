@@ -37,7 +37,8 @@ namespace v2
         // computed values
         List<RIA> RIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvalues = new List<RIA>();
-                
+        public List<ExpectedI0Value> expectedI0Values = new List<ExpectedI0Value>();
+
         public ProteinExperimentDataReader(string files_txt_path, string quant_csv_path, string RateConst_csv_path)
         {
             this.files_txt_path = files_txt_path;
@@ -77,7 +78,8 @@ namespace v2
             this.TotalIonCurrent_1 = rateConstInfoReader.TotalIonCurrent_1;
 
             // add rate constant values to peptied list
-            foreach (Peptide p in peptides) {
+            foreach (Peptide p in peptides)
+            {
                 var rateconst = rateConstants.Where(x => x.PeptideSeq == p.PeptideSeq).ToList();
                 if (rateconst.Count > 0) p.Rateconst = rateconst[0].RateConstant_value;
             }
@@ -148,6 +150,62 @@ namespace v2
                 }
             }
 
+
+        }
+
+        public void computeExpectedCurvePoints()
+        {
+            double ph = 1.5574E-4;
+            double pw = filecontents[filecontents.Count - 1].BWE;
+            double io = 0;
+            double neh = 0;
+            double k = 0;
+
+            for (int i = 0; i < peptides.Count(); i++)
+            {
+                foreach (int t in this.Experiment_time)
+                {
+                    try
+                    {
+                        io = (double)(peptides[i].M0 / 100);
+                        neh = (double)(peptides[i].Exchangeable_Hydrogens);
+                        k = (double)(peptides[i].Rateconst);
+
+                        var val1 = io * (1 - Math.Pow((pw / (1 - ph)), neh));
+                        //var val2 = io * (1 - (1 - Math.Pow((pw / (1 - ph)), neh))) * Math.Pow(Math.E, -1 * k * t);
+                        var val2 = io * Math.Pow(Math.E, -1 * k * t);
+
+                        //var val = val1;
+                        //var val = io * (1 - Math.Pow(t, k)); ;
+
+                        var val = val1 + val2;
+
+                        ExpectedI0Value expectedI0Value = new ExpectedI0Value(peptides[i].PeptideSeq, t, val);
+                        expectedI0Values.Add(expectedI0Value);
+                    }
+                    catch (Exception ex)
+                    {
+                        continue;
+                    }
+
+                }
+            }
+
+
+        }
+
+        public struct ExpectedI0Value
+        {
+            public string peptideseq;
+            public int time;
+            public double value;
+
+            public ExpectedI0Value(string peptideSeq, int t, double val)
+            {
+                peptideseq = peptideSeq;
+                time = t;
+                value = val;
+            }
 
         }
     }
