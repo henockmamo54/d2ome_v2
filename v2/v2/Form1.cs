@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using v2.Helper;
+using v2.Model;
 
 namespace v2
 {
@@ -19,6 +20,7 @@ namespace v2
         string files_txt_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
         string quant_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
         string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
+        ProteinExperimentDataReader proteinExperimentData;
 
         public Form1()
         {
@@ -27,21 +29,62 @@ namespace v2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            loadcharts();
-            loadGridarea();
 
-            ProteinExperimentDataReader proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+            proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.mergeMultipleRIAPerDay();
+
+
+            dataGridView1.DataSource = proteinExperimentData.peptides;// hide row selector
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.Columns["UniqueToProtein"].Visible = false;
+            dataGridView1.Columns["Exchangeable_Hydrogens"].Visible = false;
+            dataGridView1.Columns["M0"].Visible = false;
+            dataGridView1.Columns["M1"].Visible = false;
+            dataGridView1.Columns["M2"].Visible = false;
+            dataGridView1.Columns["M3"].Visible = false;
+            dataGridView1.Columns["M4"].Visible = false;
+            dataGridView1.Columns["M5"].Visible = false;  
+
+
+        loadPeptideChart("TSVNVVR", proteinExperimentData.mergedRIAvalues);
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
             //ReadExperiments experiInfoReader = new ReadExperiments();
             //ReadRateConstants experiInfoReader = new ReadRateConstants();
 
-            var test = proteinExperimentData.mergedRIAvalues.Where(x=>x.peptideSeq == "TSVNVVR");
-            
 
+
+        }
+
+        public void loadMultiplePeptideChart(List<string> peptideSeqs, List<RIA> mergedRIAvalues){
+
+            foreach (string peptideSeq in peptideSeqs) { 
+            
+            }
+        
+        }
+
+        public void loadPeptideChart(string peptideSeq, List<RIA>  mergedRIAvalues )
+        {
+
+            // prepare the chart data
+            var chart_data = mergedRIAvalues.Where(x => x.peptideSeq == peptideSeq).OrderBy(x => x.time).ToArray();
+            chart1.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+
+            // remove grid lines
+            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+
+            // chart add legend
+            chart1.Series["Series1"].LegendText = peptideSeq;
+
+            // chart labels added 
+            chart1.ChartAreas[0].AxisX.Title = "Time (days)";
+            chart1.ChartAreas[0].AxisY.Title = "Lys0/LysTotal";
         }
 
         public void loadcharts()
@@ -137,6 +180,7 @@ namespace v2
             dataGridView1.RowHeadersVisible = false;
         }
 
+
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -146,19 +190,32 @@ namespace v2
                 DataGridViewRow row = dataGridView1.Rows[rowIndex];
                 var temp = dataGridView1.Rows[rowIndex].Cells[0].Value.ToString();
 
-                double[] k_val = { 0.23, 0.25, 0.31, 0.35 };
-                int[] t_val = { 0, 1, 3, 5, 7, 21 };
-
-                t_val = t_val.Select(x => x * (1 + rowIndex)).ToArray();
-                k_val = k_val.Select(x => x + (x / (rowIndex + 1))).ToArray();
-
-                loadcharts(k_val, t_val);
+                loadPeptideChart(temp, proteinExperimentData.mergedRIAvalues);
 
                 MessageBox.Show(temp);
             }
-
-
         }
+
+        //private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+
+        //    int rowIndex = e.RowIndex;
+        //    if (rowIndex >= 0)
+        //    {
+        //        DataGridViewRow row = dataGridView1.Rows[rowIndex];
+        //        var temp = dataGridView1.Rows[rowIndex].Cells[0].Value.ToString();
+
+        //        double[] k_val = { 0.23, 0.25, 0.31, 0.35 };
+        //        int[] t_val = { 0, 1, 3, 5, 7, 21 };
+
+        //        t_val = t_val.Select(x => x * (1 + rowIndex)).ToArray();
+        //        k_val = k_val.Select(x => x + (x / (rowIndex + 1))).ToArray();
+
+        //        loadcharts(k_val, t_val);
+
+        //        MessageBox.Show(temp);
+        //    }
+        //}
 
         public void loadcharts(double[] k_val, int[] t_val)
         {

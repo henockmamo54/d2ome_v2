@@ -21,7 +21,7 @@ namespace v2
         public List<FileContent> filecontents = new List<FileContent>();
 
         // properties from Protein.quant.csv 
-        List<Peptide> peptides = new List<Peptide>();
+        public List<Peptide> peptides = new List<Peptide>();
         List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
 
         // propeties from Protein.Rateconst.csv
@@ -37,7 +37,7 @@ namespace v2
         // computed values
         List<RIA> RIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvalues = new List<RIA>();
-        public ProteinExperimentDataReader() { }
+                
         public ProteinExperimentDataReader(string files_txt_path, string quant_csv_path, string RateConst_csv_path)
         {
             this.files_txt_path = files_txt_path;
