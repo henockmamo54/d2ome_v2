@@ -196,27 +196,6 @@ namespace v2
             }
         }
 
-        //private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-
-        //    int rowIndex = e.RowIndex;
-        //    if (rowIndex >= 0)
-        //    {
-        //        DataGridViewRow row = dataGridView1.Rows[rowIndex];
-        //        var temp = dataGridView1.Rows[rowIndex].Cells[0].Value.ToString();
-
-        //        double[] k_val = { 0.23, 0.25, 0.31, 0.35 };
-        //        int[] t_val = { 0, 1, 3, 5, 7, 21 };
-
-        //        t_val = t_val.Select(x => x * (1 + rowIndex)).ToArray();
-        //        k_val = k_val.Select(x => x + (x / (rowIndex + 1))).ToArray();
-
-        //        loadcharts(k_val, t_val);
-
-        //        MessageBox.Show(temp);
-        //    }
-        //}
-
         public void loadcharts(double[] k_val, int[] t_val)
         {
 

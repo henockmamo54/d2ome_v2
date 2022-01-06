@@ -76,6 +76,11 @@ namespace v2
             this.StandDev_NumberPeptides_median = rateConstInfoReader.StandDev_NumberPeptides_median;
             this.TotalIonCurrent_1 = rateConstInfoReader.TotalIonCurrent_1;
 
+            // add rate constant values to peptied list
+            foreach (Peptide p in peptides) {
+                var rateconst = rateConstants.Where(x => x.PeptideSeq == p.PeptideSeq).ToList();
+                if (rateconst.Count > 0) p.Rateconst = rateconst[0].RateConstant_value;
+            }
         }
 
         public void computeRIAPerExperiment()

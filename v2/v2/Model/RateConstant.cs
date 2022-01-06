@@ -9,7 +9,7 @@ namespace v2.Model
     public class RateConstant
     { 
         public string PeptideSeq { get; set; }
-        public double? RateConstants { get; set; }
+        public double? RateConstant_value { get; set; }
         public double? Correlations { get; set; }
         public double? RootMeanRSS { get; set; }
         public double? AbsoluteIsotopeError { get; set; }

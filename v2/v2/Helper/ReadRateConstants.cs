@@ -83,7 +83,7 @@ namespace v2.Helper
 
                             RateConstant rateConstant = new RateConstant();
                             rateConstant.PeptideSeq = columns[0].Trim();
-                            if (columns[2].Trim().Length != 0) rateConstant.RateConstants = double.Parse(columns[2].Trim());
+                            if (columns[2].Trim().Length != 0) rateConstant.RateConstant_value = double.Parse(columns[2].Trim());
                             if (columns[3].Trim().Length != 0) rateConstant.Correlations = double.Parse(columns[3].Trim());
                             if (columns[4].Trim().Length != 0) rateConstant.RootMeanRSS = double.Parse(columns[4].Trim());
                             if (columns[5].Trim().Length != 0) rateConstant.AbsoluteIsotopeError = double.Parse(columns[5].Trim());
