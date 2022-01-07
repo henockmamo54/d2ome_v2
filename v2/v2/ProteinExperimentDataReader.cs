@@ -171,19 +171,9 @@ namespace v2
                         neh = (double)(peptides[i].Exchangeable_Hydrogens);
                         k = (double)(peptides[i].Rateconst);
 
-                        var val1 = io * (1 - Math.Pow((pw / (1 - ph)), neh));
-                        var val2 = io * (1 - (1 - Math.Pow((pw / (1 - ph)), neh))) * Math.Pow(Math.E, -1 * k * t);
-                        //var val2 = io * Math.Pow(Math.E, -1 * k * t);
+                        var val1 = io * Math.Pow(1 - (pw / (1 - pw)),neh);
+                        var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)),neh)));
 
-                        var a = (1 - (1 - Math.Pow((pw / (1 - ph)), neh)));
-                        var b = (1 - Math.Pow((pw / (1 - ph)), neh));
-                        var c = (1 - Math.Pow((pw / (1 - ph)), neh));
-                        var d = (1 - Math.Pow((pw / (1 - ph)), neh));
-                        var e = Math.Pow((pw / (1 - ph)), neh);
-                        var f = (pw / (1 - ph));
-
-                        //var val = val1;
-                        //var val = io * (1 - Math.Pow(t, k)); ;
 
                         var val = val1 + val2;
 
