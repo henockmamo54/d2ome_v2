@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using v2.Helper;
 using v2.Model;
 using System.Windows.Forms.DataVisualization.Charting;
+using static v2.ProteinExperimentDataReader;
 
 namespace v2
 {
@@ -37,6 +38,7 @@ namespace v2
             proteinExperimentData.mergeMultipleRIAPerDay();
             proteinExperimentData.computeExpectedCurvePoints();
             proteinExperimentData.computeRSquare();
+            ProtienchartDataValues chartdata =proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
 
 
 

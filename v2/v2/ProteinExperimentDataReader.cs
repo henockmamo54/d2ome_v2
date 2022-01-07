@@ -218,6 +218,64 @@ namespace v2
             }
 
         }
+
+        public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot()
+        {
+            List<double> xval = new List<double>();
+            List<double> yval = new List<double>();
+
+            double ph = 1.5574E-4;
+            double pw = filecontents[filecontents.Count - 1].BWE;
+            double io = 0;
+            double neh = 0;
+            double k = 0;
+
+            for (int i = 0; i < peptides.Count(); i++)
+            {
+                foreach (int t in this.Experiment_time)
+                {
+                    try
+                    {
+                        io = (double)(peptides[i].M0 / 100);
+                        neh = (double)(peptides[i].Exchangeable_Hydrogens);
+                        k = (double)(peptides[i].Rateconst);
+
+                        var ria_val2 = mergedRIAvalues.Where(x => x.peptideSeq.Trim() == peptides[i].PeptideSeq.Trim() & x.time == t).ToList();
+                        if (ria_val2.Count > 0)
+                        {
+                            var ria_val = ria_val2.First().RIA_value;
+
+                            var dn = io * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+                            var nu = io - ria_val;
+                            var fv = nu / dn;
+
+                            xval.Add(t);
+                            yval.Add((double)fv);
+                        }
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        continue;
+                    }
+
+                }
+            }
+            //ProtienchartDataValues pd = new ProtienchartDataValues(xval, yval);
+            return new ProtienchartDataValues(xval, yval); 
+
+        }
+
+        public struct ProtienchartDataValues
+        {
+            public List<double> x;
+            public List<double> y;
+
+            public ProtienchartDataValues(List<double> x, List<double> y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
         public struct ExpectedI0Value
         {
             public string peptideseq;
