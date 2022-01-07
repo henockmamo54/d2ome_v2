@@ -36,6 +36,8 @@ namespace v2
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.mergeMultipleRIAPerDay();
             proteinExperimentData.computeExpectedCurvePoints();
+            proteinExperimentData.computeRSquare();
+
 
 
             loadDataGridView();
@@ -51,7 +53,7 @@ namespace v2
         {
             var selected = (from u in proteinExperimentData.peptides
                             where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
-                            select u).ToList();
+                            select u).Distinct().ToList();
 
 
             dataGridView_peptide.DataSource = selected;

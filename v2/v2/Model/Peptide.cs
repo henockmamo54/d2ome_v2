@@ -11,6 +11,7 @@ namespace v2.Model
         public string PeptideSeq { get; set; }
         public bool? UniqueToProtein { get; set; }
         public double? Rateconst { get; set; }
+        public double? RSquare { get; set; }
         public double? Exchangeable_Hydrogens { get; set; }
         public double? Charge { get; set; }
         public double? SeqMass { get; set; }

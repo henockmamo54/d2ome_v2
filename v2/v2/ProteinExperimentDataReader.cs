@@ -84,7 +84,6 @@ namespace v2
                 if (rateconst.Count > 0) p.Rateconst = rateconst[0].RateConstant_value;
             }
         }
-
         public void computeRIAPerExperiment()
         {
 
@@ -108,7 +107,6 @@ namespace v2
             }
 
         }
-
         public void mergeMultipleRIAPerDay()
         {
             var peptides = RIAvalues.Select(x => x.peptideSeq).Distinct().ToList();
@@ -152,7 +150,6 @@ namespace v2
 
 
         }
-
         public void computeExpectedCurvePoints()
         {
             double ph = 1.5574E-4;
@@ -171,8 +168,8 @@ namespace v2
                         neh = (double)(peptides[i].Exchangeable_Hydrogens);
                         k = (double)(peptides[i].Rateconst);
 
-                        var val1 = io * Math.Pow(1 - (pw / (1 - pw)),neh);
-                        var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)),neh)));
+                        var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                        var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
 
 
                         var val = val1 + val2;
@@ -191,6 +188,36 @@ namespace v2
 
         }
 
+        public void computeRSquare()
+        {
+
+            foreach (RateConstant r in rateConstants)
+            {
+                var experimentalvalue = mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
+
+                var meanval_ria = experimentalvalue.Average(x => x.RIA_value);
+
+                double ss = 0;
+                double rss = 0;
+
+                foreach (var p in experimentalvalue)
+                {
+                    if (p.RIA_value != null)
+                    {
+                        var computedRIAValue = expectedI0Values.Where(x => x.peptideseq == p.peptideSeq & x.time == p.time).First().value;
+                        ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
+                        rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
+                    }
+                }
+
+                double RSquare = 1 - (rss / ss);
+
+                var temp = peptides.Where(x => x.PeptideSeq.Trim() == r.PeptideSeq.Trim()).ToList();
+                foreach (var t in temp) t.RSquare = RSquare;
+
+            }
+
+        }
         public struct ExpectedI0Value
         {
             public string peptideseq;
