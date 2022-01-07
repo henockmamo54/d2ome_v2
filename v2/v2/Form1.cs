@@ -38,19 +38,25 @@ namespace v2
             proteinExperimentData.mergeMultipleRIAPerDay();
             proteinExperimentData.computeExpectedCurvePoints();
             proteinExperimentData.computeRSquare();
-            ProtienchartDataValues chartdata =proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
+            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
 
 
 
             loadDataGridView();
             loadPeptideChart("TSVNVVR", proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            loadProteinchart(chartdata);
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
             //ReadExperiments experiInfoReader = new ReadExperiments();
             //ReadRateConstants experiInfoReader = new ReadRateConstants();
 
         }
+        public void loadProteinchart(ProtienchartDataValues chartdata)
+        {
 
+            chart1.Series["Series1"].Points.DataBindXY(chartdata.x, chartdata.y);
+            chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
+        }
         public void loadDataGridView()
         {
             var selected = (from u in proteinExperimentData.peptides
@@ -102,7 +108,7 @@ namespace v2
             // prepare the chart data
             var chart_data = mergedRIAvalues.Where(x => x.peptideSeq == peptideSeq).OrderBy(x => x.time).ToArray();
             chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
-            
+
             chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
             //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
 
