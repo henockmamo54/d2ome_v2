@@ -25,7 +25,7 @@ namespace v2
         List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
 
         // propeties from Protein.Rateconst.csv
-        List<RateConstant> rateConstants = new List<RateConstant>();
+        public List<RateConstant> rateConstants = new List<RateConstant>();
         double? MeanRateConst_CorrCutOff_mean;
         double? MeanRateConst_CorrCutOff_median;
         double? MedianRateConst_RMSSCutOff_mean;

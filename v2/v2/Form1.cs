@@ -52,6 +52,18 @@ namespace v2
         public void loadDataGridView()
         {
 
+            var peptidelist_fromRateconstFile = (from rc in proteinExperimentData.rateConstants
+                                                 join pep in proteinExperimentData.peptides 
+                                                 on rc.PeptideSeq.Trim() equals pep.PeptideSeq.Trim() 
+                                                 select rc).ToList();
+
+            var dealerContracts = proteinExperimentData.rateConstants.Join(proteinExperimentData.peptides,
+                                rateConstants => rateConstants.PeptideSeq,
+                                proteinExperimentData => proteinExperimentData.PeptideSeq,
+                                (rateConstants, proteinExperimentData) => proteinExperimentData).ToList();
+
+
+
             dataGridView1.DataSource = proteinExperimentData.peptides;// hide row selector
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns["UniqueToProtein"].Visible = false;
@@ -519,7 +531,7 @@ namespace v2
 
                     }
 
-                    
+
 
                 }
 
