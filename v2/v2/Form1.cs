@@ -51,26 +51,15 @@ namespace v2
 
         public void loadDataGridView()
         {
-
-            //var peptidelist_fromRateconstFile = (from pep in proteinExperimentData.peptides
-            //                                    join rc in proteinExperimentData.rateConstants
-            //                                    on pep.PeptideSeq.Trim() equals rc.PeptideSeq.Trim() into prgroup
-            //                                    select pep).ToList();
-
-            //var dealerContracts = proteinExperimentData.rateConstants.Join(proteinExperimentData.peptides,
-            //                    rateConstants => rateConstants.PeptideSeq,
-            //                    proteinExperimentData => proteinExperimentData.PeptideSeq,
-            //                    (rateConstants, proteinExperimentData) => proteinExperimentData).ToList();
-
             var selected = (from u in proteinExperimentData.peptides
                             where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
                             select u).ToList();
 
 
-            dataGridView1.DataSource = selected;
-            dataGridView1.RowHeadersVisible = false; // hide row selector
-            dataGridView1.Columns["UniqueToProtein"].Visible = false;
-            dataGridView1.Columns["Exchangeable_Hydrogens"].Visible = false;
+            dataGridView_peptide.DataSource = selected;
+            dataGridView_peptide.RowHeadersVisible = false; // hide row selector
+            dataGridView_peptide.Columns["UniqueToProtein"].Visible = false;
+            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Visible = false;
             //dataGridView1.Columns["M0"].Visible = false;
             //dataGridView1.Columns["M1"].Visible = false;
             //dataGridView1.Columns["M2"].Visible = false;
@@ -79,16 +68,16 @@ namespace v2
             //dataGridView1.Columns["M5"].Visible = false;
 
 
-            dataGridView1.Columns["PeptideSeq"].HeaderText = "Peptide";
-            dataGridView1.Columns["SeqMass"].HeaderText = "m/z";
-            dataGridView1.Columns["Total_Labeling"].HeaderText = "Total Labeling";
+            dataGridView_peptide.Columns["PeptideSeq"].HeaderText = "Peptide";
+            dataGridView_peptide.Columns["SeqMass"].HeaderText = "m/z";
+            dataGridView_peptide.Columns["Total_Labeling"].HeaderText = "Total Labeling";
 
-            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
             {
                 column.MinimumWidth = 70;
             }
-            dataGridView1.Columns["Charge"].Width = 50;
-            dataGridView1.Columns["PeptideSeq"].MinimumWidth = 140;
+            dataGridView_peptide.Columns["Charge"].Width = 50;
+            dataGridView_peptide.Columns["PeptideSeq"].MinimumWidth = 170;
         }
 
         public void loadMultiplePeptideChart(List<string> peptideSeqs, List<RIA> mergedRIAvalues)
@@ -104,39 +93,39 @@ namespace v2
         public void loadPeptideChart(string peptideSeq, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
         {
             //clear chart area
-            chart1.Titles.Clear();
+            chart_peptide.Titles.Clear();
 
             #region experimental data plot
 
             // prepare the chart data
             var chart_data = mergedRIAvalues.Where(x => x.peptideSeq == peptideSeq).OrderBy(x => x.time).ToArray();
-            chart1.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+            chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
             #endregion
 
             #region expected data plot 
 
             var expected_chart_data = expectedI0Values.Where(x => x.peptideseq == peptideSeq).OrderBy(x => x.time).ToArray();
-            chart1.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
+            chart_peptide.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
 
             #endregion
 
             // remove grid lines
-            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
             // chart labels added 
-            chart1.ChartAreas[0].AxisX.Title = "Time (days)";
-            chart1.ChartAreas[0].AxisY.Title = "RIA";
+            chart_peptide.ChartAreas[0].AxisX.Title = "Time (days)";
+            chart_peptide.ChartAreas[0].AxisY.Title = "RIA";
 
             // chart add legend
-            chart1.Series["Series3"].LegendText = "Expected Value";
-            chart1.Series["Series1"].LegendText = "Experimental value";
+            chart_peptide.Series["Series3"].LegendText = "Expected Value";
+            chart_peptide.Series["Series1"].LegendText = "Experimental value";
 
             // chart title
-            chart1.Titles.Add(peptideSeq);
+            chart_peptide.Titles.Add(peptideSeq);
         }
 
         public void loadcharts()
@@ -167,16 +156,16 @@ namespace v2
                     switch (i)
                     {
                         case 0:
-                            chart1.Series["Series1"].Points.AddXY(t_val[j], y_vals[i][j]);
+                            chart_peptide.Series["Series1"].Points.AddXY(t_val[j], y_vals[i][j]);
                             break;
                         case 1:
-                            chart1.Series["Series2"].Points.AddXY(t_val[j], y_vals[i][j]);
+                            chart_peptide.Series["Series2"].Points.AddXY(t_val[j], y_vals[i][j]);
                             break;
                         case 2:
-                            chart1.Series["Series3"].Points.AddXY(t_val[j], y_vals[i][j]);
+                            chart_peptide.Series["Series3"].Points.AddXY(t_val[j], y_vals[i][j]);
                             break;
                         case 3:
-                            chart1.Series["Series4"].Points.AddXY(t_val[j], y_vals[i][j]);
+                            chart_peptide.Series["Series4"].Points.AddXY(t_val[j], y_vals[i][j]);
                             break;
                     }
 
@@ -190,20 +179,20 @@ namespace v2
             //chart1.Series["Series4"].Label = " k = " + k_val[3];
 
             // remove grid lines
-            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
             // chart add legend
-            chart1.Series["Series1"].LegendText = " k = " + k_val[0];
-            chart1.Series["Series2"].LegendText = " k = " + k_val[1];
-            chart1.Series["Series3"].LegendText = " k = " + k_val[2];
-            chart1.Series["Series4"].LegendText = " k = " + k_val[3];
+            chart_peptide.Series["Series1"].LegendText = " k = " + k_val[0];
+            chart_peptide.Series["Series2"].LegendText = " k = " + k_val[1];
+            chart_peptide.Series["Series3"].LegendText = " k = " + k_val[2];
+            chart_peptide.Series["Series4"].LegendText = " k = " + k_val[3];
 
             // chart labels added 
-            chart1.ChartAreas[0].AxisX.Title = "Time (days)";
-            chart1.ChartAreas[0].AxisY.Title = "Lys0/LysTotal";
+            chart_peptide.ChartAreas[0].AxisX.Title = "Time (days)";
+            chart_peptide.ChartAreas[0].AxisY.Title = "Lys0/LysTotal";
         }
 
         public void loadGridarea()
@@ -225,11 +214,11 @@ namespace v2
             dt.Rows.Add("sample Peptide 9");
 
             //Bind data to grid view
-            dataGridView1.DataSource = dt;
+            dataGridView_peptide.DataSource = dt;
 
 
             // hide row selector
-            dataGridView1.RowHeadersVisible = false;
+            dataGridView_peptide.RowHeadersVisible = false;
         }
 
 
@@ -239,8 +228,8 @@ namespace v2
             int rowIndex = e.RowIndex;
             if (rowIndex >= 0)
             {
-                DataGridViewRow row = dataGridView1.Rows[rowIndex];
-                var temp = dataGridView1.Rows[rowIndex].Cells[0].Value.ToString();
+                DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
+                var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
 
                 loadPeptideChart(temp, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
@@ -255,10 +244,10 @@ namespace v2
             //int[] t_val = { 0, 1, 3, 5, 7, 21 };
 
             //clear the chart 
-            foreach (var series in chart1.Series)
+            foreach (var series in chart_peptide.Series)
             {
                 series.Points.Clear();
-                chart1.Update();
+                chart_peptide.Update();
 
 
             }
@@ -287,16 +276,16 @@ namespace v2
                     switch (i)
                     {
                         case 0:
-                            chart1.Series["Series1"].Points.AddXY(t_val[j], y_vals[i][j]);
+                            chart_peptide.Series["Series1"].Points.AddXY(t_val[j], y_vals[i][j]);
                             break;
                         case 1:
-                            chart1.Series["Series2"].Points.AddXY(t_val[j], y_vals[i][j]);
+                            chart_peptide.Series["Series2"].Points.AddXY(t_val[j], y_vals[i][j]);
                             break;
                         case 2:
-                            chart1.Series["Series3"].Points.AddXY(t_val[j], y_vals[i][j]);
+                            chart_peptide.Series["Series3"].Points.AddXY(t_val[j], y_vals[i][j]);
                             break;
                         case 3:
-                            chart1.Series["Series4"].Points.AddXY(t_val[j], y_vals[i][j]);
+                            chart_peptide.Series["Series4"].Points.AddXY(t_val[j], y_vals[i][j]);
                             break;
                     }
 
@@ -310,31 +299,31 @@ namespace v2
             //chart1.Series["Series4"].Label = " k = " + k_val[3];
 
             // remove grid lines
-            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
             // chart add legend
-            chart1.Series["Series1"].LegendText = " k = " + k_val[0];
-            chart1.Series["Series2"].LegendText = " k = " + k_val[1];
-            chart1.Series["Series3"].LegendText = " k = " + k_val[2];
-            chart1.Series["Series4"].LegendText = " k = " + k_val[3];
+            chart_peptide.Series["Series1"].LegendText = " k = " + k_val[0];
+            chart_peptide.Series["Series2"].LegendText = " k = " + k_val[1];
+            chart_peptide.Series["Series3"].LegendText = " k = " + k_val[2];
+            chart_peptide.Series["Series4"].LegendText = " k = " + k_val[3];
 
             // chart labels added 
-            chart1.ChartAreas[0].AxisX.Title = "Time (days)";
-            chart1.ChartAreas[0].AxisY.Title = "Lys0/LysTotal";
+            chart_peptide.ChartAreas[0].AxisX.Title = "Time (days)";
+            chart_peptide.ChartAreas[0].AxisY.Title = "Lys0/LysTotal";
 
-            chart1.Update();
+            chart_peptide.Update();
         }
 
         public bool exportchart()
         {
             try
             {
-                using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
                 {
-                    chart1.DrawToBitmap(im, new Rectangle(0, 0, chart1.Width, chart1.Height));
+                    chart_peptide.DrawToBitmap(im, new Rectangle(0, 0, chart_peptide.Width, chart_peptide.Height));
                     //using (Graphics gr = Graphics.FromImage(im))
                     //{
                     //    gr.DrawString("Test",
@@ -357,9 +346,9 @@ namespace v2
         {
             try
             {
-                using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
                 {
-                    chart1.DrawToBitmap(im, new Rectangle(0, 0, chart1.Width, chart1.Height));
+                    chart_peptide.DrawToBitmap(im, new Rectangle(0, 0, chart_peptide.Width, chart_peptide.Height));
                     using (Graphics gr = Graphics.FromImage(im))
                     {
                         gr.DrawString(name,
@@ -381,9 +370,9 @@ namespace v2
         {
             try
             {
-                using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
                 {
-                    chart1.DrawToBitmap(im, new Rectangle(0, 0, chart1.Width, chart1.Height));
+                    chart_peptide.DrawToBitmap(im, new Rectangle(0, 0, chart_peptide.Width, chart_peptide.Height));
 
                     im.Save(path + @"\" + name + ".jpeg");
                 }
@@ -396,59 +385,6 @@ namespace v2
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (exportchart())
-            {
-                MessageBox.Show("chart generated");
-            }
-            else
-            {
-                MessageBox.Show("! file not genrated");
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // update the datasouce for the chart
-            // export the chart as jpeg file
-
-            try
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    int rowIndex = i;
-                    if (rowIndex >= 0)
-                    {
-                        DataGridViewRow row = dataGridView1.Rows[rowIndex];
-                        var temp = dataGridView1.Rows[rowIndex].Cells[0].Value.ToString();
-
-                        double[] k_val = { 0.23, 0.25, 0.31, 0.35 };
-                        int[] t_val = { 0, 1, 3, 5, 7, 21 };
-
-                        t_val = t_val.Select(x => x * (1 + rowIndex)).ToArray();
-                        k_val = k_val.Select(x => x + (x / (rowIndex + 1))).ToArray();
-
-                        loadcharts(k_val, t_val);
-                        exportchart(temp);
-
-                    }
-                }
-
-                MessageBox.Show("Completed successfully");
-            }
-            catch (Exception er)
-            {
-
-                MessageBox.Show("error =", er.Message);
-            }
-
-        }
-
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -457,7 +393,7 @@ namespace v2
             {
                 string path = dialog.SelectedPath;
 
-                if (exportchart(path, chart1.Titles[0].Text))
+                if (exportchart(path, chart_peptide.Titles[0].Text))
                 {
                     MessageBox.Show("Chart Exported!");
                 }
@@ -478,7 +414,7 @@ namespace v2
                 //copy chart1
                 System.IO.MemoryStream myStream = new System.IO.MemoryStream();
                 Chart chart2 = new Chart();
-                chart1.Serializer.Save(myStream);
+                chart_peptide.Serializer.Save(myStream);
                 chart2.Serializer.Load(myStream);
 
                 foreach (Peptide p in proteinExperimentData.peptides)
@@ -521,7 +457,7 @@ namespace v2
 
                     try
                     {
-                        using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                        using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
                         {
                             chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
 
