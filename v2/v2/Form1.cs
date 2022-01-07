@@ -98,6 +98,9 @@ namespace v2
             // prepare the chart data
             var chart_data = mergedRIAvalues.Where(x => x.peptideSeq == peptideSeq).OrderBy(x => x.time).ToArray();
             chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+            
+            chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
+            //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
 
             #endregion
 
@@ -116,7 +119,7 @@ namespace v2
 
             // chart labels added 
             chart_peptide.ChartAreas[0].AxisX.Title = "Time (days)";
-            chart_peptide.ChartAreas[0].AxisY.Title = "RIA";
+            chart_peptide.ChartAreas[0].AxisY.Title = "Relative Isotope abundance of monoisotope";
 
             // chart add legend
             chart_peptide.Series["Series3"].LegendText = "Expected Value";
@@ -245,7 +248,7 @@ namespace v2
 
                 loadPeptideChart(temp, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
-                MessageBox.Show(temp);
+                //MessageBox.Show(temp);
             }
         }
     }
