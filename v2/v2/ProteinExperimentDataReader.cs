@@ -26,7 +26,7 @@ namespace v2
 
         // propeties from Protein.Rateconst.csv
         public List<RateConstant> rateConstants = new List<RateConstant>();
-        double? MeanRateConst_CorrCutOff_mean;
+        public double? MeanRateConst_CorrCutOff_mean;
         double? MeanRateConst_CorrCutOff_median;
         double? MedianRateConst_RMSSCutOff_mean;
         double? MedianRateConst_RMSSCutOff_median;

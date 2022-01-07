@@ -56,6 +56,15 @@ namespace v2
 
             chart1.Series["Series1"].Points.DataBindXY(chartdata.x, chartdata.y);
             chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
+
+            List<double> yval = new List<double>();
+            foreach (int t in proteinExperimentData.Experiment_time)
+            {
+                yval.Add(1 - Math.Pow(Math.E, -1 * 0.135301 * t));
+            }
+
+            chart1.Series["Series2"].Points.DataBindXY(proteinExperimentData.Experiment_time, yval);
+            chart1.ChartAreas[0].AxisX.Minimum = 0;
         }
         public void loadDataGridView()
         {
