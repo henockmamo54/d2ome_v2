@@ -172,8 +172,15 @@ namespace v2
                         k = (double)(peptides[i].Rateconst);
 
                         var val1 = io * (1 - Math.Pow((pw / (1 - ph)), neh));
-                        //var val2 = io * (1 - (1 - Math.Pow((pw / (1 - ph)), neh))) * Math.Pow(Math.E, -1 * k * t);
-                        var val2 = io * Math.Pow(Math.E, -1 * k * t);
+                        var val2 = io * (1 - (1 - Math.Pow((pw / (1 - ph)), neh))) * Math.Pow(Math.E, -1 * k * t);
+                        //var val2 = io * Math.Pow(Math.E, -1 * k * t);
+
+                        var a = (1 - (1 - Math.Pow((pw / (1 - ph)), neh)));
+                        var b = (1 - Math.Pow((pw / (1 - ph)), neh));
+                        var c = (1 - Math.Pow((pw / (1 - ph)), neh));
+                        var d = (1 - Math.Pow((pw / (1 - ph)), neh));
+                        var e = Math.Pow((pw / (1 - ph)), neh);
+                        var f = (pw / (1 - ph));
 
                         //var val = val1;
                         //var val = io * (1 - Math.Pow(t, k)); ;
