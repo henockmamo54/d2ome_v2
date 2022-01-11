@@ -32,23 +32,24 @@ namespace v2
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            //proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
-            //proteinExperimentData.loadAllExperimentData();
-            //proteinExperimentData.computeRIAPerExperiment();
-            //proteinExperimentData.mergeMultipleRIAPerDay();
-            //proteinExperimentData.computeExpectedCurvePoints();
-            //proteinExperimentData.computeRSquare();
-            //ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
+            proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+            proteinExperimentData.loadAllExperimentData();
+            proteinExperimentData.computeRIAPerExperiment();
+            proteinExperimentData.mergeMultipleRIAPerDay();
+            proteinExperimentData.computeExpectedCurvePoints();
+            proteinExperimentData.computeRSquare();
+            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
 
 
 
-            //loadDataGridView();
-            //loadPeptideChart("TSVNVVR", proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-            //loadProteinchart(chartdata);
+            loadDataGridView();
+            loadPeptideChart("TSVNVVR", proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            loadProteinchart(chartdata);
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
             //ReadExperiments experiInfoReader = new ReadExperiments();
             //ReadRateConstants experiInfoReader = new ReadRateConstants();
+
 
         }
         public void loadProteinchart(ProtienchartDataValues chartdata)
@@ -143,6 +144,7 @@ namespace v2
             // chart add legend
             chart_peptide.Series["Series3"].LegendText = "Expected Value";
             chart_peptide.Series["Series1"].LegendText = "Experimental value";
+            chart_peptide.Series["Series3"]["LineTension"] = "0.0";
 
             // chart title
             chart_peptide.Titles.Add(peptideSeq);
@@ -302,7 +304,7 @@ namespace v2
 
             string files_txt_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
             string quant_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
-            string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv"; 
+            string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
 
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
             proteinExperimentData.loadAllExperimentData();
