@@ -144,6 +144,14 @@ namespace v2
             // chart add legend
             chart_peptide.Series["Series3"].LegendText = "Expected Value";
             chart_peptide.Series["Series1"].LegendText = "Experimental value";
+
+            chart_peptide.Legends[0].Position.Auto = false;
+            chart_peptide.Legends[0].Position.X = 80;
+            chart_peptide.Legends[0].Position.Y = 10;
+            chart_peptide.Legends[0].Position.Width = 20;
+            chart_peptide.Legends[0].Position.Height = 15;
+
+            // chartline tension
             chart_peptide.Series["Series3"]["LineTension"] = "0.0";
 
             // chart title
