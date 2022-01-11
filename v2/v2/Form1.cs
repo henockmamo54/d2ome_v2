@@ -66,6 +66,8 @@ namespace v2
 
             chart1.Series["Series2"].Points.DataBindXY(proteinExperimentData.Experiment_time, yval);
             chart1.ChartAreas[0].AxisX.Minimum = 0;
+            chart1.ChartAreas[0].AxisY.Minimum = 0;
+            chart1.ChartAreas[0].AxisY.Maximum = 1.5;
         }
         public void loadDataGridView()
         {
@@ -156,6 +158,7 @@ namespace v2
 
             // chart title
             chart_peptide.Titles.Add(peptideSeq);
+
         }
 
         public bool exportchart(string path, string name)
