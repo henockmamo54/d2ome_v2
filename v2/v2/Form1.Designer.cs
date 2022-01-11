@@ -39,9 +39,9 @@
             this.dataGridView_peptide = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button_exportPeptideChart = new System.Windows.Forms.Button();
             this.chart_peptide = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button_exportAllPeptideChart = new System.Windows.Forms.Button();
-            this.button_exportPeptideChart = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_peptide)).BeginInit();
@@ -91,6 +91,15 @@
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             // 
+            // button_exportPeptideChart
+            // 
+            this.button_exportPeptideChart.Location = new System.Drawing.Point(593, 309);
+            this.button_exportPeptideChart.Name = "button_exportPeptideChart";
+            this.button_exportPeptideChart.Size = new System.Drawing.Size(75, 23);
+            this.button_exportPeptideChart.TabIndex = 9;
+            this.button_exportPeptideChart.Text = "Export Graph";
+            this.button_exportPeptideChart.UseVisualStyleBackColor = true;
+            // 
             // chart_peptide
             // 
             this.chart_peptide.BorderlineColor = System.Drawing.Color.WhiteSmoke;
@@ -131,15 +140,6 @@
             this.button_exportAllPeptideChart.UseVisualStyleBackColor = true;
             this.button_exportAllPeptideChart.Click += new System.EventHandler(this.button_exportAllPeptideChart_Click);
             // 
-            // button_exportPeptideChart
-            // 
-            this.button_exportPeptideChart.Location = new System.Drawing.Point(593, 309);
-            this.button_exportPeptideChart.Name = "button_exportPeptideChart";
-            this.button_exportPeptideChart.Size = new System.Drawing.Size(75, 23);
-            this.button_exportPeptideChart.TabIndex = 9;
-            this.button_exportPeptideChart.Text = "Export Graph";
-            this.button_exportPeptideChart.UseVisualStyleBackColor = true;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.chart1);
@@ -164,8 +164,10 @@
             series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
             series3.Name = "Series1";
             series3.YValuesPerPoint = 2;
+            series4.BorderWidth = 3;
             series4.ChartArea = "ChartArea1";
             series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Color = System.Drawing.Color.Purple;
             series4.Legend = "Legend1";
             series4.Name = "Series2";
             this.chart1.Series.Add(series3);
