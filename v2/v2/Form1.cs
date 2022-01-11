@@ -32,19 +32,19 @@ namespace v2
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
-            proteinExperimentData.loadAllExperimentData();
-            proteinExperimentData.computeRIAPerExperiment();
-            proteinExperimentData.mergeMultipleRIAPerDay();
-            proteinExperimentData.computeExpectedCurvePoints();
-            proteinExperimentData.computeRSquare();
-            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
+            //proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+            //proteinExperimentData.loadAllExperimentData();
+            //proteinExperimentData.computeRIAPerExperiment();
+            //proteinExperimentData.mergeMultipleRIAPerDay();
+            //proteinExperimentData.computeExpectedCurvePoints();
+            //proteinExperimentData.computeRSquare();
+            //ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
 
 
 
-            loadDataGridView();
-            loadPeptideChart("TSVNVVR", proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-            loadProteinchart(chartdata);
+            //loadDataGridView();
+            //loadPeptideChart("TSVNVVR", proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            //loadProteinchart(chartdata);
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
             //ReadExperiments experiInfoReader = new ReadExperiments();
@@ -269,6 +269,55 @@ namespace v2
 
                 //MessageBox.Show(temp);
             }
+        }
+
+        private void btn_Browsefolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.SelectedPath;
+
+                txt_source.Text = path;
+
+                string[] filePaths = Directory.GetFiles(path);
+                var csvfilePaths = filePaths.Where(x => x.Contains(".csv")).ToList();
+
+                if (csvfilePaths.Count == 0)
+                {
+                    MessageBox.Show("This directory doesn't contain the necessary files. Please select another diroctory.");
+                }
+                else
+                {
+                    var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
+                    comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
+                }
+            }
+        }
+
+        private void comboBox_proteinNameSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //MessageBox.Show(comboBox_proteinNameSelector.SelectedValue.ToString());
+            // plot chart inofrormation for the selected protien
+
+            string files_txt_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
+            string quant_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
+            string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv"; 
+
+            proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+            proteinExperimentData.loadAllExperimentData();
+            proteinExperimentData.computeRIAPerExperiment();
+            proteinExperimentData.mergeMultipleRIAPerDay();
+            proteinExperimentData.computeExpectedCurvePoints();
+            proteinExperimentData.computeRSquare();
+            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
+
+
+
+            loadDataGridView();
+            loadPeptideChart(proteinExperimentData.peptides.First().PeptideSeq, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            loadProteinchart(chartdata);
+
         }
     }
 }
