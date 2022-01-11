@@ -319,5 +319,6 @@ namespace v2
             loadProteinchart(chartdata);
 
         }
+
     }
 }
