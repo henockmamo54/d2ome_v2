@@ -99,7 +99,7 @@ namespace v2
             List<double> yval = new List<double>();
             foreach (int t in proteinExperimentData.Experiment_time)
             {
-                yval.Add(1 - Math.Pow(Math.E, -1 * 0.135301 * t));
+                yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst_CorrCutOff_mean * t)));
             }
 
             chart1.Series["Series2"].Points.DataBindXY(proteinExperimentData.Experiment_time, yval);
