@@ -64,6 +64,7 @@ namespace v2
             // chartline tension
             chart_peptide.Series["Series3"]["LineTension"] = "0.0";
             chart1.Series["Series2"]["LineTension"] = "0.0";
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -137,6 +138,15 @@ namespace v2
 
             //set number formationg for the columns
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
+
+            // resizeable columns
+            dataGridView_peptide.AllowUserToResizeColumns = true;
+            dataGridView_peptide.ColumnHeadersHeightSizeMode =
+         DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+
+            dataGridView_peptide.AllowUserToResizeRows = false;
+            dataGridView_peptide.RowHeadersWidthSizeMode =
+                DataGridViewRowHeadersWidthSizeMode.DisableResizing;
         }
 
 
