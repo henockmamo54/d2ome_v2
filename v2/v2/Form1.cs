@@ -56,7 +56,7 @@ namespace v2
             chart_peptide.Series["Series1"].LegendText = "Theoretical value";
 
             chart_peptide.Legends[0].Position.Auto = false;
-            chart_peptide.Legends[0].Position.X = 80;
+            chart_peptide.Legends[0].Position.X = 65;
             chart_peptide.Legends[0].Position.Y = 10;
             chart_peptide.Legends[0].Position.Width = 20;
             chart_peptide.Legends[0].Position.Height = 15;
@@ -346,6 +346,7 @@ namespace v2
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
             try
             {
+                label4_proteinRateConstantValue.Text = proteinExperimentData.MeanRateConst_CorrCutOff_mean.ToString();
                 loadDataGridView();
 
                 loadProteinchart(chartdata);
