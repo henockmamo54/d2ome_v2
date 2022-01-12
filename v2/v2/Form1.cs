@@ -92,12 +92,16 @@ namespace v2
             dataGridView_peptide.Columns["SeqMass"].HeaderText = "m/z";
             dataGridView_peptide.Columns["Total_Labeling"].HeaderText = "Total Labeling";
 
+            //set size for the columns
             foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
             {
                 column.MinimumWidth = 70;
             }
             dataGridView_peptide.Columns["Charge"].Width = 50;
             dataGridView_peptide.Columns["PeptideSeq"].MinimumWidth = 170;
+
+            //set number formationg for the columns
+            dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
         }
 
         public void loadMultiplePeptideChart(List<string> peptideSeqs, List<RIA> mergedRIAvalues)
@@ -334,9 +338,9 @@ namespace v2
                 loadPeptideChart(p.PeptideSeq, (int)p.Charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
                 loadProteinchart(chartdata);
             }
-            catch(Exception xe)
+            catch (Exception xe)
             {
-                Console.WriteLine("error ploting grpah => "+xe.Message);
+                Console.WriteLine("error ploting grpah => " + xe.Message);
             }
 
         }
