@@ -155,6 +155,38 @@ namespace v2
 
 
         }
+        public void mergeMultipleRIAPerDay2()
+        {
+            //var peptides = RIAvalues.Select(x => new { peptideSeq = x.peptideSeq, charge = x.charge }).Distinct().ToList(); 
+
+            foreach (Peptide p in this.peptides)
+            {
+                var temp_RIAvalues = RIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).ToList();
+
+                foreach (int t in this.Experiment_time)
+                {
+                    var temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.time == t).ToList();
+
+                    RIA ria = new RIA();
+                    ria.experimentNames = new List<string>();
+
+                    ria.peptideSeq = p.PeptideSeq;
+                    ria.charge = p.Charge;
+                    ria.time = t;
+
+                    var sum_io = temp_RIAvalues_pertime.Sum(x => x.I0);
+                    var sum_ioria = temp_RIAvalues_pertime.Sum(x => x.I0 * x.RIA_value);
+                    var new_ria = sum_ioria / sum_io;
+
+                    ria.RIA_value = new_ria;
+                    ria.experimentNames = temp_RIAvalues_pertime.Select(x => x.experimentName).ToList();
+                    mergedRIAvalues.Add(ria);
+
+                }
+            }
+
+
+        }
         public void computeExpectedCurvePoints()
         {
             double ph = 1.5574E-4;

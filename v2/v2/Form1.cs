@@ -35,7 +35,7 @@ namespace v2
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeRIAPerExperiment();
-            proteinExperimentData.mergeMultipleRIAPerDay();
+            proteinExperimentData.mergeMultipleRIAPerDay2();
             proteinExperimentData.computeExpectedCurvePoints();
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
