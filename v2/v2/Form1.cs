@@ -361,5 +361,20 @@ namespace v2
 
         }
 
+        private void dataGridView_peptide_SelectionChanged(object sender, EventArgs e)
+        {
+            //int rowIndex = dataGridView_peptide.SelectedRows[0].Index;
+            //if (rowIndex >= 0)
+            //{
+            //    DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
+            //    var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
+            //    var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[5].Value.ToString());
+
+            //    loadPeptideChart(temp, charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+
+            //    //MessageBox.Show(temp);
+            //}
+
+        }
     }
 }
