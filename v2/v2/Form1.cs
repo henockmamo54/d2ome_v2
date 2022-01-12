@@ -29,26 +29,63 @@ namespace v2
             InitializeComponent();
         }
 
+        public void loaduiprops()
+        {
+            chart1.ChartAreas[0].AxisX.Minimum = 0;
+            chart1.ChartAreas[0].AxisY.Minimum = 0;
+            chart1.ChartAreas[0].AxisY.Maximum = 1.5;
+
+
+            // remove grid lines
+            chart_peptide.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart_peptide.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+
+            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+
+            // chart labels added 
+            chart_peptide.ChartAreas[0].AxisX.Title = "Time (days)";
+            chart_peptide.ChartAreas[0].AxisY.Title = "Relative Isotope abundance of monoisotope";
+
+            // chart add legend
+            chart_peptide.Series["Series3"].LegendText = "Expected Value";
+            chart_peptide.Series["Series1"].LegendText = "Theoretical value";
+
+            chart_peptide.Legends[0].Position.Auto = false;
+            chart_peptide.Legends[0].Position.X = 80;
+            chart_peptide.Legends[0].Position.Y = 10;
+            chart_peptide.Legends[0].Position.Width = 20;
+            chart_peptide.Legends[0].Position.Height = 15;
+
+            // chartline tension
+            chart_peptide.Series["Series3"]["LineTension"] = "0.0";
+            chart1.Series["Series2"]["LineTension"] = "0.0";
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            loaduiprops();
+            //proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+            //proteinExperimentData.loadAllExperimentData();
+            //proteinExperimentData.computeRIAPerExperiment();
+            //proteinExperimentData.mergeMultipleRIAPerDay2();
+            //proteinExperimentData.computeExpectedCurvePoints();
+            //proteinExperimentData.computeRSquare();
+            //ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
-            proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
-            proteinExperimentData.loadAllExperimentData();
-            proteinExperimentData.computeRIAPerExperiment();
-            proteinExperimentData.mergeMultipleRIAPerDay2();
-            proteinExperimentData.computeExpectedCurvePoints();
-            proteinExperimentData.computeRSquare();
-            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
 
+            //loadDataGridView();
+            //loadPeptideChart("TSVNVVR", 2, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            //loadProteinchart(chartdata);
 
-            loadDataGridView();
-            loadPeptideChart("TSVNVVR", 2, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-            loadProteinchart(chartdata);
-
-            //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
-            //ReadExperiments experiInfoReader = new ReadExperiments();
-            //ReadRateConstants experiInfoReader = new ReadRateConstants();
+            ////ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
+            ////ReadExperiments experiInfoReader = new ReadExperiments();
+            ////ReadRateConstants experiInfoReader = new ReadRateConstants();
 
 
         }
@@ -65,9 +102,7 @@ namespace v2
             }
 
             chart1.Series["Series2"].Points.DataBindXY(proteinExperimentData.Experiment_time, yval);
-            chart1.ChartAreas[0].AxisX.Minimum = 0;
-            chart1.ChartAreas[0].AxisY.Minimum = 0;
-            chart1.ChartAreas[0].AxisY.Maximum = 1.5;
+
         }
         public void loadDataGridView()
         {
@@ -104,15 +139,6 @@ namespace v2
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
         }
 
-        public void loadMultiplePeptideChart(List<string> peptideSeqs, List<RIA> mergedRIAvalues)
-        {
-
-            foreach (string peptideSeq in peptideSeqs)
-            {
-
-            }
-
-        }
 
         public void loadPeptideChart(string peptideSeq, int charge, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
         {
@@ -136,29 +162,6 @@ namespace v2
             chart_peptide.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
 
             #endregion
-
-            // remove grid lines
-            chart_peptide.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chart_peptide.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-            chart_peptide.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-            chart_peptide.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
-
-            // chart labels added 
-            chart_peptide.ChartAreas[0].AxisX.Title = "Time (days)";
-            chart_peptide.ChartAreas[0].AxisY.Title = "Relative Isotope abundance of monoisotope";
-
-            // chart add legend
-            chart_peptide.Series["Series3"].LegendText = "Expected Value";
-            chart_peptide.Series["Series1"].LegendText = "Experimental value";
-
-            chart_peptide.Legends[0].Position.Auto = false;
-            chart_peptide.Legends[0].Position.X = 80;
-            chart_peptide.Legends[0].Position.Y = 10;
-            chart_peptide.Legends[0].Position.Width = 20;
-            chart_peptide.Legends[0].Position.Height = 15;
-
-            // chartline tension
-            chart_peptide.Series["Series3"]["LineTension"] = "0.0";
 
             // chart title
             chart_peptide.Titles.Add(peptideSeq);
@@ -334,9 +337,12 @@ namespace v2
             try
             {
                 loadDataGridView();
+
+                loadProteinchart(chartdata);
+                groupBox3_proteinchart.Text = proteinName;
+
                 var p = proteinExperimentData.peptides.First();
                 loadPeptideChart(p.PeptideSeq, (int)p.Charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-                loadProteinchart(chartdata);
             }
             catch (Exception xe)
             {

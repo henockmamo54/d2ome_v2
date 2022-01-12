@@ -46,20 +46,30 @@ namespace v2.Helper
                     //line #1 & #2 are protein name and desciption
 
                     //line #3 contains the name of the experiments
-                    experimentNames = getExperimentNames(lines[2].Trim());
 
-                    //extract the experimental data line by line
-                    //the experimental data starts from line 5 (index=4)
-                    for (int i = 4; i < lines.Length; i++)
+                    //first check the csv file is in the correct format
+                    // for now we assume "Peptide" should be on the fourth row
+                    if (lines.Length > 3 & lines[3].Trim().Contains("Peptide"))
                     {
-                        readRow(lines[i]);
+                        experimentNames = getExperimentNames(lines[2].Trim());
+
+                        //extract the experimental data line by line
+                        //the experimental data starts from line 5 (index=4)
+                        for (int i = 4; i < lines.Length; i++)
+                        {
+                            readRow(lines[i]);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error => .Quant.csv File is not in the right format");
                     }
 
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("error ==>" + e.Message);
-                    MessageBox.Show("error reading files.txt ==> " + e.Message);
+                    MessageBox.Show("Error => .Quant.csv File is not in the right format. " + e.Message);
                 }
             }
         }
@@ -99,7 +109,7 @@ namespace v2.Helper
 
                 Console.WriteLine("error ==>" + e.Message);
 
-                MessageBox.Show("error reading files.txt ==> " + e.Message);
+                MessageBox.Show("Error reading .Quant.csv ==> " + e.Message);
             }
 
         }
