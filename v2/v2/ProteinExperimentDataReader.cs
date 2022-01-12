@@ -237,12 +237,13 @@ namespace v2
                     var experimentalvalue = mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq & x.charge == r.Charge).ToList();
                     var temp_computedRIAValue = expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq).ToList();
 
-                    var meanval_ria = experimentalvalue.Average(x => x.RIA_value);
+                    var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >=0).ToList();
+                    var meanval_ria = temp_experimentalvalue.Average(x => x.RIA_value);
 
                     double ss = 0;
                     double rss = 0;
 
-                    foreach (var p in experimentalvalue)
+                    foreach (var p in temp_experimentalvalue)
                     {
                         if (p.RIA_value != null)
                         {
@@ -252,15 +253,8 @@ namespace v2
                         }
                     }
 
-                    double RSquare = 1 - (rss / ss);
-                    r.RSquare = RSquare;
-
-                    //var temp = peptides.Where(x => x.PeptideSeq.Trim() == r.PeptideSeq.Trim() & x.Charge = r.Charge).ToList();
-                    //if (temp.Count > 1)
-                    //{
-                    //    Console.WriteLine("tre");
-                    //}
-                    //foreach (var t in temp) t.RSquare = RSquare;
+                    double RSquare = 1 - (rss / ss);                    
+                    r.RSquare = RSquare; 
                 }
                 catch (Exception e)
                 {
@@ -327,7 +321,7 @@ namespace v2
             double io = 0;
             double neh = 0;
             double k = 0;
-            var temp_pep = this.peptides.Where(x => x.RSquare > 0.8);
+            var temp_pep = this.peptides.Where(x => x.RSquare > 0.6);
             foreach (RIA r in mergedRIAvalues)
             {
 

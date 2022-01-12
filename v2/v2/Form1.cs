@@ -327,11 +327,17 @@ namespace v2
             proteinExperimentData.computeExpectedCurvePoints();
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
-
-            loadDataGridView();
-            var p = proteinExperimentData.peptides.First();
-            loadPeptideChart(p.PeptideSeq, (int)p.Charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-            loadProteinchart(chartdata);
+            try
+            {
+                loadDataGridView();
+                var p = proteinExperimentData.peptides.First();
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                loadProteinchart(chartdata);
+            }
+            catch(Exception xe)
+            {
+                Console.WriteLine("error ploting grpah => "+xe.Message);
+            }
 
         }
 
