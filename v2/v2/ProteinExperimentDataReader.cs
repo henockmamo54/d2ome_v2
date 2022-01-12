@@ -89,7 +89,8 @@ namespace v2
 
             foreach (ExperimentRecord er in experimentRecords)
             {
-                double sum_val = (double)(er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5);
+                var tempsum = er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5;
+                double sum_val = tempsum != null ? (double)(er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5) : 0;
                 if (sum_val != 0)
                 {
                     RIA ria = new RIA();
@@ -234,6 +235,7 @@ namespace v2
                 try
                 {
                     var experimentalvalue = mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq & x.charge == r.Charge).ToList();
+                    var temp_computedRIAValue = expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq).ToList();
 
                     var meanval_ria = experimentalvalue.Average(x => x.RIA_value);
 
@@ -244,7 +246,7 @@ namespace v2
                     {
                         if (p.RIA_value != null)
                         {
-                            var computedRIAValue = expectedI0Values.Where(x => x.peptideseq == p.peptideSeq & x.time == p.time).First().value;
+                            var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.time).First().value;
                             ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
                             rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
                         }

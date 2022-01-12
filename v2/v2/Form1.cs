@@ -43,7 +43,7 @@ namespace v2
 
 
             loadDataGridView();
-            loadPeptideChart("TSVNVVR",2, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            loadPeptideChart("TSVNVVR", 2, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
             loadProteinchart(chartdata);
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
@@ -277,9 +277,9 @@ namespace v2
             {
                 DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
                 var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
-                var charge = int.Parse( dataGridView_peptide.Rows[rowIndex].Cells[5].Value.ToString());
+                var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[5].Value.ToString());
 
-                loadPeptideChart(temp, charge,proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                loadPeptideChart(temp, charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
                 //MessageBox.Show(temp);
             }
@@ -295,7 +295,7 @@ namespace v2
                 txt_source.Text = path;
 
                 string[] filePaths = Directory.GetFiles(path);
-                var csvfilePaths = filePaths.Where(x => x.Contains(".csv")).ToList();
+                var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
 
                 if (csvfilePaths.Count == 0)
                 {
@@ -313,24 +313,25 @@ namespace v2
         {
             //MessageBox.Show(comboBox_proteinNameSelector.SelectedValue.ToString());
             // plot chart inofrormation for the selected protien
-
-            string files_txt_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
-            string quant_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
-            string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
+            string proteinName = comboBox_proteinNameSelector.SelectedValue.ToString();
+            string files_txt_path = txt_source.Text + @"\files.txt";
+            string quant_csv_path = txt_source.Text + @"\" + proteinName + ".Quant.csv";
+            string RateConst_csv_path = txt_source.Text + @"\" + proteinName + ".RateConst.csv";
 
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+
+
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeRIAPerExperiment();
-            proteinExperimentData.mergeMultipleRIAPerDay();
+            proteinExperimentData.mergeMultipleRIAPerDay2();
             proteinExperimentData.computeExpectedCurvePoints();
             proteinExperimentData.computeRSquare();
-            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
+            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
-
-
-            //loadDataGridView();
-            //loadPeptideChart(proteinExperimentData.peptides.First().PeptideSeq, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-            //loadProteinchart(chartdata);
+            loadDataGridView();
+            var p = proteinExperimentData.peptides.First();
+            loadPeptideChart(p.PeptideSeq, (int)p.Charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            loadProteinchart(chartdata);
 
         }
 
