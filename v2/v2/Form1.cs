@@ -38,13 +38,13 @@ namespace v2
             proteinExperimentData.mergeMultipleRIAPerDay();
             proteinExperimentData.computeExpectedCurvePoints();
             proteinExperimentData.computeRSquare();
-            //ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
+            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
 
 
             loadDataGridView();
             loadPeptideChart("TSVNVVR",2, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-            //loadProteinchart(chartdata);
+            loadProteinchart(chartdata);
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
             //ReadExperiments experiInfoReader = new ReadExperiments();

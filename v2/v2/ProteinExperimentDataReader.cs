@@ -228,8 +228,9 @@ namespace v2
                     //}
                     //foreach (var t in temp) t.RSquare = RSquare;
                 }
-                catch (Exception e) {
-                    Console.WriteLine("error==>"+e.Message);
+                catch (Exception e)
+                {
+                    Console.WriteLine("error==>" + e.Message);
                 }
             }
 
@@ -256,7 +257,7 @@ namespace v2
                         neh = (double)(peptides[i].Exchangeable_Hydrogens);
                         k = (double)(peptides[i].Rateconst);
 
-                        var ria_val2 = mergedRIAvalues.Where(x => x.peptideSeq.Trim() == peptides[i].PeptideSeq.Trim() & x.time == t).ToList();
+                        var ria_val2 = mergedRIAvalues.Where(x => x.peptideSeq.Trim() == peptides[i].PeptideSeq.Trim() & x.time == t & x.charge == peptides[i].Charge).ToList();
                         if (ria_val2.Count > 0)
                         {
                             var ria_val = ria_val2.First().RIA_value;
@@ -277,6 +278,43 @@ namespace v2
 
                 }
             }
+            //ProtienchartDataValues pd = new ProtienchartDataValues(xval, yval);
+            return new ProtienchartDataValues(xval, yval);
+
+        }
+
+        public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot2()
+        {
+            List<double> xval = new List<double>();
+            List<double> yval = new List<double>();
+
+            double ph = 1.5574E-4;
+            double pw = filecontents[filecontents.Count - 1].BWE;
+            double io = 0;
+            double neh = 0;
+            double k = 0;
+            var temp_pep = this.peptides.Where(x => x.RSquare > 0.8);
+            foreach (RIA r in mergedRIAvalues)
+            {
+
+                Peptide p = temp_pep.Where(x => x.PeptideSeq == r.peptideSeq & x.Charge == r.charge).FirstOrDefault();
+                if (p != null)
+                {
+                    io = (double)(p.M0 / 100);
+                    neh = (double)(p.Exchangeable_Hydrogens);
+                    k = (double)(p.Rateconst);
+
+
+
+                    var dn = io * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+                    var nu = io - r.RIA_value;
+                    var fv = nu / dn;
+
+                    xval.Add(r.time);
+                    yval.Add((double)fv);
+                }
+            }
+
             //ProtienchartDataValues pd = new ProtienchartDataValues(xval, yval);
             return new ProtienchartDataValues(xval, yval);
 
