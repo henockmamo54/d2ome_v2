@@ -321,7 +321,7 @@ namespace v2
             double io = 0;
             double neh = 0;
             double k = 0;
-            var temp_pep = this.peptides.Where(x => x.RSquare > 0.6);
+            var temp_pep = this.peptides.Where(x => x.RSquare > 0.8);
             foreach (RIA r in mergedRIAvalues)
             {
 
