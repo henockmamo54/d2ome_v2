@@ -11,6 +11,7 @@ namespace v2.Model
         public string experimentName { get; set; }
         public List<string> experimentNames { get; set; }
         public string peptideSeq { get; set; }
+        public double? charge { get; set; }
         public int time { get; set; }
         public double? I0 { get; set; }
         public double? RIA_value { get; set; }

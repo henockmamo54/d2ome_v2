@@ -10,6 +10,7 @@ namespace v2.Model
     {
         public string experimentName { get; set; }
         public string PeptideSeq { get; set; }
+        public double? charge { get; set; }
         public double SpecMass { get; set; }
         public double? IonScore { get; set; }
         public double? Expectn { get; set; }

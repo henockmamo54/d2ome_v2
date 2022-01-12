@@ -86,6 +86,7 @@ namespace v2.Helper
                     current_index = start_index + (i * 16);
                     ExperimentRecord experimentRecord = getExperimentsValuePerPeptide(columns, current_index);
                     experimentRecord.PeptideSeq = p.PeptideSeq;
+                    experimentRecord.charge = p.Charge;
                     experimentRecord.experimentName = experimentNames[i];
                     experimentRecords.Add(experimentRecord);
                 }

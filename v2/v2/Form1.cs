@@ -38,13 +38,13 @@ namespace v2
             proteinExperimentData.mergeMultipleRIAPerDay();
             proteinExperimentData.computeExpectedCurvePoints();
             proteinExperimentData.computeRSquare();
-            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
+            //ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot();
 
 
 
             loadDataGridView();
-            loadPeptideChart("TSVNVVR", proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-            loadProteinchart(chartdata);
+            loadPeptideChart("TSVNVVR",2, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            //loadProteinchart(chartdata);
 
             //ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt();
             //ReadExperiments experiInfoReader = new ReadExperiments();
@@ -110,7 +110,7 @@ namespace v2
 
         }
 
-        public void loadPeptideChart(string peptideSeq, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
+        public void loadPeptideChart(string peptideSeq, int charge, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
         {
             //clear chart area
             chart_peptide.Titles.Clear();
@@ -118,7 +118,7 @@ namespace v2
             #region experimental data plot
 
             // prepare the chart data
-            var chart_data = mergedRIAvalues.Where(x => x.peptideSeq == peptideSeq).OrderBy(x => x.time).ToArray();
+            var chart_data = mergedRIAvalues.Where(x => x.peptideSeq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
             chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
             chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
@@ -277,8 +277,9 @@ namespace v2
             {
                 DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
                 var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
+                var charge = int.Parse( dataGridView_peptide.Rows[rowIndex].Cells[5].Value.ToString());
 
-                loadPeptideChart(temp, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                loadPeptideChart(temp, charge,proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
                 //MessageBox.Show(temp);
             }
@@ -327,9 +328,9 @@ namespace v2
 
 
 
-            loadDataGridView();
-            loadPeptideChart(proteinExperimentData.peptides.First().PeptideSeq, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
-            loadProteinchart(chartdata);
+            //loadDataGridView();
+            //loadPeptideChart(proteinExperimentData.peptides.First().PeptideSeq, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            //loadProteinchart(chartdata);
 
         }
 
