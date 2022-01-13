@@ -52,14 +52,23 @@ namespace v2
             chart_peptide.ChartAreas[0].AxisY.Title = "Relative Isotope abundance of monoisotope";
 
             // chart add legend
-            chart_peptide.Series["Series3"].LegendText = "Expected Value";
-            chart_peptide.Series["Series1"].LegendText = "Theoretical value";
+            chart_peptide.Series["Series3"].LegendText = "Theoretical value";
+            chart_peptide.Series["Series1"].LegendText = "Experimental Value";
 
-            chart_peptide.Legends[0].Position.Auto = false;
+            chart1.Series["Series2"].LegendText = "Theoretical value";
+            chart1.Series["Series1"].LegendText = "Experimental Value";
+
+            //chart_peptide.Legends[0].Position.Auto = false;
             chart_peptide.Legends[0].Position.X = 65;
             chart_peptide.Legends[0].Position.Y = 10;
             chart_peptide.Legends[0].Position.Width = 20;
             chart_peptide.Legends[0].Position.Height = 15;
+
+            //chart1.Legends[0].Position.Auto = false;
+            chart1.Legends[0].Position.X = 65;
+            chart1.Legends[0].Position.Y = 0;
+            chart1.Legends[0].Position.Width = 20;
+            chart1.Legends[0].Position.Height = 15;
 
             // chartline tension
             chart_peptide.Series["Series3"]["LineTension"] = "0.0";
@@ -92,39 +101,22 @@ namespace v2
         }
         public void loadProteinchart(ProtienchartDataValues chartdata)
         {
-
             chart1.Series["Series1"].Points.DataBindXY(chartdata.x, chartdata.y);
-            chart1.ChartAreas[0].AxisX.Minimum = 0;
-            chart1.ChartAreas[0].AxisX.Maximum = proteinExperimentData.Experiment_time.Max();
-
-            ////List<double> yval = new List<double>();
-            ////foreach (int t in proteinExperimentData.Experiment_time)
-            ////{
-            ////    yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst_CorrCutOff_mean * t)));
-            ////}
-
-            ////chart1.Series["Series2"].Points.DataBindXY(proteinExperimentData.Experiment_time, yval);
-
-            //test
-            chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
+            //chart1.ChartAreas[0].AxisX.Maximum = proteinExperimentData.Experiment_time.Max();
 
             var temp_xval = new List<double>();
-            var temp_maxval = proteinExperimentData.Experiment_time.Max()+5;
+            var temp_maxval = proteinExperimentData.Experiment_time.Max();
             var step = 0.1;
-
-            for (int i = 0; i* step < temp_maxval; i++)
-            {
-                temp_xval.Add(step * i);
-            }
-
             List<double> yval = new List<double>();
-            foreach (double t in temp_xval)
+
+            for (int i = 0; i * step < temp_maxval; i++)
             {
-                yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst_CorrCutOff_mean * t)));
+                var temp_x = step * i;
+                temp_xval.Add(temp_x);
+                yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst_CorrCutOff_mean * temp_x)));
             }
 
             chart1.Series["Series2"].Points.DataBindXY(temp_xval, yval);
-            chart1.Series["Series2"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 
         }
         public void loadDataGridView()
