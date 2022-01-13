@@ -162,11 +162,22 @@ namespace v2
 
             foreach (Peptide p in this.peptides)
             {
-                var temp_RIAvalues = RIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).ToList();
+                //var temp_RIAvalues = RIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).ToList();
+                //var temp_RIAvalues = RIAvalues.Where(x => x.RIA_value != null);
+                //temp_RIAvalues = temp_RIAvalues.Where(x => x.peptideSeq == p.PeptideSeq);
+                //temp_RIAvalues = temp_RIAvalues.Where(x => x.charge == p.Charge);
+
+                List<RIA> temp_RIAvalues = new List<RIA>();
+                foreach (RIA r in RIAvalues)
+                {
+                    if (r.RIA_value != null & r.peptideSeq == p.PeptideSeq & r.charge == p.Charge) temp_RIAvalues.Add(r);
+                }
+
 
                 foreach (int t in this.Experiment_time)
                 {
-                    var temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.time == t).ToList();
+                    //var temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.time == t).ToList();
+                    List<RIA> temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.time == t).ToList();
 
                     RIA ria = new RIA();
                     ria.experimentNames = new List<string>();
@@ -175,8 +186,11 @@ namespace v2
                     ria.charge = p.Charge;
                     ria.time = t;
 
-                    var sum_io = temp_RIAvalues_pertime.Sum(x => x.I0);
-                    var sum_ioria = temp_RIAvalues_pertime.Sum(x => x.I0 * x.RIA_value);
+                    //var sum_io = temp_RIAvalues_pertime.Sum(x => x.I0);
+                    //var sum_ioria = temp_RIAvalues_pertime.Sum(x => x.I0 * x.RIA_value);
+                    double sum_io = 0; for (int i = 0; i < temp_RIAvalues_pertime.Count(); i++) sum_io = (double)(sum_io + temp_RIAvalues_pertime[i].I0);
+                    double sum_ioria = 0; for (int i = 0; i < temp_RIAvalues_pertime.Count(); i++) sum_ioria = (double)(
+                            sum_ioria + (temp_RIAvalues_pertime[i].I0 * temp_RIAvalues_pertime[i].RIA_value));
                     var new_ria = sum_ioria / sum_io;
 
                     ria.RIA_value = new_ria;
@@ -234,10 +248,12 @@ namespace v2
             {
                 try
                 {
-                    var experimentalvalue = mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq & x.charge == r.Charge).ToList();
+                    var experimentalvalue = mergedRIAvalues.Where(x => x.charge == r.Charge).ToList();
+                    experimentalvalue = mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
+
                     var temp_computedRIAValue = expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq).ToList();
 
-                    var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >=0).ToList();
+                    var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
                     var meanval_ria = temp_experimentalvalue.Average(x => x.RIA_value);
 
                     double ss = 0;
@@ -253,8 +269,8 @@ namespace v2
                         }
                     }
 
-                    double RSquare = 1 - (rss / ss);                    
-                    r.RSquare = RSquare; 
+                    double RSquare = 1 - (rss / ss);
+                    r.RSquare = RSquare;
                 }
                 catch (Exception e)
                 {
