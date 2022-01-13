@@ -183,7 +183,41 @@ namespace v2
             #region expected data plot 
 
             var expected_chart_data = expectedI0Values.Where(x => x.peptideseq == peptideSeq).OrderBy(x => x.time).ToArray();
-            chart_peptide.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
+            List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+            List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
+            var pep = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq).FirstOrDefault();
+
+            if (pep != null)
+            {
+                // add additional data points to make the graph smooth
+                double io = (double)(pep.M0 / 100);
+                double neh = (double)(pep.Exchangeable_Hydrogens);
+                double k = (double)(pep.Rateconst);
+                double ph = 1.5574E-4;
+                double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
+
+                var temp_maxval = proteinExperimentData.Experiment_time.Max();
+                var step = 0.1;
+                for (int i = 0; i * step < temp_maxval; i++)
+                {
+                    double temp_X = step * i;
+                    x_val.Add(temp_X);
+
+                    var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                    var val2 = io * Math.Pow(Math.E, -1 * k * temp_X) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+
+                    var val = val1 + val2;
+                    y_val.Add(val);
+                }
+                chart_peptide.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x=>x).ToList(), y_val.OrderByDescending(x => x).ToList());
+            }
+            else
+            {
+                chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
+            }
+
+
+
 
             #endregion
 
