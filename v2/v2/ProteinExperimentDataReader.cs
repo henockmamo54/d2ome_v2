@@ -202,6 +202,103 @@ namespace v2
 
 
         }
+
+        //private static IList<int> GetPrimeListWithParallel(IList<int> numbers)
+        //{
+        //    var primeNumbers = new ConcurrentBag<int>();
+
+        //    Parallel.ForEach(numbers, number =>
+        //    {
+        //        if (IsPrime(number))
+        //        {
+        //            primeNumbers.Add(number);
+        //        }
+        //    });
+
+        //    return primeNumbers.ToList();
+        //}
+        public void mergeMultipleRIAPerDayWithParallel()
+        {
+            Parallel.ForEach(this.peptides, p =>
+            {
+                //var temp_RIAvalues = RIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).ToList();
+                //var temp_RIAvalues = RIAvalues.Where(x => x.RIA_value != null);
+                //temp_RIAvalues = temp_RIAvalues.Where(x => x.peptideSeq == p.PeptideSeq);
+                //temp_RIAvalues = temp_RIAvalues.Where(x => x.charge == p.Charge);
+
+                List<RIA> temp_RIAvalues = new List<RIA>();
+                foreach (RIA r in RIAvalues)
+                {
+                    if (r.RIA_value != null & r.peptideSeq == p.PeptideSeq & r.charge == p.Charge) temp_RIAvalues.Add(r);
+                }
+
+
+                foreach (int t in this.Experiment_time)
+                {
+                    //var temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.time == t).ToList();
+                    List<RIA> temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.time == t).ToList();
+
+                    RIA ria = new RIA();
+                    ria.experimentNames = new List<string>();
+
+                    ria.peptideSeq = p.PeptideSeq;
+                    ria.charge = p.Charge;
+                    ria.time = t;
+
+                    //var sum_io = temp_RIAvalues_pertime.Sum(x => x.I0);
+                    //var sum_ioria = temp_RIAvalues_pertime.Sum(x => x.I0 * x.RIA_value);
+                    double sum_io = 0; for (int i = 0; i < temp_RIAvalues_pertime.Count(); i++) sum_io = (double)(sum_io + temp_RIAvalues_pertime[i].I0);
+                    double sum_ioria = 0; for (int i = 0; i < temp_RIAvalues_pertime.Count(); i++) sum_ioria = (double)(
+                            sum_ioria + (temp_RIAvalues_pertime[i].I0 * temp_RIAvalues_pertime[i].RIA_value));
+                    var new_ria = sum_ioria / sum_io;
+
+                    ria.RIA_value = new_ria;
+                    ria.experimentNames = temp_RIAvalues_pertime.Select(x => x.experimentName).ToList();
+                    mergedRIAvalues.Add(ria);
+
+                }
+            });
+        }
+
+        public void computeRSquareWithParallel()
+        {
+            Parallel.ForEach(this.peptides, r =>
+            {
+                try
+                {
+                    var experimentalvalue = this.mergedRIAvalues.Where(x => x.charge == r.Charge).ToList();
+                    experimentalvalue = this.mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
+
+                    var temp_computedRIAValue = this.expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq).ToList();
+
+                    var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
+                    var meanval_ria = temp_experimentalvalue.Average(x => x.RIA_value);
+
+                    double ss = 0;
+                    double rss = 0;
+
+                    foreach (var p in temp_experimentalvalue)
+                    {
+                        if (p.RIA_value != null)
+                        {
+                            var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.time).First().value;
+                            ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
+                            rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
+                        }
+                    }
+
+                    double RSquare = 1 - (rss / ss);
+                    r.RSquare = RSquare;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error => Rsquare," + e.Message);
+                }
+
+            });
+        }
+
+
         public void computeExpectedCurvePoints()
         {
             double ph = 1.5574E-4;

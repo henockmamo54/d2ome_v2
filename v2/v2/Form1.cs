@@ -417,9 +417,9 @@ namespace v2
 
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeRIAPerExperiment();
-            proteinExperimentData.mergeMultipleRIAPerDay2();
+            proteinExperimentData.mergeMultipleRIAPerDayWithParallel();
             proteinExperimentData.computeExpectedCurvePoints();
-            proteinExperimentData.computeRSquare();
+            proteinExperimentData.computeRSquareWithParallel();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
             try
             {
