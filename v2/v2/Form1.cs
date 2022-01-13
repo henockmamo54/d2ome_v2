@@ -94,15 +94,37 @@ namespace v2
         {
 
             chart1.Series["Series1"].Points.DataBindXY(chartdata.x, chartdata.y);
+            chart1.ChartAreas[0].AxisX.Minimum = 0;
+            chart1.ChartAreas[0].AxisX.Maximum = proteinExperimentData.Experiment_time.Max();
+
+            ////List<double> yval = new List<double>();
+            ////foreach (int t in proteinExperimentData.Experiment_time)
+            ////{
+            ////    yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst_CorrCutOff_mean * t)));
+            ////}
+
+            ////chart1.Series["Series2"].Points.DataBindXY(proteinExperimentData.Experiment_time, yval);
+
+            //test
             chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
 
+            var temp_xval = new List<double>();
+            var temp_maxval = proteinExperimentData.Experiment_time.Max()+5;
+            var step = 0.1;
+
+            for (int i = 0; i* step < temp_maxval; i++)
+            {
+                temp_xval.Add(step * i);
+            }
+
             List<double> yval = new List<double>();
-            foreach (int t in proteinExperimentData.Experiment_time)
+            foreach (double t in temp_xval)
             {
                 yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst_CorrCutOff_mean * t)));
             }
 
-            chart1.Series["Series2"].Points.DataBindXY(proteinExperimentData.Experiment_time, yval);
+            chart1.Series["Series2"].Points.DataBindXY(temp_xval, yval);
+            chart1.Series["Series2"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 
         }
         public void loadDataGridView()
