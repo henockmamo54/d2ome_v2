@@ -47,9 +47,19 @@ namespace v2
             chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
             chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
+
+
             // chart labels added 
+            chart1.ChartAreas[0].AxisX.Title = "Time (days)";
             chart_peptide.ChartAreas[0].AxisX.Title = "Time (days)";
-            chart_peptide.ChartAreas[0].AxisY.Title = "Relative Isotope abundance of monoisotope";
+            chart_peptide.ChartAreas[0].AxisY.Title = "Relative Isotope abundance \n of monoisotope";
+            chart_peptide.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
+
+            chart1.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
+            chart_peptide.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
+            chart_peptide.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
+
+
 
             // chart add legend
             chart_peptide.Series["Series3"].LegendText = "Theoretical value";
@@ -58,17 +68,22 @@ namespace v2
             chart1.Series["Series2"].LegendText = "Theoretical value";
             chart1.Series["Series1"].LegendText = "Experimental Value";
 
-            //chart_peptide.Legends[0].Position.Auto = false;
+            // chart legend size
+            chart_peptide.Legends[0].Position.Auto = false;
             chart_peptide.Legends[0].Position.X = 65;
             chart_peptide.Legends[0].Position.Y = 10;
-            chart_peptide.Legends[0].Position.Width = 20;
+            chart_peptide.Legends[0].Position.Width = 30;
             chart_peptide.Legends[0].Position.Height = 15;
 
-            //chart1.Legends[0].Position.Auto = false;
+            chart1.Legends[0].Position.Auto = false;
             chart1.Legends[0].Position.X = 65;
             chart1.Legends[0].Position.Y = 0;
-            chart1.Legends[0].Position.Width = 20;
+            chart1.Legends[0].Position.Width = 30;
             chart1.Legends[0].Position.Height = 15;
+
+            // cahrt font
+            chart_peptide.Legends[0].Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 9);
+            chart1.Legends[0].Font = new Font(chart1.Legends[0].Font.FontFamily, 9);
 
             // chartline tension
             chart_peptide.Series["Series3"]["LineTension"] = "0.0";
@@ -209,7 +224,7 @@ namespace v2
                     var val = val1 + val2;
                     y_val.Add(val);
                 }
-                chart_peptide.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x=>x).ToList(), y_val.OrderByDescending(x => x).ToList());
+                chart_peptide.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x => x).ToList(), y_val.OrderByDescending(x => x).ToList());
             }
             else
             {
