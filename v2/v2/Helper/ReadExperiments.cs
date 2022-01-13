@@ -60,6 +60,20 @@ namespace v2.Helper
                             readRow(lines[i]);
                         }
                     }
+                    else if (lines.Length > 2 & lines[1].Trim().Contains("Peptide"))
+                    {
+                        // the other varation of quant file drops the first two lines (line #1 & #2), which are protein name and desciption.
+                        // to handel this, we strat read from first line as name of experiment
+                        experimentNames = getExperimentNames(lines[0].Trim());
+
+                        //extract the experimental data line by line
+                        //the experimental data starts from line 5 (index=4)
+                        for (int i = 2; i < lines.Length; i++)
+                        {
+                            readRow(lines[i]);
+                        }
+
+                    }
                     else
                     {
                         MessageBox.Show("Error => .Quant.csv File is not in the right format");

@@ -136,26 +136,22 @@ namespace v2
         }
         public void loadDataGridView()
         {
+
+            // update the datasource for the data gridview
             var selected = (from u in proteinExperimentData.peptides
                             where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
                             select u).Distinct().ToList();
-
-
             dataGridView_peptide.DataSource = selected;
+
+            //hide some columns from the datasource
             dataGridView_peptide.RowHeadersVisible = false; // hide row selector
             dataGridView_peptide.Columns["UniqueToProtein"].Visible = false;
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Visible = false;
-            //dataGridView1.Columns["M0"].Visible = false;
-            //dataGridView1.Columns["M1"].Visible = false;
-            //dataGridView1.Columns["M2"].Visible = false;
-            //dataGridView1.Columns["M3"].Visible = false;
-            //dataGridView1.Columns["M4"].Visible = false;
-            //dataGridView1.Columns["M5"].Visible = false;
+            dataGridView_peptide.Columns["Total_Labeling"].Visible = false;
 
-
+            //rename column name
             dataGridView_peptide.Columns["PeptideSeq"].HeaderText = "Peptide";
             dataGridView_peptide.Columns["SeqMass"].HeaderText = "m/z";
-            dataGridView_peptide.Columns["Total_Labeling"].HeaderText = "Total Labeling";
 
             //set size for the columns
             foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
@@ -340,12 +336,6 @@ namespace v2
 
 
                     #endregion
-
-                    // remove grid lines
-                    chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                    chart2.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-                    chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-                    chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
 
                     // chart title
