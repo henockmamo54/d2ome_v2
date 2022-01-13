@@ -306,7 +306,38 @@ namespace v2
                     #region expected data plot 
 
                     var expected_chart_data = this.proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
-                    chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
+                    //
+                    List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+                    List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
+
+                    if (p.Rateconst != null)
+                    {
+                        double io = (double)(p.M0 / 100);
+                        double neh = (double)(p.Exchangeable_Hydrogens);
+                        double k = (double)(p.Rateconst);
+                        double ph = 1.5574E-4;
+                        double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
+
+
+                        var temp_maxval = proteinExperimentData.Experiment_time.Max();
+                        var step = 0.1;
+                        for (int i = 0; i * step < temp_maxval; i++)
+                        {
+                            double temp_X = step * i;
+                            x_val.Add(temp_X);
+
+                            var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                            var val2 = io * Math.Pow(Math.E, -1 * k * temp_X) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+
+                            var val = val1 + val2;
+                            y_val.Add(val);
+                        }
+                        chart2.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x => x).ToList(), y_val.OrderByDescending(x => x).ToList());
+
+                    }
+                    else { chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray()); }
+
+
 
                     #endregion
 
@@ -316,13 +347,6 @@ namespace v2
                     chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
                     chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
-                    // chart labels added 
-                    chart2.ChartAreas[0].AxisX.Title = "Time (days)";
-                    chart2.ChartAreas[0].AxisY.Title = "RIA";
-
-                    // chart add legend
-                    chart2.Series["Series3"].LegendText = "Expected Value";
-                    chart2.Series["Series1"].LegendText = "Experimental value";
 
                     // chart title
                     chart2.Titles.Add(p.PeptideSeq);
