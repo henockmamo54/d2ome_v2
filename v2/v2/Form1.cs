@@ -89,6 +89,8 @@ namespace v2
             chart_peptide.Series["Series3"]["LineTension"] = "0.0";
             chart1.Series["Series2"]["LineTension"] = "0.0";
 
+
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -186,7 +188,7 @@ namespace v2
         }
 
 
-        public void loadPeptideChart(string peptideSeq, int charge, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
+        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
         {
             try
             {
@@ -246,7 +248,13 @@ namespace v2
                 #endregion
 
                 // chart title
-                chart_peptide.Titles.Add(peptideSeq);
+                //chart_peptide.Titles.Add(peptideSeq);    
+
+                Title title = new Title();
+                title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
+                title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ")";
+                chart_peptide.Titles.Add(title);
+
             }
             catch (Exception e)
             {
@@ -362,7 +370,11 @@ namespace v2
 
 
                     // chart title
-                    chart2.Titles.Add(p.PeptideSeq);
+                    //chart2.Titles.Add(p.PeptideSeq + "(K=" + p.Rateconst.ToString() + ", " + ")");
+                    Title title = new Title();
+                    title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
+                    title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
+                    chart2.Titles.Add(title);
 
                     try
                     {
@@ -398,8 +410,10 @@ namespace v2
                 DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
                 var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
                 var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[4].Value.ToString());
+                var rateconst = double.Parse(dataGridView_peptide.Rows[rowIndex].Cells[2].Value.ToString());
+                var rsquare = double.Parse(dataGridView_peptide.Rows[rowIndex].Cells[3].Value.ToString());
 
-                loadPeptideChart(temp, charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                loadPeptideChart(temp, charge, rateconst, rsquare, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
                 //MessageBox.Show(temp);
             }
@@ -456,7 +470,7 @@ namespace v2
                 groupBox3_proteinchart.Text = proteinName;
 
                 var p = proteinExperimentData.peptides.First();
-                loadPeptideChart(p.PeptideSeq, (int)p.Charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
             }
             catch (Exception xe)
             {
