@@ -71,14 +71,14 @@ namespace v2.Helper
                 catch (Exception e)
                 {
                     Console.WriteLine("error ==>" + e.Message);
-                    MessageBox.Show("error reading files.txt ==> " + e.Message);
+                    MessageBox.Show("Error reading files.txt ==> " + e.Message);
                 }
 
             }
             else
             {
                 Console.WriteLine("***> file not found");
-                MessageBox.Show("error reading files.txt ==> file not found");
+                MessageBox.Show("Error reading files.txt ==> File Not found!!");
             }
 
         }

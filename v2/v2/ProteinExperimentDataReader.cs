@@ -212,38 +212,43 @@ namespace v2
         }
         public void computeExpectedCurvePoints()
         {
-            double ph = 1.5574E-4;
-            double pw = filecontents[filecontents.Count - 1].BWE;
-            double io = 0;
-            double neh = 0;
-            double k = 0;
-
-            for (int i = 0; i < peptides.Count(); i++)
+            try
             {
-                foreach (int t in this.Experiment_time)
+                double ph = 1.5574E-4;
+                double pw = filecontents[filecontents.Count - 1].BWE;
+                double io = 0;
+                double neh = 0;
+                double k = 0;
+
+                for (int i = 0; i < peptides.Count(); i++)
                 {
-                    try
+                    foreach (int t in this.Experiment_time)
                     {
-                        io = (double)(peptides[i].M0 / 100);
-                        neh = (double)(peptides[i].Exchangeable_Hydrogens);
-                        k = (double)(peptides[i].Rateconst);
+                        try
+                        {
+                            io = (double)(peptides[i].M0 / 100);
+                            neh = (double)(peptides[i].Exchangeable_Hydrogens);
+                            k = (double)(peptides[i].Rateconst);
 
-                        var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
-                        var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+                            var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                            var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
 
 
-                        var val = val1 + val2;
+                            var val = val1 + val2;
 
-                        ExpectedI0Value expectedI0Value = new ExpectedI0Value(peptides[i].PeptideSeq, t, val);
-                        expectedI0Values.Add(expectedI0Value);
+                            ExpectedI0Value expectedI0Value = new ExpectedI0Value(peptides[i].PeptideSeq, t, val);
+                            expectedI0Values.Add(expectedI0Value);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error => computeExpectedCurvePoints(), " + ex.Message);
+                            continue;
+                        }
+
                     }
-                    catch (Exception ex)
-                    {
-                        continue;
-                    }
-
                 }
             }
+            catch (Exception e) { Console.WriteLine("Error => computeExpectedCurvePoints(), " + e.Message); }
 
 
         }
@@ -282,7 +287,7 @@ namespace v2
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("error==>" + e.Message);
+                    Console.WriteLine("Error => computeRSquare(), " + e.Message);
                 }
             }
 
@@ -340,31 +345,38 @@ namespace v2
             List<double> xval = new List<double>();
             List<double> yval = new List<double>();
 
-            double ph = 1.5574E-4;
-            double pw = filecontents[filecontents.Count - 1].BWE;
-            double io = 0;
-            double neh = 0;
-            double k = 0;
-            var temp_pep = this.peptides.Where(x => x.RSquare > 0.8);
-            foreach (RIA r in mergedRIAvalues)
+            try
             {
-
-                Peptide p = temp_pep.Where(x => x.PeptideSeq == r.peptideSeq & x.Charge == r.charge).FirstOrDefault();
-                if (p != null)
+                double ph = 1.5574E-4;
+                double pw = filecontents[filecontents.Count - 1].BWE;
+                double io = 0;
+                double neh = 0;
+                double k = 0;
+                var temp_pep = this.peptides.Where(x => x.RSquare > 0.8);
+                foreach (RIA r in mergedRIAvalues)
                 {
-                    io = (double)(p.M0 / 100);
-                    neh = (double)(p.Exchangeable_Hydrogens);
-                    k = (double)(p.Rateconst);
+
+                    Peptide p = temp_pep.Where(x => x.PeptideSeq == r.peptideSeq & x.Charge == r.charge).FirstOrDefault();
+                    if (p != null)
+                    {
+                        io = (double)(p.M0 / 100);
+                        neh = (double)(p.Exchangeable_Hydrogens);
+                        k = (double)(p.Rateconst);
 
 
 
-                    var dn = io * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
-                    var nu = io - r.RIA_value;
-                    var fv = nu / dn;
+                        var dn = io * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+                        var nu = io - r.RIA_value;
+                        var fv = nu / dn;
 
-                    xval.Add(r.time);
-                    yval.Add((double)fv);
+                        xval.Add(r.time);
+                        yval.Add((double)fv);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error => computeValuesForEnhancedPerProtienPlot2(), " + e.Message);
             }
 
             //ProtienchartDataValues pd = new ProtienchartDataValues(xval, yval);
