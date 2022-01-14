@@ -10,15 +10,15 @@ namespace v2.Helper
 {
     public class ReadRateConstants
     {
-        public List<RateConstant> rateConstants = new List<RateConstant>();
-        public double? MeanRateConst_CorrCutOff_mean;
-        public double? MeanRateConst_CorrCutOff_median;
-        public double? MedianRateConst_RMSSCutOff_mean;
-        public double? MedianRateConst_RMSSCutOff_median;
-        public double? StandDev_NumberPeptides_mean;
-        public double? StandDev_NumberPeptides_median;
-        public double? TotalIonCurrent_1;
-        public string path = @"";
+        //List<RateConstant> rateConstants = new List<RateConstant>();
+        //double? MeanRateConst_CorrCutOff_mean;
+        //double? MeanRateConst_CorrCutOff_median;
+        //double? MedianRateConst_RMSSCutOff_mean;
+        //double? MedianRateConst_RMSSCutOff_median;
+        //double? StandDev_NumberPeptides_mean;
+        //double? StandDev_NumberPeptides_median;
+        //double? TotalIonCurrent_1;
+        string path = @"";
 
         public ReadRateConstants(string path)
         {
@@ -30,8 +30,11 @@ namespace v2.Helper
             readRateConstantsCSV(this.path);
         }
 
-        public void readRateConstantsCSV(string path)
+        public RateConstantFileContent readRateConstantsCSV(string path)
         {
+            RateConstantFileContent rateConstantFileContent = new RateConstantFileContent();
+            rateConstantFileContent.rateConstants = new List<RateConstant>();
+
             //Extracts the information from csv file
 
             //check if the file exists
@@ -57,25 +60,25 @@ namespace v2.Helper
                         if (line.Contains("MeanRateConst/CorrCutOff"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) MeanRateConst_CorrCutOff_mean = double.Parse(columns[1].Trim());
-                            if (columns[2].Trim().Length > 0) MeanRateConst_CorrCutOff_median = double.Parse(columns[2].Trim());
+                            if (columns[1].Trim().Length > 0) rateConstantFileContent.MeanRateConst_CorrCutOff_mean = double.Parse(columns[1].Trim());
+                            if (columns[2].Trim().Length > 0) rateConstantFileContent.MeanRateConst_CorrCutOff_median = double.Parse(columns[2].Trim());
                         }
                         else if (line.Contains("MedianRateConst/RMSSCutOff"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) MedianRateConst_RMSSCutOff_mean = double.Parse(columns[1].Trim());
-                            if (columns[2].Trim().Length > 0) MedianRateConst_RMSSCutOff_median = double.Parse(columns[2].Trim());
+                            if (columns[1].Trim().Length > 0) rateConstantFileContent.MedianRateConst_RMSSCutOff_mean = double.Parse(columns[1].Trim());
+                            if (columns[2].Trim().Length > 0) rateConstantFileContent.MedianRateConst_RMSSCutOff_median = double.Parse(columns[2].Trim());
                         }
                         else if (line.Contains("StandDev/NumberPeptides"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) StandDev_NumberPeptides_mean = double.Parse(columns[1].Trim());
-                            if (columns[2].Trim().Length > 0) StandDev_NumberPeptides_median = double.Parse(columns[2].Trim());
+                            if (columns[1].Trim().Length > 0) rateConstantFileContent.StandDev_NumberPeptides_mean = double.Parse(columns[1].Trim());
+                            if (columns[2].Trim().Length > 0) rateConstantFileContent.StandDev_NumberPeptides_median = double.Parse(columns[2].Trim());
                         }
                         else if (line.Contains("TotalIonCurrent"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) TotalIonCurrent_1 = double.Parse(columns[1].Trim());
+                            if (columns[1].Trim().Length > 0) rateConstantFileContent.TotalIonCurrent_1 = double.Parse(columns[1].Trim());
                         }
                         else
                         {
@@ -87,7 +90,7 @@ namespace v2.Helper
                             if (columns[3].Trim().Length != 0) rateConstant.Correlations = double.Parse(columns[3].Trim());
                             if (columns[4].Trim().Length != 0) rateConstant.RootMeanRSS = double.Parse(columns[4].Trim());
                             if (columns[5].Trim().Length != 0) rateConstant.AbsoluteIsotopeError = double.Parse(columns[5].Trim());
-                            rateConstants.Add(rateConstant);
+                            rateConstantFileContent.rateConstants.Add(rateConstant);
                         }
                     }
                 }
@@ -98,6 +101,110 @@ namespace v2.Helper
                     MessageBox.Show("error reading files.txt ==> " + e.Message);
                 }
             }
+            return rateConstantFileContent;
+        }
+
+
+        public RateConstantFileContent readRateConstantsCSVWithParallel(string path)
+        {
+            RateConstantFileContent rateConstantFileContent = new RateConstantFileContent();
+
+
+            //Extracts the information from csv file
+
+            //check if the file exists
+            //string path = this.path;
+            if (File.Exists(path))
+            {
+                Console.WriteLine("==> file found");
+
+                try
+                {
+                    //read all the lines
+                    string[] lines = System.IO.File.ReadAllLines(path);
+                    lines = lines.Where(x => x.Length > 0).ToArray();
+
+                    Parallel.ForEach(lines, line =>
+                     {
+                         // this csv file has structured table data on the top and 
+                         //four paramters at the end of the files. first check for those
+                         //paramters.
+
+                         line = line.Trim();
+
+                         if (line.Contains("MeanRateConst/CorrCutOff"))
+                         {
+                             var columns = line.Split(',');
+                             if (columns[1].Trim().Length > 0) rateConstantFileContent.MeanRateConst_CorrCutOff_mean = double.Parse(columns[1].Trim());
+                             if (columns[2].Trim().Length > 0) rateConstantFileContent.MeanRateConst_CorrCutOff_median = double.Parse(columns[2].Trim());
+                         }
+                         else if (line.Contains("MedianRateConst/RMSSCutOff"))
+                         {
+                             var columns = line.Split(',');
+                             if (columns[1].Trim().Length > 0) rateConstantFileContent.MedianRateConst_RMSSCutOff_mean = double.Parse(columns[1].Trim());
+                             if (columns[2].Trim().Length > 0) rateConstantFileContent.MedianRateConst_RMSSCutOff_median = double.Parse(columns[2].Trim());
+                         }
+                         else if (line.Contains("StandDev/NumberPeptides"))
+                         {
+                             var columns = line.Split(',');
+                             if (columns[1].Trim().Length > 0) rateConstantFileContent.StandDev_NumberPeptides_mean = double.Parse(columns[1].Trim());
+                             if (columns[2].Trim().Length > 0) rateConstantFileContent.StandDev_NumberPeptides_median = double.Parse(columns[2].Trim());
+                         }
+                         else if (line.Contains("TotalIonCurrent"))
+                         {
+                             var columns = line.Split(',');
+                             if (columns[1].Trim().Length > 0) rateConstantFileContent.TotalIonCurrent_1 = double.Parse(columns[1].Trim());
+                         }
+                         else
+                         {
+                             var columns = line.Split(',');
+
+                             RateConstant rateConstant = new RateConstant();
+                             rateConstant.PeptideSeq = columns[0].Trim();
+                             if (columns[2].Trim().Length != 0) rateConstant.RateConstant_value = double.Parse(columns[2].Trim());
+                             if (columns[3].Trim().Length != 0) rateConstant.Correlations = double.Parse(columns[3].Trim());
+                             if (columns[4].Trim().Length != 0) rateConstant.RootMeanRSS = double.Parse(columns[4].Trim());
+                             if (columns[5].Trim().Length != 0) rateConstant.AbsoluteIsotopeError = double.Parse(columns[5].Trim());
+                             rateConstantFileContent.rateConstants.Add(rateConstant);
+                         }
+                     });
+
+
+
+                }
+
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error ==>" + e.Message);
+                    MessageBox.Show("Error reading rate constfile, ==> " + e.Message);
+                }
+            }
+
+            return rateConstantFileContent;
+        }
+
+        public struct RateConstantFileContent
+        {
+            public List<RateConstant> rateConstants;
+            public double? MeanRateConst_CorrCutOff_mean;
+            public double? MeanRateConst_CorrCutOff_median;
+            public double? MedianRateConst_RMSSCutOff_mean;
+            public double? MedianRateConst_RMSSCutOff_median;
+            public double? StandDev_NumberPeptides_mean;
+            public double? StandDev_NumberPeptides_median;
+            public double? TotalIonCurrent_1;
+
+            //public RateConstantFileContent()
+            //{
+            //    rateConstants = new List<RateConstant>();
+            //    MeanRateConst_CorrCutOff_mean = null;
+            //    MeanRateConst_CorrCutOff_median = null;
+            //    MedianRateConst_RMSSCutOff_mean = null;
+            //    MedianRateConst_RMSSCutOff_median = null;
+            //    StandDev_NumberPeptides_mean = null;
+            //    StandDev_NumberPeptides_median = null;
+            //    TotalIonCurrent_1 = null;
+            //}
         }
     }
 }

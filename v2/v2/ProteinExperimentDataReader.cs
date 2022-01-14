@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using v2.Helper;
 using v2.Model;
+using static v2.Helper.ReadExperiments;
 using static v2.Helper.ReadFilesInfo_txt;
+using static v2.Helper.ReadRateConstants;
 
 namespace v2
 {
@@ -22,7 +24,7 @@ namespace v2
 
         // properties from Protein.quant.csv 
         public List<Peptide> peptides = new List<Peptide>();
-        List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
+        public List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
 
         // propeties from Protein.Rateconst.csv
         public List<RateConstant> rateConstants = new List<RateConstant>();
@@ -35,7 +37,7 @@ namespace v2
         double? TotalIonCurrent_1;
 
         // computed values
-        List<RIA> RIAvalues = new List<RIA>();
+        public List<RIA> RIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvalues = new List<RIA>();
         public List<ExpectedI0Value> expectedI0Values = new List<ExpectedI0Value>();
 
@@ -58,24 +60,23 @@ namespace v2
 
             //Protein.Quant.csv reader
             ReadExperiments experiInfoReader = new ReadExperiments(quant_csv_path);
-            experiInfoReader.readExperimentCSVFile();
-
-            this.peptides = experiInfoReader.peptides;
-            this.experimentRecords = experiInfoReader.experimentRecords;
+            QuantFileContent qc = experiInfoReader.readExperimentCSVFileWithParallel();
+            this.peptides = qc.peptides;
+            this.experimentRecords = qc.experimentRecords;
 
 
             //Protein.Quant.csv reader
             ReadRateConstants rateConstInfoReader = new ReadRateConstants(RateConst_csv_path);
-            rateConstInfoReader.readRateConstantsCSV();
+            RateConstantFileContent rcfc = rateConstInfoReader.readRateConstantsCSV(RateConst_csv_path);
 
-            this.rateConstants = rateConstInfoReader.rateConstants;
-            this.MeanRateConst_CorrCutOff_mean = rateConstInfoReader.MeanRateConst_CorrCutOff_mean;
-            this.MeanRateConst_CorrCutOff_median = rateConstInfoReader.MeanRateConst_CorrCutOff_median;
-            this.MedianRateConst_RMSSCutOff_mean = rateConstInfoReader.MedianRateConst_RMSSCutOff_mean;
-            this.MedianRateConst_RMSSCutOff_median = rateConstInfoReader.MedianRateConst_RMSSCutOff_median;
-            this.StandDev_NumberPeptides_mean = rateConstInfoReader.StandDev_NumberPeptides_mean;
-            this.StandDev_NumberPeptides_median = rateConstInfoReader.StandDev_NumberPeptides_median;
-            this.TotalIonCurrent_1 = rateConstInfoReader.TotalIonCurrent_1;
+            this.rateConstants = rcfc.rateConstants;
+            this.MeanRateConst_CorrCutOff_mean = rcfc.MeanRateConst_CorrCutOff_mean;
+            this.MeanRateConst_CorrCutOff_median = rcfc.MeanRateConst_CorrCutOff_median;
+            this.MedianRateConst_RMSSCutOff_mean = rcfc.MedianRateConst_RMSSCutOff_mean;
+            this.MedianRateConst_RMSSCutOff_median = rcfc.MedianRateConst_RMSSCutOff_median;
+            this.StandDev_NumberPeptides_mean = rcfc.StandDev_NumberPeptides_mean;
+            this.StandDev_NumberPeptides_median = rcfc.StandDev_NumberPeptides_median;
+            this.TotalIonCurrent_1 = rcfc.TotalIonCurrent_1;
 
             // add rate constant values to peptied list
             foreach (Peptide p in peptides)
@@ -84,11 +85,13 @@ namespace v2
                 if (rateconst.Count > 0) p.Rateconst = rateconst[0].RateConstant_value;
             }
         }
-        public void computeRIAPerExperiment()
+        public List<RIA> computeRIAPerExperiment(List<ExperimentRecord> experimentRecords)
         {
-
-            foreach (ExperimentRecord er in experimentRecords)
+            //foreach (ExperimentRecord er in experimentRecords)
+            for (int i = 0; i < experimentRecords.Count(); i++)
             {
+                var er = experimentRecords[i];
+                if (er == null) return null;
                 var tempsum = er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5;
                 double sum_val = tempsum != null ? (double)(er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5) : 0;
                 if (sum_val != 0)
@@ -107,6 +110,8 @@ namespace v2
                     RIAvalues.Add(ria);
                 }
             }
+
+            return RIAvalues;
 
         }
         public void mergeMultipleRIAPerDay()
@@ -217,7 +222,7 @@ namespace v2
 
         //    return primeNumbers.ToList();
         //}
-        public void mergeMultipleRIAPerDayWithParallel()
+        public List<RIA> mergeMultipleRIAPerDayWithParallel(List<Peptide> peptides, List<RIA> RIAvalues)
         {
             Parallel.ForEach(this.peptides, p =>
             {
@@ -227,8 +232,10 @@ namespace v2
                 //temp_RIAvalues = temp_RIAvalues.Where(x => x.charge == p.Charge);
 
                 List<RIA> temp_RIAvalues = new List<RIA>();
-                foreach (RIA r in RIAvalues)
+                //foreach (RIA r in RIAvalues)
+                for (int i = 0; i < RIAvalues.Count(); i++)
                 {
+                    var r = RIAvalues[i];
                     if (r.RIA_value != null & r.peptideSeq == p.PeptideSeq & r.charge == p.Charge) temp_RIAvalues.Add(r);
                 }
 
@@ -258,16 +265,18 @@ namespace v2
 
                 }
             });
+            return mergedRIAvalues;
         }
 
-        public void computeRSquareWithParallel()
+        public void computeRSquareWithParallel(List<RIA> mergedRIAvalues)
         {
             Parallel.ForEach(this.peptides, r =>
             {
                 try
                 {
-                    var experimentalvalue = this.mergedRIAvalues.Where(x => x.charge == r.Charge).ToList();
-                    experimentalvalue = this.mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
+
+                    var experimentalvalue = mergedRIAvalues.Where(x => x.charge == r.Charge).ToList();
+                    experimentalvalue = mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
 
                     var temp_computedRIAValue = this.expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq).ToList();
 

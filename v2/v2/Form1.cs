@@ -416,10 +416,11 @@ namespace v2
 
 
             proteinExperimentData.loadAllExperimentData();
-            proteinExperimentData.computeRIAPerExperiment();
-            proteinExperimentData.mergeMultipleRIAPerDayWithParallel();
+            proteinExperimentData.RIAvalues = proteinExperimentData.computeRIAPerExperiment(proteinExperimentData.experimentRecords);
+            proteinExperimentData.mergedRIAvalues = proteinExperimentData.mergeMultipleRIAPerDayWithParallel(proteinExperimentData.peptides, proteinExperimentData.RIAvalues);
+
             proteinExperimentData.computeExpectedCurvePoints();
-            proteinExperimentData.computeRSquareWithParallel();
+            proteinExperimentData.computeRSquareWithParallel(proteinExperimentData.mergedRIAvalues);
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
             try
             {

@@ -27,6 +27,87 @@ namespace v2.Helper
             readExperimentCSVFile(this.path);
         }
 
+        public QuantFileContent readExperimentCSVFileWithParallel()
+        {
+            //Extracts the information from csv file
+
+            //check if the file exists
+            //string path = this.path;
+            if (File.Exists(path))
+            {
+                Console.WriteLine("==> file found");
+
+                try
+                {
+                    //read all the lines
+                    string[] lines = System.IO.File.ReadAllLines(path);
+                    lines = lines.Where(x => x.Length > 0).ToArray();
+
+                    //line #1 & #2 are protein name and desciption
+
+                    //line #3 contains the name of the experiments
+
+                    //first check the csv file is in the correct format
+                    // for now we assume "Peptide" should be on the fourth row
+                    if (lines.Length > 3 & lines[3].Trim().Contains("Peptide"))
+                    {
+                        experimentNames = getExperimentNames(lines[2].Trim());
+
+                        //extract the experimental data line by line
+                        //the experimental data starts from line 5 (index=4)
+                        //for (int i = 4; i < lines.Length; i++)
+                        //{
+                        //    readRow(lines[i]);
+                        //}
+                        string[] temp_lines = lines.Skip(4).ToArray();
+                        Parallel.ForEach(temp_lines, r =>
+                        {
+                            readRow(r);
+                        });
+                    }
+                    else if (lines.Length > 2 & lines[1].Trim().Contains("Peptide"))
+                    {
+                        // the other varation of quant file drops the first two lines (line #1 & #2), which are protein name and desciption.
+                        // to handel this, we strat read from first line as name of experiment
+                        experimentNames = getExperimentNames(lines[0].Trim());
+
+                        //extract the experimental data line by line
+                        //the experimental data starts from line 5 (index=4)
+                        //for (int i = 2; i < lines.Length; i++)
+                        //{
+                        //    readRow(lines[i]);
+                        //}
+
+                        string[] temp_lines = lines.Skip(2).ToArray();
+                        Parallel.ForEach(temp_lines, r =>
+                        {
+                            readRow(r);
+                        });
+
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error => .Quant.csv File is not in the right format");
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("error ==>" + e.Message);
+                    MessageBox.Show("Error => .Quant.csv File is not in the right format. " + e.Message);
+
+                }
+
+            }
+
+            return new QuantFileContent(experimentRecords, peptides);
+
+            //Parallel.ForEach(this.peptides, r =>
+            //{
+            //});
+        }
+
         public void readExperimentCSVFile(string path)
         {
             //Extracts the information from csv file
@@ -199,6 +280,18 @@ namespace v2.Helper
             }
 
             return null;
+        }
+
+        public struct QuantFileContent
+        {
+            public List<ExperimentRecord> experimentRecords { get; set; }
+            public List<Peptide> peptides { get; set; }
+
+            public QuantFileContent(List<ExperimentRecord> experimentRecords, List<Peptide> peptides)
+            {
+                this.experimentRecords = experimentRecords;
+                this.peptides = peptides;
+            }
         }
     }
 }
