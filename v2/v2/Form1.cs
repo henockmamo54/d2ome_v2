@@ -382,7 +382,7 @@ namespace v2
             {
                 DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
                 var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
-                var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[5].Value.ToString());
+                var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[4].Value.ToString());
 
                 loadPeptideChart(temp, charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
@@ -419,7 +419,7 @@ namespace v2
             //MessageBox.Show(comboBox_proteinNameSelector.SelectedValue.ToString());
             // plot chart inofrormation for the selected protien
             string proteinName = comboBox_proteinNameSelector.SelectedValue.ToString();
-            string files_txt_path = txt_source.Text + @"\files.txt";
+            string files_txt_path = txt_source.Text + @"\files.centroid.txt";
             string quant_csv_path = txt_source.Text + @"\" + proteinName + ".Quant.csv";
             string RateConst_csv_path = txt_source.Text + @"\" + proteinName + ".RateConst.csv";
 
