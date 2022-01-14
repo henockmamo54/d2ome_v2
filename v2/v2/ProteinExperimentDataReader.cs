@@ -70,11 +70,11 @@ namespace v2
 
             this.rateConstants = rateConstInfoReader.rateConstants;
             this.MeanRateConst_CorrCutOff_mean = rateConstInfoReader.MeanRateConst_CorrCutOff_mean;
-            this.MeanRateConst_CorrCutOff_median = rateConstInfoReader.MeanRateConst_CorrCutOff_median;
-            this.MedianRateConst_RMSSCutOff_mean = rateConstInfoReader.MedianRateConst_RMSSCutOff_mean;
-            this.MedianRateConst_RMSSCutOff_median = rateConstInfoReader.MedianRateConst_RMSSCutOff_median;
-            this.StandDev_NumberPeptides_mean = rateConstInfoReader.StandDev_NumberPeptides_mean;
-            this.StandDev_NumberPeptides_median = rateConstInfoReader.StandDev_NumberPeptides_median;
+            this.MeanRateConst_CorrCutOff_median = rateConstInfoReader.MeanRateConst_CorrCutOff_CorrCutOff;
+            this.MedianRateConst_RMSSCutOff_mean = rateConstInfoReader.MedianRateConst_RMSSCutOff_Median;
+            this.MedianRateConst_RMSSCutOff_median = rateConstInfoReader.MedianRateConst_RMSSCutOff_RMSSCutOff;
+            this.StandDev_NumberPeptides_mean = rateConstInfoReader.StandDev_NumberPeptides_StandDev;
+            this.StandDev_NumberPeptides_median = rateConstInfoReader.StandDev_NumberPeptides_NumberPeptides;
             this.TotalIonCurrent_1 = rateConstInfoReader.TotalIonCurrent_1;
 
             // add rate constant values to peptied list
