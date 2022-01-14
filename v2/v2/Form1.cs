@@ -248,7 +248,8 @@ namespace v2
                 // chart title
                 chart_peptide.Titles.Add(peptideSeq);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Console.WriteLine("Error => loadPeptideChart(), " + e.Message);
             }
 
@@ -303,7 +304,12 @@ namespace v2
                 chart_peptide.Serializer.Save(myStream);
                 chart2.Serializer.Load(myStream);
 
-                foreach (Peptide p in proteinExperimentData.peptides)
+                var selected = (from u in proteinExperimentData.peptides
+                                where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
+                                select u).Distinct().ToList();
+                int count = 1;
+                //foreach (Peptide p in proteinExperimentData.peptides)
+                foreach (Peptide p in selected)
                 {
                     //clear chart area
                     chart2.Titles.Clear();
@@ -364,14 +370,17 @@ namespace v2
                         {
                             chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
 
-                            im.Save(path + @"\" + p.PeptideSeq + ".jpeg");
+                            im.Save(path + @"\" + count.ToString() + "_" + p.PeptideSeq + "_" + p.Charge.ToString() + ".jpeg");
                         }
 
                     }
                     catch (Exception he)
                     {
 
+                        Console.WriteLine("ERROR: exporting chart for " + (count + 1).ToString() + " " + p.PeptideSeq + "===>" + he.Message);
                     }
+
+                    count++;
 
                 }
 
