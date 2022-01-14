@@ -44,23 +44,12 @@ namespace v2.Helper
                     lines = lines.Where(x => x.Length > 0).ToArray();
 
                     //line #1 & #2 are protein name and desciption
-
                     //line #3 contains the name of the experiments
-
                     //first check the csv file is in the correct format
                     // for now we assume "Peptide" should be on the fourth row
-                    if (lines.Length > 3 & lines[3].Trim().Contains("Peptide"))
-                    {
-                        experimentNames = getExperimentNames(lines[2].Trim());
 
-                        //extract the experimental data line by line
-                        //the experimental data starts from line 5 (index=4)
-                        for (int i = 4; i < lines.Length; i++)
-                        {
-                            readRow(lines[i]);
-                        }
-                    }
-                    else if (lines.Length > 2 & lines[1].Trim().Contains("Peptide"))
+
+                    if (lines.Length > 2 & lines[1].Trim().Contains("Peptide"))
                     {
                         // the other varation of quant file drops the first two lines (line #1 & #2), which are protein name and desciption.
                         // to handel this, we strat read from first line as name of experiment
@@ -73,6 +62,17 @@ namespace v2.Helper
                             readRow(lines[i]);
                         }
 
+                    }
+                    else if (lines.Length > 3 & lines[3].Trim().Contains("Peptide"))
+                    {
+                        experimentNames = getExperimentNames(lines[2].Trim());
+
+                        //extract the experimental data line by line
+                        //the experimental data starts from line 5 (index=4)
+                        for (int i = 4; i < lines.Length; i++)
+                        {
+                            readRow(lines[i]);
+                        }
                     }
                     else
                     {
