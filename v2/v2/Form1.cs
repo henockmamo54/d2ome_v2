@@ -146,12 +146,21 @@ namespace v2
             //hide some columns from the datasource
             dataGridView_peptide.RowHeadersVisible = false; // hide row selector
             dataGridView_peptide.Columns["UniqueToProtein"].Visible = false;
-            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Visible = false;
             dataGridView_peptide.Columns["Total_Labeling"].Visible = false;
+
+            dataGridView_peptide.Columns["M0"].Visible = false;
+            dataGridView_peptide.Columns["M1"].Visible = false;
+            dataGridView_peptide.Columns["M2"].Visible = false;
+            dataGridView_peptide.Columns["M3"].Visible = false;
+            dataGridView_peptide.Columns["M4"].Visible = false;
+            dataGridView_peptide.Columns["M5"].Visible = false;
 
             //rename column name
             dataGridView_peptide.Columns["PeptideSeq"].HeaderText = "Peptide";
             dataGridView_peptide.Columns["SeqMass"].HeaderText = "m/z";
+            dataGridView_peptide.Columns["IsotopeDeviation"].HeaderText = "Isotope Deviation";
+            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].HeaderText = "Exchangeable \nHydrogens";
+            dataGridView_peptide.Columns["Rateconst"].HeaderText = "Rate \nconstant";
 
             //set size for the columns
             foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
@@ -159,7 +168,9 @@ namespace v2
                 column.MinimumWidth = 70;
             }
             dataGridView_peptide.Columns["Charge"].Width = 50;
+            dataGridView_peptide.Columns["Rateconst"].Width = 90;
             dataGridView_peptide.Columns["PeptideSeq"].MinimumWidth = 170;
+            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].MinimumWidth = 100;
 
             //set number formationg for the columns
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";

@@ -12,9 +12,10 @@ namespace v2.Model
         public bool? UniqueToProtein { get; set; }
         public double? Rateconst { get; set; }
         public double? RSquare { get; set; }
-        public double? Exchangeable_Hydrogens { get; set; }
         public double? Charge { get; set; }
         public double? SeqMass { get; set; }
+        public double? Exchangeable_Hydrogens { get; set; }
+        public double? IsotopeDeviation { get; set; }
         public double? M0 { get; set; }
         public double? M1 { get; set; }
         public double? M2 { get; set; }

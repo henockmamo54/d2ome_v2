@@ -81,7 +81,15 @@ namespace v2
             foreach (Peptide p in peptides)
             {
                 var rateconst = rateConstants.Where(x => x.PeptideSeq == p.PeptideSeq).ToList();
-                if (rateconst.Count > 0) p.Rateconst = rateconst[0].RateConstant_value;
+                if (rateconst.Count > 0)
+                {
+                    p.Rateconst = rateconst[0].RateConstant_value;
+
+                    var AbsoluteIsotopeError = rateconst[0].AbsoluteIsotopeError;
+                    if (AbsoluteIsotopeError == -100) p.IsotopeDeviation = 1.0;
+                    else p.IsotopeDeviation = AbsoluteIsotopeError;
+                }
+
             }
         }
         public void computeRIAPerExperiment()
