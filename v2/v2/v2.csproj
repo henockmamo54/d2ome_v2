@@ -69,6 +69,7 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ExperimentRecord.cs" />
+    <Compile Include="Model\mzMlmzIDModel.cs" />
     <Compile Include="Model\Peptide.cs" />
     <Compile Include="Model\RateConstant.cs" />
     <Compile Include="Model\RIA.cs" />
