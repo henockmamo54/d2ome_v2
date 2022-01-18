@@ -32,6 +32,20 @@ namespace v2
 
         }
 
+        public bool check_inputDatagridIsIntheRightFormat()
+        {
+            try
+            {
+                List<mzMlmzIDModel> gridviewboundedData = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
+            }
+            catch (Exception e) {
+                MessageBox.Show("");
+            }
+
+            return false;
+
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -63,7 +77,8 @@ namespace v2
                         inputdata.Add(k);
                     }
 
-
+                    comboBox_mzidfilelist.DataSource = mzid;
+                    comboBox_mzmlfilelist.DataSource = mzml;
                 }
 
                 dataGridView1_records.DataSource = inputdata;
