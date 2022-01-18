@@ -62,6 +62,8 @@ namespace v2
                         k.mzID = mz.Replace(".mzML", ".mzid");
                         inputdata.Add(k);
                     }
+
+
                 }
 
                 dataGridView1_records.DataSource = inputdata;

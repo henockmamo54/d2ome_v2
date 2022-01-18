@@ -83,9 +83,9 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox_mzmlfilelist = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox_mzidfilelist = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
@@ -611,9 +611,9 @@
             this.groupBox6.Controls.Add(this.label17);
             this.groupBox6.Controls.Add(this.textBox1);
             this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Controls.Add(this.comboBox2);
+            this.groupBox6.Controls.Add(this.comboBox_mzidfilelist);
             this.groupBox6.Controls.Add(this.label15);
-            this.groupBox6.Controls.Add(this.comboBox1);
+            this.groupBox6.Controls.Add(this.comboBox_mzmlfilelist);
             this.groupBox6.Controls.Add(this.label14);
             this.groupBox6.Controls.Add(this.dataGridView1_records);
             this.groupBox6.Location = new System.Drawing.Point(23, 230);
@@ -622,18 +622,18 @@
             this.groupBox6.TabIndex = 8;
             this.groupBox6.TabStop = false;
             // 
-            // comboBox1
+            // comboBox_mzmlfilelist
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.comboBox_mzmlfilelist.FormattingEnabled = true;
+            this.comboBox_mzmlfilelist.Items.AddRange(new object[] {
             "2H",
             "15N",
             "13C",
             "18O"});
-            this.comboBox1.Location = new System.Drawing.Point(78, 344);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 9;
+            this.comboBox_mzmlfilelist.Location = new System.Drawing.Point(78, 344);
+            this.comboBox_mzmlfilelist.Name = "comboBox_mzmlfilelist";
+            this.comboBox_mzmlfilelist.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_mzmlfilelist.TabIndex = 9;
             // 
             // label14
             // 
@@ -644,18 +644,18 @@
             this.label14.TabIndex = 8;
             this.label14.Text = "mzMl File";
             // 
-            // comboBox2
+            // comboBox_mzidfilelist
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.comboBox_mzidfilelist.FormattingEnabled = true;
+            this.comboBox_mzidfilelist.Items.AddRange(new object[] {
             "2H",
             "15N",
             "13C",
             "18O"});
-            this.comboBox2.Location = new System.Drawing.Point(296, 345);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 11;
+            this.comboBox_mzidfilelist.Location = new System.Drawing.Point(296, 345);
+            this.comboBox_mzidfilelist.Name = "comboBox_mzidfilelist";
+            this.comboBox_mzidfilelist.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_mzidfilelist.TabIndex = 11;
             // 
             // label15
             // 
@@ -803,9 +803,9 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox_mzidfilelist;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox_mzmlfilelist;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
