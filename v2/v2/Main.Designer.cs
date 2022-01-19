@@ -39,6 +39,21 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.textBox_mzidfile = new System.Windows.Forms.TextBox();
+            this.button_mzidbrowse = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.textBox_mzmlfile = new System.Windows.Forms.TextBox();
+            this.button_mzmlbrowse = new System.Windows.Forms.Button();
+            this.button_clear = new System.Windows.Forms.Button();
+            this.button_delete = new System.Windows.Forms.Button();
+            this.button_add = new System.Windows.Forms.Button();
+            this.textBox_BWE = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.textBox_T = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.dataGridView1_records = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.textBox_peptideConsistency = new System.Windows.Forms.TextBox();
             this.textBox_peptideScore = new System.Windows.Forms.TextBox();
@@ -59,7 +74,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.dataGridView1_records = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBox1_mzmlidfiles = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -82,22 +96,12 @@
             this.dataGridView_peptide = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.comboBox_mzmlfilelist = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.comboBox_mzidfilelist = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1_records)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1_records)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox3_proteinchart.SuspendLayout();
@@ -107,7 +111,6 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_peptide)).BeginInit();
             this.tabPage3.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -135,6 +138,151 @@
             this.tabPage1.Size = new System.Drawing.Size(1194, 682);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Computation";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.textBox_mzidfile);
+            this.groupBox6.Controls.Add(this.button_mzidbrowse);
+            this.groupBox6.Controls.Add(this.label18);
+            this.groupBox6.Controls.Add(this.textBox_mzmlfile);
+            this.groupBox6.Controls.Add(this.button_mzmlbrowse);
+            this.groupBox6.Controls.Add(this.button_clear);
+            this.groupBox6.Controls.Add(this.button_delete);
+            this.groupBox6.Controls.Add(this.button_add);
+            this.groupBox6.Controls.Add(this.textBox_BWE);
+            this.groupBox6.Controls.Add(this.label17);
+            this.groupBox6.Controls.Add(this.textBox_T);
+            this.groupBox6.Controls.Add(this.label16);
+            this.groupBox6.Controls.Add(this.label14);
+            this.groupBox6.Controls.Add(this.dataGridView1_records);
+            this.groupBox6.Location = new System.Drawing.Point(23, 230);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(1137, 384);
+            this.groupBox6.TabIndex = 8;
+            this.groupBox6.TabStop = false;
+            // 
+            // textBox_mzidfile
+            // 
+            this.textBox_mzidfile.Location = new System.Drawing.Point(467, 31);
+            this.textBox_mzidfile.Name = "textBox_mzidfile";
+            this.textBox_mzidfile.Size = new System.Drawing.Size(234, 20);
+            this.textBox_mzidfile.TabIndex = 23;
+            // 
+            // button_mzidbrowse
+            // 
+            this.button_mzidbrowse.Location = new System.Drawing.Point(707, 28);
+            this.button_mzidbrowse.Name = "button_mzidbrowse";
+            this.button_mzidbrowse.Size = new System.Drawing.Size(75, 23);
+            this.button_mzidbrowse.TabIndex = 24;
+            this.button_mzidbrowse.Text = "Browse";
+            this.button_mzidbrowse.UseVisualStyleBackColor = true;
+            this.button_mzidbrowse.Click += new System.EventHandler(this.button_mzidbrowse_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(409, 34);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(50, 13);
+            this.label18.TabIndex = 22;
+            this.label18.Text = "mzID File";
+            // 
+            // textBox_mzmlfile
+            // 
+            this.textBox_mzmlfile.Location = new System.Drawing.Point(73, 32);
+            this.textBox_mzmlfile.Name = "textBox_mzmlfile";
+            this.textBox_mzmlfile.Size = new System.Drawing.Size(234, 20);
+            this.textBox_mzmlfile.TabIndex = 20;
+            // 
+            // button_mzmlbrowse
+            // 
+            this.button_mzmlbrowse.Location = new System.Drawing.Point(313, 29);
+            this.button_mzmlbrowse.Name = "button_mzmlbrowse";
+            this.button_mzmlbrowse.Size = new System.Drawing.Size(75, 23);
+            this.button_mzmlbrowse.TabIndex = 21;
+            this.button_mzmlbrowse.Text = "Browse";
+            this.button_mzmlbrowse.UseVisualStyleBackColor = true;
+            this.button_mzmlbrowse.Click += new System.EventHandler(this.button_mzmlbrowse_Click);
+            // 
+            // button_clear
+            // 
+            this.button_clear.Location = new System.Drawing.Point(1038, 340);
+            this.button_clear.Name = "button_clear";
+            this.button_clear.Size = new System.Drawing.Size(75, 23);
+            this.button_clear.TabIndex = 18;
+            this.button_clear.Text = "Clear All";
+            this.button_clear.UseVisualStyleBackColor = true;
+            this.button_clear.Click += new System.EventHandler(this.button_clear_Click);
+            // 
+            // button_delete
+            // 
+            this.button_delete.Location = new System.Drawing.Point(934, 340);
+            this.button_delete.Name = "button_delete";
+            this.button_delete.Size = new System.Drawing.Size(75, 23);
+            this.button_delete.TabIndex = 17;
+            this.button_delete.Text = "Delete";
+            this.button_delete.UseVisualStyleBackColor = true;
+            this.button_delete.Click += new System.EventHandler(this.button_delete_Click);
+            // 
+            // button_add
+            // 
+            this.button_add.Location = new System.Drawing.Point(1024, 29);
+            this.button_add.Name = "button_add";
+            this.button_add.Size = new System.Drawing.Size(75, 23);
+            this.button_add.TabIndex = 16;
+            this.button_add.Text = "Add";
+            this.button_add.UseVisualStyleBackColor = true;
+            this.button_add.Click += new System.EventHandler(this.button_add_Click);
+            // 
+            // textBox_BWE
+            // 
+            this.textBox_BWE.Location = new System.Drawing.Point(958, 29);
+            this.textBox_BWE.Name = "textBox_BWE";
+            this.textBox_BWE.Size = new System.Drawing.Size(38, 20);
+            this.textBox_BWE.TabIndex = 15;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(917, 33);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(32, 13);
+            this.label17.TabIndex = 14;
+            this.label17.Text = "BWE";
+            // 
+            // textBox_T
+            // 
+            this.textBox_T.Location = new System.Drawing.Point(844, 30);
+            this.textBox_T.Name = "textBox_T";
+            this.textBox_T.Size = new System.Drawing.Size(38, 20);
+            this.textBox_T.TabIndex = 13;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(820, 35);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(14, 13);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "T";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(15, 35);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(54, 13);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "mzML File";
+            // 
+            // dataGridView1_records
+            // 
+            this.dataGridView1_records.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dataGridView1_records.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1_records.Location = new System.Drawing.Point(6, 83);
+            this.dataGridView1_records.Name = "dataGridView1_records";
+            this.dataGridView1_records.Size = new System.Drawing.Size(1116, 239);
+            this.dataGridView1_records.TabIndex = 4;
             // 
             // groupBox5
             // 
@@ -331,15 +479,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // dataGridView1_records
-            // 
-            this.dataGridView1_records.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dataGridView1_records.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1_records.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1_records.Name = "dataGridView1_records";
-            this.dataGridView1_records.Size = new System.Drawing.Size(1116, 293);
-            this.dataGridView1_records.TabIndex = 4;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.textBox1_mzmlidfiles);
@@ -354,14 +493,14 @@
             // textBox1_mzmlidfiles
             // 
             this.textBox1_mzmlidfiles.Enabled = false;
-            this.textBox1_mzmlidfiles.Location = new System.Drawing.Point(105, 19);
+            this.textBox1_mzmlidfiles.Location = new System.Drawing.Point(105, 25);
             this.textBox1_mzmlidfiles.Name = "textBox1_mzmlidfiles";
             this.textBox1_mzmlidfiles.Size = new System.Drawing.Size(234, 20);
             this.textBox1_mzmlidfiles.TabIndex = 1;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(358, 15);
+            this.button1.Location = new System.Drawing.Point(358, 21);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -372,7 +511,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 19);
+            this.label5.Location = new System.Drawing.Point(13, 25);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 13);
             this.label5.TabIndex = 0;
@@ -603,119 +742,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.button5);
-            this.groupBox6.Controls.Add(this.button4);
-            this.groupBox6.Controls.Add(this.textBox2);
-            this.groupBox6.Controls.Add(this.label17);
-            this.groupBox6.Controls.Add(this.textBox1);
-            this.groupBox6.Controls.Add(this.label16);
-            this.groupBox6.Controls.Add(this.comboBox_mzidfilelist);
-            this.groupBox6.Controls.Add(this.label15);
-            this.groupBox6.Controls.Add(this.comboBox_mzmlfilelist);
-            this.groupBox6.Controls.Add(this.label14);
-            this.groupBox6.Controls.Add(this.dataGridView1_records);
-            this.groupBox6.Location = new System.Drawing.Point(23, 230);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1137, 384);
-            this.groupBox6.TabIndex = 8;
-            this.groupBox6.TabStop = false;
-            // 
-            // comboBox_mzmlfilelist
-            // 
-            this.comboBox_mzmlfilelist.FormattingEnabled = true;
-            this.comboBox_mzmlfilelist.Items.AddRange(new object[] {
-            "2H",
-            "15N",
-            "13C",
-            "18O"});
-            this.comboBox_mzmlfilelist.Location = new System.Drawing.Point(78, 344);
-            this.comboBox_mzmlfilelist.Name = "comboBox_mzmlfilelist";
-            this.comboBox_mzmlfilelist.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_mzmlfilelist.TabIndex = 9;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(22, 348);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(50, 13);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "mzMl File";
-            // 
-            // comboBox_mzidfilelist
-            // 
-            this.comboBox_mzidfilelist.FormattingEnabled = true;
-            this.comboBox_mzidfilelist.Items.AddRange(new object[] {
-            "2H",
-            "15N",
-            "13C",
-            "18O"});
-            this.comboBox_mzidfilelist.Location = new System.Drawing.Point(296, 345);
-            this.comboBox_mzidfilelist.Name = "comboBox_mzidfilelist";
-            this.comboBox_mzidfilelist.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_mzidfilelist.TabIndex = 11;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(240, 350);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(50, 13);
-            this.label15.TabIndex = 10;
-            this.label15.Text = "mzID File";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(486, 345);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(66, 20);
-            this.textBox1.TabIndex = 13;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(462, 349);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(14, 13);
-            this.label16.TabIndex = 12;
-            this.label16.Text = "T";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(637, 346);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 15;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(599, 351);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(32, 13);
-            this.label17.TabIndex = 14;
-            this.label17.Text = "BWE";
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(831, 340);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 16;
-            this.button4.Text = "Add";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(934, 340);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 17;
-            this.button5.Text = "Delete";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -728,11 +754,13 @@
             this.Load += new System.EventHandler(this.Main_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1_records)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1_records)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -745,8 +773,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_peptide)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -799,15 +825,18 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button_delete;
+        private System.Windows.Forms.Button button_clear;
+        private System.Windows.Forms.Button button_add;
+        private System.Windows.Forms.TextBox textBox_BWE;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_T;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ComboBox comboBox_mzidfilelist;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.ComboBox comboBox_mzmlfilelist;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox textBox_mzidfile;
+        private System.Windows.Forms.Button button_mzidbrowse;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox textBox_mzmlfile;
+        private System.Windows.Forms.Button button_mzmlbrowse;
     }
 }

@@ -32,19 +32,20 @@ namespace v2
 
         }
 
-        public bool check_inputDatagridIsIntheRightFormat()
-        {
-            try
-            {
-                List<mzMlmzIDModel> gridviewboundedData = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
-            }
-            catch (Exception e) {
-                MessageBox.Show("");
-            }
+        //public bool check_inputDatagridIsIntheRightFormat()
+        //{
+        //    try
+        //    {
+        //        List<mzMlmzIDModel> gridviewboundedData = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        MessageBox.Show("");
+        //    }
 
-            return false;
+        //    return false;
 
-        }
+        //}
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -77,8 +78,6 @@ namespace v2
                         inputdata.Add(k);
                     }
 
-                    comboBox_mzidfilelist.DataSource = mzid;
-                    comboBox_mzmlfilelist.DataSource = mzml;
                 }
 
                 dataGridView1_records.DataSource = inputdata;
@@ -108,6 +107,122 @@ namespace v2
         private void Main_Load(object sender, EventArgs e)
         {
             load_defaultValues();
+            inputdata = new List<mzMlmzIDModel>();
+            this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+        }
+
+        private void button_add_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (textBox_mzmlfile.Text.Length > 0)
+                {
+                    if (File.Exists(textBox_mzmlfile.Text.Trim()))
+                    {
+                        if (textBox_mzidfile.Text.Length > 0)
+                        {
+                            if (File.Exists(textBox_mzidfile.Text.Trim()))
+                            {
+                                var mzmlIDfilerecord = new mzMlmzIDModel();
+                                mzmlIDfilerecord.mzML = textBox_mzmlfile.Text.Trim();
+                                mzmlIDfilerecord.mzID = textBox_mzidfile.Text.Trim();
+                                mzmlIDfilerecord.T = double.Parse(textBox_T.Text.Trim());
+                                mzmlIDfilerecord.BWE = double.Parse(textBox_BWE.Text.Trim());
+
+                                inputdata.Add(mzmlIDfilerecord);
+
+                                dataGridView1_records.DataSource = inputdata.ToList();
+
+                            }
+                            else
+                            {
+                                MessageBox.Show("Please check your input!", "Error");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please check your input!", "Error");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please check your input!", "Error");
+                }
+            }
+            catch { MessageBox.Show("Please check your input!", "Error"); }
+        }
+
+        private void button_mzmlbrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (textBox1_mzmlidfiles.Text.Trim().Count() > 0)
+            {
+                try
+                {
+                    dialog.InitialDirectory = textBox1_mzmlidfiles.Text.Trim();
+                }
+                catch
+                {
+                    dialog.InitialDirectory = "c:\\";
+                }
+            }
+
+            //dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.Filter = "txt files (*.mzML)|*.mzML";
+            dialog.FilterIndex = 2;
+            dialog.RestoreDirectory = true;
+
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.FileName;
+                textBox_mzmlfile.Text = path;
+            }
+        }
+
+        private void button_mzidbrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (textBox1_mzmlidfiles.Text.Trim().Count() > 0)
+            {
+                try
+                {
+                    dialog.InitialDirectory = textBox1_mzmlidfiles.Text.Trim();
+                }
+                catch
+                {
+                    dialog.InitialDirectory = "c:\\";
+                }
+            }
+
+            dialog.Filter = "txt files (*.mzid)|*.mzid";
+            dialog.FilterIndex = 2;
+            dialog.RestoreDirectory = true;
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.FileName;
+                textBox_mzidfile.Text = path;
+            }
+        }
+
+        private void button_clear_Click(object sender, EventArgs e)
+        {
+            inputdata.Clear();
+            dataGridView1_records.DataSource = inputdata;
+        }
+
+        private void button_delete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var index = dataGridView1_records.SelectedRows[0].Index;
+                inputdata.RemoveAt(index);
+                dataGridView1_records.DataSource = inputdata;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please select the row you want to delete.", "Error");
+            }
         }
     }
 }

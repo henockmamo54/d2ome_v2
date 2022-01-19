@@ -10,7 +10,7 @@ namespace v2.Model
     {
         public string mzML { get; set; }
         public string mzID { get; set; }
-        public string T { get; set; }
-        public string BWE { get; set; }
+        public double T { get; set; }
+        public double BWE { get; set; }
     }
 }
