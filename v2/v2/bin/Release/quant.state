@@ -1,5 +1,5 @@
 mass_accuracy =  20.0 ppm  // mass accuracy: either in ppm or Da 
-MS1_Type = 1	// data type of MS1, 1 - centroid, 0 - profile  
+MS1_Type = 0	// data type of MS1, 1 - centroid, 0 - profile  
 protein_score       = 40     //minimum protein score
 peptide_score =  20.0 	// minimum peptide score, ion score in Mascot, default is 1
 peptide_expectation = 0.05     // maximum peptide expectation in Mascot

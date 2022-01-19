@@ -1,5 +1,0 @@
-1 C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzML C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzid 1
-1 C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzML C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzid 1
-1 C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzML C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzid 1
-1 C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzML C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzid 1
-

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -46,15 +47,16 @@ namespace v2
 
                 #region files.txt 
 
-                TextWriter tw = new StreamWriter(path+"\\files.txt");
-                string fileContent = "";
-                foreach (var x in inputdata)
-                {
-                    fileContent += x.T.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
-                }
+                ////TextWriter tw = new StreamWriter(path + "\\files.txt");
+                //TextWriter tw = new StreamWriter("files.txt");
+                //string fileContent = "";
+                //foreach (var x in inputdata)
+                //{
+                //    fileContent += x.T.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
+                //}
 
-                tw.WriteLine(fileContent);
-                tw.Close();
+                //tw.WriteLine(fileContent);
+                //tw.Close();
 
                 #endregion
 
@@ -186,7 +188,8 @@ protein_consistency = {4}  // minimum number of experiments for protein consiste
 peptide_consistency = {4}   //mininum number of experiments for a peptide consistency
 NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2", massaccuracy, MS1_Type, peptidescore, elutionwindow, peptideconsistency, rate_constant_choice);
 
-                TextWriter tw2 = new StreamWriter(path + "\\quant.state");
+                //TextWriter tw2 = new StreamWriter(path + "\\quant.state");
+                TextWriter tw2 = new StreamWriter("quant.state");
 
 
                 tw2.WriteLine(quantstatefile);
@@ -211,7 +214,13 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         private void WorkThreadFunction()
         {
             var sExecsFolder = Directory.GetCurrentDirectory();
+            Console.WriteLine(sExecsFolder);
             var sCommandFile = sExecsFolder + "\\d2ome.exe " + "files.txt";
+
+            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            p.StartInfo = new System.Diagnostics.ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", "files.txt"); 
+            p.Start();        
+
         }
 
         private void Main_Load(object sender, EventArgs e)
