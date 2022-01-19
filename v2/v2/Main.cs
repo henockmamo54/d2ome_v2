@@ -285,6 +285,12 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                                 dataGridView1_records.DataSource = inputdata.ToList();
 
+                                //sucssful insertion of record. clear the input
+                                textBox_mzmlfile.Text = "";
+                                textBox_mzidfile.Text = "";
+                                textBox_T.Text = "";
+                                textBox_BWE.Text = "";
+
                             }
                             else
                             {
@@ -337,7 +343,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void button_clear_Click(object sender, EventArgs e)
         {
-            inputdata.Clear();
+            dataGridView1_records.DataSource = null;
+            inputdata = new List<mzMlmzIDModel>();
             dataGridView1_records.DataSource = inputdata;
         }
 
@@ -346,13 +353,33 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             try
             {
                 var index = dataGridView1_records.SelectedRows[0].Index;
-                inputdata.RemoveAt(index);
-                dataGridView1_records.DataSource = inputdata;
+                if (index < inputdata.Count & index >= 0)
+                {
+                    dataGridView1_records.DataSource = null;
+                    inputdata.RemoveAt(index);
+                    dataGridView1_records.DataSource = inputdata;
+                }
+
             }
-            catch (Exception ex)
+            catch (Exception ex1)
             {
-                MessageBox.Show("Please select the row you want to delete.", "Error");
+                MessageBox.Show("Please select the row you want to delete. " + ex1.Message, "Error");
             }
         }
+
+        //private void button_delete_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        var index = dataGridView1_records.SelectedRows[0].Index;
+        //        inputdata.RemoveAt(index);
+        //        dataGridView1_records.DataSource = inputdata;
+        //        dataGridView1_records.SelectedRows.Clear();
+        //    }
+        //    catch (Exception ex1)
+        //    {
+        //        MessageBox.Show("Please select the row you want to delete.", "Error");
+        //    }
+        //}
     }
 }
