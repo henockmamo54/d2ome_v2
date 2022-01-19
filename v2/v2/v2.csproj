@@ -58,6 +58,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLoader.cs" />
     <Compile Include="Helper\BasicFunctions.cs" />
     <Compile Include="Helper\ReadExperiments.cs" />
     <Compile Include="Helper\ReadFilesInfo_txt.cs" />

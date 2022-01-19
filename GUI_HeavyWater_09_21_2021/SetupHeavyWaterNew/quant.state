@@ -1,0 +1,7 @@
+mass_accuracy       = 20 ppm  // mass accuracy: either in ppm or Da
+protein_score       = 50     //minimum protein score 
+peptide_score       = 30     // minimum peptide score, ion score in Mascot
+peptide_expectation = 0.05     // maximum peptide expectation in Mascot
+elutiontimewindow   = 2     // time window  (mins) to search for elution peak. From the time that highest scoring MS2 was triggered
+protein_consistency = 2      // minimum number of experiments for protein consistency
+peptide_consistency = 2      //mininum number of experiments for a peptide consistency

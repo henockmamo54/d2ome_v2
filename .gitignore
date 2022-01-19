@@ -1,2 +1,8 @@
 v2/v2/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttributes.cs
 v2/v2/obj/Debug/v2.csproj.AssemblyReference.cache
+GUI_HeavyWater_09_21_2021/VC_Form_Application.VC.db
+GUI_HeavyWater_09_21_2021/VC_Form_Application.VC.VC.opendb
+*.db
+*.ipch
+*.pdb
+*.pch
