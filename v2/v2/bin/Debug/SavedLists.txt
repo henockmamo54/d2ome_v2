@@ -1,1 +1,2 @@
-System.Collections.Generic.List`1[v2.Model.mzMlmzIDModel]
+0 C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzML C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzid 0.03
+
