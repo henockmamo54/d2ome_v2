@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using v2.Model;
@@ -34,142 +35,148 @@ namespace v2
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button_start_Click(object sender, EventArgs e)
         {
-            #region files.txt
-            Console.WriteLine("test");
-
-            TextWriter tw = new StreamWriter("SavedLists.txt");
-            string fileContent = "";
-            foreach (var x in inputdata)
+            try
             {
-                fileContent += x.T.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
-            }
+                if (inputdata.Count == 0) { MessageBox.Show("Please input mzML and mzID files records!", "Error"); return; }
+                if (textBox_outputfolderpath.Text.Length == 0) { MessageBox.Show("Please select a valid output directory!", "Error"); return; }
 
-            tw.WriteLine(fileContent);
-            tw.Close();
+                var path = textBox_outputfolderpath.Text;
 
-            #endregion
+                #region files.txt 
 
-            #region quant.csv
-
-            // massaccuracy
-            double massaccuracy = 0;
-            if (textBox_massAccuracy.Text.Length > 0)
-            {
-                try
+                TextWriter tw = new StreamWriter(path+"\\files.txt");
+                string fileContent = "";
+                foreach (var x in inputdata)
                 {
-                    massaccuracy = double.Parse(textBox_massAccuracy.Text);
+                    fileContent += x.T.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
                 }
-                catch (Exception ex)
+
+                tw.WriteLine(fileContent);
+                tw.Close();
+
+                #endregion
+
+                #region quant.csv
+
+                // massaccuracy
+                double massaccuracy = 0;
+                if (textBox_massAccuracy.Text.Length > 0)
+                {
+                    try
+                    {
+                        massaccuracy = double.Parse(textBox_massAccuracy.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Invalid Mass Accuracy. " + textBox_massAccuracy.Text +
+                            " Please, enter mass accuracy\n");
+
+                        return;
+                    }
+                }
+                else
                 {
                     MessageBox.Show("Invalid Mass Accuracy. " + textBox_massAccuracy.Text +
-                        " Please, enter mass accuracy\n");
-
+                                " Please, enter mass accuracy\n");
                     return;
                 }
-            }
-            else
-            {
-                MessageBox.Show("Invalid Mass Accuracy. " + textBox_massAccuracy.Text +
-                            " Please, enter mass accuracy\n");
-                return;
-            }
 
-            // elutionwindow
+                // elutionwindow
 
-            double elutionwindow = 0;
-            if (textBox_massAccuracy.Text.Length > 0)
-            {
-                try
+                double elutionwindow = 0;
+                if (textBox_massAccuracy.Text.Length > 0)
                 {
-                    elutionwindow = double.Parse(textBox_ElutionWindow.Text);
+                    try
+                    {
+                        elutionwindow = double.Parse(textBox_ElutionWindow.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Invalid Elution Window. " + textBox_ElutionWindow.Text +
+                            " Please, re-enter Elution Window\n");
+
+                        return;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
                     MessageBox.Show("Invalid Elution Window. " + textBox_ElutionWindow.Text +
-                        " Please, re-enter Elution Window\n");
-
+                           " Please, re-enter Elution Window\n");
                     return;
                 }
-            }
-            else
-            {
-                MessageBox.Show("Invalid Elution Window. " + textBox_ElutionWindow.Text +
-                       " Please, re-enter Elution Window\n");
-                return;
-            }
 
-            // peptidescore
+                // peptidescore
 
-            double peptidescore = 0;
-            if (textBox_peptideScore.Text.Length > 0)
-            {
-                try
+                double peptidescore = 0;
+                if (textBox_peptideScore.Text.Length > 0)
                 {
-                    peptidescore = double.Parse(textBox_peptideScore.Text);
+                    try
+                    {
+                        peptidescore = double.Parse(textBox_peptideScore.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Invalid Peptide Identification Score. " + textBox_peptideScore.Text +
+                            " Please, re-enter Elution Window\n");
+
+                        return;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
                     MessageBox.Show("Invalid Peptide Identification Score. " + textBox_peptideScore.Text +
-                        " Please, re-enter Elution Window\n");
-
+                           " Please, re-enter Elution Window\n");
                     return;
                 }
-            }
-            else
-            {
-                MessageBox.Show("Invalid Peptide Identification Score. " + textBox_peptideScore.Text +
-                       " Please, re-enter Elution Window\n");
-                return;
-            }
 
-            // peptideconsistency
+                // peptideconsistency
 
-            double peptideconsistency = 0;
-            if (textBox_peptideConsistency.Text.Length > 0)
-            {
-                try
+                double peptideconsistency = 0;
+                if (textBox_peptideConsistency.Text.Length > 0)
                 {
-                    peptideconsistency = double.Parse(textBox_peptideConsistency.Text);
+                    try
+                    {
+                        peptideconsistency = double.Parse(textBox_peptideConsistency.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Invalid Peptide Consistency. " + textBox_peptideConsistency.Text +
+                            " Please, re-enter. Peptide Consistency value of 4 or higher is suggested\n");
+
+                        return;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
                     MessageBox.Show("Invalid Peptide Consistency. " + textBox_peptideConsistency.Text +
-                        " Please, re-enter. Peptide Consistency value of 4 or higher is suggested\n");
-
+                            " Please, re-enter. Peptide Consistency value of 4 or higher is suggested\n");
                     return;
                 }
-            }
-            else
-            {
-                MessageBox.Show("Invalid Peptide Consistency. " + textBox_peptideConsistency.Text +
-                        " Please, re-enter. Peptide Consistency value of 4 or higher is suggested\n");
-                return;
-            }
 
-            // rate constant
-            int rate_constant_choice = 0;
+                // rate constant
+                int rate_constant_choice = 0;
 
-            if (comboBox_Rate_Constant_Method.Text == "One Parameter")
-                rate_constant_choice = 1;
-            else if (comboBox_Rate_Constant_Method.Text == "Two Parameter")
-                rate_constant_choice = 2;
-            else
-            {
-                MessageBox.Show("Invalid Rate Constant. " + rate_constant_choice +
-                    "  Please, re-enter Rate Constant\n");
-                return;
-            }
+                if (comboBox_Rate_Constant_Method.Text == "One Parameter")
+                    rate_constant_choice = 1;
+                else if (comboBox_Rate_Constant_Method.Text == "Two Parameter")
+                    rate_constant_choice = 2;
+                else
+                {
+                    MessageBox.Show("Invalid Rate Constant. " + rate_constant_choice +
+                        "  Please, re-enter Rate Constant\n");
+                    return;
+                }
 
-            double MS1_Type = 0;
-            if (comboBox_MS1Data.Text == "Profile")
-                MS1_Type = 0;
-            else if (comboBox_MS1Data.Text == "Centroid")
-                MS1_Type = 1;
+                double MS1_Type = 0;
+                if (comboBox_MS1Data.Text == "Profile")
+                    MS1_Type = 0;
+                else if (comboBox_MS1Data.Text == "Centroid")
+                    MS1_Type = 1;
 
 
-            string quantstatefile = string.Format(@"mass_accuracy =  {0:f1} ppm  // mass accuracy: either in ppm or Da 
+                string quantstatefile = string.Format(@"mass_accuracy =  {0:f1} ppm  // mass accuracy: either in ppm or Da 
 MS1_Type = {1}	// data type of MS1, 1 - centroid, 0 - profile  
 protein_score       = 40     //minimum protein score
 peptide_score =  {2:f1} 	// minimum peptide score, ion score in Mascot, default is 1
@@ -179,14 +186,32 @@ protein_consistency = {4}  // minimum number of experiments for protein consiste
 peptide_consistency = {4}   //mininum number of experiments for a peptide consistency
 NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2", massaccuracy, MS1_Type, peptidescore, elutionwindow, peptideconsistency, rate_constant_choice);
 
-            TextWriter tw2 = new StreamWriter("quant.state");
+                TextWriter tw2 = new StreamWriter(path + "\\quant.state");
 
 
-            tw2.WriteLine(quantstatefile);
-            tw2.Close();
+                tw2.WriteLine(quantstatefile);
+                tw2.Close();
 
-            #endregion
+                #endregion
 
+
+                Thread thread = new Thread(new ThreadStart(WorkThreadFunction));
+                thread.Start();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+
+
+
+        }
+
+        private void WorkThreadFunction()
+        {
+            var sExecsFolder = Directory.GetCurrentDirectory();
+            var sCommandFile = sExecsFolder + "\\d2ome.exe " + "files.txt";
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -300,5 +325,31 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             }
         }
 
+        private void button_browseoutputfolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.SelectedPath;
+
+                txt_source.Text = path;
+
+                string[] filePaths = Directory.GetFiles(path);
+                var csvfilePaths = filePaths.Where(x => x.Contains(".csv") || (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
+
+                if (csvfilePaths.Count == 0)
+                {
+                    textBox_outputfolderpath.Text = path;
+
+                }
+                else
+                {
+                    MessageBox.Show("There are *.csv files in the output folder: " +
+                                    path + "\n\r" + "They may interfere with output files.\r\n" +
+                                    "Remove the csv files from the folder and run the program again.\n\r", "Error");
+                }
+            }
+
+        }
     }
 }

@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -70,10 +70,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.textBox_outputfolderpath = new System.Windows.Forms.TextBox();
+            this.button_browseoutputfolder = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.button_start = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label4_proteinRateConstantValue = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -429,32 +429,33 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.textBox5);
-            this.groupBox4.Controls.Add(this.button3);
+            this.groupBox4.Controls.Add(this.textBox_outputfolderpath);
+            this.groupBox4.Controls.Add(this.button_browseoutputfolder);
             this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Controls.Add(this.button2);
+            this.groupBox4.Controls.Add(this.button_start);
             this.groupBox4.Location = new System.Drawing.Point(23, 560);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(1137, 67);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             // 
-            // textBox5
+            // textBox_outputfolderpath
             // 
-            this.textBox5.Enabled = false;
-            this.textBox5.Location = new System.Drawing.Point(102, 28);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(234, 20);
-            this.textBox5.TabIndex = 4;
+            this.textBox_outputfolderpath.Enabled = false;
+            this.textBox_outputfolderpath.Location = new System.Drawing.Point(102, 28);
+            this.textBox_outputfolderpath.Name = "textBox_outputfolderpath";
+            this.textBox_outputfolderpath.Size = new System.Drawing.Size(234, 20);
+            this.textBox_outputfolderpath.TabIndex = 4;
             // 
-            // button3
+            // button_browseoutputfolder
             // 
-            this.button3.Location = new System.Drawing.Point(355, 24);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Browse";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button_browseoutputfolder.Location = new System.Drawing.Point(355, 24);
+            this.button_browseoutputfolder.Name = "button_browseoutputfolder";
+            this.button_browseoutputfolder.Size = new System.Drawing.Size(75, 23);
+            this.button_browseoutputfolder.TabIndex = 5;
+            this.button_browseoutputfolder.Text = "Browse";
+            this.button_browseoutputfolder.UseVisualStyleBackColor = true;
+            this.button_browseoutputfolder.Click += new System.EventHandler(this.button_browseoutputfolder_Click);
             // 
             // label13
             // 
@@ -465,15 +466,15 @@
             this.label13.TabIndex = 3;
             this.label13.Text = "Output Directory";
             // 
-            // button2
+            // button_start
             // 
-            this.button2.Location = new System.Drawing.Point(447, 25);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Start";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button_start.Location = new System.Drawing.Point(447, 25);
+            this.button_start.Name = "button_start";
+            this.button_start.Size = new System.Drawing.Size(75, 23);
+            this.button_start.TabIndex = 5;
+            this.button_start.Text = "Start";
+            this.button_start.UseVisualStyleBackColor = true;
+            this.button_start.Click += new System.EventHandler(this.button_start_Click);
             // 
             // tabPage2
             // 
@@ -568,27 +569,27 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(6, 13);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Legend = "Legend1";
-            series1.MarkerColor = System.Drawing.Color.MidnightBlue;
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
-            series1.Name = "Series1";
-            series1.YValuesPerPoint = 2;
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Color = System.Drawing.Color.Purple;
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series5.Legend = "Legend1";
+            series5.MarkerColor = System.Drawing.Color.MidnightBlue;
+            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
+            series5.Name = "Series1";
+            series5.YValuesPerPoint = 2;
+            series6.BorderWidth = 3;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Color = System.Drawing.Color.Purple;
+            series6.Legend = "Legend1";
+            series6.Name = "Series2";
+            this.chart1.Series.Add(series5);
+            this.chart1.Series.Add(series6);
             this.chart1.Size = new System.Drawing.Size(662, 239);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -624,29 +625,29 @@
             // chart_peptide
             // 
             this.chart_peptide.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            chartArea2.Name = "ChartArea1";
-            this.chart_peptide.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart_peptide.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chart_peptide.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart_peptide.Legends.Add(legend4);
             this.chart_peptide.Location = new System.Drawing.Point(6, 16);
             this.chart_peptide.Name = "chart_peptide";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series3.Legend = "Legend1";
-            series3.MarkerColor = System.Drawing.Color.Black;
-            series3.MarkerSize = 7;
-            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series3.Name = "Series1";
-            series3.YValuesPerPoint = 2;
-            series4.BorderWidth = 2;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Color = System.Drawing.Color.Purple;
-            series4.Legend = "Legend1";
-            series4.MarkerSize = 7;
-            series4.Name = "Series3";
-            this.chart_peptide.Series.Add(series3);
-            this.chart_peptide.Series.Add(series4);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series7.Legend = "Legend1";
+            series7.MarkerColor = System.Drawing.Color.Black;
+            series7.MarkerSize = 7;
+            series7.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series7.Name = "Series1";
+            series7.YValuesPerPoint = 2;
+            series8.BorderWidth = 2;
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series8.Color = System.Drawing.Color.Purple;
+            series8.Legend = "Legend1";
+            series8.MarkerSize = 7;
+            series8.Name = "Series3";
+            this.chart_peptide.Series.Add(series7);
+            this.chart_peptide.Series.Add(series8);
             this.chart_peptide.Size = new System.Drawing.Size(662, 316);
             this.chart_peptide.TabIndex = 0;
             this.chart_peptide.Text = "chart1";
@@ -756,7 +757,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView_peptide;
         private System.Windows.Forms.DataGridView dataGridView1_records;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
@@ -773,8 +774,8 @@
         private System.Windows.Forms.TextBox textBox_peptideScore;
         private System.Windows.Forms.TextBox textBox_ElutionWindow;
         private System.Windows.Forms.TextBox textBox_massAccuracy;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox_outputfolderpath;
+        private System.Windows.Forms.Button button_browseoutputfolder;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button button_delete;

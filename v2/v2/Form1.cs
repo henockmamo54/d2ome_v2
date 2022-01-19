@@ -433,7 +433,7 @@ namespace v2
 
                 if (csvfilePaths.Count == 0)
                 {
-                    MessageBox.Show("This directory doesn't contain the necessary files. Please select another diroctory.");
+                    MessageBox.Show("This directory doesn't contain the necessary files. Please select another directory.");
                 }
                 else
                 {
