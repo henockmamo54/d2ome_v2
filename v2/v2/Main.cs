@@ -102,6 +102,12 @@ namespace v2
         private void button2_Click(object sender, EventArgs e)
         {
             Console.WriteLine("test");
+
+            TextWriter tw = new StreamWriter("SavedLists.txt");
+
+            tw.WriteLine(inputdata.ToList());
+            tw.Close();
+
         }
 
         private void Main_Load(object sender, EventArgs e)
