@@ -34,73 +34,6 @@ namespace v2
 
         }
 
-        //public bool check_inputDatagridIsIntheRightFormat()
-        //{
-        //    try
-        //    {
-        //        List<mzMlmzIDModel> gridviewboundedData = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MessageBox.Show("");
-        //    }
-
-        //    return false;
-
-        //}
-
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    FolderBrowserDialog dialog = new FolderBrowserDialog();
-        //    if (DialogResult.OK == dialog.ShowDialog())
-        //    {
-        //        string path = dialog.SelectedPath;
-
-        //        textBox1_mzmlidfiles.Text = path;
-
-        //        string[] filePaths = Directory.GetFiles(path);
-
-        //        var mzml = filePaths.Where(x => x.Contains(".mzML")).ToList();
-        //        var mzid = filePaths.Where(x => x.Contains(".mzid")).ToList();
-
-        //        if (mzml.Count() != mzid.Count())
-        //        {
-        //            MessageBox.Show("ERROR", "mzML and mzid files should be in matched pairs");
-        //            return;
-        //        }
-
-        //        else
-        //        {
-
-        //            foreach (var mz in mzml)
-        //            {
-        //                mzMlmzIDModel k = new mzMlmzIDModel();
-        //                k.mzML = mz;
-        //                k.mzID = mz.Replace(".mzML", ".mzid");
-        //                inputdata.Add(k);
-        //            }
-
-        //        }
-
-        //        dataGridView1_records.DataSource = inputdata;
-        //        this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-
-
-        //        //string[] filePaths = Directory.GetFiles(path);
-        //        //var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
-
-        //        //if (csvfilePaths.Count == 0)
-        //        //{
-        //        //    MessageBox.Show("This directory doesn't contain the necessary files. Please select another diroctory.");
-        //        //}
-        //        //else
-        //        //{
-        //        //    var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
-        //        //    comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
-        //        //}
-        //    }
-        //}
-
         private void button2_Click(object sender, EventArgs e)
         {
             #region files.txt
@@ -367,19 +300,5 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             }
         }
 
-        //private void button_delete_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        var index = dataGridView1_records.SelectedRows[0].Index;
-        //        inputdata.RemoveAt(index);
-        //        dataGridView1_records.DataSource = inputdata;
-        //        dataGridView1_records.SelectedRows.Clear();
-        //    }
-        //    catch (Exception ex1)
-        //    {
-        //        MessageBox.Show("Please select the row you want to delete.", "Error");
-        //    }
-        //}
     }
 }
