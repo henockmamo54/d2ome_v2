@@ -1472,6 +1472,7 @@ namespace VC_Form_Application {
 		OFDmzML->Multiselect = true;
 		OFDmzML->DefaultExt = ".mzML";
 		//OFDmzID->Filter = "*.mzML";
+		OFDmzML->Filter = "mzML files (*.mzML)|*.mzML";
 		OFDmzML->ShowDialog();
 
 		if (OFDmzML->FileNames->Length > 1)
@@ -1572,6 +1573,7 @@ namespace VC_Form_Application {
 
 		OFDmzID = gcnew OpenFileDialog;
 		OFDmzID->Multiselect = true;
+		OFDmzID->Filter = "mzid files (*.mzid)|*.mzid";
 		OFDmzID->ShowDialog();
 
 
