@@ -214,6 +214,15 @@ namespace v2
             dataGridView_peptide.AllowUserToResizeRows = false;
             dataGridView_peptide.RowHeadersWidthSizeMode =
                 DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+
+            // column selected hightlight
+            dataGridView_peptide.EnableHeadersVisualStyles = false;
+
+            foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
+            {
+                column.HeaderCell.Style.SelectionBackColor = Color.White;
+                column.HeaderCell.Style.SelectionForeColor = Color.Black;
+            }
         }
 
 
@@ -455,6 +464,14 @@ namespace v2
                 var rsquare = double.Parse(dataGridView_peptide.Rows[rowIndex].Cells[3].Value.ToString());
 
                 loadPeptideChart(temp, charge, rateconst, rsquare, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+
+                //foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
+                //{
+                //    column.HeaderCell.Style.BackColor = Color.White;
+                //    column.HeaderCell.Style.ForeColor = Color.White;
+                //    column.HeaderCell.Style.SelectionBackColor = Color.White;
+                //    column.HeaderCell.Style.SelectionForeColor = Color.White;
+                //}
 
                 //MessageBox.Show(temp);
             }
