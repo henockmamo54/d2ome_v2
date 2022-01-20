@@ -2574,7 +2574,7 @@ namespace VC_Form_Application {
 	private: System::Void Output_visualize_button_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		v2::FormLoader fl;
-		fl.startVisualizerForm();
+		fl.startVisualizerForm(Output_textBox->Text);
 	}
 
 	};

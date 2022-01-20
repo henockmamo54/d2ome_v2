@@ -21,6 +21,7 @@ Assembly PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken
 Class v2.Form1: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
     loaduiprops(): PrivateScope, Public, HideBySig
     loadProteinchart(ProtienchartDataValues): PrivateScope, Public, HideBySig
@@ -29,8 +30,9 @@ Class v2.Form1: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     exportchart(String, String): PrivateScope, Public, HideBySig
 Class v2.FormLoader: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
-    startVisualizerForm(): PrivateScope, Public, Static, HideBySig
+    startVisualizerForm(String): PrivateScope, Public, Static, HideBySig
 Class v2.Main: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName

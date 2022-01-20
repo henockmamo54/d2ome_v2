@@ -9,10 +9,14 @@ namespace v2
     public class FormLoader
     {
         public FormLoader() { }
-
-        public static void startVisualizerForm()
+        public FormLoader(string path)
         {
-            Form1 visual = new Form1();
+
+        }
+
+        public static void startVisualizerForm(string sourcepath)
+        {
+            Form1 visual = new Form1(sourcepath);
             visual.Show();
         }
     }

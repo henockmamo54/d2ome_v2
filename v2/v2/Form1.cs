@@ -28,6 +28,34 @@ namespace v2
         {
             InitializeComponent();
         }
+        public Form1(string path)
+        {
+            InitializeComponent();
+            if (path.Trim().Length > 0)
+            {
+                try
+                {
+                    txt_source.Text = path;
+
+                    string[] filePaths = Directory.GetFiles(path);
+                    var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
+
+                    if (csvfilePaths.Count == 0)
+                    {
+                        MessageBox.Show("This directory doesn't contain the necessary files. Please select another directory.");
+                    }
+                    else
+                    {
+                        var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
+                        comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Please select valid directory", "Error");
+                }
+            }
+        }
 
         public void loaduiprops()
         {
@@ -284,122 +312,132 @@ namespace v2
 
         private void button_exportPeptideChart_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if (DialogResult.OK == dialog.ShowDialog())
+            try
             {
-                string path = dialog.SelectedPath;
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                if (DialogResult.OK == dialog.ShowDialog())
+                {
+                    string path = dialog.SelectedPath;
 
-                if (exportchart(path, chart_peptide.Titles[0].Text))
-                {
-                    MessageBox.Show("Chart Exported!");
+                    if (exportchart(path, chart_peptide.Titles[0].Text))
+                    {
+                        MessageBox.Show("Chart Exported!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("! file not genrated");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("! file not genrated");
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
         }
 
         private void button_exportAllPeptideChart_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if (DialogResult.OK == dialog.ShowDialog())
+            try
             {
-                string path = dialog.SelectedPath;
-                //copy chart1
-                System.IO.MemoryStream myStream = new System.IO.MemoryStream();
-                Chart chart2 = new Chart();
-                chart_peptide.Serializer.Save(myStream);
-                chart2.Serializer.Load(myStream);
-
-                var selected = (from u in proteinExperimentData.peptides
-                                where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
-                                select u).Distinct().ToList();
-                int count = 1;
-                //foreach (Peptide p in proteinExperimentData.peptides)
-                foreach (Peptide p in selected)
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                if (DialogResult.OK == dialog.ShowDialog())
                 {
-                    //clear chart area
-                    chart2.Titles.Clear();
+                    string path = dialog.SelectedPath;
+                    //copy chart1
+                    System.IO.MemoryStream myStream = new System.IO.MemoryStream();
+                    Chart chart2 = new Chart();
+                    chart_peptide.Serializer.Save(myStream);
+                    chart2.Serializer.Load(myStream);
 
-                    #region experimental data plot
-
-                    // prepare the chart data
-                    var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
-                    chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
-
-                    #endregion
-
-                    #region expected data plot 
-
-                    var expected_chart_data = this.proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
-                    //
-                    List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
-                    List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
-
-                    if (p.Rateconst != null)
+                    var selected = (from u in proteinExperimentData.peptides
+                                    where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
+                                    select u).Distinct().ToList();
+                    int count = 1;
+                    //foreach (Peptide p in proteinExperimentData.peptides)
+                    foreach (Peptide p in selected)
                     {
-                        double io = (double)(p.M0 / 100);
-                        double neh = (double)(p.Exchangeable_Hydrogens);
-                        double k = (double)(p.Rateconst);
-                        double ph = 1.5574E-4;
-                        double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
+                        //clear chart area
+                        chart2.Titles.Clear();
 
+                        #region experimental data plot
 
-                        var temp_maxval = proteinExperimentData.Experiment_time.Max();
-                        var step = 0.1;
-                        for (int i = 0; i * step < temp_maxval; i++)
+                        // prepare the chart data
+                        var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
+                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+
+                        #endregion
+
+                        #region expected data plot 
+
+                        var expected_chart_data = this.proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
+                        //
+                        List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+                        List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
+
+                        if (p.Rateconst != null)
                         {
-                            double temp_X = step * i;
-                            x_val.Add(temp_X);
+                            double io = (double)(p.M0 / 100);
+                            double neh = (double)(p.Exchangeable_Hydrogens);
+                            double k = (double)(p.Rateconst);
+                            double ph = 1.5574E-4;
+                            double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
 
-                            var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
-                            var val2 = io * Math.Pow(Math.E, -1 * k * temp_X) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
 
-                            var val = val1 + val2;
-                            y_val.Add(val);
+                            var temp_maxval = proteinExperimentData.Experiment_time.Max();
+                            var step = 0.1;
+                            for (int i = 0; i * step < temp_maxval; i++)
+                            {
+                                double temp_X = step * i;
+                                x_val.Add(temp_X);
+
+                                var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                                var val2 = io * Math.Pow(Math.E, -1 * k * temp_X) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+
+                                var val = val1 + val2;
+                                y_val.Add(val);
+                            }
+                            chart2.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x => x).ToList(), y_val.OrderByDescending(x => x).ToList());
+
                         }
-                        chart2.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x => x).ToList(), y_val.OrderByDescending(x => x).ToList());
-
-                    }
-                    else { chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray()); }
+                        else { chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray()); }
 
 
 
-                    #endregion
+                        #endregion
 
 
-                    // chart title
-                    //chart2.Titles.Add(p.PeptideSeq + "(K=" + p.Rateconst.ToString() + ", " + ")");
-                    Title title = new Title();
-                    title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
-                    title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
-                    chart2.Titles.Add(title);
+                        // chart title
+                        //chart2.Titles.Add(p.PeptideSeq + "(K=" + p.Rateconst.ToString() + ", " + ")");
+                        Title title = new Title();
+                        title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
+                        title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
+                        chart2.Titles.Add(title);
 
-                    try
-                    {
-                        using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
+                        try
                         {
-                            chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
+                            using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
+                            {
+                                chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
 
-                            im.Save(path + @"\" + count.ToString() + "_" + p.PeptideSeq + "_" + p.Charge.ToString() + ".jpeg");
+                                im.Save(path + @"\" + count.ToString() + "_" + p.PeptideSeq + "_" + p.Charge.ToString() + ".jpeg");
+                            }
+
+                        }
+                        catch (Exception he)
+                        {
+
+                            Console.WriteLine("ERROR: exporting chart for " + (count + 1).ToString() + " " + p.PeptideSeq + "===>" + he.Message);
                         }
 
-                    }
-                    catch (Exception he)
-                    {
+                        count++;
 
-                        Console.WriteLine("ERROR: exporting chart for " + (count + 1).ToString() + " " + p.PeptideSeq + "===>" + he.Message);
                     }
 
-                    count++;
+                    MessageBox.Show("done!!");
 
                 }
-
-                MessageBox.Show("done!!");
-
             }
-
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error"); }
         }
 
         private void dataGridView_peptide_CellClick(object sender, DataGridViewCellEventArgs e)
