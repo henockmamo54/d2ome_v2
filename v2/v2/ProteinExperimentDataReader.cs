@@ -30,9 +30,9 @@ namespace v2
         double? MeanRateConst_CorrCutOff_median;
         double? MedianRateConst_RMSSCutOff_mean;
         double? MedianRateConst_RMSSCutOff_median;
-        double? StandDev_NumberPeptides_mean;
+        public double? StandDev_NumberPeptides_mean;
         double? StandDev_NumberPeptides_median;
-        double? TotalIonCurrent_1;
+        public double? TotalIonCurrent_1;
 
         // computed values
         List<RIA> RIAvalues = new List<RIA>();

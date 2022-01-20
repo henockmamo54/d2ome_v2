@@ -78,12 +78,15 @@ namespace v2
 
 
             // chart labels added 
-            chart1.ChartAreas[0].AxisX.Title = "Time (days)";
-            chart_peptide.ChartAreas[0].AxisX.Title = "Time (days)";
-            chart_peptide.ChartAreas[0].AxisY.Title = "Relative Isotope abundance \n of monoisotope";
+            chart1.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
+            chart_peptide.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
+
+            chart_peptide.ChartAreas[0].AxisY.Title = "Relative abundance \n of monoisotope";
+            chart1.ChartAreas[0].AxisY.Title = "Fractional protein \n synthesis";
             chart_peptide.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
 
             chart1.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
+            chart1.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
             chart_peptide.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
             chart_peptide.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
 
@@ -198,6 +201,7 @@ namespace v2
             dataGridView_peptide.Columns["IsotopeDeviation"].HeaderText = "Isotope Deviation";
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].HeaderText = "Exchangeable \nHydrogens";
             dataGridView_peptide.Columns["Rateconst"].HeaderText = "Rate \nconstant";
+            dataGridView_peptide.Columns["RSquare"].HeaderText = "R" + "\u00B2";
 
             //set size for the columns
             foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
@@ -310,6 +314,12 @@ namespace v2
 
         public bool exportchart(string path, string name)
         {
+
+
+            bool exists = System.IO.Directory.Exists(path);
+            if (!exists)
+                System.IO.Directory.CreateDirectory(path);
+
             try
             {
                 using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
@@ -334,7 +344,7 @@ namespace v2
                 FolderBrowserDialog dialog = new FolderBrowserDialog();
                 if (DialogResult.OK == dialog.ShowDialog())
                 {
-                    string path = dialog.SelectedPath;
+                    string path = dialog.SelectedPath + "\\" + comboBox_proteinNameSelector.SelectedValue.ToString();
 
                     if (exportchart(path, chart_peptide.Titles[0].Text))
                     {
@@ -359,7 +369,8 @@ namespace v2
                 FolderBrowserDialog dialog = new FolderBrowserDialog();
                 if (DialogResult.OK == dialog.ShowDialog())
                 {
-                    string path = dialog.SelectedPath;
+                    //string path = dialog.SelectedPath;
+                    string path = dialog.SelectedPath + "\\" + comboBox_proteinNameSelector.SelectedValue.ToString();
                     //copy chart1
                     System.IO.MemoryStream myStream = new System.IO.MemoryStream();
                     Chart chart2 = new Chart();
@@ -431,6 +442,9 @@ namespace v2
                         title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
                         chart2.Titles.Add(title);
 
+                        bool exists = System.IO.Directory.Exists(path);
+                        if (!exists)
+                            System.IO.Directory.CreateDirectory(path);
                         try
                         {
                             using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
@@ -460,27 +474,18 @@ namespace v2
 
         private void dataGridView_peptide_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
-                var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
-                var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[4].Value.ToString());
-                var rateconst = double.Parse(dataGridView_peptide.Rows[rowIndex].Cells[2].Value.ToString());
-                var rsquare = double.Parse(dataGridView_peptide.Rows[rowIndex].Cells[3].Value.ToString());
+            //int rowIndex = e.RowIndex;
+            //if (rowIndex >= 0)
+            //{
+            //    DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
+            //    var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
+            //    var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[4].Value.ToString());
+            //    var rateconst = double.Parse(dataGridView_peptide.Rows[rowIndex].Cells[2].Value.ToString());
+            //    var rsquare = double.Parse(dataGridView_peptide.Rows[rowIndex].Cells[3].Value.ToString());
 
-                loadPeptideChart(temp, charge, rateconst, rsquare, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            //    loadPeptideChart(temp, charge, rateconst, rsquare, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
-                //foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
-                //{
-                //    column.HeaderCell.Style.BackColor = Color.White;
-                //    column.HeaderCell.Style.ForeColor = Color.White;
-                //    column.HeaderCell.Style.SelectionBackColor = Color.White;
-                //    column.HeaderCell.Style.SelectionForeColor = Color.White;
-                //}
-
-                //MessageBox.Show(temp);
-            }
+            //}
         }
 
         private void btn_Browsefolder_Click(object sender, EventArgs e)
@@ -514,7 +519,7 @@ namespace v2
             string proteinName = comboBox_proteinNameSelector.SelectedValue.ToString();
 
             //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
-            string files_txt_path = txt_source.Text + @"\files.txt"; 
+            string files_txt_path = txt_source.Text + @"\files.txt";
             string quant_csv_path = txt_source.Text + @"\" + proteinName + ".Quant.csv";
             string RateConst_csv_path = txt_source.Text + @"\" + proteinName + ".RateConst.csv";
 
@@ -522,8 +527,8 @@ namespace v2
             if (File.Exists(temppath)) files_txt_path = temppath;
 
             if (!File.Exists(files_txt_path)) { MessageBox.Show("filex.txt is not available in the specified directory.", "Error"); return; }
-            if (!File.Exists(quant_csv_path)) { MessageBox.Show(proteinName + ".Quant.csv"+" is not available in the specified directory.", "Error"); return; }
-            if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv"+"filex.txt is not available in the specified directory.", "Error"); return; }
+            if (!File.Exists(quant_csv_path)) { MessageBox.Show(proteinName + ".Quant.csv" + " is not available in the specified directory.", "Error"); return; }
+            if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); return; }
 
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
 
@@ -536,7 +541,10 @@ namespace v2
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
             try
             {
-                label4_proteinRateConstantValue.Text = proteinExperimentData.MeanRateConst_CorrCutOff_mean.ToString();
+
+
+                label4_proteinRateConstantValue.Text = formatdoubletothreedecimalplace((double)proteinExperimentData.MeanRateConst_CorrCutOff_mean) + " \u00B1 " + formatdoubletothreedecimalplace((double)proteinExperimentData.StandDev_NumberPeptides_mean);
+                label5_Ic.Text = proteinExperimentData.TotalIonCurrent_1.ToString();
                 loadDataGridView();
 
                 loadProteinchart(chartdata);
@@ -552,19 +560,49 @@ namespace v2
 
         }
 
+        public string formatdoubletothreedecimalplace(double n)
+        {
+            var tempval = "";
+            if (n > 0.09999999) tempval = String.Format("{0:0.###}", n);
+            else if (n > 0.00999999) tempval = String.Format("{0:0.####}", n);
+            else if (n > 0.00099999) tempval = String.Format("{0:0.#####}", n);
+            else if (n > 0.00009999) tempval = String.Format("{0:0.######}", n);
+            else tempval = String.Format("{0:0.######}", n);
+
+            return tempval;
+        }
+
         private void dataGridView_peptide_SelectionChanged(object sender, EventArgs e)
         {
-            //int rowIndex = dataGridView_peptide.SelectedRows[0].Index;
-            //if (rowIndex >= 0)
-            //{
-            //    DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
-            //    var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
-            //    var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[5].Value.ToString());
+            //////int rowIndex = dataGridView_peptide.SelectedRows[0].Index;
+            //////if (rowIndex >= 0)
+            //////{
+            //////    DataGridViewRow row = dataGridView_peptide.Rows[rowIndex];
+            //////    var temp = dataGridView_peptide.Rows[rowIndex].Cells[0].Value.ToString();
+            //////    var charge = int.Parse(dataGridView_peptide.Rows[rowIndex].Cells[5].Value.ToString());
 
-            //    loadPeptideChart(temp, charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+            //////    loadPeptideChart(temp, charge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
-            //    //MessageBox.Show(temp);
-            //}
+            //////    //MessageBox.Show(temp);
+            //////}
+
+            if (dataGridView_peptide.SelectedRows.Count > 0)
+            {
+                
+                int indexofselctedrow= dataGridView_peptide.SelectedRows[0].Index;
+
+                if (indexofselctedrow >= 0)
+                {
+                    DataGridViewRow row = dataGridView_peptide.Rows[indexofselctedrow];
+                    var temp = dataGridView_peptide.Rows[indexofselctedrow].Cells[0].Value.ToString();
+                    var charge = int.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[4].Value.ToString());
+                    var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
+                    var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
+
+                    loadPeptideChart(temp, charge, rateconst, rsquare, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+
+                }
+            }
 
         }
     }

@@ -28,6 +28,7 @@ Class v2.Form1: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     loadDataGridView(): PrivateScope, Public, HideBySig
     loadPeptideChart(String, Int32, Double, Double, List`1, List`1): PrivateScope, Public, HideBySig
     exportchart(String, String): PrivateScope, Public, HideBySig
+    formatdoubletothreedecimalplace(Double): PrivateScope, Public, HideBySig
 Class v2.FormLoader: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
     Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
@@ -47,6 +48,8 @@ Class v2.ProteinExperimentDataReader: AutoLayout, AnsiClass, Class, Public, Befo
     System.Collections.Generic.List`1[v2.Model.Peptide] peptides : Public
     System.Collections.Generic.List`1[v2.Model.RateConstant] rateConstants : Public
     System.Nullable`1[System.Double] MeanRateConst_CorrCutOff_mean : Public
+    System.Nullable`1[System.Double] StandDev_NumberPeptides_mean : Public
+    System.Nullable`1[System.Double] TotalIonCurrent_1 : Public
     System.Collections.Generic.List`1[v2.Model.RIA] mergedRIAvalues : Public
     System.Collections.Generic.List`1[v2.ProteinExperimentDataReader+ExpectedI0Value] expectedI0Values : Public
   Methods:
