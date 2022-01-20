@@ -151,7 +151,8 @@ namespace v2
 
             var temp_xval = new List<double>();
             var temp_maxval = proteinExperimentData.Experiment_time.Max();
-            var step = 0.1;
+            //var step = 0.1;
+            var step = temp_maxval / 300;
             List<double> yval = new List<double>();
 
             for (int i = 0; i * step < temp_maxval; i++)
@@ -251,7 +252,8 @@ namespace v2
                     double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
 
                     var temp_maxval = proteinExperimentData.Experiment_time.Max();
-                    var step = 0.1;
+                    //var step = 0.1;
+                    var step = temp_maxval / 300;
                     for (int i = 0; i * step < temp_maxval; i++)
                     {
                         double temp_X = step * i;
@@ -384,7 +386,8 @@ namespace v2
 
 
                             var temp_maxval = proteinExperimentData.Experiment_time.Max();
-                            var step = 0.1;
+                            //var step = 0.1;
+                            var step = temp_maxval / 300;
                             for (int i = 0; i * step < temp_maxval; i++)
                             {
                                 double temp_X = step * i;
