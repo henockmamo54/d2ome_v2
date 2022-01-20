@@ -114,8 +114,14 @@ namespace v2
             chart1.Legends[0].Font = new Font(chart1.Legends[0].Font.FontFamily, 9);
 
             // chartline tension
-            chart_peptide.Series["Series3"]["LineTension"] = "0.0";
-            chart1.Series["Series2"]["LineTension"] = "0.0";
+            chart_peptide.Series["Series3"]["LineTension"] = "0.1";
+            chart1.Series["Series2"]["LineTension"] = "0.1";
+
+            chart_peptide.Series["Series3"].BorderWidth = 1;
+            chart1.Series["Series2"].BorderWidth = 1;
+
+            chart_peptide.Series["Series3"].Color = Color.Navy;
+            chart1.Series["Series2"].Color = Color.Navy;
 
 
 
@@ -152,7 +158,7 @@ namespace v2
             var temp_xval = new List<double>();
             var temp_maxval = proteinExperimentData.Experiment_time.Max();
             //var step = 0.1;
-            var step = temp_maxval / 300;
+            var step = temp_maxval / 200.0;
             List<double> yval = new List<double>();
 
             for (int i = 0; i * step < temp_maxval; i++)
@@ -262,7 +268,7 @@ namespace v2
 
                     var temp_maxval = proteinExperimentData.Experiment_time.Max();
                     //var step = 0.1;
-                    var step = temp_maxval / 300;
+                    var step = temp_maxval / 200.0;
                     for (int i = 0; i * step < temp_maxval; i++)
                     {
                         double temp_X = step * i;
@@ -396,7 +402,7 @@ namespace v2
 
                             var temp_maxval = proteinExperimentData.Experiment_time.Max();
                             //var step = 0.1;
-                            var step = temp_maxval / 300;
+                            var step = temp_maxval / 200.0;
                             for (int i = 0; i * step < temp_maxval; i++)
                             {
                                 double temp_X = step * i;
@@ -506,9 +512,14 @@ namespace v2
             //MessageBox.Show(comboBox_proteinNameSelector.SelectedValue.ToString());
             // plot chart inofrormation for the selected protien
             string proteinName = comboBox_proteinNameSelector.SelectedValue.ToString();
-            string files_txt_path = txt_source.Text + @"\files.centroid.txt";
+
+            //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
+            string files_txt_path = txt_source.Text + @"\files.txt"; 
             string quant_csv_path = txt_source.Text + @"\" + proteinName + ".Quant.csv";
             string RateConst_csv_path = txt_source.Text + @"\" + proteinName + ".RateConst.csv";
+
+            var temppath = files_txt_path.Replace("files.txt", "files.centroid.txt");
+            if (File.Exists(temppath)) files_txt_path = temppath;
 
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
 
