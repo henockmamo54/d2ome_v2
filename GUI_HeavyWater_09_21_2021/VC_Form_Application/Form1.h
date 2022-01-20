@@ -76,8 +76,6 @@ namespace VC_Form_Application {
 			fl= gcnew v2::FormLoader();
 			fl.startVisualizerForm();*/
 
-			FormLoader fl;
-			fl.startVisualizerForm();
 
 
 		}
@@ -108,7 +106,8 @@ namespace VC_Form_Application {
 	private: System::Windows::Forms::Label^ Information_label;
 	private: System::Windows::Forms::Label^ Output_label;
 	private: System::Windows::Forms::TextBox^ Output_textBox;
-	private: System::Windows::Forms::Button^ Output_browse_button;
+	private: System::Windows::Forms::Button^ Output_browse_button; 
+	private: System::Windows::Forms::Button^ Output_visualize_button;
 	private: System::Windows::Forms::ComboBox^ Enrichment_comboBox;
 	private: System::Windows::Forms::Label^ Elution_label;
 	private: System::Windows::Forms::TextBox^ Elution_textBox;
@@ -118,7 +117,7 @@ namespace VC_Form_Application {
 
 	private: System::Windows::Forms::ComboBox^ Rate_Constant_comboBox2;
 
-		   //static int finished;
+			 //static int finished;
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
@@ -373,6 +372,7 @@ namespace VC_Form_Application {
 			this->Output_label = (gcnew System::Windows::Forms::Label());
 			this->Output_textBox = (gcnew System::Windows::Forms::TextBox());
 			this->Output_browse_button = (gcnew System::Windows::Forms::Button());
+			this->Output_visualize_button = (gcnew System::Windows::Forms::Button());
 			this->Enrichment_comboBox = (gcnew System::Windows::Forms::ComboBox());
 			this->Elution_label = (gcnew System::Windows::Forms::Label());
 			this->Elution_textBox = (gcnew System::Windows::Forms::TextBox());
@@ -1296,6 +1296,19 @@ namespace VC_Form_Application {
 			this->Output_browse_button->Text = L"Browse";
 			this->Output_browse_button->UseVisualStyleBackColor = true;
 			this->Output_browse_button->Click += gcnew System::EventHandler(this, &Form1::Output_browse_button_Click);
+
+			// Output_visualize_button
+			// 
+			this->Output_visualize_button->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->Output_visualize_button->Location = System::Drawing::Point(953, 360);
+			this->Output_visualize_button->Name = L"Output_visualize_button";
+			this->Output_visualize_button->Size = System::Drawing::Size(75, 23);
+			this->Output_visualize_button->TabIndex = 72;
+			this->Output_visualize_button->Text = L"visualize";
+			this->Output_visualize_button->UseVisualStyleBackColor = true;
+			this->Output_visualize_button->Click += gcnew System::EventHandler(this, &Form1::Output_visualize_button_Click);
+			// 
+
 			// 
 			// Enrichment_comboBox
 			// 
@@ -1342,6 +1355,7 @@ namespace VC_Form_Application {
 			this->Controls->Add(this->Elution_label);
 			this->Controls->Add(this->Enrichment_comboBox);
 			this->Controls->Add(this->Output_browse_button);
+			this->Controls->Add(this->Output_visualize_button);
 			this->Controls->Add(this->Output_textBox);
 			this->Controls->Add(this->Output_label);
 			this->Controls->Add(this->enrichment_label);
@@ -1516,20 +1530,20 @@ namespace VC_Form_Application {
 			mzML_textBox->Clear();
 		}
 	}
-		   ////private:System::Void mzML_textBox_DragDrop(System::Object ^  sender,System::Windows::Forms::DragEventArgs ^  e)
-		   //   {
-		   //		  int i;
-		   //		  String ^s;
-		   //
-		   //	   // Get start position to drop the text.
-		   //	   i = mzML_textBox->SelectionStart;
-		   //	   s = mzML_textBox->Text->Substring(i);
-		   //	   mzML_textBox->Text = mzML_textBox->Text->Substring(0,i);
-		   //
-		   //	   // Drop the text on to the RichTextBox.
-		   //	   String ^str = String::Concat(mzML_textBox->Text, e->Data->GetData(DataFormats->Text)->ToString()); 
-		   //	   mzML_textBox->Text = String::Concat(str, s);
-		   //   }
+			 ////private:System::Void mzML_textBox_DragDrop(System::Object ^  sender,System::Windows::Forms::DragEventArgs ^  e)
+			 //   {
+			 //		  int i;
+			 //		  String ^s;
+			 //
+			 //	   // Get start position to drop the text.
+			 //	   i = mzML_textBox->SelectionStart;
+			 //	   s = mzML_textBox->Text->Substring(i);
+			 //	   mzML_textBox->Text = mzML_textBox->Text->Substring(0,i);
+			 //
+			 //	   // Drop the text on to the RichTextBox.
+			 //	   String ^str = String::Concat(mzML_textBox->Text, e->Data->GetData(DataFormats->Text)->ToString()); 
+			 //	   mzML_textBox->Text = String::Concat(str, s);
+			 //   }
 
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
@@ -1632,7 +1646,7 @@ namespace VC_Form_Application {
 
 	}
 
-		   //
+			 //
 
 
 	private: System::Void mzML_RichtextBox_DragEnter(System::Object^ sender,
@@ -1694,13 +1708,13 @@ namespace VC_Form_Application {
 		mzID_RichtextBox->Text = String::Concat(str, s);
 	}
 
-		   //
+			 //
 
 
 
 	private: void ThreadProcUnsafe()
 	{
-		char* s1, * s2;
+		char* s1, *s2;
 
 		char szCommandLine[2046];
 
@@ -1805,82 +1819,82 @@ namespace VC_Form_Application {
 
 
 	}
-		  //private: System::Void Quant_File_Browse_Click(System::Object^  sender, System::EventArgs^  e) 
-		  //		 {
-		  //
-		  //			  /*fbd->ShowDialog();				  
-		  //			  Quant_File_textBox->Text = fbd->SelectedPath;*/
-		  //			  OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
-		  //			  openFileDialog1->ShowDialog();
-		  //			 /* Quant_File_textBox->Text = openFileDialog1->FileName;
-		  //			  filename3 = Quant_File_textBox->Text;*/
-		  //
-		  //		 }
-		  //private: System::Void Output_Dir_Browse_Click(System::Object^  sender, System::EventArgs^  e) 
-		  //		 {
-		  //
-		  //			 fbd->ShowDialog();				  
-		  //			 Output_Dir_textBox->Text = fbd->SelectedPath;
-		  //			 filename4 = Output_Dir_textBox->Text;
-		  //
-		  //		 }
+			//private: System::Void Quant_File_Browse_Click(System::Object^  sender, System::EventArgs^  e) 
+			//		 {
+			//
+			//			  /*fbd->ShowDialog();				  
+			//			  Quant_File_textBox->Text = fbd->SelectedPath;*/
+			//			  OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
+			//			  openFileDialog1->ShowDialog();
+			//			 /* Quant_File_textBox->Text = openFileDialog1->FileName;
+			//			  filename3 = Quant_File_textBox->Text;*/
+			//
+			//		 }
+			//private: System::Void Output_Dir_Browse_Click(System::Object^  sender, System::EventArgs^  e) 
+			//		 {
+			//
+			//			 fbd->ShowDialog();				  
+			//			 Output_Dir_textBox->Text = fbd->SelectedPath;
+			//			 filename4 = Output_Dir_textBox->Text;
+			//
+			//		 }
 
 
 
 
-		  //public: void ShowString(String ^text)                         ///////////////This function cllas another thread to update the status bar///////////////////
-		  //{  if(this->ProgressBarText->InvokeRequired)
-		  //	  this->ProgressBarText->Invoke(gcnew UpdateTextCallback(this, &Form1::UpdateText),gcnew array<Object^>{text});													
-		  //	else
-		  //	{
-		  //		if(text!="")
-		  //		{
-		  //			this->progressBar1->Value += 1;
-		  //			this->ProgressBarText->Text = text;
-		  //			this->ProgressBarText->Refresh();
-		  //			System::Threading::Thread::Sleep(1000);
-		  //		}
-		  //		else
-		  //		{
-		  //			 this->progressBar1->Value += 0;
-		  //			 this->ProgressBarText->Refresh();
-		  //			 
-		  //		}
-		  //	}
-		  //}
-		  //public: delegate void UpdateTextCallback(String ^text); //Delegate functiondelegate void UpdateTextCallback();
-		  //public: void UpdateText(String ^text)
-		  //{
-		  //
-		  //	// Set the textbox text.
-		  //	//String ^str = gcnew String(text.c_str());
-		  //	
-		  //		this->progressBar1->Value += 1;
-		  //		this->ProgressBarText->Text = text;
-		  //		this->ProgressBarText->Refresh();
-		  //		System::Threading::Thread::Sleep(1000);
-		  //	
-		  //
-		  //}
+			//public: void ShowString(String ^text)                         ///////////////This function cllas another thread to update the status bar///////////////////
+			//{  if(this->ProgressBarText->InvokeRequired)
+			//	  this->ProgressBarText->Invoke(gcnew UpdateTextCallback(this, &Form1::UpdateText),gcnew array<Object^>{text});													
+			//	else
+			//	{
+			//		if(text!="")
+			//		{
+			//			this->progressBar1->Value += 1;
+			//			this->ProgressBarText->Text = text;
+			//			this->ProgressBarText->Refresh();
+			//			System::Threading::Thread::Sleep(1000);
+			//		}
+			//		else
+			//		{
+			//			 this->progressBar1->Value += 0;
+			//			 this->ProgressBarText->Refresh();
+			//			 
+			//		}
+			//	}
+			//}
+			//public: delegate void UpdateTextCallback(String ^text); //Delegate functiondelegate void UpdateTextCallback();
+			//public: void UpdateText(String ^text)
+			//{
+			//
+			//	// Set the textbox text.
+			//	//String ^str = gcnew String(text.c_str());
+			//	
+			//		this->progressBar1->Value += 1;
+			//		this->ProgressBarText->Text = text;
+			//		this->ProgressBarText->Refresh();
+			//		System::Threading::Thread::Sleep(1000);
+			//	
+			//
+			//}
 
 
 
-		  /*
-		  *
-		  *    This function creates the files.txt and quant.state
-		  *
-		  *
-		  *
-		  */
+			/*
+			*
+			*    This function creates the files.txt and quant.state
+			*
+			*
+			*
+			*/
 
-		  ////////////////////////////////////////////////////////GUI Action class definition//////////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////GUI Action class definition//////////////////////////////////////////////////////////////////////
 	private: System::Void Start_button_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		//Read_Params(filename3);
 
 		//Caller_mzML(filename1 + filename2);
 
-		char* s1, * s2, * s3;
+		char* s1, *s2, *s3;
 
 		int mzML_counter, mzID_counter, time_hour_counter, i, time_counter;
 
@@ -1892,7 +1906,7 @@ namespace VC_Form_Application {
 
 		List <String^>^ sBWE = gcnew List <String^>;
 
-		FILE* fp_files_txt, * fp_quant_state;
+		FILE* fp_files_txt, *fp_quant_state;
 
 		String^ sTemp = gcnew String("");
 
@@ -2515,23 +2529,23 @@ namespace VC_Form_Application {
 
 	}
 
-		   //private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
-		   //		 {
-		   //			
-		   //
-		   //			  if(this->progressBar1->Value == this->progressBar1->Maximum)
-		   //			 {
-		   //				 this->timer1->Stop();
-		   //				 MessageBox::Show("Finished... Please check the output directory for files\n");
-		   //				 this->Start_button->Enabled = true;
-		   //				 this->progressBar1->Value = 0;
-		   //				 this->ProgressBarText->Text="";
-		   //				 this->progressBar1->Refresh();
-		   //				 //this->ControlBox = true;
-		   //			 }
-		   //
-		   //
-		   //		 }
+			 //private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
+			 //		 {
+			 //			
+			 //
+			 //			  if(this->progressBar1->Value == this->progressBar1->Maximum)
+			 //			 {
+			 //				 this->timer1->Stop();
+			 //				 MessageBox::Show("Finished... Please check the output directory for files\n");
+			 //				 this->Start_button->Enabled = true;
+			 //				 this->progressBar1->Value = 0;
+			 //				 this->ProgressBarText->Text="";
+			 //				 this->progressBar1->Refresh();
+			 //				 //this->ControlBox = true;
+			 //			 }
+			 //
+			 //
+			 //		 }
 	private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void Enrichment_radioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -2548,6 +2562,7 @@ namespace VC_Form_Application {
 	}
 	private: System::Void MS1_comboBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
+
 	private: System::Void Output_browse_button_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 
@@ -2555,6 +2570,13 @@ namespace VC_Form_Application {
 		Output_textBox->Text = fbd->SelectedPath;
 		filename4 = Output_textBox->Text;
 	}
+
+	private: System::Void Output_visualize_button_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		v2::FormLoader fl;
+		fl.startVisualizerForm();
+	}
+
 	};
 
 }
