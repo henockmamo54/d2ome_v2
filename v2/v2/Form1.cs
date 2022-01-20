@@ -544,7 +544,7 @@ namespace v2
 
 
                 label4_proteinRateConstantValue.Text = formatdoubletothreedecimalplace((double)proteinExperimentData.MeanRateConst_CorrCutOff_mean) + " \u00B1 " + formatdoubletothreedecimalplace((double)proteinExperimentData.StandDev_NumberPeptides_mean);
-                label5_Ic.Text = proteinExperimentData.TotalIonCurrent_1.ToString();
+                label5_Ic.Text = ((double)proteinExperimentData.TotalIonCurrent_1).ToString("G2");
                 loadDataGridView();
 
                 loadProteinchart(chartdata);
@@ -588,8 +588,8 @@ namespace v2
 
             if (dataGridView_peptide.SelectedRows.Count > 0)
             {
-                
-                int indexofselctedrow= dataGridView_peptide.SelectedRows[0].Index;
+
+                int indexofselctedrow = dataGridView_peptide.SelectedRows[0].Index;
 
                 if (indexofselctedrow >= 0)
                 {
@@ -604,6 +604,43 @@ namespace v2
                 }
             }
 
+        }
+
+        private void button_exportProteinChart_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                if (DialogResult.OK == dialog.ShowDialog())
+                {
+                    string path = dialog.SelectedPath + "\\" + comboBox_proteinNameSelector.SelectedValue.ToString();
+
+                    bool exists = System.IO.Directory.Exists(path);
+                    if (!exists)
+                        System.IO.Directory.CreateDirectory(path);
+
+                    try
+                    {
+                        using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                        {
+                            chart1.DrawToBitmap(im, new Rectangle(0, 0, chart1.Width, chart1.Height));
+
+                            im.Save(path + @"\" + comboBox_proteinNameSelector.SelectedValue.ToString() + ".jpeg");
+                        }
+
+                        MessageBox.Show("Chart Exported!");
+                    }
+                    catch (Exception exx)
+                    {
+                        MessageBox.Show("! file not genrated");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
     }
 }
