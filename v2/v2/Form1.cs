@@ -521,6 +521,10 @@ namespace v2
             var temppath = files_txt_path.Replace("files.txt", "files.centroid.txt");
             if (File.Exists(temppath)) files_txt_path = temppath;
 
+            if (!File.Exists(files_txt_path)) { MessageBox.Show("filex.txt is not available in the specified directory.", "Error"); return; }
+            if (!File.Exists(quant_csv_path)) { MessageBox.Show(proteinName + ".Quant.csv"+" is not available in the specified directory.", "Error"); return; }
+            if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv"+"filex.txt is not available in the specified directory.", "Error"); return; }
+
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
 
 
