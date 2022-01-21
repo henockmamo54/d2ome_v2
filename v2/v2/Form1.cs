@@ -203,6 +203,7 @@ namespace v2
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].HeaderText = "Exchangeable \nHydrogens";
             dataGridView_peptide.Columns["Rateconst"].HeaderText = "Rate \nconstant";
             dataGridView_peptide.Columns["RSquare"].HeaderText = "R" + "\u00B2";
+            dataGridView_peptide.Columns["RMSE_value"].HeaderText = "RMSE";
 
             //set size for the columns
             foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
@@ -210,12 +211,15 @@ namespace v2
                 column.MinimumWidth = 70;
             }
             dataGridView_peptide.Columns["Charge"].Width = 50;
+            dataGridView_peptide.Columns["RSquare"].Width = 50;
+            dataGridView_peptide.Columns["RMSE_value"].Width = 50;
             dataGridView_peptide.Columns["Rateconst"].Width = 90;
             dataGridView_peptide.Columns["PeptideSeq"].MinimumWidth = 170;
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].MinimumWidth = 100;
 
             //set number formationg for the columns
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
+            dataGridView_peptide.Columns["RMSE_value"].DefaultCellStyle.Format = "#0.####";
 
             // resizeable columns
             dataGridView_peptide.AllowUserToResizeColumns = true;

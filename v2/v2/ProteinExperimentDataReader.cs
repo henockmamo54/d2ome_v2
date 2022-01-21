@@ -284,6 +284,7 @@ namespace v2
 
                     double RSquare = 1 - (rss / ss);
                     r.RSquare = RSquare;
+                    r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
                 }
                 catch (Exception e)
                 {

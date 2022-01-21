@@ -26,7 +26,7 @@ Class v2.Form1: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     loaduiprops(): PrivateScope, Public, HideBySig
     loadProteinchart(ProtienchartDataValues): PrivateScope, Public, HideBySig
     loadDataGridView(): PrivateScope, Public, HideBySig
-    loadPeptideChart(String, Int32, Double, Double, List`1, List`1): PrivateScope, Public, HideBySig
+    loadPeptideChart(String, Int32, Double, Double, Double, List`1, List`1): PrivateScope, Public, HideBySig
     exportchart(String, String): PrivateScope, Public, HideBySig
     formatdoubletothreedecimalplace(Double): PrivateScope, Public, HideBySig
 Class v2.FormLoader: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
@@ -156,6 +156,7 @@ Class v2.Model.Peptide: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     System.Nullable`1[System.Double] M4 'get set' : 
     System.Nullable`1[System.Double] M5 'get set' : 
     System.Nullable`1[System.Double] Total_Labeling 'get set' : 
+    System.Nullable`1[System.Double] RMSE_value 'get set' : 
   Methods:
     get_PeptideSeq(): PrivateScope, Public, HideBySig, SpecialName
     set_PeptideSeq(String): PrivateScope, Public, HideBySig, SpecialName
@@ -187,6 +188,8 @@ Class v2.Model.Peptide: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     set_M5(Nullable`1): PrivateScope, Public, HideBySig, SpecialName
     get_Total_Labeling(): PrivateScope, Public, HideBySig, SpecialName
     set_Total_Labeling(Nullable`1): PrivateScope, Public, HideBySig, SpecialName
+    get_RMSE_value(): PrivateScope, Public, HideBySig, SpecialName
+    set_RMSE_value(Nullable`1): PrivateScope, Public, HideBySig, SpecialName
 Class v2.Model.RateConstant: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Properties:
