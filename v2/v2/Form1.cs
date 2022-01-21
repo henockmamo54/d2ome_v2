@@ -236,7 +236,7 @@ namespace v2
         }
 
 
-        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
+        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
         {
             try
             {
@@ -301,7 +301,8 @@ namespace v2
 
                 Title title = new Title();
                 title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
-                title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ")";
+                //title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ")";
+                title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###0") + ", charge = " + charge.ToString() + ")";
                 chart_peptide.Titles.Add(title);
 
             }
@@ -315,6 +316,7 @@ namespace v2
         public bool exportchart(string path, string name)
         {
 
+            name= name.Replace("/","");
 
             bool exists = System.IO.Directory.Exists(path);
             if (!exists)
@@ -352,7 +354,7 @@ namespace v2
                     }
                     else
                     {
-                        MessageBox.Show("! file not genrated");
+                        MessageBox.Show("File not genrated!");
                     }
                 }
             }
@@ -439,7 +441,8 @@ namespace v2
                         //chart2.Titles.Add(p.PeptideSeq + "(K=" + p.Rateconst.ToString() + ", " + ")");
                         Title title = new Title();
                         title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
-                        title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
+                        //title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
+                        title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###0") + ", charge = " + ((double)p.Charge).ToString() + ")";
                         chart2.Titles.Add(title);
 
                         bool exists = System.IO.Directory.Exists(path);
@@ -551,7 +554,7 @@ namespace v2
                 groupBox3_proteinchart.Text = proteinName;
 
                 var p = proteinExperimentData.peptides.First();
-                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
             }
             catch (Exception xe)
             {
@@ -598,8 +601,9 @@ namespace v2
                     var charge = int.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[4].Value.ToString());
                     var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
                     var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
+                    var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
 
-                    loadPeptideChart(temp, charge, rateconst, rsquare, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                    loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
 
                 }
             }
