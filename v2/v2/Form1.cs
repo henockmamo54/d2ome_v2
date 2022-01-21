@@ -172,6 +172,7 @@ namespace v2
             }
 
             chart1.Series["Series2"].Points.DataBindXY(temp_xval, yval);
+            chart1.ChartAreas[0].AxisX.Interval = temp_maxval/10;
 
         }
         public void loadDataGridView()
@@ -285,6 +286,9 @@ namespace v2
                         y_val.Add(val);
                     }
                     chart_peptide.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x => x).ToList(), y_val.OrderByDescending(x => x).ToList());
+
+                    // set x axis chart interval
+                    chart_peptide.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
                 }
                 else
                 {
@@ -428,6 +432,9 @@ namespace v2
                                 y_val.Add(val);
                             }
                             chart2.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x => x).ToList(), y_val.OrderByDescending(x => x).ToList());
+
+                            // set x axis chart interval
+                            chart2.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
 
                         }
                         else { chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray()); }
