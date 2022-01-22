@@ -287,11 +287,12 @@ Struct v2.ProteinExperimentDataReader+ProtienchartDataValues: AutoLayout, AnsiCl
     System.Collections.Generic.List`1[System.Double] y : Public
 Struct v2.ProteinExperimentDataReader+ExpectedI0Value: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
   :System.ValueType
-    Void .ctor(System.String, Int32, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String, Int32, Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
     System.String peptideseq : Public
     Int32 time : Public
     Double value : Public
+    System.Nullable`1[System.Double] charge : Public
 Struct v2.Helper.ReadFilesInfo_txt+FileContent: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
   :System.ValueType
     Void .ctor(Int32, System.String, System.String, Double, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName

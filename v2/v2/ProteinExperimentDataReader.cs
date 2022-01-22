@@ -224,8 +224,21 @@ namespace v2
 
                 for (int i = 0; i < peptides.Count(); i++)
                 {
-                    foreach (int t in this.Experiment_time)
+                    if (peptides[i].Rateconst == null) continue;
+
+                    List<double> mytimelist = new List<double>();
+                    foreach (var x in Experiment_time) mytimelist.Add(x);
+
+                    var temp_maxval = Experiment_time.Max();
+                    var step = temp_maxval / 50.0;
+                    for (int j = 0; j * step < temp_maxval; j++)
+                    { mytimelist.Add(j * step); }
+
+
+                    foreach (int t in mytimelist)
                     {
+                        //foreach (int t in this.Experiment_time)
+                        //{
                         try
                         {
                             io = (double)(peptides[i].M0 / 100);
@@ -271,6 +284,8 @@ namespace v2
 
                 for (int i = 0; i < peptides.Count(); i++)
                 {
+                    if (peptides[i].Rateconst == null) continue;
+
                     var r = peptides[i];
                     var experimentalvalue = experimentalvalue_at_t0.Where(x => x.charge == r.Charge).ToList();
                     experimentalvalue = experimentalvalue.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
@@ -278,7 +293,16 @@ namespace v2
 
                     if (temp_experimentalvalue.Count != 1) continue;
 
-                    foreach (int t in this.Experiment_time)
+                    List<double> mytimelist = new List<double>();
+                    foreach (var x in Experiment_time) mytimelist.Add(x);
+
+                    var temp_maxval = Experiment_time.Max();
+                    var step = temp_maxval / 50.0;
+                    for (int j = 0; j * step < temp_maxval; j++)
+                    { mytimelist.Add(j * step); }
+
+
+                    foreach (int t in mytimelist)
                     {
                         try
                         {
