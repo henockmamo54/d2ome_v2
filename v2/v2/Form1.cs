@@ -401,19 +401,20 @@ namespace v2
                         #region experimental data plot
 
                         // prepare the chart data
-                        var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
+                        var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
                         chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
                         #endregion
 
                         #region expected data plot 
 
-                        var expected_chart_data = this.proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq).OrderBy(x => x.time).ToArray();
+                        var expected_chart_data = this.proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
                         //
                         List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
                         List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
 
-                        if (p.Rateconst != null)
+                        //if (p.Rateconst != null)
+                        if (false)
                         {
                             double io = (double)(p.M0 / 100);
                             double neh = (double)(p.Exchangeable_Hydrogens);
