@@ -172,7 +172,7 @@ namespace v2
             }
 
             chart1.Series["Series2"].Points.DataBindXY(temp_xval, yval);
-            chart1.ChartAreas[0].AxisX.Interval = temp_maxval/10;
+            chart1.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
 
         }
         public void loadDataGridView()
@@ -241,7 +241,7 @@ namespace v2
         }
 
 
-        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<ProteinExperimentDataReader.ExpectedI0Value> expectedI0Values)
+        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<ExpectedI0Value> expectedI0Valuespassedvalue)
         {
             try
             {
@@ -261,12 +261,13 @@ namespace v2
 
                 #region expected data plot 
 
-                var expected_chart_data = expectedI0Values.Where(x => x.peptideseq == peptideSeq).OrderBy(x => x.time).ToArray();
+                var expected_chart_data = expectedI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
                 List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
                 List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
                 var pep = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq).FirstOrDefault();
 
-                if (pep != null)
+                //if (pep != null)
+                if (false)
                 {
                     // add additional data points to make the graph smooth
                     double io = (double)(pep.M0 / 100);
@@ -324,7 +325,7 @@ namespace v2
         public bool exportchart(string path, string name)
         {
 
-            name= name.Replace("/","");
+            name = name.Replace("/", "");
 
             bool exists = System.IO.Directory.Exists(path);
             if (!exists)
@@ -551,6 +552,7 @@ namespace v2
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.mergeMultipleRIAPerDay2();
             proteinExperimentData.computeExpectedCurvePoints();
+            proteinExperimentData.computeExpectedCurvePointsBasedOnExperimentalIo();
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
             try
@@ -565,7 +567,7 @@ namespace v2
                 groupBox3_proteinchart.Text = proteinName;
 
                 var p = proteinExperimentData.peptides.First();
-                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
             }
             catch (Exception xe)
             {
@@ -614,7 +616,7 @@ namespace v2
                     var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
                     var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
 
-                    loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.expectedI0Values);
+                    loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
 
                 }
             }

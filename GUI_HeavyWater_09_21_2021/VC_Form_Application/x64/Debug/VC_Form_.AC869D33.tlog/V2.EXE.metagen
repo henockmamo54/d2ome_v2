@@ -53,6 +53,7 @@ Class v2.ProteinExperimentDataReader: AutoLayout, AnsiClass, Class, Public, Befo
     System.Collections.Generic.List`1[v2.Model.RIA] mergedRIAvalues : Public
     System.Collections.Generic.List`1[v2.ProteinExperimentDataReader+ExpectedI0Value] expectedI0Values : Public
     System.Collections.Generic.List`1[v2.ProteinExperimentDataReader+ExpectedI0Value] expectedI0Values_withExperimentalIO : Public
+    System.Collections.Generic.List`1[v2.ProteinExperimentDataReader+ExpectedI0Value] temp_expectedI0Values : Public
   Methods:
     loadAllExperimentData(): PrivateScope, Public, HideBySig
     computeRIAPerExperiment(): PrivateScope, Public, HideBySig

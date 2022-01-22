@@ -38,6 +38,8 @@ namespace v2
         List<RIA> RIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvalues = new List<RIA>();
         public List<ExpectedI0Value> expectedI0Values = new List<ExpectedI0Value>();
+        public List<ExpectedI0Value> expectedI0Values_withExperimentalIO = new List<ExpectedI0Value>();
+        public List<ExpectedI0Value> temp_expectedI0Values = new List<ExpectedI0Value>();
 
         public ProteinExperimentDataReader(string files_txt_path, string quant_csv_path, string RateConst_csv_path)
         {
@@ -236,8 +238,62 @@ namespace v2
 
                             var val = val1 + val2;
 
-                            ExpectedI0Value expectedI0Value = new ExpectedI0Value(peptides[i].PeptideSeq, t, val);
+                            ExpectedI0Value expectedI0Value = new ExpectedI0Value(peptides[i].PeptideSeq, t, val, (double)peptides[i].Charge);
                             expectedI0Values.Add(expectedI0Value);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error => computeExpectedCurvePoints(), " + ex.Message);
+                            continue;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception e) { Console.WriteLine("Error => computeExpectedCurvePoints(), " + e.Message); }
+
+
+        }
+
+        public void computeExpectedCurvePointsBasedOnExperimentalIo()
+        {
+            try
+            {
+                double ph = 1.5574E-4;
+                double pw = filecontents[filecontents.Count - 1].BWE;
+                double io = 0;
+                double neh = 0;
+                double k = 0;
+
+                var experimentalvalue_at_t0 = mergedRIAvalues.Where(x => x.time == 0).ToList();
+
+
+
+                for (int i = 0; i < peptides.Count(); i++)
+                {
+                    var r = peptides[i];
+                    var experimentalvalue = experimentalvalue_at_t0.Where(x => x.charge == r.Charge).ToList();
+                    experimentalvalue = experimentalvalue.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
+                    var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
+
+                    if (temp_experimentalvalue.Count != 1) continue;
+
+                    foreach (int t in this.Experiment_time)
+                    {
+                        try
+                        {
+                            io = (double)(temp_experimentalvalue.FirstOrDefault().RIA_value);
+                            neh = (double)(peptides[i].Exchangeable_Hydrogens);
+                            k = (double)(peptides[i].Rateconst);
+
+                            var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                            var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+
+
+                            var val = val1 + val2;
+
+                            ExpectedI0Value expectedI0Value_withExperimentalIO = new ExpectedI0Value(peptides[i].PeptideSeq, t, val, (double)peptides[i].Charge);
+                            expectedI0Values_withExperimentalIO.Add(expectedI0Value_withExperimentalIO);
                         }
                         catch (Exception ex)
                         {
@@ -255,6 +311,7 @@ namespace v2
 
         public void computeRSquare()
         {
+            temp_expectedI0Values = new List<ExpectedI0Value>();
 
             //foreach (RateConstant r in rateConstants)
             foreach (Peptide r in this.peptides)
@@ -262,35 +319,81 @@ namespace v2
                 try
                 {
                     var experimentalvalue = mergedRIAvalues.Where(x => x.charge == r.Charge).ToList();
-                    experimentalvalue = mergedRIAvalues.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
-
-                    var temp_computedRIAValue = expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq).ToList();
-
+                    experimentalvalue = experimentalvalue.Where(x => x.peptideSeq == r.PeptideSeq).ToList();
                     var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
                     var meanval_ria = temp_experimentalvalue.Average(x => x.RIA_value);
 
-                    double ss = 0;
-                    double rss = 0;
+                    var temp_computedRIAValue = expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
+                    var temp_computedRIAValue_withexperimentalIO = expectedI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
 
-                    foreach (var p in temp_experimentalvalue)
+                    if (temp_computedRIAValue_withexperimentalIO.Count == 0)
                     {
-                        if (p.RIA_value != null)
+
+                        double ss = 0;
+                        double rss = 0;
+
+                        foreach (var p in temp_experimentalvalue)
                         {
-                            var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.time).First().value;
-                            ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
-                            rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
+                            if (p.RIA_value != null)
+                            {
+                                var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.time).First().value;
+                                ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
+                                rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
+                            }
                         }
+
+                        double RSquare = 1 - (rss / ss);
+                        r.RSquare = RSquare;
+                        r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
+                        //temp_expectedI0Values.AddRange(temp_computedRIAValue);
+                        foreach (var x in temp_computedRIAValue) temp_expectedI0Values.Add(x);
                     }
 
-                    double RSquare = 1 - (rss / ss);
-                    r.RSquare = RSquare;
-                    r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
+                    else
+                    {
+                        double ss = 0;
+                        double rss_mo = 0;
+                        double rss_io = 0;
+
+                        foreach (var p in temp_experimentalvalue)
+                        {
+                            if (p.RIA_value != null)
+                            {
+                                var computedRIAValue_mo = temp_computedRIAValue.Where(x => x.time == p.time).First().value;
+                                var computedRIAValue_io = temp_computedRIAValue_withexperimentalIO.Where(x => x.time == p.time).First().value;
+
+                                ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
+                                rss_mo = rss_mo + Math.Pow((double)(p.RIA_value - computedRIAValue_mo), 2);
+                                rss_io = rss_io + Math.Pow((double)(p.RIA_value - computedRIAValue_io), 2);
+                            }
+                        }
+
+                        var rss = rss_mo < rss_io ? rss_mo : rss_io;
+                        double RSquare = 1 - (rss / ss);
+                        r.RSquare = RSquare;
+                        r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
+
+                        if (rss_mo < rss_io)
+                        {
+                            foreach (var x in temp_computedRIAValue) temp_expectedI0Values.Add(x);
+                            //temp_expectedI0Values.AddRange(temp_computedRIAValue);
+                        }
+                        else
+                        {
+                            //temp_expectedI0Values.AddRange(temp_computedRIAValue_withexperimentalIO);
+                            foreach (var x in temp_computedRIAValue_withexperimentalIO) temp_expectedI0Values.Add(x);
+                        }
+
+                    }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("Error => computeRSquare(), " + e.Message);
                 }
             }
+
+            expectedI0Values = new List<ExpectedI0Value>();
+            expectedI0Values = temp_expectedI0Values;
 
         }
 
@@ -401,12 +504,14 @@ namespace v2
             public string peptideseq;
             public int time;
             public double value;
+            public double? charge;
 
-            public ExpectedI0Value(string peptideSeq, int t, double val)
+            public ExpectedI0Value(string peptideSeq, int t, double val, double charge)
             {
                 peptideseq = peptideSeq;
                 time = t;
                 value = val;
+                this.charge = charge;
             }
 
         }
