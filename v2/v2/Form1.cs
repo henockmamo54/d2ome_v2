@@ -556,25 +556,28 @@ namespace v2
 
             //////    //MessageBox.Show(temp);
             //////}
-
-            if (dataGridView_peptide.SelectedRows.Count > 0)
+            try
             {
-
-                int indexofselctedrow = dataGridView_peptide.SelectedRows[0].Index;
-
-                if (indexofselctedrow >= 0)
+                if (dataGridView_peptide.SelectedRows.Count > 0)
                 {
-                    DataGridViewRow row = dataGridView_peptide.Rows[indexofselctedrow];
-                    var temp = dataGridView_peptide.Rows[indexofselctedrow].Cells[0].Value.ToString();
-                    var charge = int.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[4].Value.ToString());
-                    var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
-                    var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
-                    var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
 
-                    loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
+                    int indexofselctedrow = dataGridView_peptide.SelectedRows[0].Index;
 
+                    if (indexofselctedrow >= 0)
+                    {
+                        DataGridViewRow row = dataGridView_peptide.Rows[indexofselctedrow];
+                        var temp = dataGridView_peptide.Rows[indexofselctedrow].Cells[0].Value.ToString();
+                        var charge = int.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[4].Value.ToString());
+                        var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
+                        var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
+                        var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
+
+                        loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
+
+                    }
                 }
             }
+            catch (Exception ex) { }
 
         }
 
