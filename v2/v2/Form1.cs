@@ -93,11 +93,11 @@ namespace v2
 
 
             // chart add legend
-            chart_peptide.Series["Series3"].LegendText = "Theoretical value";
-            chart_peptide.Series["Series1"].LegendText = "Experimental Value";
+            chart_peptide.Series["Series3"].LegendText = "Theoretical fit";
+            chart_peptide.Series["Series1"].LegendText = "Experimental value";
 
-            chart1.Series["Series2"].LegendText = "Theoretical value";
-            chart1.Series["Series1"].LegendText = "Experimental Value";
+            chart1.Series["Series2"].LegendText = "Theoretical fit";
+            chart1.Series["Series1"].LegendText = "Experimental value";
 
             // chart legend size
             chart_peptide.Legends[0].Position.Auto = false;
@@ -172,7 +172,11 @@ namespace v2
             }
 
             chart1.Series["Series2"].Points.DataBindXY(temp_xval, yval);
+
             chart1.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
+            chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
+            chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+
 
         }
         public void loadDataGridView()
@@ -294,10 +298,16 @@ namespace v2
 
                     // set x axis chart interval
                     chart_peptide.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
+                    chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
+                    chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
                 }
                 else
                 {
                     chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
+                    // set x axis chart interval
+                    chart_peptide.ChartAreas[0].AxisX.Interval = x_val.Max() / 10;
+                    chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
+                    chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
                 }
 
 
@@ -311,8 +321,12 @@ namespace v2
                 Title title = new Title();
                 title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
                 //title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ")";
-                title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###0") + ", charge = " + charge.ToString() + ")";
+                title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###0") + ", z = " + charge.ToString() + ")";
                 chart_peptide.Titles.Add(title);
+
+                chart_peptide.ChartAreas[0].AxisY.Maximum = y_val.Max() + 0.1;
+
+
 
             }
             catch (Exception e)
@@ -441,9 +455,20 @@ namespace v2
 
                             // set x axis chart interval
                             chart2.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
+                            chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
+                            chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         }
-                        else { chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray()); }
+                        else
+                        {
+                            chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
+
+                            // set x axis chart interval
+                            chart2.ChartAreas[0].AxisX.Interval = expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                            chart_peptide.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
+                            chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+
+                        }
 
 
 
@@ -457,6 +482,8 @@ namespace v2
                         //title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
                         title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###0") + ", charge = " + ((double)p.Charge).ToString() + ")";
                         chart2.Titles.Add(title);
+
+                        chart_peptide.ChartAreas[0].AxisY.Maximum = (double)(chart_data.Select(x => x.RIA_value).Max() + 0.1);
 
                         bool exists = System.IO.Directory.Exists(path);
                         if (!exists)

@@ -27,4 +27,3 @@ F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.GenerateResource.cache
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.CoreCompileInputs.cache
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.exe
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.pdb
-F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.AssemblyReference.cache

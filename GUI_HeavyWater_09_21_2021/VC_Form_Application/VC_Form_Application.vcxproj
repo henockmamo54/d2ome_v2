@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>C:\Users\hmdebern\Desktop\New folder</OutDir>
+    <OutDir>C:\Users\hmdebern\Desktop\GUI</OutDir>
     <TargetName>d2ome_SetUp_GUI</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
