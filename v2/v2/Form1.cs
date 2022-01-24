@@ -592,7 +592,7 @@ namespace v2
                 loadDataGridView();
 
                 loadProteinchart(chartdata);
-                groupBox3_proteinchart.Text = proteinName;
+                //groupBox3_proteinchart.Text = proteinName;
 
                 var p = proteinExperimentData.peptides.First();
                 loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
@@ -686,6 +686,26 @@ namespace v2
             {
                 MessageBox.Show(ex.Message, "Error");
             }
+        }
+
+        private void splitContainer4_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void splitContainer3_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button_exportProteinChart_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_exportProteinChart_Click_2(object sender, EventArgs e)
+        {
+
         }
     }
 }
