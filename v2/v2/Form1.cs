@@ -702,7 +702,7 @@ namespace v2
                     string outputpath = dialog.SelectedPath;
                     string sourcepath = txt_source.Text;
 
-                    MessageBox.Show("This process will take longer time to complete. please check the exported graphs in "+outputpath,"Message");
+                    MessageBox.Show("This process will take longer time to complete. please check the exported graphs in " + outputpath, "Message");
 
                     if (outputpath.Length > 0 & sourcepath.Length > 0)
                     {
@@ -710,7 +710,7 @@ namespace v2
                         //exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall);
 
                         //allProteinExporterThread = new Thread(new ThreadStart(exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall)));
-                        allProteinExporterThread = new Thread(() => exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall));
+                        allProteinExporterThread = new Thread(() => exp.Export_all_ProteinChart(progressBar_exportall));
                         allProteinExporterThread.Start();
 
                     }

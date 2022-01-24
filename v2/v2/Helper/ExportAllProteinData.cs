@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -22,7 +23,7 @@ namespace v2.Helper
             this.outputPath = outputPath;
         }
 
-        public void Export_all_ProteinChart(Chart chart_peptide, System.Windows.Forms.ProgressBar progressBar_exportall)
+        public void Export_all_ProteinChart(System.Windows.Forms.ProgressBar progressBar_exportall)
         {
 
             string[] filePaths = Directory.GetFiles(sourcePath);
@@ -79,7 +80,7 @@ namespace v2.Helper
                     ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
                     // for each peptide draw the chart 
-                    draw_peptideChart(proteinExperimentData, outputPath + "\\" + proteinName, chart_peptide);
+                    draw_peptideChart(proteinExperimentData, outputPath + "\\" + proteinName);
 
                     //progressBar_exportall.Value = progressBar_exportall.Value + 1;
 
@@ -90,7 +91,94 @@ namespace v2.Helper
 
         }
 
-        private void draw_peptideChart(ProteinExperimentDataReader proteinExperimentData, string outputpath, Chart chart_peptide)
+        public Chart preppare_chart()
+        {
+
+            Chart chart2 = new Chart();
+
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+
+            chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
+            chartArea1.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chart2.Legends.Add(legend1);
+            chart2.Location = new System.Drawing.Point(6, 16);
+            chart2.Name = "chart_peptide";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series1.Legend = "Legend1";
+            series1.MarkerColor = System.Drawing.Color.Black;
+            series1.MarkerSize = 7;
+            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series1.Name = "Series1";
+            series1.YValuesPerPoint = 2;
+            series2.BorderWidth = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Color = System.Drawing.Color.Purple;
+            series2.Legend = "Legend1";
+            series2.Name = "Series3";
+            chart2.Series.Add(series1);
+            chart2.Series.Add(series2);
+            chart2.Size = new System.Drawing.Size(662, 316);
+            chart2.TabIndex = 0;
+            chart2.Text = "chart1";
+
+
+            // remove grid lines
+            chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+
+
+
+
+            // chart labels added  
+            chart2.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
+
+            chart2.ChartAreas[0].AxisY.Title = "Relative abundance \n of monoisotope";
+            chart2.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
+
+            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Legends[0].Font.FontFamily, 10);
+            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Legends[0].Font.FontFamily, 10);
+
+
+
+            // chart add legend
+            chart2.Series["Series3"].LegendText = "Theoretical fit";
+            chart2.Series["Series1"].LegendText = "Experimental value";
+
+
+            // chart legend size
+            chart2.Legends[0].Position.Auto = false;
+            chart2.Legends[0].Position.X = 65;
+            chart2.Legends[0].Position.Y = 10;
+            chart2.Legends[0].Position.Width = 30;
+            chart2.Legends[0].Position.Height = 15;
+
+
+            // cahrt font
+            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, 9);
+
+            // chartline tension
+            chart2.Series["Series3"]["LineTension"] = "0.1";
+
+            chart2.Series["Series3"].BorderWidth = 1;
+
+            chart2.Series["Series3"].Color = Color.Navy;
+
+            return chart2;
+        }
+        private void draw_peptideChart(ProteinExperimentDataReader proteinExperimentData, string outputpath)
         {
             try
             {
@@ -98,11 +186,10 @@ namespace v2.Helper
 
                 {
 
-                    //copy chart1
-                    System.IO.MemoryStream myStream = new System.IO.MemoryStream();
-                    Chart chart2 = new Chart();
-                    chart_peptide.Serializer.Save(myStream);
-                    chart2.Serializer.Load(myStream);
+
+                    Chart chart2 = preppare_chart();
+
+
 
                     var selected = (from u in proteinExperimentData.peptides
                                     where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
@@ -163,9 +250,13 @@ namespace v2.Helper
                         {
                             using (Bitmap im = new Bitmap(chart2.Width, chart2.Height))
                             {
-                                chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
-
-                                im.Save(outputpath + @"\" + count.ToString() + "_" + p.PeptideSeq + "_" + p.Charge.ToString() + ".jpeg");
+                                try
+                                {
+                                    chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
+                                    im.Save(outputpath + @"\" + count.ToString() + "_" + p.PeptideSeq + "_" + p.Charge.ToString() + ".jpeg");
+                                }
+                                catch (ThreadAbortException e)
+                                { }
                             }
 
                         }
