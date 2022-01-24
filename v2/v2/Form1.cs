@@ -13,6 +13,7 @@ using v2.Helper;
 using v2.Model;
 using System.Windows.Forms.DataVisualization.Charting;
 using static v2.ProteinExperimentDataReader;
+using System.Threading;
 
 namespace v2
 {
@@ -23,6 +24,7 @@ namespace v2
         string quant_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
         string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
         ProteinExperimentDataReader proteinExperimentData;
+        Thread allProteinExporterThread;
 
         public Form1()
         {
@@ -321,7 +323,7 @@ namespace v2
                 Title title = new Title();
                 title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
                 //title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ")";
-                title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###0") + ", z = " + charge.ToString() + ")";
+                title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ", z = " + charge.ToString() + ")";
                 chart_peptide.Titles.Add(title);
 
                 chart_peptide.ChartAreas[0].AxisY.Maximum = y_val.Max() + 0.1;
@@ -455,8 +457,8 @@ namespace v2
 
                             // set x axis chart interval
                             chart2.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
-                            chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
-                            chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+                            chart2.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
+                            chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         }
                         else
@@ -465,8 +467,8 @@ namespace v2
 
                             // set x axis chart interval
                             chart2.ChartAreas[0].AxisX.Interval = expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
-                            chart_peptide.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
-                            chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+                            chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
+                            chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         }
 
@@ -480,10 +482,10 @@ namespace v2
                         Title title = new Title();
                         title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
                         //title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
-                        title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###0") + ", charge = " + ((double)p.Charge).ToString() + ")";
+                        title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
                         chart2.Titles.Add(title);
 
-                        chart_peptide.ChartAreas[0].AxisY.Maximum = (double)(chart_data.Select(x => x.RIA_value).Max() + 0.1);
+                        chart2.ChartAreas[0].AxisY.Maximum = (double)(chart_data.Select(x => x.RIA_value).Max() + 0.1);
 
                         bool exists = System.IO.Directory.Exists(path);
                         if (!exists)
@@ -685,6 +687,60 @@ namespace v2
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //ExportAllProteinData
+
+            try
+            {
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                if (DialogResult.OK == dialog.ShowDialog())
+                {
+                    string outputpath = dialog.SelectedPath;
+                    string sourcepath = txt_source.Text;
+
+                    MessageBox.Show("This process will take longer time to complete. please check the exported graphs in "+outputpath,"Message");
+
+                    if (outputpath.Length > 0 & sourcepath.Length > 0)
+                    {
+                        ExportAllProteinData exp = new ExportAllProteinData(sourcepath, outputpath);
+                        //exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall);
+
+                        //allProteinExporterThread = new Thread(new ThreadStart(exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall)));
+                        allProteinExporterThread = new Thread(() => exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall));
+                        allProteinExporterThread.Start();
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select a valid directory!");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void button2_cancelled_Click(object sender, EventArgs e)
+        {
+            if (allProteinExporterThread == null) return;
+            try
+            {
+                allProteinExporterThread.Abort();
+                MessageBox.Show("Export cacelled!");
+                progressBar_exportall.Value = 0;
+                allProteinExporterThread = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.Message);
+                allProteinExporterThread = null;
             }
         }
     }

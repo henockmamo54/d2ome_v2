@@ -36,6 +36,7 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView_peptide = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -43,6 +44,7 @@
             this.chart_peptide = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button_exportAllPeptideChart = new System.Windows.Forms.Button();
             this.groupBox3_proteinchart = new System.Windows.Forms.GroupBox();
+            this.button_exportProteinChart = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.txt_source = new System.Windows.Forms.TextBox();
             this.btn_Browsefolder = new System.Windows.Forms.Button();
@@ -53,7 +55,9 @@
             this.label4_proteinRateConstantValue = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5_Ic = new System.Windows.Forms.Label();
-            this.button_exportProteinChart = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.progressBar_exportall = new System.Windows.Forms.ProgressBar();
+            this.button2_cancelled = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_peptide)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -144,11 +148,11 @@
             // 
             // button_exportAllPeptideChart
             // 
-            this.button_exportAllPeptideChart.Location = new System.Drawing.Point(344, 653);
+            this.button_exportAllPeptideChart.Location = new System.Drawing.Point(122, 653);
             this.button_exportAllPeptideChart.Name = "button_exportAllPeptideChart";
-            this.button_exportAllPeptideChart.Size = new System.Drawing.Size(75, 23);
+            this.button_exportAllPeptideChart.Size = new System.Drawing.Size(104, 23);
             this.button_exportAllPeptideChart.TabIndex = 9;
-            this.button_exportAllPeptideChart.Text = "Export All";
+            this.button_exportAllPeptideChart.Text = "Export all peptide";
             this.button_exportAllPeptideChart.UseVisualStyleBackColor = true;
             this.button_exportAllPeptideChart.Click += new System.EventHandler(this.button_exportAllPeptideChart_Click);
             // 
@@ -161,6 +165,16 @@
             this.groupBox3_proteinchart.Size = new System.Drawing.Size(674, 258);
             this.groupBox3_proteinchart.TabIndex = 10;
             this.groupBox3_proteinchart.TabStop = false;
+            // 
+            // button_exportProteinChart
+            // 
+            this.button_exportProteinChart.Location = new System.Drawing.Point(593, 229);
+            this.button_exportProteinChart.Name = "button_exportProteinChart";
+            this.button_exportProteinChart.Size = new System.Drawing.Size(75, 23);
+            this.button_exportProteinChart.TabIndex = 10;
+            this.button_exportProteinChart.Text = "Export Graph";
+            this.button_exportProteinChart.UseVisualStyleBackColor = true;
+            this.button_exportProteinChart.Click += new System.EventHandler(this.button_exportProteinChart_Click);
             // 
             // chart1
             // 
@@ -271,22 +285,43 @@
             this.label5_Ic.Size = new System.Drawing.Size(0, 13);
             this.label5_Ic.TabIndex = 19;
             // 
-            // button_exportProteinChart
+            // button1
             // 
-            this.button_exportProteinChart.Location = new System.Drawing.Point(593, 229);
-            this.button_exportProteinChart.Name = "button_exportProteinChart";
-            this.button_exportProteinChart.Size = new System.Drawing.Size(75, 23);
-            this.button_exportProteinChart.TabIndex = 10;
-            this.button_exportProteinChart.Text = "Export Graph";
-            this.button_exportProteinChart.UseVisualStyleBackColor = true;
-            this.button_exportProteinChart.Click += new System.EventHandler(this.button_exportProteinChart_Click);
+            this.button1.Location = new System.Drawing.Point(10, 653);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(106, 23);
+            this.button1.TabIndex = 20;
+            this.button1.Text = "Export all protein";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // progressBar_exportall
+            // 
+            this.progressBar_exportall.Location = new System.Drawing.Point(12, 682);
+            this.progressBar_exportall.Name = "progressBar_exportall";
+            this.progressBar_exportall.Size = new System.Drawing.Size(380, 23);
+            this.progressBar_exportall.TabIndex = 21;
+            // 
+            // button2_cancelled
+            // 
+            this.button2_cancelled.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2_cancelled.BackgroundImage")));
+            this.button2_cancelled.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button2_cancelled.Location = new System.Drawing.Point(393, 682);
+            this.button2_cancelled.Name = "button2_cancelled";
+            this.button2_cancelled.Size = new System.Drawing.Size(29, 23);
+            this.button2_cancelled.TabIndex = 22;
+            this.button2_cancelled.UseVisualStyleBackColor = true;
+            this.button2_cancelled.Click += new System.EventHandler(this.button2_cancelled_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1153, 682);
+            this.ClientSize = new System.Drawing.Size(1153, 711);
+            this.Controls.Add(this.button2_cancelled);
+            this.Controls.Add(this.progressBar_exportall);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label5_Ic);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label4_proteinRateConstantValue);
@@ -334,6 +369,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5_Ic;
         private System.Windows.Forms.Button button_exportProteinChart;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ProgressBar progressBar_exportall;
+        private System.Windows.Forms.Button button2_cancelled;
     }
 }
 
