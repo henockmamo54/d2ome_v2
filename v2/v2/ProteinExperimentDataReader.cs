@@ -83,16 +83,69 @@ namespace v2
             foreach (Peptide p in peptides)
             {
                 var rateconst = rateConstants.Where(x => x.PeptideSeq == p.PeptideSeq).ToList();
-                if (rateconst.Count > 0)
+                if (rateconst.Count == 1)
                 {
                     p.Rateconst = rateconst[0].RateConstant_value;
 
-                    var AbsoluteIsotopeError = rateconst[0].AbsoluteIsotopeError;
+                    var AbsoluteIsotopeError = (double)rateconst[0].AbsoluteIsotopeError;
                     if (AbsoluteIsotopeError == -100) p.IsotopeDeviation = 1.0;
                     else p.IsotopeDeviation = AbsoluteIsotopeError;
-                }
 
+                }
+                else if (rateconst.Count > 1)
+                {
+                    var mult_pep = peptides.Where(x => x.PeptideSeq == p.PeptideSeq).OrderBy(x => x.order).ToList();
+                    rateconst = rateconst.OrderBy(x => x.order).ToList();
+                    for (int t = 0; t < rateconst.Count; t++)
+                    {
+                        var rp = mult_pep[t];
+                        rp.Rateconst = rateconst[t].RateConstant_value;
+
+                        var AbsoluteIsotopeError = (double)rateconst[t].AbsoluteIsotopeError;
+                        if (AbsoluteIsotopeError == -100) rp.IsotopeDeviation = 1.0;
+                        else rp.IsotopeDeviation = AbsoluteIsotopeError;
+                    }
+
+
+                }
             }
+            //for (int i = 0; i < peptides.Count; i++)
+            //{
+
+
+
+            //    Console.WriteLine(i.ToString());
+
+            //    var p = peptides[i];
+            //    var rateconst = rateConstants.Where(x => x.PeptideSeq == p.PeptideSeq).ToList();
+
+            //    Console.WriteLine(p.PeptideSeq + rateconst.Count.ToString());
+
+            //    if (p.Rateconst == null & rateconst.Count > 0)
+            //    {
+            //        int countofRC = rateconst.Count();
+            //        double AbsoluteIsotopeError = 0;
+            //        for (int j = 0; j < countofRC; j++)
+            //        {
+            //            try
+            //            {
+            //                p = peptides[i + j];
+            //                p.Rateconst = rateconst[j].RateConstant_value;
+
+            //                AbsoluteIsotopeError = (double)rateconst[j].AbsoluteIsotopeError;
+            //                if (AbsoluteIsotopeError == -100) p.IsotopeDeviation = 1.0;
+            //                else p.IsotopeDeviation = AbsoluteIsotopeError;
+            //            }
+            //            catch { }
+
+            //        }
+
+
+
+            //        Console.WriteLine(i.ToString());
+            //    }
+
+            //}
         }
         public void computeRIAPerExperiment()
         {
@@ -267,7 +320,6 @@ namespace v2
 
 
         }
-
         public void computeExpectedCurvePointsBasedOnExperimentalIo()
         {
             try
@@ -332,7 +384,6 @@ namespace v2
 
 
         }
-
         public void computeRSquare()
         {
             temp_expectedI0Values = new List<ExpectedI0Value>();
@@ -420,7 +471,6 @@ namespace v2
             expectedI0Values = temp_expectedI0Values;
 
         }
-
         public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot()
         {
             List<double> xval = new List<double>();
@@ -467,7 +517,6 @@ namespace v2
             return new ProtienchartDataValues(xval, yval);
 
         }
-
         public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot2()
         {
             List<double> xval = new List<double>();
@@ -511,7 +560,6 @@ namespace v2
             return new ProtienchartDataValues(xval, yval);
 
         }
-
         public struct ProtienchartDataValues
         {
             public List<double> x;
