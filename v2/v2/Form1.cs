@@ -197,6 +197,7 @@ namespace v2
             dataGridView_peptide.Columns["M3"].Visible = false;
             dataGridView_peptide.Columns["M4"].Visible = false;
             dataGridView_peptide.Columns["M5"].Visible = false;
+            dataGridView_peptide.Columns["order"].Visible = false;
 
             //rename column name
             dataGridView_peptide.Columns["PeptideSeq"].HeaderText = "Peptide";
