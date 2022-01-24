@@ -36,7 +36,6 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView_peptide = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -304,7 +303,7 @@
             // 
             // button2_cancelled
             // 
-            this.button2_cancelled.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2_cancelled.BackgroundImage")));
+            this.button2_cancelled.BackgroundImage = global::v2.Properties.Resources.x1;
             this.button2_cancelled.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button2_cancelled.Location = new System.Drawing.Point(393, 682);
             this.button2_cancelled.Name = "button2_cancelled";
