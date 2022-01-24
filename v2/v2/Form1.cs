@@ -1,14 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using v2.Helper;
 using v2.Model;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -272,46 +268,11 @@ namespace v2
                 List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
                 var pep = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq).FirstOrDefault();
 
-                //if (pep != null)
-                if (false)
-                {
-                    // add additional data points to make the graph smooth
-                    double io = (double)(pep.M0 / 100);
-                    double neh = (double)(pep.Exchangeable_Hydrogens);
-                    double k = (double)(pep.Rateconst);
-                    double ph = 1.5574E-4;
-                    double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
-
-                    var temp_maxval = proteinExperimentData.Experiment_time.Max();
-                    //var step = 0.1;
-                    var step = temp_maxval / 200.0;
-                    for (int i = 0; i * step < temp_maxval; i++)
-                    {
-                        double temp_X = step * i;
-                        x_val.Add(temp_X);
-
-                        var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
-                        var val2 = io * Math.Pow(Math.E, -1 * k * temp_X) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
-
-                        var val = val1 + val2;
-                        y_val.Add(val);
-                    }
-                    chart_peptide.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x => x).ToList(), y_val.OrderByDescending(x => x).ToList());
-
-                    // set x axis chart interval
-                    chart_peptide.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
-                    chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
-                    chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-                }
-                else
-                {
-                    chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
-                    // set x axis chart interval
-                    chart_peptide.ChartAreas[0].AxisX.Interval = x_val.Max() / 10;
-                    chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
-                    chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-                }
-
+                chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
+                // set x axis chart interval
+                chart_peptide.ChartAreas[0].AxisX.Interval = x_val.Max() / 10;
+                chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
+                chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
 
 
@@ -429,48 +390,12 @@ namespace v2
                         List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
                         List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
 
-                        //if (p.Rateconst != null)
-                        if (false)
-                        {
-                            double io = (double)(p.M0 / 100);
-                            double neh = (double)(p.Exchangeable_Hydrogens);
-                            double k = (double)(p.Rateconst);
-                            double ph = 1.5574E-4;
-                            double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
+                        chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
 
-
-                            var temp_maxval = proteinExperimentData.Experiment_time.Max();
-                            //var step = 0.1;
-                            var step = temp_maxval / 200.0;
-                            for (int i = 0; i * step < temp_maxval; i++)
-                            {
-                                double temp_X = step * i;
-                                x_val.Add(temp_X);
-
-                                var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
-                                var val2 = io * Math.Pow(Math.E, -1 * k * temp_X) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
-
-                                var val = val1 + val2;
-                                y_val.Add(val);
-                            }
-                            chart2.Series["Series3"].Points.DataBindXY(x_val.OrderBy(x => x).ToList(), y_val.OrderByDescending(x => x).ToList());
-
-                            // set x axis chart interval
-                            chart2.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
-                            chart2.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
-                            chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-
-                        }
-                        else
-                        {
-                            chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
-
-                            // set x axis chart interval
-                            chart2.ChartAreas[0].AxisX.Interval = expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
-                            chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
-                            chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-
-                        }
+                        // set x axis chart interval
+                        chart2.ChartAreas[0].AxisX.Interval = expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                        chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
+                        chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
 
 

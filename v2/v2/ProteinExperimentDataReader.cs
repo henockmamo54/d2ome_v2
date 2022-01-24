@@ -283,12 +283,12 @@ namespace v2
                     foreach (var x in Experiment_time) mytimelist.Add(x);
 
                     var temp_maxval = Experiment_time.Max();
-                    var step = temp_maxval / 50.0;
+                    var step = temp_maxval / 200.0;
                     for (int j = 0; j * step < temp_maxval; j++)
                     { mytimelist.Add(j * step); }
 
 
-                    foreach (int t in mytimelist)
+                    foreach (double t in mytimelist)
                     {
                         //foreach (int t in this.Experiment_time)
                         //{
@@ -349,12 +349,12 @@ namespace v2
                     foreach (var x in Experiment_time) mytimelist.Add(x);
 
                     var temp_maxval = Experiment_time.Max();
-                    var step = temp_maxval / 50.0;
+                    var step = temp_maxval / 200.0;
                     for (int j = 0; j * step < temp_maxval; j++)
                     { mytimelist.Add(j * step); }
 
 
-                    foreach (int t in mytimelist)
+                    foreach (double t in mytimelist)
                     {
                         try
                         {
@@ -574,11 +574,11 @@ namespace v2
         public struct ExpectedI0Value
         {
             public string peptideseq;
-            public int time;
+            public double time;
             public double value;
             public double? charge;
 
-            public ExpectedI0Value(string peptideSeq, int t, double val, double charge)
+            public ExpectedI0Value(string peptideSeq, double t, double val, double charge)
             {
                 peptideseq = peptideSeq;
                 time = t;
