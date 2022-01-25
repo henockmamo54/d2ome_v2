@@ -96,14 +96,14 @@ namespace v2.Helper
 
             Chart chart2 = new Chart();
 
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            ChartArea chartArea1 = new ChartArea();
+            Legend legend1 = new Legend();
+            Series series1 = new Series();
+            Series series2 = new Series();
+            //ChartArea chartArea2 = new ChartArea();
+            //Legend legend2 = new Legend();
+            //Series series3 = new Series();
+            //Series series4 = new Series();
 
             chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
             chartArea1.Name = "ChartArea1";
@@ -175,6 +175,8 @@ namespace v2.Helper
             chart2.Series["Series3"].BorderWidth = 1;
 
             chart2.Series["Series3"].Color = Color.Navy;
+
+            chart2.ChartAreas[0].AxisX.Minimum = 0;
 
             return chart2;
         }
