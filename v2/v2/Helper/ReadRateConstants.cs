@@ -87,6 +87,7 @@ namespace v2.Helper
                             if (columns[3].Trim().Length != 0) rateConstant.Correlations = double.Parse(columns[3].Trim());
                             if (columns[4].Trim().Length != 0) rateConstant.RootMeanRSS = double.Parse(columns[4].Trim());
                             if (columns[5].Trim().Length != 0) rateConstant.AbsoluteIsotopeError = double.Parse(columns[5].Trim());
+                            rateConstant.order = 1;
                             rateConstants.Add(rateConstant);
                         }
                     }

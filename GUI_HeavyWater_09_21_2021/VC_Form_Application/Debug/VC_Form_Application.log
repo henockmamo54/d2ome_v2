@@ -1,0 +1,142 @@
+﻿C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Common.Targets(1605,5): warning MSB3270: There was a mismatch between the processor architecture of the project being built "x86" and the processor architecture of the reference "IsotopePeaks, Version=1.0.5977.18219, Culture=neutral, PublicKeyToken=null", "AMD64". This mismatch may cause runtime failures. Please consider changing the targeted processor architecture of your project through the Configuration Manager so as to align the processor architectures between your project and references, or take a dependency on references with a processor architecture that matches the targeted processor architecture of your project.
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Common.Targets(1605,5): warning MSB3270: There was a mismatch between the processor architecture of the project being built "x86" and the processor architecture of the reference "mzIdentML, Version=1.0.5977.17946, Culture=neutral, PublicKeyToken=null", "AMD64". This mismatch may cause runtime failures. Please consider changing the targeted processor architecture of your project through the Configuration Manager so as to align the processor architectures between your project and references, or take a dependency on references with a processor architecture that matches the targeted processor architecture of your project.
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Common.Targets(1605,5): warning MSB3270: There was a mismatch between the processor architecture of the project being built "x86" and the processor architecture of the reference "XmlMzML, Version=1.0.5977.18189, Culture=neutral, PublicKeyToken=null", "AMD64". This mismatch may cause runtime failures. Please consider changing the targeted processor architecture of your project through the Configuration Manager so as to align the processor architectures between your project and references, or take a dependency on references with a processor architecture that matches the targeted processor architecture of your project.
+  stdafx.cpp
+  AssemblyInfo.cpp
+  Caller_mzIdentML.cpp
+Caller_mzIdentML.cpp(50): warning C4244: 'return' : conversion from 'float' to 'int', possible loss of data
+Caller_mzIdentML.cpp(117): warning C4129: '.' : unrecognized character escape sequence
+Caller_mzIdentML.cpp(284): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(295): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(427): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(558): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(563): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110) : see declaration of 'strcat'
+Caller_mzIdentML.cpp(565): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(574): warning C4129: 'R' : unrecognized character escape sequence
+Caller_mzIdentML.cpp(574): warning C4129: 'S' : unrecognized character escape sequence
+Caller_mzIdentML.cpp(698): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(703): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(736): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(782): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(785): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(851): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(856): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(879): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+Caller_mzIdentML.cpp(883): warning C4018: '<' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(1187): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(1287): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(1168): warning C4101: 'dSpecMass' : unreferenced local variable
+Caller_mzIdentML.cpp(1591): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(1600): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(1605): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(1612): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110) : see declaration of 'strcat'
+Caller_mzIdentML.cpp(1614): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(1906): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2008): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2010): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2013): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2015): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2017): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2019): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2022): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2067): warning C4018: '<' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(2084): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2181): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2183): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2186): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2188): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2190): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2192): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2196): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2223): warning C4018: '<=' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(2334): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2520): warning C4018: '<' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(2540): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(2699): warning C4018: '<=' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(2771): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(2848): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(3033): warning C4018: '<' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(3053): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(3212): warning C4018: '<=' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(3284): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(3419): warning C4018: '<=' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(3288): warning C4101: 'i1' : unreferenced local variable
+Caller_mzIdentML.cpp(3288): warning C4101: 'i5' : unreferenced local variable
+Caller_mzIdentML.cpp(3288): warning C4101: 'i3' : unreferenced local variable
+Caller_mzIdentML.cpp(3288): warning C4101: 'i4' : unreferenced local variable
+Caller_mzIdentML.cpp(3288): warning C4101: 'i2' : unreferenced local variable
+Caller_mzIdentML.cpp(3521): warning C4018: '>' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(4147): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4155): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4160): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4168): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110) : see declaration of 'strcat'
+Caller_mzIdentML.cpp(4170): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(4277): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4550): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4558): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4563): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4571): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110) : see declaration of 'strcat'
+Caller_mzIdentML.cpp(4573): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(4680): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4925): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(4927): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+Caller_mzIdentML.cpp(4952): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(4957): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(4968): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+Caller_mzIdentML.cpp(5030): warning C4129: '.' : unrecognized character escape sequence
+Caller_mzIdentML.cpp(5041): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(5046): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(5070): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+Caller_mzIdentML.cpp(5074): warning C4018: '<' : signed/unsigned mismatch
+Caller_mzIdentML.cpp(5245): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(5281): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(197) : see declaration of 'strtok'
+Caller_mzIdentML.cpp(5283): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(197) : see declaration of 'strtok'
+Caller_mzIdentML.cpp(5285): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(197) : see declaration of 'strtok'
+Caller_mzIdentML.cpp(5314): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+Caller_mzIdentML.cpp(5325): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+Caller_mzIdentML.cpp(5336): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+Caller_mzIdentML.cpp(5347): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+Caller_mzIdentML.cpp(5358): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+Caller_mzIdentML.cpp(5406): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(5416): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(5421): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+Caller_mzIdentML.cpp(5429): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110) : see declaration of 'strcat'
+Caller_mzIdentML.cpp(5431): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+Caller_mzIdentML.cpp(5536): warning C4244: '=' : conversion from 'wchar_t' to 'char', possible loss of data
+  Form2.cpp
+  VC_Form_Application.cpp
+  Generating Code...
+d:\researchcode\vc_form_application\vc_form_application\caller_mzidentml.cpp(276): warning C4700: uninitialized local variable 'j' used
+d:\researchcode\vc_form_application\vc_form_application\caller_mzidentml.cpp(276): warning C4700: uninitialized local variable 'i' used
+.NETFramework,Version=v4.0.AssemblyAttributes.obj : warning LNK4099: PDB 'vc100.pdb' was not found with '.NETFramework,Version=v4.0.AssemblyAttributes.obj' or at 'D:\ResearchCode\VC_Form_Application\Debug\vc100.pdb'; linking object as if no debug info
+  VC_Form_Application.vcxproj -> D:\ResearchCode\VC_Form_Application\Debug\VC_Form_Application.exe

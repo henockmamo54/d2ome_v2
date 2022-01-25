@@ -14,5 +14,7 @@ namespace v2.Model
         public double? RootMeanRSS { get; set; }
         public double? AbsoluteIsotopeError { get; set; }
 
+        public int order { get; set; }
+
     }
 }

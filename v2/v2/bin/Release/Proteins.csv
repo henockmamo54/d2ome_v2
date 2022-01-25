@@ -1,0 +1,761 @@
+Accession,Protein,Length,LDLnD_SE_Band10_0ha,,LDLnD_SE_Band10_72ha,
+,,,ProteinScore,SCN,ProteinScore, SCN
+THIM_MOUSE, 3-ketoacyl-CoA thiolase mitochondrial OS=Mus musculus GN=Acaa2 PE=1 SV=3, 397,23259.2, 749,20369.0, 771
+SAHH_MOUSE, Adenosylhomocysteinase OS=Mus musculus GN=Ahcy PE=1 SV=3, 432,14540.7, 685,12057.3, 625
+ACTB_MOUSE, Actin cytoplasmic 1 OS=Mus musculus GN=Actb PE=1 SV=1, 375,14460.7, 581,12501.0, 595
+ACTG_MOUSE, Actin cytoplasmic 2 OS=Mus musculus GN=Actg1 PE=1 SV=1, 375,14446.9, 580,12511.0, 592
+BHMT1_MOUSE, Betaine--homocysteine S-methyltransferase 1 OS=Mus musculus GN=Bhmt PE=1 SV=1, 407,14172.3, 623,10794.4, 638
+IDHC_MOUSE, Isocitrate dehydrogenase [NADP] cytoplasmic OS=Mus musculus GN=Idh1 PE=1 SV=2, 414,9417.2, 388,9123.0, 444
+ALDOB_MOUSE, Fructose-bisphosphate aldolase B OS=Mus musculus GN=Aldob PE=1 SV=3, 364,9272.1, 311,2135.0, 97
+THIL_MOUSE, Acetyl-CoA acetyltransferase mitochondrial OS=Mus musculus GN=Acat1 PE=1 SV=1, 424,7321.0, 384,6372.3, 398
+HPPD_MOUSE, 4-hydroxyphenylpyruvate dioxygenase OS=Mus musculus GN=Hpd PE=1 SV=3, 393,6875.6, 311,4108.5, 324
+PGK1_MOUSE, Phosphoglycerate kinase 1 OS=Mus musculus GN=Pgk1 PE=1 SV=4, 417,6783.8, 326,5339.5, 316
+FAAA_MOUSE, Fumarylacetoacetase OS=Mus musculus GN=Fah PE=1 SV=2, 419,6706.1, 334,5162.6, 288
+QCR2_MOUSE, Cytochrome b-c1 complex subunit 2 mitochondrial OS=Mus musculus GN=Uqcrc2 PE=1 SV=1, 453,5116.0, 178,4516.2, 196
+ASSY_MOUSE, Argininosuccinate synthase OS=Mus musculus GN=Ass1 PE=1 SV=1, 412,5041.6, 249,5163.6, 353
+S14L2_MOUSE, SEC14-like protein 2 OS=Mus musculus GN=Sec14l2 PE=1 SV=1, 403,4728.7, 223,3465.8, 188
+GLNA_MOUSE, Glutamine synthetase OS=Mus musculus GN=Glul PE=1 SV=6, 373,4562.3, 205,3412.9, 207
+SUCB2_MOUSE, Succinate--CoA ligase [GDP-forming] subunit beta mitochondrial OS=Mus musculus GN=Suclg2 PE=1 SV=3, 433,4278.5, 153,3643.1, 161
+HUTI_MOUSE, Probable imidazolonepropionase OS=Mus musculus GN=Amdhd1 PE=1 SV=1, 426,4234.8, 127,3119.0, 126
+THIKA_MOUSE, 3-ketoacyl-CoA thiolase A peroxisomal OS=Mus musculus GN=Acaa1a PE=1 SV=1, 424,4007.5, 119,756.7, 48
+GCDH_MOUSE, Glutaryl-CoA dehydrogenase mitochondrial OS=Mus musculus GN=Gcdh PE=1 SV=2, 438,3993.8, 187,2920.2, 186
+SUCB1_MOUSE, Succinate--CoA ligase [ADP-forming] subunit beta mitochondrial OS=Mus musculus GN=Sucla2 PE=1 SV=2, 463,3982.8, 126,3559.7, 135
+ACTC_MOUSE, Actin alpha cardiac muscle 1 OS=Mus musculus GN=Actc1 PE=1 SV=1, 377,3922.4, 276,4371.5, 326
+ATPB_MOUSE, ATP synthase subunit beta mitochondrial OS=Mus musculus GN=Atp5b PE=1 SV=2, 529,3915.8, 135,3736.1, 151
+ACTS_MOUSE, Actin alpha skeletal muscle OS=Mus musculus GN=Acta1 PE=1 SV=1, 377,3766.5, 271,4278.6, 322
+CGL_MOUSE, Cystathionine gamma-lyase OS=Mus musculus GN=Cth PE=1 SV=1, 398,3559.7, 133,1812.4, 91
+ACADL_MOUSE, Long-chain specific acyl-CoA dehydrogenase mitochondrial OS=Mus musculus GN=Acadl PE=1 SV=2, 430,3489.1, 147,1729.9, 85
+HMCS2_MOUSE, Hydroxymethylglutaryl-CoA synthase mitochondrial OS=Mus musculus GN=Hmgcs2 PE=1 SV=2, 508,3401.6, 122,2736.5, 132
+IVD_MOUSE, Isovaleryl-CoA dehydrogenase mitochondrial OS=Mus musculus GN=Ivd PE=1 SV=1, 424,3364.4, 139,2007.0, 93
+ENOA_MOUSE, Alpha-enolase OS=Mus musculus GN=Eno1 PE=1 SV=3, 434,3216.8, 128,3203.0, 148
+ACTBL_MOUSE, Beta-actin-like protein 2 OS=Mus musculus GN=Actbl2 PE=1 SV=1, 376,3211.7, 216,3052.7, 231
+THIKB_MOUSE, 3-ketoacyl-CoA thiolase B peroxisomal OS=Mus musculus GN=Acaa1b PE=1 SV=1, 424,3142.3, 99,875.5, 50
+ACADM_MOUSE, Medium-chain specific acyl-CoA dehydrogenase mitochondrial OS=Mus musculus GN=Acadm PE=1 SV=1, 421,3092.1, 159,2920.3, 192
+EF1A1_MOUSE, Elongation factor 1-alpha 1 OS=Mus musculus GN=Eef1a1 PE=1 SV=3, 462,3020.8, 164,4224.4, 230
+HYEP_MOUSE, Epoxide hydrolase 1 OS=Mus musculus GN=Ephx1 PE=1 SV=2, 455,3005.4, 179,3272.2, 246
+ALDH2_MOUSE, Aldehyde dehydrogenase mitochondrial OS=Mus musculus GN=Aldh2 PE=1 SV=1, 519,2972.5, 109,1891.9, 108
+AAAD_MOUSE, Arylacetamide deacetylase OS=Mus musculus GN=Aadac PE=1 SV=3, 398,2865.1, 142,1591.3, 137
+OAT_MOUSE, Ornithine aminotransferase mitochondrial OS=Mus musculus GN=Oat PE=1 SV=1, 439,2609.0, 97,2542.9, 159
+ADK_MOUSE, Adenosine kinase OS=Mus musculus GN=Adk PE=1 SV=2, 361,2557.1, 156,1957.0, 155
+IF4A1_MOUSE, Eukaryotic initiation factor 4A-I OS=Mus musculus GN=Eif4a1 PE=1 SV=1, 406,2488.8, 118,1993.4, 139
+IDHP_MOUSE, Isocitrate dehydrogenase [NADP] mitochondrial OS=Mus musculus GN=Idh2 PE=1 SV=3, 452,2487.8, 117,3050.2, 156
+ARLY_MOUSE, Argininosuccinate lyase OS=Mus musculus GN=Asl PE=1 SV=1, 464,2474.4, 100,1978.1, 104
+CISY_MOUSE, Citrate synthase mitochondrial OS=Mus musculus GN=Cs PE=1 SV=1, 464,2454.7, 129,2177.8, 129
+RSSA_MOUSE, 40S ribosomal protein SA OS=Mus musculus GN=Rpsa PE=1 SV=4, 295,2313.5, 95,2265.4, 106
+S14L4_MOUSE, SEC14-like protein 4 OS=Mus musculus GN=Sec14l4 PE=1 SV=1, 403,2263.3, 113,1578.2, 114
+AATC_MOUSE, Aspartate aminotransferase cytoplasmic OS=Mus musculus GN=Got1 PE=1 SV=3, 413,2211.7, 75,322.1, 21
+AL1A1_MOUSE, Retinal dehydrogenase 1 OS=Mus musculus GN=Aldh1a1 PE=1 SV=5, 501,2208.1, 97,1658.0, 111
+SOX_MOUSE, Peroxisomal sarcosine oxidase OS=Mus musculus GN=Pipox PE=1 SV=1, 390,2202.4, 115,1251.8, 83
+NDUS2_MOUSE, NADH dehydrogenase [ubiquinone] iron-sulfur protein 2 mitochondrial OS=Mus musculus GN=Ndufs2 PE=1 SV=1, 463,2058.1, 98,2235.2, 131
+ATPA_MOUSE, ATP synthase subunit alpha mitochondrial OS=Mus musculus GN=Atp5a1 PE=1 SV=1, 553,2040.7, 84,2046.4, 85
+SBP1_MOUSE, Selenium-binding protein 1 OS=Mus musculus GN=Selenbp1 PE=1 SV=2, 472,2016.6, 64,1766.9, 73
+SBP2_MOUSE, Selenium-binding protein 2 OS=Mus musculus GN=Selenbp2 PE=1 SV=2, 472,2013.3, 67,1827.2, 73
+EFTU_MOUSE, Elongation factor Tu mitochondrial OS=Mus musculus GN=Tufm PE=1 SV=1, 452,1983.6, 79,2776.0, 123
+ACOX1_MOUSE, Peroxisomal acyl-coenzyme A oxidase 1 OS=Mus musculus GN=Acox1 PE=1 SV=5, 661,1983.4, 94,921.9, 77
+ALDOA_MOUSE, Fructose-bisphosphate aldolase A OS=Mus musculus GN=Aldoa PE=1 SV=2, 364,1982.4, 91,640.0, 39
+CP2F2_MOUSE, Cytochrome P450 2F2 OS=Mus musculus GN=Cyp2f2 PE=1 SV=1, 491,1948.4, 96,1217.4, 84
+NDRG2_MOUSE, Protein NDRG2 OS=Mus musculus GN=Ndrg2 PE=1 SV=1, 371,1917.7, 67,1360.2, 85
+BAAT_MOUSE, Bile acid-CoA:amino acid N-acyltransferase OS=Mus musculus GN=Baat PE=1 SV=1, 420,1915.1, 99,793.9, 65
+ODPA_MOUSE, Pyruvate dehydrogenase E1 component subunit alpha somatic form mitochondrial OS=Mus musculus GN=Pdha1 PE=1 SV=1, 390,1911.0, 94,1467.0, 91
+SCRN2_MOUSE, Secernin-2 OS=Mus musculus GN=Scrn2 PE=1 SV=1, 425,1903.9, 46,1395.4, 44
+DHE3_MOUSE, Glutamate dehydrogenase 1 mitochondrial OS=Mus musculus GN=Glud1 PE=1 SV=1, 558,1878.7, 89,2076.6, 100
+ECHB_MOUSE, Trifunctional enzyme subunit beta mitochondrial OS=Mus musculus GN=Hadhb PE=1 SV=1, 475,1764.8, 71,1470.5, 83
+AADAT_MOUSE, Kynurenine/alpha-aminoadipate aminotransferase mitochondrial OS=Mus musculus GN=Aadat PE=1 SV=1, 425,1754.1, 90,1528.0, 88
+ODBA_MOUSE, 2-oxoisovalerate dehydrogenase subunit alpha mitochondrial OS=Mus musculus GN=Bckdha PE=1 SV=1, 442,1705.3, 62,1817.9, 79
+NLTP_MOUSE, Non-specific lipid-transfer protein OS=Mus musculus GN=Scp2 PE=1 SV=3, 547,1690.7, 64,1375.7, 86
+GGLO_MOUSE, L-gulonolactone oxidase OS=Mus musculus GN=Gulo PE=1 SV=3, 440,1687.2, 70,1514.1, 80
+RINI_MOUSE, Ribonuclease inhibitor OS=Mus musculus GN=Rnh1 PE=1 SV=1, 456,1672.4, 42,1199.4, 47
+QCR1_MOUSE, Cytochrome b-c1 complex subunit 1 mitochondrial OS=Mus musculus GN=Uqcrc1 PE=1 SV=2, 480,1637.4, 59,1796.8, 64
+CBPA1_MOUSE, Carboxypeptidase A1 OS=Mus musculus GN=Cpa1 PE=1 SV=1, 419,1610.0, 67,0.0, 0
+KBL_MOUSE, 2-amino-3-ketobutyrate coenzyme A ligase mitochondrial OS=Mus musculus GN=Gcat PE=1 SV=2, 416,1555.8, 49,133.9, 12
+PSMD6_MOUSE, 26S proteasome non-ATPase regulatory subunit 6 OS=Mus musculus GN=Psmd6 PE=1 SV=1, 389,1532.5, 79,873.1, 69
+KAT1_MOUSE, Kynurenine--oxoglutarate transaminase 1 OS=Mus musculus GN=Kyat1 PE=1 SV=1, 424,1532.4, 58,892.9, 52
+ACOT1_MOUSE, Acyl-coenzyme A thioesterase 1 OS=Mus musculus GN=Acot1 PE=1 SV=1, 419,1497.8, 79,1012.3, 76
+FUMH_MOUSE, Fumarate hydratase mitochondrial OS=Mus musculus GN=Fh PE=1 SV=3, 507,1443.8, 53,1216.4, 51
+CP2DA_MOUSE, Cytochrome P450 2D10 OS=Mus musculus GN=Cyp2d10 PE=1 SV=2, 504,1426.4, 74,758.7, 60
+HGD_MOUSE, Homogentisate 12-dioxygenase OS=Mus musculus GN=Hgd PE=1 SV=2, 445,1401.2, 67,1218.0, 69
+ACOT2_MOUSE, Acyl-coenzyme A thioesterase 2 mitochondrial OS=Mus musculus GN=Acot2 PE=1 SV=2, 453,1399.1, 64,1025.3, 54
+3BHS3_MOUSE, 3 beta-hydroxysteroid dehydrogenase/Delta 5-->4-isomerase type 3 OS=Mus musculus GN=Hsd3b3 PE=1 SV=3, 373,1389.7, 61,950.9, 58
+CATA_MOUSE, Catalase OS=Mus musculus GN=Cat PE=1 SV=4, 527,1381.4, 64,416.3, 49
+PRS10_MOUSE, 26S protease regulatory subunit 10B OS=Mus musculus GN=Psmc6 PE=1 SV=1, 389,1368.0, 58,427.9, 27
+CP2CT_MOUSE, Cytochrome P450 2C29 OS=Mus musculus GN=Cyp2c29 PE=1 SV=2, 490,1302.2, 76,845.3, 73
+HOT_MOUSE, Hydroxyacid-oxoacid transhydrogenase mitochondrial OS=Mus musculus GN=Adhfe1 PE=1 SV=2, 465,1297.6, 48,947.6, 45
+METK1_MOUSE, S-adenosylmethionine synthase isoform type-1 OS=Mus musculus GN=Mat1a PE=1 SV=1, 396,1291.4, 64,1001.8, 83
+CY250_MOUSE, Cytochrome P450 2C50 OS=Mus musculus GN=Cyp2c50 PE=1 SV=2, 490,1289.8, 71,644.2, 62
+DHSO_MOUSE, Sorbitol dehydrogenase OS=Mus musculus GN=Sord PE=1 SV=3, 357,1287.7, 54,951.0, 46
+ARGI1_MOUSE, Arginase-1 OS=Mus musculus GN=Arg1 PE=1 SV=1, 323,1280.0, 73,1044.0, 62
+AATM_MOUSE, Aspartate aminotransferase mitochondrial OS=Mus musculus GN=Got2 PE=1 SV=1, 430,1246.0, 80,760.6, 53
+G3P_MOUSE, Glyceraldehyde-3-phosphate dehydrogenase OS=Mus musculus GN=Gapdh PE=1 SV=2, 333,1245.1, 42,847.9, 40
+IF4A2_MOUSE, Eukaryotic initiation factor 4A-II OS=Mus musculus GN=Eif4a2 PE=1 SV=2, 407,1234.6, 67,1215.1, 92
+CP237_MOUSE, Cytochrome P450 2C37 OS=Mus musculus GN=Cyp2c37 PE=1 SV=2, 490,1221.8, 54,658.7, 58
+ADH1_MOUSE, Alcohol dehydrogenase 1 OS=Mus musculus GN=Adh1 PE=1 SV=2, 375,1212.7, 70,943.2, 65
+CP254_MOUSE, Cytochrome P450 2C54 OS=Mus musculus GN=Cyp2c54 PE=1 SV=1, 490,1206.8, 72,771.3, 63
+SQRD_MOUSE, Sulfide:quinone oxidoreductase mitochondrial OS=Mus musculus GN=Sqrdl PE=1 SV=3, 450,1171.3, 58,679.8, 57
+TIM44_MOUSE, Mitochondrial import inner membrane translocase subunit TIM44 OS=Mus musculus GN=Timm44 PE=1 SV=2, 452,1163.0, 52,1004.4, 45
+PON3_MOUSE, Serum paraoxonase/lactonase 3 OS=Mus musculus GN=Pon3 PE=1 SV=2, 354,1159.8, 45,513.1, 42
+PRS8_MOUSE, 26S protease regulatory subunit 8 OS=Mus musculus GN=Psmc5 PE=1 SV=1, 406,1159.0, 68,736.3, 59
+ENTP5_MOUSE, Ectonucleoside triphosphate diphosphohydrolase 5 OS=Mus musculus GN=Entpd5 PE=1 SV=1, 427,1141.0, 33,814.5, 41
+NAKD2_MOUSE, NAD kinase 2 mitochondrial OS=Mus musculus GN=Nadk2 PE=1 SV=2, 452,1136.6, 63,1023.9, 66
+PPID_MOUSE, Peptidyl-prolyl cis-trans isomerase D OS=Mus musculus GN=Ppid PE=1 SV=3, 370,1136.4, 67,924.9, 57
+NFS1_MOUSE, Cysteine desulfurase mitochondrial OS=Mus musculus GN=Nfs1 PE=1 SV=3, 459,1118.2, 51,545.0, 36
+PCBP1_MOUSE, Poly(rC)-binding protein 1 OS=Mus musculus GN=Pcbp1 PE=1 SV=1, 356,1093.1, 50,389.9, 25
+BUP1_MOUSE, Beta-ureidopropionase OS=Mus musculus GN=Upb1 PE=1 SV=1, 393,1053.2, 45,444.2, 39
+TXND5_MOUSE, Thioredoxin domain-containing protein 5 OS=Mus musculus GN=Txndc5 PE=1 SV=2, 417,1052.3, 52,780.2, 55
+CPSM_MOUSE, Carbamoyl-phosphate synthase [ammonia] mitochondrial OS=Mus musculus GN=Cps1 PE=1 SV=2, 1500,1051.2, 74,364.4, 49
+ALDOC_MOUSE, Fructose-bisphosphate aldolase C OS=Mus musculus GN=Aldoc PE=1 SV=4, 363,1047.5, 47,326.0, 15
+AL1A7_MOUSE, Aldehyde dehydrogenase cytosolic 1 OS=Mus musculus GN=Aldh1a7 PE=1 SV=1, 501,1037.8, 64,802.3, 66
+CP2AC_MOUSE, Cytochrome P450 2A12 OS=Mus musculus GN=Cyp2a12 PE=1 SV=2, 492,1027.1, 49,520.1, 43
+UDB17_MOUSE, UDP-glucuronosyltransferase 2B17 OS=Mus musculus GN=Ugt2b17 PE=1 SV=1, 530,1026.5, 68,736.5, 68
+L2HDH_MOUSE, L-2-hydroxyglutarate dehydrogenase mitochondrial OS=Mus musculus GN=L2hgdh PE=1 SV=1, 464,1002.0, 48,717.0, 46
+PUR6_MOUSE, Multifunctional protein ADE2 OS=Mus musculus GN=Paics PE=1 SV=4, 425,1001.3, 62,535.3, 49
+CP2D9_MOUSE, Cytochrome P450 2D9 OS=Mus musculus GN=Cyp2d9 PE=1 SV=2, 504,988.9, 50,428.9, 39
+CP2DQ_MOUSE, Cytochrome P450 2D26 OS=Mus musculus GN=Cyp2d26 PE=1 SV=1, 500,945.8, 56,511.1, 53
+PREB_MOUSE, Prolactin regulatory element-binding protein OS=Mus musculus GN=Preb PE=1 SV=1, 417,935.5, 36,631.4, 38
+ACTZ_MOUSE, Alpha-centractin OS=Mus musculus GN=Actr1a PE=1 SV=1, 376,926.1, 36,682.8, 29
+RL4_MOUSE, 60S ribosomal protein L4 OS=Mus musculus GN=Rpl4 PE=1 SV=3, 419,891.4, 57,856.9, 54
+BHMT2_MOUSE, S-methylmethionine--homocysteine S-methyltransferase BHMT2 OS=Mus musculus GN=Bhmt2 PE=1 SV=2, 363,874.7, 109,729.1, 120
+KAT3_MOUSE, Kynurenine--oxoglutarate transaminase 3 OS=Mus musculus GN=Kyat3 PE=1 SV=1, 455,842.4, 33,1077.1, 49
+DJB11_MOUSE, DnaJ homolog subfamily B member 11 OS=Mus musculus GN=Dnajb11 PE=1 SV=1, 358,841.0, 32,526.5, 28
+F16P1_MOUSE, Fructose-16-bisphosphatase 1 OS=Mus musculus GN=Fbp1 PE=1 SV=3, 338,840.4, 40,447.4, 20
+MMSA_MOUSE, Methylmalonate-semialdehyde dehydrogenase [acylating] mitochondrial OS=Mus musculus GN=Aldh6a1 PE=1 SV=1, 535,836.4, 42,805.3, 53
+ERP44_MOUSE, Endoplasmic reticulum resident protein 44 OS=Mus musculus GN=Erp44 PE=1 SV=1, 406,825.0, 40,550.6, 49
+ACD10_MOUSE, Acyl-CoA dehydrogenase family member 10 OS=Mus musculus GN=Acad10 PE=1 SV=1, 1069,815.1, 39,733.8, 51
+PPA6_MOUSE, Lysophosphatidic acid phosphatase type 6 OS=Mus musculus GN=Acp6 PE=1 SV=1, 418,811.3, 45,743.7, 47
+ACTY_MOUSE, Beta-centractin OS=Mus musculus GN=Actr1b PE=1 SV=1, 376,788.0, 34,616.7, 29
+PON1_MOUSE, Serum paraoxonase/arylesterase 1 OS=Mus musculus GN=Pon1 PE=1 SV=2, 355,787.2, 34,252.3, 23
+OLA1_MOUSE, Obg-like ATPase 1 OS=Mus musculus GN=Ola1 PE=1 SV=1, 396,777.5, 48,582.2, 47
+CSK21_MOUSE, Casein kinase II subunit alpha OS=Mus musculus GN=Csnk2a1 PE=1 SV=2, 391,771.4, 30,372.7, 31
+BASI_MOUSE, Basigin OS=Mus musculus GN=Bsg PE=1 SV=2, 389,767.4, 29,524.3, 25
+T23O_MOUSE, Tryptophan 23-dioxygenase OS=Mus musculus GN=Tdo2 PE=1 SV=2, 406,766.9, 39,166.3, 19
+3BHS2_MOUSE, 3 beta-hydroxysteroid dehydrogenase/Delta 5-->4-isomerase type 2 OS=Mus musculus GN=Hsd3b2 PE=1 SV=4, 373,766.7, 30,429.3, 26
+SCLY_MOUSE, Selenocysteine lyase OS=Mus musculus GN=Scly PE=1 SV=1, 432,764.5, 33,535.8, 29
+CP2E1_MOUSE, Cytochrome P450 2E1 OS=Mus musculus GN=Cyp2e1 PE=1 SV=1, 493,762.9, 47,390.5, 47
+CP2A5_MOUSE, Cytochrome P450 2A5 OS=Mus musculus GN=Cyp2a5 PE=2 SV=1, 494,760.5, 37,361.5, 32
+AS3MT_MOUSE, Arsenite methyltransferase OS=Mus musculus GN=As3mt PE=1 SV=2, 376,756.1, 24,457.0, 27
+GDIB_MOUSE, Rab GDP dissociation inhibitor beta OS=Mus musculus GN=Gdi2 PE=1 SV=1, 445,756.0, 34,608.1, 39
+BODG_MOUSE, Gamma-butyrobetaine dioxygenase OS=Mus musculus GN=Bbox1 PE=1 SV=1, 387,754.0, 37, 99.8, 7
+ASGR1_MOUSE, Asialoglycoprotein receptor 1 OS=Mus musculus GN=Asgr1 PE=1 SV=4, 284,750.9, 39,255.0, 25
+RL3_MOUSE, 60S ribosomal protein L3 OS=Mus musculus GN=Rpl3 PE=1 SV=3, 403,750.8, 40,1178.8, 63
+EF1G_MOUSE, Elongation factor 1-gamma OS=Mus musculus GN=Eef1g PE=1 SV=3, 437,744.9, 35,615.7, 36
+MYG1_MOUSE, UPF0160 protein MYG1 mitochondrial OS=Mus musculus GN=Myg1 PE=1 SV=1, 380,726.2, 32,436.4, 17
+PURB_MOUSE, Transcriptional activator protein Pur-beta OS=Mus musculus GN=Purb PE=1 SV=3, 324,723.3, 22, 91.5, 11
+BZW1_MOUSE, Basic leucine zipper and W2 domain-containing protein 1 OS=Mus musculus GN=Bzw1 PE=1 SV=1, 419,718.4, 38,443.1, 29
+AL7A1_MOUSE, Alpha-aminoadipic semialdehyde dehydrogenase OS=Mus musculus GN=Aldh7a1 PE=1 SV=4, 539,717.5, 30,772.3, 38
+I23O2_MOUSE, Indoleamine 23-dioxygenase 2 OS=Mus musculus GN=Ido2 PE=1 SV=3, 405,704.5, 34, 52.1, 5
+CP2DB_MOUSE, Cytochrome P450 2D11 OS=Mus musculus GN=Cyp2d11 PE=2 SV=2, 504,703.4, 38,385.3, 30
+APMAP_MOUSE, Adipocyte plasma membrane-associated protein OS=Mus musculus GN=Apmap PE=1 SV=1, 415,698.6, 40,630.0, 35
+ACY1_MOUSE, Aminoacylase-1 OS=Mus musculus GN=Acy1 PE=1 SV=1, 408,691.6, 40,575.4, 40
+GMPPA_MOUSE, Mannose-1-phosphate guanyltransferase alpha OS=Mus musculus GN=Gmppa PE=1 SV=1, 420,689.1, 19,368.7, 18
+GSTP1_MOUSE, Glutathione S-transferase P 1 OS=Mus musculus GN=Gstp1 PE=1 SV=2, 210,686.9, 23,556.3, 29
+CATD_MOUSE, Cathepsin D OS=Mus musculus GN=Ctsd PE=1 SV=1, 410,677.6, 32,217.3, 33
+RT27_MOUSE, 28S ribosomal protein S27 mitochondrial OS=Mus musculus GN=Mrps27 PE=1 SV=2, 415,676.7, 26,532.1, 28
+OTC_MOUSE, Ornithine carbamoyltransferase mitochondrial OS=Mus musculus GN=Otc PE=1 SV=1, 354,674.0, 32,485.9, 26
+AHSA1_MOUSE, Activator of 90 kDa heat shock protein ATPase homolog 1 OS=Mus musculus GN=Ahsa1 PE=1 SV=2, 338,660.4, 24,262.2, 19
+HNRPD_MOUSE, Heterogeneous nuclear ribonucleoprotein D0 OS=Mus musculus GN=Hnrnpd PE=1 SV=2, 355,653.8, 33,307.8, 22
+SEPT2_MOUSE, Septin-2 OS=Mus musculus GN=Sept2 PE=1 SV=2, 361,647.0, 30,602.0, 40
+PPM1A_MOUSE, Protein phosphatase 1A OS=Mus musculus GN=Ppm1a PE=1 SV=1, 382,642.6, 35,438.0, 37
+CSN4_MOUSE, COP9 signalosome complex subunit 4 OS=Mus musculus GN=Cops4 PE=1 SV=1, 406,639.8, 30,361.5, 21
+KCRB_MOUSE, Creatine kinase B-type OS=Mus musculus GN=Ckb PE=1 SV=1, 381,630.9, 29,279.6, 24
+RMD2_MOUSE, Regulator of microtubule dynamics protein 2 OS=Mus musculus GN=Rmdn2 PE=1 SV=1, 410,629.9, 30,618.6, 35
+GALT_MOUSE, Galactose-1-phosphate uridylyltransferase OS=Mus musculus GN=Galt PE=1 SV=3, 379,624.3, 36,404.4, 34
+SPB6_MOUSE, Serpin B6 OS=Mus musculus GN=Serpinb6 PE=1 SV=1, 378,623.1, 24,464.0, 19
+TADBP_MOUSE, TAR DNA-binding protein 43 OS=Mus musculus GN=Tardbp PE=1 SV=1, 414,622.8, 26,510.3, 23
+AL1B1_MOUSE, Aldehyde dehydrogenase X mitochondrial OS=Mus musculus GN=Aldh1b1 PE=1 SV=1, 519,620.6, 39,434.8, 40
+AL8A1_MOUSE, Aldehyde dehydrogenase family 8 member A1 OS=Mus musculus GN=Aldh8a1 PE=1 SV=1, 487,618.4, 33,463.7, 40
+AMPL_MOUSE, Cytosol aminopeptidase OS=Mus musculus GN=Lap3 PE=1 SV=3, 519,618.0, 27,773.2, 37
+GABT_MOUSE, 4-aminobutyrate aminotransferase mitochondrial OS=Mus musculus GN=Abat PE=1 SV=1, 500,617.8, 34,538.2, 28
+PSD11_MOUSE, 26S proteasome non-ATPase regulatory subunit 11 OS=Mus musculus GN=Psmd11 PE=1 SV=3, 422,616.9, 34,585.2, 52
+AL3A2_MOUSE, Fatty aldehyde dehydrogenase OS=Mus musculus GN=Aldh3a2 PE=1 SV=2, 484,611.4, 19,332.7, 17
+PSD13_MOUSE, 26S proteasome non-ATPase regulatory subunit 13 OS=Mus musculus GN=Psmd13 PE=1 SV=1, 376,610.2, 28, 74.4, 11
+GCST_MOUSE, Aminomethyltransferase mitochondrial OS=Mus musculus GN=Amt PE=1 SV=1, 403,609.7, 31,172.6, 15
+PH4H_MOUSE, Phenylalanine-4-hydroxylase OS=Mus musculus GN=Pah PE=1 SV=4, 453,601.3, 32,242.4, 29
+FADS2_MOUSE, Fatty acid desaturase 2 OS=Mus musculus GN=Fads2 PE=1 SV=1, 444,593.6, 26,295.8, 27
+PCBP2_MOUSE, Poly(rC)-binding protein 2 OS=Mus musculus GN=Pcbp2 PE=1 SV=1, 362,590.0, 34,280.1, 21
+FCL_MOUSE, GDP-L-fucose synthase OS=Mus musculus GN=Tsta3 PE=1 SV=3, 321,582.3, 26, 95.2, 10
+ENOB_MOUSE, Beta-enolase OS=Mus musculus GN=Eno3 PE=1 SV=3, 434,580.1, 16,724.1, 31
+AMRP_MOUSE, Alpha-2-macroglobulin receptor-associated protein OS=Mus musculus GN=Lrpap1 PE=1 SV=1, 360,579.1, 28,267.9, 25
+ACADS_MOUSE, Short-chain specific acyl-CoA dehydrogenase mitochondrial OS=Mus musculus GN=Acads PE=1 SV=2, 412,574.9, 22,253.3, 15
+CP1A2_MOUSE, Cytochrome P450 1A2 OS=Mus musculus GN=Cyp1a2 PE=1 SV=1, 513,571.4, 33,161.9, 24
+SPS1_MOUSE, Selenide water dikinase 1 OS=Mus musculus GN=Sephs1 PE=1 SV=1, 392,567.1, 29,354.6, 27
+TBA1B_MOUSE, Tubulin alpha-1B chain OS=Mus musculus GN=Tuba1b PE=1 SV=2, 451,562.7, 21,0.0, 0
+PDIA1_MOUSE, Protein disulfide-isomerase OS=Mus musculus GN=P4hb PE=1 SV=2, 509,557.8, 43,534.9, 50
+METK2_MOUSE, S-adenosylmethionine synthase isoform type-2 OS=Mus musculus GN=Mat2a PE=1 SV=2, 395,554.7, 31,304.1, 36
+GLYC_MOUSE, Serine hydroxymethyltransferase cytosolic OS=Mus musculus GN=Shmt1 PE=1 SV=3, 478,538.5, 30,449.3, 29
+CECR5_MOUSE, Cat eye syndrome critical region protein 5 homolog OS=Mus musculus GN=Cecr5 PE=1 SV=1, 419,536.8, 18,471.5, 15
+AMACR_MOUSE, Alpha-methylacyl-CoA racemase OS=Mus musculus GN=Amacr PE=1 SV=4, 381,536.8, 20,123.7, 7
+PURA_MOUSE, Transcriptional activator protein Pur-alpha OS=Mus musculus GN=Pura PE=1 SV=1, 321,536.7, 24,569.3, 30
+HEMH_MOUSE, Ferrochelatase mitochondrial OS=Mus musculus GN=Fech PE=1 SV=2, 420,534.8, 39, 77.3, 9
+PCBP3_MOUSE, Poly(rC)-binding protein 3 OS=Mus musculus GN=Pcbp3 PE=1 SV=3, 371,528.8, 20,276.6, 15
+HBB1_MOUSE, Hemoglobin subunit beta-1 OS=Mus musculus GN=Hbb-b1 PE=1 SV=2, 147,523.0, 12,572.9, 13
+NUD19_MOUSE, Nucleoside diphosphate-linked moiety X motif 19 OS=Mus musculus GN=Nudt19 PE=1 SV=2, 357,522.9, 25,0.0, 0
+TBB4B_MOUSE, Tubulin beta-4B chain OS=Mus musculus GN=Tubb4b PE=1 SV=1, 445,519.5, 43,446.1, 43
+ERLN2_MOUSE, Erlin-2 OS=Mus musculus GN=Erlin2 PE=1 SV=1, 340,511.3, 28,318.4, 21
+KMO_MOUSE, Kynurenine 3-monooxygenase OS=Mus musculus GN=Kmo PE=1 SV=1, 479,505.7, 28,302.9, 22
+CP27A_MOUSE, Sterol 26-hydroxylase mitochondrial OS=Mus musculus GN=Cyp27a1 PE=1 SV=1, 533,498.8, 27,326.1, 29
+CSN3_MOUSE, COP9 signalosome complex subunit 3 OS=Mus musculus GN=Cops3 PE=1 SV=3, 423,498.4, 12,143.6, 7
+BPNT1_MOUSE, 3'(2')5'-bisphosphate nucleotidase 1 OS=Mus musculus GN=Bpnt1 PE=1 SV=2, 308,497.5, 20,115.5, 6
+PDIA6_MOUSE, Protein disulfide-isomerase A6 OS=Mus musculus GN=Pdia6 PE=1 SV=3, 440,496.5, 14,575.0, 22
+SUCHY_MOUSE, Succinate--hydroxymethylglutarate CoA-transferase OS=Mus musculus GN=Sugct PE=1 SV=2, 436,494.3, 18, 56.4, 10
+CES1D_MOUSE, Carboxylesterase 1D OS=Mus musculus GN=Ces1d PE=1 SV=1, 565,492.7, 26,329.8, 24
+GIMA4_MOUSE, GTPase IMAP family member 4 OS=Mus musculus GN=Gimap4 PE=1 SV=1, 219,484.0, 15, 42.8, 5
+DHB4_MOUSE, Peroxisomal multifunctional enzyme type 2 OS=Mus musculus GN=Hsd17b4 PE=1 SV=3, 735,482.1, 26,525.0, 38
+MP2K1_MOUSE, Dual specificity mitogen-activated protein kinase kinase 1 OS=Mus musculus GN=Map2k1 PE=1 SV=2, 393,477.1, 26,305.2, 27
+AGT2_MOUSE, Alanine--glyoxylate aminotransferase 2 mitochondrial OS=Mus musculus GN=Agxt2 PE=1 SV=1, 513,474.3, 27,437.0, 36
+ACNT1_MOUSE, Acyl-coenzyme A amino acid N-acyltransferase 1 OS=Mus musculus GN=Acnat1 PE=1 SV=1, 416,473.6, 23,237.8, 22
+DHB5_MOUSE, Estradiol 17 beta-dehydrogenase 5 OS=Mus musculus GN=Akr1c6 PE=1 SV=1, 323,472.6, 19,201.7, 21
+CREL2_MOUSE, Cysteine-rich with EGF-like domain protein 2 OS=Mus musculus GN=Creld2 PE=1 SV=1, 350,471.8, 21,202.9, 15
+3BHS5_MOUSE, 3 beta-hydroxysteroid dehydrogenase type 5 OS=Mus musculus GN=Hsd3b5 PE=1 SV=4, 373,466.5, 18,240.1, 20
+ACOT3_MOUSE, Acyl-coenzyme A thioesterase 3 OS=Mus musculus GN=Acot3 PE=1 SV=1, 432,465.6, 19,205.9, 31
+TBB2A_MOUSE, Tubulin beta-2A chain OS=Mus musculus GN=Tubb2a PE=1 SV=1, 445,463.8, 25,414.4, 27
+TBA4A_MOUSE, Tubulin alpha-4A chain OS=Mus musculus GN=Tuba4a PE=1 SV=1, 448,457.9, 20,418.5, 26
+PLBL1_MOUSE, Phospholipase B-like 1 OS=Mus musculus GN=Plbd1 PE=1 SV=1, 550,456.6, 26,461.5, 21
+NDUV1_MOUSE, NADH dehydrogenase [ubiquinone] flavoprotein 1 mitochondrial OS=Mus musculus GN=Ndufv1 PE=1 SV=1, 464,453.5, 31,338.8, 28
+OST48_MOUSE, Dolichyl-diphosphooligosaccharide--protein glycosyltransferase 48 kDa subunit OS=Mus musculus GN=Ddost PE=1 SV=2, 441,442.6, 24,776.3, 40
+SAHH2_MOUSE, Putative adenosylhomocysteinase 2 OS=Mus musculus GN=Ahcyl1 PE=1 SV=1, 530,437.7, 24,426.3, 22
+ZA2G_MOUSE, Zinc-alpha-2-glycoprotein OS=Mus musculus GN=Azgp1 PE=1 SV=2, 307,435.1, 26,223.8, 23
+DNJA3_MOUSE, DnaJ homolog subfamily A member 3 mitochondrial OS=Mus musculus GN=Dnaja3 PE=1 SV=1, 480,432.1, 14,147.1, 11
+HNRPC_MOUSE, Heterogeneous nuclear ribonucleoproteins C1/C2 OS=Mus musculus GN=Hnrnpc PE=1 SV=1, 313,428.6, 23, 73.2, 15
+TTC38_MOUSE, Tetratricopeptide repeat protein 38 OS=Mus musculus GN=Ttc38 PE=1 SV=2, 465,412.2, 25,370.4, 30
+SPA3K_MOUSE, Serine protease inhibitor A3K OS=Mus musculus GN=Serpina3k PE=1 SV=2, 418,407.5, 14,162.3, 12
+HA10_MOUSE, H-2 class I histocompatibility antigen Q10 alpha chain OS=Mus musculus GN=H2-Q10 PE=1 SV=3, 325,404.5, 22,191.9, 22
+AMBP_MOUSE, Protein AMBP OS=Mus musculus GN=Ambp PE=1 SV=2, 349,401.8, 11,117.6, 9
+IIGP1_MOUSE, Interferon-inducible GTPase 1 OS=Mus musculus GN=Iigp1 PE=1 SV=2, 413,397.1, 19,142.8, 11
+CP20A_MOUSE, Cytochrome P450 20A1 OS=Mus musculus GN=Cyp20a1 PE=1 SV=1, 462,394.1, 31,301.7, 18
+ABHD3_MOUSE, Phospholipase ABHD3 OS=Mus musculus GN=Abhd3 PE=1 SV=1, 411,391.4, 20, 80.8, 9
+GNMT_MOUSE, Glycine N-methyltransferase OS=Mus musculus GN=Gnmt PE=1 SV=3, 293,391.2, 13,417.8, 15
+NAGAB_MOUSE, Alpha-N-acetylgalactosaminidase OS=Mus musculus GN=Naga PE=1 SV=2, 415,387.2, 17,348.5, 23
+CSAD_MOUSE, Cysteine sulfinic acid decarboxylase OS=Mus musculus GN=Csad PE=1 SV=1, 493,385.6, 23,444.0, 35
+DRG1_MOUSE, Developmentally-regulated GTP-binding protein 1 OS=Mus musculus GN=Drg1 PE=1 SV=1, 367,384.3, 22, 55.6, 12
+UGPA_MOUSE, UTP--glucose-1-phosphate uridylyltransferase OS=Mus musculus GN=Ugp2 PE=1 SV=3, 508,383.7, 18,238.1, 15
+BCS1_MOUSE, Mitochondrial chaperone BCS1 OS=Mus musculus GN=Bcs1l PE=1 SV=1, 418,382.2, 17,256.4, 18
+MA2B1_MOUSE, Lysosomal alpha-mannosidase OS=Mus musculus GN=Man2b1 PE=1 SV=4, 1013,380.7, 22,208.8, 14
+ALAT1_MOUSE, Alanine aminotransferase 1 OS=Mus musculus GN=Gpt PE=1 SV=3, 496,379.8, 19,316.4, 21
+PA2G4_MOUSE, Proliferation-associated protein 2G4 OS=Mus musculus GN=Pa2g4 PE=1 SV=3, 394,379.8, 25,579.0, 38
+ADHX_MOUSE, Alcohol dehydrogenase class-3 OS=Mus musculus GN=Adh5 PE=1 SV=3, 374,378.5, 20,253.7, 16
+CH60_MOUSE, 60 kDa heat shock protein mitochondrial OS=Mus musculus GN=Hspd1 PE=1 SV=1, 573,373.6, 18,323.6, 19
+TBB5_MOUSE, Tubulin beta-5 chain OS=Mus musculus GN=Tubb5 PE=1 SV=1, 444,373.3, 26,0.0, 0
+APOA4_MOUSE, Apolipoprotein A-IV OS=Mus musculus GN=Apoa4 PE=1 SV=3, 395,370.0, 23,290.1, 29
+CHIL3_MOUSE, Chitinase-like protein 3 OS=Mus musculus GN=Chil3 PE=1 SV=2, 398,363.8, 12,322.2, 13
+TOM40_MOUSE, Mitochondrial import receptor subunit TOM40 homolog OS=Mus musculus GN=Tomm40 PE=1 SV=3, 361,360.5, 24,121.2, 11
+K1C18_MOUSE, Keratin type I cytoskeletal 18 OS=Mus musculus GN=Krt18 PE=1 SV=5, 423,359.1, 28,462.8, 33
+VP26B_MOUSE, Vacuolar protein sorting-associated protein 26B OS=Mus musculus GN=Vps26b PE=1 SV=1, 336,358.7, 25,172.8, 18
+ANM1_MOUSE, Protein arginine N-methyltransferase 1 OS=Mus musculus GN=Prmt1 PE=1 SV=1, 371,357.1, 15,171.8, 10
+FTCD_MOUSE, Formimidoyltransferase-cyclodeaminase OS=Mus musculus GN=Ftcd PE=1 SV=1, 541,356.3, 15, 95.0, 13
+TBL2_MOUSE, Transducin beta-like protein 2 OS=Mus musculus GN=Tbl2 PE=1 SV=2, 442,352.3, 19,207.2, 22
+GLRX3_MOUSE, Glutaredoxin-3 OS=Mus musculus GN=Glrx3 PE=1 SV=1, 337,344.5, 28,0.0, 0
+SOAT2_MOUSE, Sterol O-acyltransferase 2 OS=Mus musculus GN=Soat2 PE=1 SV=2, 525,340.4, 17,450.1, 20
+ENOG_MOUSE, Gamma-enolase OS=Mus musculus GN=Eno2 PE=1 SV=2, 434,340.3, 9,0.0, 0
+AL9A1_MOUSE, 4-trimethylaminobutyraldehyde dehydrogenase OS=Mus musculus GN=Aldh9a1 PE=1 SV=1, 494,338.9, 27,289.2, 25
+6PGD_MOUSE, 6-phosphogluconate dehydrogenase decarboxylating OS=Mus musculus GN=Pgd PE=1 SV=3, 483,333.8, 28,233.1, 26
+CP3AB_MOUSE, Cytochrome P450 3A11 OS=Mus musculus GN=Cyp3a11 PE=1 SV=1, 504,326.1, 30,200.7, 24
+HYKK_MOUSE, Hydroxylysine kinase OS=Mus musculus GN=Hykk PE=1 SV=2, 376,325.3, 14,0.0, 0
+MOCS1_MOUSE, Molybdenum cofactor biosynthesis protein 1 OS=Mus musculus GN=Mocs1 PE=1 SV=2, 636,324.1, 29,0.0, 0
+FADS1_MOUSE, Fatty acid desaturase 1 OS=Mus musculus GN=Fads1 PE=1 SV=1, 447,321.0, 20,160.4, 20
+CP8B1_MOUSE, 7-alpha-hydroxycholest-4-en-3-one 12-alpha-hydroxylase OS=Mus musculus GN=Cyp8b1 PE=1 SV=1, 500,319.7, 26,143.2, 18
+NDUAA_MOUSE, NADH dehydrogenase [ubiquinone] 1 alpha subcomplex subunit 10 mitochondrial OS=Mus musculus GN=Ndufa10 PE=1 SV=1, 355,317.7, 20, 70.9, 7
+ASNA_MOUSE, ATPase Asna1 OS=Mus musculus GN=Asna1 PE=1 SV=2, 348,316.9, 22,0.0, 0
+CP7B1_MOUSE, 25-hydroxycholesterol 7-alpha-hydroxylase OS=Mus musculus GN=Cyp7b1 PE=1 SV=2, 507,316.6, 19, 96.7, 14
+KAPCA_MOUSE, cAMP-dependent protein kinase catalytic subunit alpha OS=Mus musculus GN=Prkaca PE=1 SV=3, 351,312.9, 19, 46.2, 10
+UD11_MOUSE, UDP-glucuronosyltransferase 1-1 OS=Mus musculus GN=Ugt1a1 PE=1 SV=2, 535,311.5, 14,398.5, 21
+ALG2_MOUSE, Alpha-13/16-mannosyltransferase ALG2 OS=Mus musculus GN=Alg2 PE=1 SV=2, 415,310.1, 11, 37.8, 3
+CAH3_MOUSE, Carbonic anhydrase 3 OS=Mus musculus GN=Ca3 PE=1 SV=3, 260,309.2, 37,303.2, 39
+APOA5_MOUSE, Apolipoprotein A-V OS=Mus musculus GN=Apoa5 PE=1 SV=1, 368,308.1, 14, 30.0, 3
+HA1B_MOUSE, H-2 class I histocompatibility antigen K-B alpha chain OS=Mus musculus GN=H2-K1 PE=1 SV=1, 369,307.8, 9,123.8, 9
+NSF1C_MOUSE, NSFL1 cofactor p47 OS=Mus musculus GN=Nsfl1c PE=1 SV=1, 370,299.3, 13,253.3, 25
+THIC_MOUSE, Acetyl-CoA acetyltransferase cytosolic OS=Mus musculus GN=Acat2 PE=1 SV=2, 397,296.5, 14,160.7, 7
+MPI_MOUSE, Mannose-6-phosphate isomerase OS=Mus musculus GN=Mpi PE=1 SV=1, 423,296.1, 15,364.8, 13
+MAP11_MOUSE, Methionine aminopeptidase 1 OS=Mus musculus GN=Metap1 PE=1 SV=1, 386,293.4, 18,282.6, 16
+LICH_MOUSE, Lysosomal acid lipase/cholesteryl ester hydrolase OS=Mus musculus GN=Lipa PE=1 SV=2, 397,291.7, 17,196.5, 14
+SIR2_MOUSE, NAD-dependent protein deacetylase sirtuin-2 OS=Mus musculus GN=Sirt2 PE=1 SV=2, 389,289.6, 12,141.6, 10
+LDHD_MOUSE, Probable D-lactate dehydrogenase mitochondrial OS=Mus musculus GN=Ldhd PE=1 SV=1, 484,289.3, 17,318.9, 19
+UGDH_MOUSE, UDP-glucose 6-dehydrogenase OS=Mus musculus GN=Ugdh PE=1 SV=1, 493,288.7, 13,255.7, 17
+EIF3E_MOUSE, Eukaryotic translation initiation factor 3 subunit E OS=Mus musculus GN=Eif3e PE=1 SV=1, 445,286.6, 14,273.9, 18
+NDUF7_MOUSE, Protein arginine methyltransferase NDUFAF7 mitochondrial OS=Mus musculus GN=Ndufaf7 PE=1 SV=4, 436,285.0, 12,163.6, 11
+PCY1A_MOUSE, Choline-phosphate cytidylyltransferase A OS=Mus musculus GN=Pcyt1a PE=1 SV=1, 367,284.3, 28, 92.2, 18
+ROAA_MOUSE, Heterogeneous nuclear ribonucleoprotein A/B OS=Mus musculus GN=Hnrnpab PE=1 SV=1, 285,281.8, 13,190.9, 15
+RGN_MOUSE, Regucalcin OS=Mus musculus GN=Rgn PE=1 SV=1, 299,279.7, 14,162.8, 15
+CP240_MOUSE, Cytochrome P450 2C40 OS=Mus musculus GN=Cyp2c40 PE=1 SV=2, 491,279.6, 24,128.9, 14
+SYFM_MOUSE, Phenylalanine--tRNA ligase mitochondrial OS=Mus musculus GN=Fars2 PE=1 SV=1, 451,279.0, 15,102.4, 17
+INPP_MOUSE, Inositol polyphosphate 1-phosphatase OS=Mus musculus GN=Inpp1 PE=1 SV=2, 396,278.9, 13,209.8, 12
+ARP3_MOUSE, Actin-related protein 3 OS=Mus musculus GN=Actr3 PE=1 SV=3, 418,276.1, 17,244.8, 15
+MP2K2_MOUSE, Dual specificity mitogen-activated protein kinase kinase 2 OS=Mus musculus GN=Map2k2 PE=1 SV=2, 401,275.4, 21,258.7, 27
+SRSF5_MOUSE, Serine/arginine-rich splicing factor 5 OS=Mus musculus GN=Srsf5 PE=1 SV=2, 269,273.8, 9,127.9, 8
+SSDH_MOUSE, Succinate-semialdehyde dehydrogenase mitochondrial OS=Mus musculus GN=Aldh5a1 PE=1 SV=1, 523,273.6, 18,189.9, 19
+DHCR7_MOUSE, 7-dehydrocholesterol reductase OS=Mus musculus GN=Dhcr7 PE=1 SV=1, 471,272.7, 10, 57.8, 6
+PPM1B_MOUSE, Protein phosphatase 1B OS=Mus musculus GN=Ppm1b PE=1 SV=1, 390,270.1, 17,287.1, 25
+FBX22_MOUSE, F-box only protein 22 OS=Mus musculus GN=Fbxo22 PE=1 SV=2, 402,269.9, 7,124.4, 6
+UD16_MOUSE, UDP-glucuronosyltransferase 1-6 OS=Mus musculus GN=Ugt1a6 PE=1 SV=1, 531,269.5, 19,374.5, 26
+CAH14_MOUSE, Carbonic anhydrase 14 OS=Mus musculus GN=Ca14 PE=1 SV=1, 337,267.4, 9,128.7, 4
+ATG3_MOUSE, Ubiquitin-like-conjugating enzyme ATG3 OS=Mus musculus GN=Atg3 PE=1 SV=1, 314,267.3, 9, 30.8, 4
+PTER_MOUSE, Phosphotriesterase-related protein OS=Mus musculus GN=Pter PE=1 SV=1, 349,266.1, 16,0.0, 0
+FACE1_MOUSE, CAAX prenyl protease 1 homolog OS=Mus musculus GN=Zmpste24 PE=1 SV=2, 475,263.3, 18, 51.5, 8
+PDK1_MOUSE, [Pyruvate dehydrogenase (acetyl-transferring)] kinase isozyme 1 mitochondrial OS=Mus musculus GN=Pdk1 PE=1 SV=2, 434,261.2, 12,197.2, 15
+ADH4_MOUSE, Alcohol dehydrogenase 4 OS=Mus musculus GN=Adh4 PE=1 SV=4, 377,259.0, 8, 26.5, 4
+CES1F_MOUSE, Carboxylesterase 1F OS=Mus musculus GN=Ces1f PE=1 SV=1, 561,258.2, 14,182.3, 16
+ILF2_MOUSE, Interleukin enhancer-binding factor 2 OS=Mus musculus GN=Ilf2 PE=1 SV=1, 390,257.8, 9,122.8, 5
+ERLN1_MOUSE, Erlin-1 OS=Mus musculus GN=Erlin1 PE=1 SV=1, 346,257.4, 15,134.7, 6
+AIFM2_MOUSE, Apoptosis-inducing factor 2 OS=Mus musculus GN=Aifm2 PE=1 SV=1, 373,256.9, 15,0.0, 0
+ADA_MOUSE, Adenosine deaminase OS=Mus musculus GN=Ada PE=1 SV=3, 352,250.6, 16,237.5, 12
+MPRD_MOUSE, Cation-dependent mannose-6-phosphate receptor OS=Mus musculus GN=M6pr PE=1 SV=1, 278,248.4, 8,137.7, 9
+DX39B_MOUSE, Spliceosome RNA helicase Ddx39b OS=Mus musculus GN=Ddx39b PE=1 SV=1, 428,247.9, 26,160.2, 24
+A1AT2_MOUSE, Alpha-1-antitrypsin 1-2 OS=Mus musculus GN=Serpina1b PE=1 SV=2, 413,247.4, 12, 61.7, 11
+LAP2B_MOUSE, Lamina-associated polypeptide 2 isoforms beta/delta/epsilon/gamma OS=Mus musculus GN=Tmpo PE=1 SV=4, 452,246.7, 17,126.0, 13
+LANC2_MOUSE, LanC-like protein 2 OS=Mus musculus GN=Lancl2 PE=1 SV=1, 450,245.3, 10,188.8, 10
+GMPPB_MOUSE, Mannose-1-phosphate guanyltransferase beta OS=Mus musculus GN=Gmppb PE=1 SV=1, 360,239.8, 10, 21.6, 1
+ADRO_MOUSE, NADPH:adrenodoxin oxidoreductase mitochondrial OS=Mus musculus GN=Fdxr PE=1 SV=1, 494,238.3, 14,160.4, 14
+SAE1_MOUSE, SUMO-activating enzyme subunit 1 OS=Mus musculus GN=Sae1 PE=1 SV=1, 350,236.8, 10, 21.4, 16
+S29A1_MOUSE, Equilibrative nucleoside transporter 1 OS=Mus musculus GN=Slc29a1 PE=1 SV=3, 460,236.4, 10,109.6, 11
+PHKG2_MOUSE, Phosphorylase b kinase gamma catalytic chain liver/testis isoform OS=Mus musculus GN=Phkg2 PE=2 SV=2, 406,235.9, 8, 63.9, 2
+PDK2_MOUSE, [Pyruvate dehydrogenase (acetyl-transferring)] kinase isozyme 2 mitochondrial OS=Mus musculus GN=Pdk2 PE=1 SV=2, 407,235.2, 18,135.3, 17
+CBPA2_MOUSE, Carboxypeptidase A2 OS=Mus musculus GN=Cpa2 PE=1 SV=1, 417,235.1, 15,0.0, 0
+MTNA_MOUSE, Methylthioribose-1-phosphate isomerase OS=Mus musculus GN=Mri1 PE=1 SV=1, 369,234.6, 7, 32.3, 2
+ALBU_MOUSE, Serum albumin OS=Mus musculus GN=Alb PE=1 SV=3, 608,234.4, 10,384.1, 15
+PRS6A_MOUSE, 26S protease regulatory subunit 6A OS=Mus musculus GN=Psmc3 PE=1 SV=2, 442,234.3, 16, 80.1, 22
+SPYA_MOUSE, Serine--pyruvate aminotransferase mitochondrial OS=Mus musculus GN=Agxt PE=1 SV=3, 414,233.4, 12,105.1, 9
+BZW2_MOUSE, Basic leucine zipper and W2 domain-containing protein 2 OS=Mus musculus GN=Bzw2 PE=1 SV=1, 419,228.9, 12,0.0, 0
+EST3A_MOUSE, Carboxylesterase 3A OS=Mus musculus GN=Ces3a PE=1 SV=2, 571,228.1, 11,125.7, 8
+GNAS1_MOUSE, Guanine nucleotide-binding protein G(s) subunit alpha isoforms XLas OS=Mus musculus GN=Gnas PE=1 SV=1, 1133,225.5, 22, 96.6, 16
+UD19_MOUSE, UDP-glucuronosyltransferase 1-9 OS=Mus musculus GN=Ugt1a9 PE=1 SV=3, 528,224.3, 10,0.0, 0
+HEM3_MOUSE, Porphobilinogen deaminase OS=Mus musculus GN=Hmbs PE=1 SV=2, 361,223.6, 21,108.0, 22
+LAP2A_MOUSE, Lamina-associated polypeptide 2 isoforms alpha/zeta OS=Mus musculus GN=Tmpo PE=1 SV=4, 693,222.7, 12,0.0, 0
+F10A1_MOUSE, Hsc70-interacting protein OS=Mus musculus GN=St13 PE=1 SV=1, 371,222.5, 27, 80.2, 23
+CD47_MOUSE, Leukocyte surface antigen CD47 OS=Mus musculus GN=Cd47 PE=1 SV=2, 303,221.7, 9,141.0, 8
+FDFT_MOUSE, Squalene synthase OS=Mus musculus GN=Fdft1 PE=1 SV=2, 416,220.9, 11,155.7, 17
+PROD2_MOUSE, Probable proline dehydrogenase 2 OS=Mus musculus GN=Prodh2 PE=1 SV=1, 456,220.2, 14,184.5, 16
+UBXN1_MOUSE, UBX domain-containing protein 1 OS=Mus musculus GN=Ubxn1 PE=1 SV=1, 297,218.6, 16, 37.4, 9
+KYNU_MOUSE, Kynureninase OS=Mus musculus GN=Kynu PE=1 SV=3, 464,218.2, 17,212.3, 16
+MGST1_MOUSE, Microsomal glutathione S-transferase 1 OS=Mus musculus GN=Mgst1 PE=1 SV=3, 155,217.7, 8,224.3, 8
+MK03_MOUSE, Mitogen-activated protein kinase 3 OS=Mus musculus GN=Mapk3 PE=1 SV=5, 380,216.9, 16,113.2, 19
+ASAH1_MOUSE, Acid ceramidase OS=Mus musculus GN=Asah1 PE=1 SV=1, 394,215.4, 10,144.4, 10
+DDRGK_MOUSE, DDRGK domain-containing protein 1 OS=Mus musculus GN=Ddrgk1 PE=1 SV=2, 315,215.3, 7, 67.6, 9
+SYYM_MOUSE, Tyrosine--tRNA ligase mitochondrial OS=Mus musculus GN=Yars2 PE=1 SV=2, 472,214.9, 15,172.0, 11
+CREL1_MOUSE, Cysteine-rich with EGF-like domain protein 1 OS=Mus musculus GN=Creld1 PE=1 SV=1, 420,213.8, 6, 91.0, 7
+THTR_MOUSE, Thiosulfate sulfurtransferase OS=Mus musculus GN=Tst PE=1 SV=3, 297,212.3, 10,110.8, 7
+PRDX1_MOUSE, Peroxiredoxin-1 OS=Mus musculus GN=Prdx1 PE=1 SV=1, 199,209.9, 14,134.1, 9
+IF4A3_MOUSE, Eukaryotic initiation factor 4A-III OS=Mus musculus GN=Eif4a3 PE=1 SV=3, 411,209.6, 34,0.0, 0
+AGK_MOUSE, Acylglycerol kinase mitochondrial OS=Mus musculus GN=Agk PE=1 SV=1, 421,209.1, 16,168.0, 16
+SET_MOUSE, Protein SET OS=Mus musculus GN=Set PE=1 SV=1, 289,208.8, 14, 26.2, 5
+MRRP1_MOUSE, Mitochondrial ribonuclease P protein 1 OS=Mus musculus GN=Trmt10c PE=1 SV=2, 414,208.0, 12,104.6, 13
+CD38_MOUSE, ADP-ribosyl cyclase/cyclic ADP-ribose hydrolase 1 OS=Mus musculus GN=Cd38 PE=1 SV=2, 304,207.5, 13,209.4, 15
+HNRPK_MOUSE, Heterogeneous nuclear ribonucleoprotein K OS=Mus musculus GN=Hnrnpk PE=1 SV=1, 463,207.4, 13,161.3, 8
+CP4CA_MOUSE, Cytochrome P450 4A12A OS=Mus musculus GN=Cyp4a12a PE=1 SV=2, 508,205.0, 18, 91.4, 12
+CN37_MOUSE, 2'3'-cyclic-nucleotide 3'-phosphodiesterase OS=Mus musculus GN=Cnp PE=1 SV=3, 420,201.4, 14, 99.7, 14
+HM13_MOUSE, Minor histocompatibility antigen H13 OS=Mus musculus GN=Hm13 PE=1 SV=1, 378,201.0, 12, 29.3, 6
+CP270_MOUSE, Cytochrome P450 2C70 OS=Mus musculus GN=Cyp2c70 PE=1 SV=2, 489,200.1, 18,106.1, 23
+RM38_MOUSE, 39S ribosomal protein L38 mitochondrial OS=Mus musculus GN=Mrpl38 PE=1 SV=2, 380,199.3, 15,237.2, 16
+IGBP1_MOUSE, Immunoglobulin-binding protein 1 OS=Mus musculus GN=Igbp1 PE=1 SV=1, 340,199.2, 28, 87.5, 26
+CAPG_MOUSE, Macrophage-capping protein OS=Mus musculus GN=Capg PE=1 SV=2, 352,198.4, 15, 89.6, 12
+KIBRA_MOUSE, Protein KIBRA OS=Mus musculus GN=Wwc1 PE=1 SV=1, 1104,198.3, 30,180.4, 29
+ACDSB_MOUSE, Short/branched chain specific acyl-CoA dehydrogenase mitochondrial OS=Mus musculus GN=Acadsb PE=1 SV=1, 432,197.8, 11, 60.7, 7
+HPT_MOUSE, Haptoglobin OS=Mus musculus GN=Hp PE=1 SV=1, 347,197.0, 20, 82.2, 12
+ETFA_MOUSE, Electron transfer flavoprotein subunit alpha mitochondrial OS=Mus musculus GN=Etfa PE=1 SV=2, 333,196.8, 13,163.1, 12
+UD12_MOUSE, UDP-glucuronosyltransferase 1-2 OS=Mus musculus GN=Ugt1a2 PE=1 SV=1, 533,196.1, 10,0.0, 0
+AUP1_MOUSE, Ancient ubiquitous protein 1 OS=Mus musculus GN=Aup1 PE=1 SV=1, 410,194.9, 11, 25.4, 9
+MEP50_MOUSE, Methylosome protein 50 OS=Mus musculus GN=Wdr77 PE=1 SV=1, 342,193.2, 6,140.7, 7
+MDHM_MOUSE, Malate dehydrogenase mitochondrial OS=Mus musculus GN=Mdh2 PE=1 SV=3, 338,192.3, 12,142.4, 9
+ODO2_MOUSE, Dihydrolipoyllysine-residue succinyltransferase component of 2-oxoglutarate dehydrogenase complex mitochondrial OS=Mus musculus GN=Dlst PE=1 SV=1, 454,191.8, 6,269.4, 15
+SHLB1_MOUSE, Endophilin-B1 OS=Mus musculus GN=Sh3glb1 PE=1 SV=1, 365,191.4, 8,119.7, 11
+CP3AD_MOUSE, Cytochrome P450 3A13 OS=Mus musculus GN=Cyp3a13 PE=1 SV=1, 503,190.0, 25,109.0, 13
+LA_MOUSE, Lupus La protein homolog OS=Mus musculus GN=Ssb PE=1 SV=1, 415,189.9, 12,169.8, 13
+HA11_MOUSE, H-2 class I histocompatibility antigen D-B alpha chain OS=Mus musculus GN=H2-D1 PE=1 SV=2, 362,188.8, 6,126.3, 7
+STML2_MOUSE, Stomatin-like protein 2 mitochondrial OS=Mus musculus GN=Stoml2 PE=1 SV=1, 353,188.5, 4, 14.3, 1
+YBOX1_MOUSE, Nuclease-sensitive element-binding protein 1 OS=Mus musculus GN=Ybx1 PE=1 SV=3, 322,188.3, 11, 91.3, 9
+RT05_MOUSE, 28S ribosomal protein S5 mitochondrial OS=Mus musculus GN=Mrps5 PE=1 SV=1, 432,188.1, 14,0.0, 0
+ARP10_MOUSE, Actin-related protein 10 OS=Mus musculus GN=Actr10 PE=1 SV=2, 417,187.6, 11,102.7, 7
+EF1D_MOUSE, Elongation factor 1-delta OS=Mus musculus GN=Eef1d PE=1 SV=3, 281,186.0, 7, 48.5, 4
+MVD1_MOUSE, Diphosphomevalonate decarboxylase OS=Mus musculus GN=Mvd PE=1 SV=2, 401,185.6, 11, 70.2, 9
+GRP75_MOUSE, Stress-70 protein mitochondrial OS=Mus musculus GN=Hspa9 PE=1 SV=3, 679,185.5, 13,102.9, 8
+ABHD5_MOUSE, 1-acylglycerol-3-phosphate O-acyltransferase ABHD5 OS=Mus musculus GN=Abhd5 PE=1 SV=1, 351,183.7, 6, 34.8, 5
+AMYP_MOUSE, Pancreatic alpha-amylase OS=Mus musculus GN=Amy2 PE=1 SV=2, 508,183.3, 9,0.0, 0
+NSMA_MOUSE, Sphingomyelin phosphodiesterase 2 OS=Mus musculus GN=Smpd2 PE=1 SV=1, 419,182.8, 18, 26.1, 7
+GLYAT_MOUSE, Glycine N-acyltransferase OS=Mus musculus GN=Glyat PE=1 SV=1, 296,182.1, 7,112.8, 10
+MDHC_MOUSE, Malate dehydrogenase cytoplasmic OS=Mus musculus GN=Mdh1 PE=1 SV=3, 334,180.0, 10,157.2, 10
+HNRPF_MOUSE, Heterogeneous nuclear ribonucleoprotein F OS=Mus musculus GN=Hnrnpf PE=1 SV=3, 415,179.9, 5, 34.8, 5
+RPAC1_MOUSE, DNA-directed RNA polymerases I and III subunit RPAC1 OS=Mus musculus GN=Polr1c PE=1 SV=3, 346,179.8, 4,0.0, 0
+ALKMO_MOUSE, Alkylglycerol monooxygenase OS=Mus musculus GN=Agmo PE=1 SV=1, 447,179.1, 8, 69.5, 8
+TPP1_MOUSE, Tripeptidyl-peptidase 1 OS=Mus musculus GN=Tpp1 PE=1 SV=2, 562,177.3, 5,219.8, 11
+KAPCB_MOUSE, cAMP-dependent protein kinase catalytic subunit beta OS=Mus musculus GN=Prkacb PE=1 SV=2, 351,177.1, 12, 44.6, 7
+NDRG1_MOUSE, Protein NDRG1 OS=Mus musculus GN=Ndrg1 PE=1 SV=1, 394,176.6, 9, 88.1, 9
+NHRF2_MOUSE, Na(+)/H(+) exchange regulatory cofactor NHE-RF2 OS=Mus musculus GN=Slc9a3r2 PE=1 SV=2, 337,176.0, 19, 49.0, 8
+URIC_MOUSE, Uricase OS=Mus musculus GN=Uox PE=1 SV=2, 303,174.6, 16, 57.8, 7
+TMLH_MOUSE, Trimethyllysine dioxygenase mitochondrial OS=Mus musculus GN=Tmlhe PE=1 SV=2, 421,174.2, 7,0.0, 0
+PARVA_MOUSE, Alpha-parvin OS=Mus musculus GN=Parva PE=1 SV=1, 372,172.4, 4,118.4, 5
+ODB2_MOUSE, Lipoamide acyltransferase component of branched-chain alpha-keto acid dehydrogenase complex mitochondrial OS=Mus musculus GN=Dbt PE=1 SV=2, 482,172.4, 16,298.7, 20
+PGRC1_MOUSE, Membrane-associated progesterone receptor component 1 OS=Mus musculus GN=Pgrmc1 PE=1 SV=4, 195,171.7, 5, 52.3, 3
+GALM_MOUSE, Aldose 1-epimerase OS=Mus musculus GN=Galm PE=1 SV=1, 342,170.4, 6, 72.2, 2
+RM37_MOUSE, 39S ribosomal protein L37 mitochondrial OS=Mus musculus GN=Mrpl37 PE=1 SV=1, 423,169.1, 8,194.9, 16
+KPYR_MOUSE, Pyruvate kinase PKLR OS=Mus musculus GN=Pklr PE=1 SV=1, 574,168.7, 17,100.1, 16
+CP4AA_MOUSE, Cytochrome P450 4A10 OS=Mus musculus GN=Cyp4a10 PE=2 SV=2, 509,168.5, 14, 58.8, 5
+PON2_MOUSE, Serum paraoxonase/arylesterase 2 OS=Mus musculus GN=Pon2 PE=1 SV=2, 354,166.8, 9, 90.8, 8
+TCPB_MOUSE, T-complex protein 1 subunit beta OS=Mus musculus GN=Cct2 PE=1 SV=4, 535,165.8, 7, 68.1, 10
+ANXA7_MOUSE, Annexin A7 OS=Mus musculus GN=Anxa7 PE=1 SV=2, 463,165.4, 5, 60.0, 4
+CP4AE_MOUSE, Cytochrome P450 4A14 OS=Mus musculus GN=Cyp4a14 PE=1 SV=1, 507,165.2, 14, 56.8, 10
+LDHA_MOUSE, L-lactate dehydrogenase A chain OS=Mus musculus GN=Ldha PE=1 SV=3, 332,164.4, 14, 85.8, 13
+DDC_MOUSE, Aromatic-L-amino-acid decarboxylase OS=Mus musculus GN=Ddc PE=1 SV=1, 480,164.0, 5,149.7, 5
+ARP2_MOUSE, Actin-related protein 2 OS=Mus musculus GN=Actr2 PE=1 SV=1, 394,162.2, 23, 14.6, 10
+HBA_MOUSE, Hemoglobin subunit alpha OS=Mus musculus GN=Hba PE=1 SV=2, 142,161.4, 10,217.8, 10
+GNA13_MOUSE, Guanine nucleotide-binding protein subunit alpha-13 OS=Mus musculus GN=Gna13 PE=1 SV=1, 377,161.1, 14,0.0, 0
+STX5_MOUSE, Syntaxin-5 OS=Mus musculus GN=Stx5 PE=1 SV=3, 355,161.0, 6, 23.1, 3
+LIPP_MOUSE, Pancreatic triacylglycerol lipase OS=Mus musculus GN=Pnlip PE=1 SV=1, 465,160.6, 10,0.0, 0
+ECI2_MOUSE, Enoyl-CoA delta isomerase 2 mitochondrial OS=Mus musculus GN=Eci2 PE=1 SV=2, 391,160.5, 4, 70.0, 6
+UFD1_MOUSE, Ubiquitin fusion degradation protein 1 homolog OS=Mus musculus GN=Ufd1l PE=1 SV=2, 307,160.4, 12,0.0, 0
+SRGP3_MOUSE, SLIT-ROBO Rho GTPase-activating protein 3 OS=Mus musculus GN=Srgap3 PE=1 SV=1, 1099,159.2, 27,107.0, 18
+SRGP1_MOUSE, SLIT-ROBO Rho GTPase-activating protein 1 OS=Mus musculus GN=Srgap1 PE=1 SV=2, 1062,159.2, 20,107.0, 22
+AT1B1_MOUSE, Sodium/potassium-transporting ATPase subunit beta-1 OS=Mus musculus GN=Atp1b1 PE=1 SV=1, 304,157.9, 37,150.1, 34
+ILEUA_MOUSE, Leukocyte elastase inhibitor A OS=Mus musculus GN=Serpinb1a PE=1 SV=1, 379,156.5, 8,0.0, 0
+EST2C_MOUSE, Acylcarnitine hydrolase OS=Mus musculus GN=Ces2c PE=1 SV=1, 561,155.6, 8, 95.6, 8
+NHRF1_MOUSE, Na(+)/H(+) exchange regulatory cofactor NHE-RF1 OS=Mus musculus GN=Slc9a3r1 PE=1 SV=3, 355,155.4, 13, 20.5, 11
+DCMC_MOUSE, Malonyl-CoA decarboxylase mitochondrial OS=Mus musculus GN=Mlycd PE=1 SV=1, 492,153.8, 7,197.7, 13
+CP2J5_MOUSE, Cytochrome P450 2J5 OS=Mus musculus GN=Cyp2j5 PE=1 SV=1, 501,153.7, 12,116.2, 10
+DPTOR_MOUSE, DEP domain-containing mTOR-interacting protein OS=Mus musculus GN=Deptor PE=1 SV=2, 409,152.3, 12,101.0, 12
+GPDA_MOUSE, Glycerol-3-phosphate dehydrogenase [NAD(+)] cytoplasmic OS=Mus musculus GN=Gpd1 PE=1 SV=3, 349,150.7, 6, 93.0, 7
+DPYS_MOUSE, Dihydropyrimidinase OS=Mus musculus GN=Dpys PE=1 SV=2, 519,150.3, 10,106.9, 7
+ARK72_MOUSE, Aflatoxin B1 aldehyde reductase member 2 OS=Mus musculus GN=Akr7a2 PE=1 SV=3, 367,149.9, 11, 40.3, 11
+VTA1_MOUSE, Vacuolar protein sorting-associated protein VTA1 homolog OS=Mus musculus GN=Vta1 PE=1 SV=1, 309,149.4, 3, 66.7, 9
+HDGF_MOUSE, Hepatoma-derived growth factor OS=Mus musculus GN=Hdgf PE=1 SV=2, 237,149.4, 24, 34.5, 3
+ACOT4_MOUSE, Acyl-coenzyme A thioesterase 4 OS=Mus musculus GN=Acot4 PE=1 SV=1, 421,149.1, 13,159.6, 19
+OXSM_MOUSE, 3-oxoacyl-[acyl-carrier-protein] synthase mitochondrial OS=Mus musculus GN=Oxsm PE=1 SV=1, 459,147.9, 8,190.5, 14
+AIMP1_MOUSE, Aminoacyl tRNA synthase complex-interacting multifunctional protein 1 OS=Mus musculus GN=Aimp1 PE=1 SV=2, 310,147.8, 6,0.0, 0
+ATX3_MOUSE, Ataxin-3 OS=Mus musculus GN=Atxn3 PE=1 SV=2, 355,147.3, 3, 25.1, 1
+NUCKS_MOUSE, Nuclear ubiquitous casein and cyclin-dependent kinase substrate 1 OS=Mus musculus GN=Nucks1 PE=1 SV=1, 234,147.2, 6, 53.8, 3
+EIF3G_MOUSE, Eukaryotic translation initiation factor 3 subunit G OS=Mus musculus GN=Eif3g PE=1 SV=2, 320,147.0, 19, 77.0, 12
+PRS7_MOUSE, 26S protease regulatory subunit 7 OS=Mus musculus GN=Psmc2 PE=1 SV=5, 433,146.4, 18,150.3, 19
+PURA2_MOUSE, Adenylosuccinate synthetase isozyme 2 OS=Mus musculus GN=Adss PE=1 SV=2, 456,146.2, 7, 59.6, 6
+HA18_MOUSE, H-2 class I histocompatibility antigen Q8 alpha chain OS=Mus musculus GN=H2-Q8 PE=3 SV=1, 326,146.1, 8,0.0, 0
+MAAI_MOUSE, Maleylacetoacetate isomerase OS=Mus musculus GN=Gstz1 PE=1 SV=1, 216,145.9, 6, 72.1, 3
+CMPK2_MOUSE, UMP-CMP kinase 2 mitochondrial OS=Mus musculus GN=Cmpk2 PE=1 SV=2, 447,145.2, 11,100.9, 8
+PLIN2_MOUSE, Perilipin-2 OS=Mus musculus GN=Plin2 PE=1 SV=2, 425,143.9, 9,121.9, 12
+QORL1_MOUSE, Quinone oxidoreductase-like protein 1 OS=Mus musculus GN=Cryzl1 PE=1 SV=1, 348,142.6, 9,125.1, 12
+MP2K4_MOUSE, Dual specificity mitogen-activated protein kinase kinase 4 OS=Mus musculus GN=Map2k4 PE=1 SV=2, 397,141.9, 18, 65.2, 9
+HNRH1_MOUSE, Heterogeneous nuclear ribonucleoprotein H OS=Mus musculus GN=Hnrnph1 PE=1 SV=3, 449,140.8, 8,0.0, 0
+RL7_MOUSE, 60S ribosomal protein L7 OS=Mus musculus GN=Rpl7 PE=1 SV=2, 270,140.7, 30, 39.0, 23
+MPCP_MOUSE, Phosphate carrier protein mitochondrial OS=Mus musculus GN=Slc25a3 PE=1 SV=1, 357,140.6, 13, 38.0, 9
+NAGA_MOUSE, N-acetylglucosamine-6-phosphate deacetylase OS=Mus musculus GN=Amdhd2 PE=1 SV=1, 409,139.3, 8,145.5, 8
+BRE_MOUSE, BRCA1-A complex subunit BRE OS=Mus musculus GN=Bre PE=1 SV=2, 383,139.2, 10,138.8, 6
+EHD3_MOUSE, EH domain-containing protein 3 OS=Mus musculus GN=Ehd3 PE=1 SV=2, 535,138.5, 10,0.0, 0
+HYES_MOUSE, Bifunctional epoxide hydrolase 2 OS=Mus musculus GN=Ephx2 PE=1 SV=2, 554,138.2, 6,123.1, 14
+NACAM_MOUSE, Nascent polypeptide-associated complex subunit alpha muscle-specific form OS=Mus musculus GN=Naca PE=1 SV=2, 2187,138.2, 31, 64.8, 25
+VMP1_MOUSE, Vacuole membrane protein 1 OS=Mus musculus GN=Vmp1 PE=1 SV=2, 406,137.2, 13,162.5, 8
+SNP47_MOUSE, Synaptosomal-associated protein 47 OS=Mus musculus GN=Snap47 PE=1 SV=1, 413,137.1, 5, 23.3, 3
+DLDH_MOUSE, Dihydrolipoyl dehydrogenase mitochondrial OS=Mus musculus GN=Dld PE=1 SV=2, 509,136.9, 5,135.6, 12
+ACOT5_MOUSE, Acyl-coenzyme A thioesterase 5 OS=Mus musculus GN=Acot5 PE=2 SV=2, 421,136.3, 16,0.0, 0
+K2C1_MOUSE, Keratin type II cytoskeletal 1 OS=Mus musculus GN=Krt1 PE=1 SV=4, 637,132.4, 19,540.3, 23
+RLA0_MOUSE, 60S acidic ribosomal protein P0 OS=Mus musculus GN=Rplp0 PE=1 SV=3, 317,131.8, 9,116.2, 9
+RTCA_MOUSE, RNA 3'-terminal phosphate cyclase OS=Mus musculus GN=RtcA PE=1 SV=2, 366,129.8, 9,0.0, 0
+STX16_MOUSE, Syntaxin-16 OS=Mus musculus GN=Stx16 PE=1 SV=3, 326,129.5, 11, 58.6, 4
+K2C75_MOUSE, Keratin type II cytoskeletal 75 OS=Mus musculus GN=Krt75 PE=1 SV=1, 551,129.4, 17,0.0, 0
+UD3A2_MOUSE, UDP-glucuronosyltransferase 3A2 OS=Mus musculus GN=Ugt3a2 PE=1 SV=2, 523,129.0, 10, 63.7, 17
+GMDS_MOUSE, GDP-mannose 46 dehydratase OS=Mus musculus GN=Gmds PE=1 SV=1, 372,128.6, 14,0.0, 0
+SCRN3_MOUSE, Secernin-3 OS=Mus musculus GN=Scrn3 PE=1 SV=1, 418,128.5, 9,175.8, 9
+GSTM1_MOUSE, Glutathione S-transferase Mu 1 OS=Mus musculus GN=Gstm1 PE=1 SV=2, 218,128.1, 13, 96.3, 10
+AL1L1_MOUSE, Cytosolic 10-formyltetrahydrofolate dehydrogenase OS=Mus musculus GN=Aldh1l1 PE=1 SV=1, 902,127.9, 27,0.0, 0
+PTGR3_MOUSE, Prostaglandin reductase-3 OS=Mus musculus GN=Zadh2 PE=1 SV=1, 377,125.4, 12,0.0, 0
+HOGA1_MOUSE, 4-hydroxy-2-oxoglutarate aldolase mitochondrial OS=Mus musculus GN=Hoga1 PE=1 SV=1, 321,124.7, 5, 71.1, 7
+UB2J1_MOUSE, Ubiquitin-conjugating enzyme E2 J1 OS=Mus musculus GN=Ube2j1 PE=1 SV=2, 318,124.3, 7, 18.8, 4
+CIAO1_MOUSE, Probable cytosolic iron-sulfur protein assembly protein CIAO1 OS=Mus musculus GN=Ciao1 PE=1 SV=1, 339,124.1, 6,0.0, 0
+ALAT2_MOUSE, Alanine aminotransferase 2 OS=Mus musculus GN=Gpt2 PE=1 SV=1, 522,123.6, 6, 52.4, 6
+NEUA_MOUSE, N-acylneuraminate cytidylyltransferase OS=Mus musculus GN=Cmas PE=1 SV=2, 432,123.3, 12, 98.4, 14
+ADAP2_MOUSE, Arf-GAP with dual PH domain-containing protein 2 OS=Mus musculus GN=Adap2 PE=1 SV=1, 381,123.1, 9,0.0, 0
+FMO5_MOUSE, Dimethylaniline monooxygenase [N-oxide-forming] 5 OS=Mus musculus GN=Fmo5 PE=1 SV=4, 533,122.9, 9,231.0, 20
+PAG15_MOUSE, Group XV phospholipase A2 OS=Mus musculus GN=Pla2g15 PE=1 SV=1, 412,122.2, 3, 45.5, 4
+RUVB2_MOUSE, RuvB-like 2 OS=Mus musculus GN=Ruvbl2 PE=1 SV=3, 463,122.1, 21,0.0, 0
+DHI1_MOUSE, Corticosteroid 11-beta-dehydrogenase isozyme 1 OS=Mus musculus GN=Hsd11b1 PE=1 SV=3, 292,122.0, 7,105.5, 6
+MPPB_MOUSE, Mitochondrial-processing peptidase subunit beta OS=Mus musculus GN=Pmpcb PE=1 SV=1, 489,120.8, 6,107.5, 4
+CATH_MOUSE, Pro-cathepsin H OS=Mus musculus GN=Ctsh PE=1 SV=2, 333,120.4, 6,0.0, 0
+RTN4_MOUSE, Reticulon-4 OS=Mus musculus GN=Rtn4 PE=1 SV=2, 1162,119.8, 9,153.6, 9
+SHPK_MOUSE, Sedoheptulokinase OS=Mus musculus GN=Shpk PE=1 SV=1, 476,118.2, 11,145.0, 9
+HACD3_MOUSE, Very-long-chain (3R)-3-hydroxyacyl-CoA dehydratase 3 OS=Mus musculus GN=Hacd3 PE=1 SV=2, 362,118.2, 3, 67.5, 4
+K2C8_MOUSE, Keratin type II cytoskeletal 8 OS=Mus musculus GN=Krt8 PE=1 SV=4, 490,116.9, 11,211.1, 15
+DNPEP_MOUSE, Aspartyl aminopeptidase OS=Mus musculus GN=Dnpep PE=1 SV=2, 473,116.6, 10, 88.3, 6
+ODPB_MOUSE, Pyruvate dehydrogenase E1 component subunit beta mitochondrial OS=Mus musculus GN=Pdhb PE=1 SV=1, 359,116.1, 8, 29.2, 3
+PYRD_MOUSE, Dihydroorotate dehydrogenase (quinone) mitochondrial OS=Mus musculus GN=Dhodh PE=1 SV=2, 395,115.9, 8,0.0, 0
+TBCEL_MOUSE, Tubulin-specific chaperone cofactor E-like protein OS=Mus musculus GN=Tbcel PE=1 SV=1, 424,115.5, 10, 35.2, 5
+KCRM_MOUSE, Creatine kinase M-type OS=Mus musculus GN=Ckm PE=1 SV=1, 381,114.0, 11,254.3, 16
+MOT10_MOUSE, Monocarboxylate transporter 10 OS=Mus musculus GN=Slc16a10 PE=1 SV=1, 512,112.3, 4, 65.5, 3
+MOT1_MOUSE, Monocarboxylate transporter 1 OS=Mus musculus GN=Slc16a1 PE=1 SV=1, 493,112.2, 8, 21.8, 4
+IRGM1_MOUSE, Immunity-related GTPase family M protein 1 OS=Mus musculus GN=Irgm1 PE=1 SV=1, 409,111.8, 14,0.0, 0
+CALU_MOUSE, Calumenin OS=Mus musculus GN=Calu PE=1 SV=1, 315,111.7, 22, 29.8, 15
+AK1A1_MOUSE, Alcohol dehydrogenase [NADP(+)] OS=Mus musculus GN=Akr1a1 PE=1 SV=3, 325,111.3, 11, 91.9, 10
+RL6_MOUSE, 60S ribosomal protein L6 OS=Mus musculus GN=Rpl6 PE=1 SV=3, 296,110.5, 13, 51.2, 14
+ASGR2_MOUSE, Asialoglycoprotein receptor 2 OS=Mus musculus GN=Asgr2 PE=1 SV=1, 301,110.4, 16, 35.2, 7
+CP3AG_MOUSE, Cytochrome P450 3A16 OS=Mus musculus GN=Cyp3a16 PE=2 SV=2, 504,109.2, 10,0.0, 0
+PAWR_MOUSE, PRKC apoptosis WT1 regulator protein OS=Mus musculus GN=Pawr PE=1 SV=2, 333,108.7, 10, 15.1, 12
+MARC2_MOUSE, Mitochondrial amidoxime reducing component 2 OS=Mus musculus GN=Marc2 PE=1 SV=1, 338,108.5, 8, 47.2, 3
+UD2A3_MOUSE, UDP-glucuronosyltransferase 2A3 OS=Mus musculus GN=Ugt2a3 PE=1 SV=1, 534,107.8, 6,143.3, 7
+FMO1_MOUSE, Dimethylaniline monooxygenase [N-oxide-forming] 1 OS=Mus musculus GN=Fmo1 PE=1 SV=1, 532,107.1, 6, 69.8, 4
+SEPT4_MOUSE, Septin-4 OS=Mus musculus GN=Sept4 PE=1 SV=1, 478,105.5, 9, 50.3, 8
+PR38A_MOUSE, Pre-mRNA-splicing factor 38A OS=Mus musculus GN=Prpf38a PE=1 SV=1, 312,105.3, 3,0.0, 0
+K2C74_MOUSE, Keratin type II cytoskeletal 74 OS=Mus musculus GN=Krt74 PE=3 SV=1, 495,104.5, 6,170.6, 7
+RCN1_MOUSE, Reticulocalbin-1 OS=Mus musculus GN=Rcn1 PE=1 SV=1, 325,104.4, 5, 19.6, 3
+TMOD3_MOUSE, Tropomodulin-3 OS=Mus musculus GN=Tmod3 PE=1 SV=1, 352,103.3, 5,0.0, 0
+TBC13_MOUSE, TBC1 domain family member 13 OS=Mus musculus GN=Tbc1d13 PE=1 SV=1, 400,102.1, 19, 39.4, 10
+PP1R7_MOUSE, Protein phosphatase 1 regulatory subunit 7 OS=Mus musculus GN=Ppp1r7 PE=1 SV=2, 361,101.7, 7,111.8, 6
+PHLA1_MOUSE, Pleckstrin homology-like domain family A member 1 OS=Mus musculus GN=Phlda1 PE=1 SV=2, 405,100.9, 8, 33.1, 4
+NU5M_MOUSE, NADH-ubiquinone oxidoreductase chain 5 OS=Mus musculus GN=Mtnd5 PE=1 SV=3, 607,100.8, 3,0.0, 0
+T3HPD_MOUSE, Trans-L-3-hydroxyproline dehydratase OS=Mus musculus GN=L3hypdh PE=1 SV=1, 354,100.6, 4,0.0, 0
+PELO_MOUSE, Protein pelota homolog OS=Mus musculus GN=Pelo PE=1 SV=3, 385, 99.8, 8, 31.7, 7
+UBFD1_MOUSE, Ubiquitin domain-containing protein UBFD1 OS=Mus musculus GN=Ubfd1 PE=1 SV=2, 368, 98.8, 12, 70.1, 11
+MET7B_MOUSE, Methyltransferase-like protein 7B OS=Mus musculus GN=Mettl7b PE=1 SV=2, 244, 97.9, 5, 53.0, 2
+IRF3_MOUSE, Interferon regulatory factor 3 OS=Mus musculus GN=Irf3 PE=1 SV=1, 419, 97.9, 5, 31.2, 3
+CATB_MOUSE, Cathepsin B OS=Mus musculus GN=Ctsb PE=1 SV=2, 339, 97.4, 3, 25.3, 2
+ARSB_MOUSE, Arylsulfatase B OS=Mus musculus GN=Arsb PE=1 SV=3, 534, 96.9, 7,153.8, 8
+ILK_MOUSE, Integrin-linked protein kinase OS=Mus musculus GN=Ilk PE=1 SV=2, 452, 96.8, 9, 46.3, 9
+HEM2_MOUSE, Delta-aminolevulinic acid dehydratase OS=Mus musculus GN=Alad PE=1 SV=1, 330, 96.7, 5, 40.4, 1
+FABPL_MOUSE, Fatty acid-binding protein liver OS=Mus musculus GN=Fabp1 PE=1 SV=2, 127, 96.6, 7, 47.1, 5
+MUP1_MOUSE, Major urinary protein 1 OS=Mus musculus GN=Mup1 PE=1 SV=1, 180, 94.0, 4, 25.8, 2
+STRAB_MOUSE, STE20-related kinase adapter protein beta OS=Mus musculus GN=Stradb PE=2 SV=1, 418, 93.9, 4, 27.4, 8
+RMD5A_MOUSE, Protein RMD5 homolog A OS=Mus musculus GN=Rmnd5a PE=1 SV=2, 391, 93.8, 6,0.0, 0
+MRP_MOUSE, MARCKS-related protein OS=Mus musculus GN=Marcksl1 PE=1 SV=2, 200, 93.5, 13, 47.3, 17
+MK09_MOUSE, Mitogen-activated protein kinase 9 OS=Mus musculus GN=Mapk9 PE=1 SV=2, 423, 93.5, 12,0.0, 0
+TPSN_MOUSE, Tapasin OS=Mus musculus GN=Tapbp PE=1 SV=2, 465, 93.5, 5,0.0, 0
+PLEK_MOUSE, Pleckstrin OS=Mus musculus GN=Plek PE=1 SV=1, 350, 92.7, 10, 94.2, 11
+NU1M_MOUSE, NADH-ubiquinone oxidoreductase chain 1 OS=Mus musculus GN=Mtnd1 PE=1 SV=3, 318, 92.1, 5, 61.9, 5
+ADT2_MOUSE, ADP/ATP translocase 2 OS=Mus musculus GN=Slc25a5 PE=1 SV=3, 298, 92.0, 11,159.7, 9
+T106B_MOUSE, Transmembrane protein 106B OS=Mus musculus GN=Tmem106b PE=1 SV=1, 275, 91.2, 4, 16.5, 3
+BLMH_MOUSE, Bleomycin hydrolase OS=Mus musculus GN=Blmh PE=1 SV=1, 455, 91.1, 4, 82.5, 6
+CLUS_MOUSE, Clusterin OS=Mus musculus GN=Clu PE=1 SV=1, 448, 90.9, 14,0.0, 0
+DJB12_MOUSE, DnaJ homolog subfamily B member 12 OS=Mus musculus GN=Dnajb12 PE=1 SV=2, 376, 90.4, 4, 51.0, 6
+SURF4_MOUSE, Surfeit locus protein 4 OS=Mus musculus GN=Surf4 PE=1 SV=1, 269, 90.1, 3, 73.9, 6
+MAVS_MOUSE, Mitochondrial antiviral-signaling protein OS=Mus musculus GN=Mavs PE=1 SV=1, 503, 89.7, 4,0.0, 0
+ECHA_MOUSE, Trifunctional enzyme subunit alpha mitochondrial OS=Mus musculus GN=Hadha PE=1 SV=1, 763, 89.5, 4,0.0, 0
+PEDF_MOUSE, Pigment epithelium-derived factor OS=Mus musculus GN=Serpinf1 PE=1 SV=2, 417, 89.2, 2, 26.4, 7
+COQ6_MOUSE, Ubiquinone biosynthesis monooxygenase COQ6 mitochondrial OS=Mus musculus GN=Coq6 PE=1 SV=3, 476, 88.3, 3, 41.8, 6
+CK054_MOUSE, Ester hydrolase C11orf54 homolog OS=Mus musculus PE=1 SV=1, 315, 87.8, 2, 56.8, 5
+HEM6_MOUSE, Oxygen-dependent coproporphyrinogen-III oxidase mitochondrial OS=Mus musculus GN=Cpox PE=1 SV=2, 443, 86.9, 20, 22.5, 10
+NECA1_MOUSE, N-terminal EF-hand calcium-binding protein 1 OS=Mus musculus GN=Necab1 PE=1 SV=1, 352, 86.8, 2,0.0, 0
+EST1_MOUSE, Liver carboxylesterase 1 OS=Mus musculus GN=Ces1 PE=1 SV=1, 565, 85.9, 10,0.0, 0
+RCC1_MOUSE, Regulator of chromosome condensation OS=Mus musculus GN=Rcc1 PE=1 SV=1, 421, 85.7, 3,232.4, 12
+RS6_MOUSE, 40S ribosomal protein S6 OS=Mus musculus GN=Rps6 PE=1 SV=1, 249, 85.7, 9,0.0, 0
+MARC1_MOUSE, Mitochondrial amidoxime-reducing component 1 OS=Mus musculus GN=Marc1 PE=1 SV=2, 340, 85.6, 4,103.4, 5
+EST2E_MOUSE, Pyrethroid hydrolase Ces2e OS=Mus musculus GN=Ces2e PE=1 SV=1, 559, 85.4, 8, 93.8, 8
+DNJA1_MOUSE, DnaJ homolog subfamily A member 1 OS=Mus musculus GN=Dnaja1 PE=1 SV=1, 397, 84.2, 15, 46.5, 13
+BDH_MOUSE, D-beta-hydroxybutyrate dehydrogenase mitochondrial OS=Mus musculus GN=Bdh1 PE=1 SV=2, 343, 83.7, 2, 56.0, 6
+PP1R8_MOUSE, Nuclear inhibitor of protein phosphatase 1 OS=Mus musculus GN=Ppp1r8 PE=1 SV=1, 351, 83.3, 7, 63.6, 2
+LIS1_MOUSE, Platelet-activating factor acetylhydrolase IB subunit alpha OS=Mus musculus GN=Pafah1b1 PE=1 SV=2, 410, 83.1, 10,102.5, 7
+SLMAP_MOUSE, Sarcolemmal membrane-associated protein OS=Mus musculus GN=Slmap PE=1 SV=2, 845, 82.7, 17,161.8, 8
+CTBP1_MOUSE, C-terminal-binding protein 1 OS=Mus musculus GN=Ctbp1 PE=1 SV=2, 441, 82.3, 7,0.0, 0
+K1C10_MOUSE, Keratin type I cytoskeletal 10 OS=Mus musculus GN=Krt10 PE=1 SV=3, 570, 81.7, 9,303.1, 13
+HCDH_MOUSE, Hydroxyacyl-coenzyme A dehydrogenase mitochondrial OS=Mus musculus GN=Hadh PE=1 SV=2, 314, 81.5, 3, 51.8, 3
+CLC4G_MOUSE, C-type lectin domain family 4 member G OS=Mus musculus GN=Clec4g PE=1 SV=1, 294, 81.1, 4,0.0, 0
+ABD12_MOUSE, Monoacylglycerol lipase ABHD12 OS=Mus musculus GN=Abhd12 PE=1 SV=2, 398, 81.0, 5, 64.0, 6
+LC7L2_MOUSE, Putative RNA-binding protein Luc7-like 2 OS=Mus musculus GN=Luc7l2 PE=1 SV=1, 392, 80.3, 4,0.0, 0
+PPME1_MOUSE, Protein phosphatase methylesterase 1 OS=Mus musculus GN=Ppme1 PE=1 SV=5, 386, 79.9, 4, 52.9, 6
+ITM2B_MOUSE, Integral membrane protein 2B OS=Mus musculus GN=Itm2b PE=1 SV=1, 266, 79.7, 4,0.0, 0
+TMM43_MOUSE, Transmembrane protein 43 OS=Mus musculus GN=Tmem43 PE=1 SV=1, 400, 79.6, 5,0.0, 0
+GLTD2_MOUSE, Glycolipid transfer protein domain-containing protein 2 OS=Mus musculus GN=Gltpd2 PE=1 SV=1, 321, 79.3, 9,0.0, 0
+CYB5_MOUSE, Cytochrome b5 OS=Mus musculus GN=Cyb5a PE=1 SV=2, 134, 79.1, 6, 27.7, 7
+RUS1_MOUSE, RUS1 family protein C16orf58 homolog OS=Mus musculus PE=1 SV=1, 466, 79.0, 7, 86.8, 7
+RACK1_MOUSE, Receptor of activated protein C kinase 1 OS=Mus musculus GN=Rack1 PE=1 SV=3, 317, 78.8, 2,0.0, 0
+STEA4_MOUSE, Metalloreductase STEAP4 OS=Mus musculus GN=Steap4 PE=1 SV=1, 470, 78.2, 4, 36.2, 4
+OFUT1_MOUSE, GDP-fucose protein O-fucosyltransferase 1 OS=Mus musculus GN=Pofut1 PE=1 SV=1, 393, 77.7, 6,0.0, 0
+FXL20_MOUSE, F-box/LRR-repeat protein 20 OS=Mus musculus GN=Fbxl20 PE=1 SV=3, 436, 77.5, 6, 36.5, 3
+M2GD_MOUSE, Dimethylglycine dehydrogenase mitochondrial OS=Mus musculus GN=Dmgdh PE=1 SV=1, 869, 76.1, 3,0.0, 0
+PHB2_MOUSE, Prohibitin-2 OS=Mus musculus GN=Phb2 PE=1 SV=1, 299, 76.0, 4, 73.7, 3
+DHR13_MOUSE, Dehydrogenase/reductase SDR family member 13 OS=Mus musculus GN=Dhrs13 PE=1 SV=1, 376, 75.5, 7,0.0, 0
+B3GA3_MOUSE, Galactosylgalactosylxylosylprotein 3-beta-glucuronosyltransferase 3 OS=Mus musculus GN=B3gat3 PE=1 SV=1, 335, 75.4, 8, 17.7, 4
+CP3AP_MOUSE, Cytochrome P450 3A25 OS=Mus musculus GN=Cyp3a25 PE=1 SV=1, 503, 75.3, 12, 54.5, 9
+TRI14_MOUSE, Tripartite motif-containing protein 14 OS=Mus musculus GN=Trim14 PE=1 SV=2, 440, 74.5, 5, 86.9, 6
+VP26A_MOUSE, Vacuolar protein sorting-associated protein 26A OS=Mus musculus GN=Vps26a PE=1 SV=1, 327, 74.0, 11, 30.9, 7
+GRP78_MOUSE, 78 kDa glucose-regulated protein OS=Mus musculus GN=Hspa5 PE=1 SV=3, 655, 73.5, 29, 19.1, 20
+RS27A_MOUSE, Ubiquitin-40S ribosomal protein S27a OS=Mus musculus GN=Rps27a PE=1 SV=2, 156, 73.2, 18, 50.8, 12
+AL4A1_MOUSE, Delta-1-pyrroline-5-carboxylate dehydrogenase mitochondrial OS=Mus musculus GN=Aldh4a1 PE=1 SV=3, 562, 73.1, 9, 52.6, 8
+S38A3_MOUSE, Sodium-coupled neutral amino acid transporter 3 OS=Mus musculus GN=Slc38a3 PE=1 SV=1, 505, 73.1, 3,0.0, 0
+VATC1_MOUSE, V-type proton ATPase subunit C 1 OS=Mus musculus GN=Atp6v1c1 PE=1 SV=4, 382, 72.7, 15,0.0, 0
+SEPT7_MOUSE, Septin-7 OS=Mus musculus GN=Sept7 PE=1 SV=1, 436, 72.6, 15, 72.8, 14
+VTDB_MOUSE, Vitamin D-binding protein OS=Mus musculus GN=Gc PE=1 SV=2, 476, 71.9, 11, 47.9, 8
+PCY2_MOUSE, Ethanolamine-phosphate cytidylyltransferase OS=Mus musculus GN=Pcyt2 PE=1 SV=1, 404, 71.4, 13,106.7, 14
+MYLK_MOUSE, Myosin light chain kinase smooth muscle OS=Mus musculus GN=Mylk PE=1 SV=3, 1941, 71.3, 27, 92.2, 22
+SYDC_MOUSE, Aspartate--tRNA ligase cytoplasmic OS=Mus musculus GN=Dars PE=1 SV=2, 501, 71.3, 7, 62.9, 5
+ECI1_MOUSE, Enoyl-CoA delta isomerase 1 mitochondrial OS=Mus musculus GN=Eci1 PE=1 SV=2, 289, 70.9, 4, 46.6, 2
+RS8_MOUSE, 40S ribosomal protein S8 OS=Mus musculus GN=Rps8 PE=1 SV=2, 208, 70.5, 2,104.4, 4
+GUAD_MOUSE, Guanine deaminase OS=Mus musculus GN=Gda PE=1 SV=1, 454, 70.0, 8, 86.7, 11
+TRA2B_MOUSE, Transformer-2 protein homolog beta OS=Mus musculus GN=Tra2b PE=1 SV=1, 288, 69.3, 4,0.0, 0
+A1AG1_MOUSE, Alpha-1-acid glycoprotein 1 OS=Mus musculus GN=Orm1 PE=1 SV=1, 207, 69.0, 6,0.0, 0
+SUOX_MOUSE, Sulfite oxidase mitochondrial OS=Mus musculus GN=Suox PE=1 SV=2, 546, 69.0, 6, 78.1, 3
+FABD_MOUSE, Malonyl-CoA-acyl carrier protein transacylase mitochondrial OS=Mus musculus GN=Mcat PE=1 SV=3, 381, 68.7, 2,0.0, 0
+HEPS_MOUSE, Serine protease hepsin OS=Mus musculus GN=Hpn PE=1 SV=3, 436, 67.9, 2, 26.5, 3
+RL18A_MOUSE, 60S ribosomal protein L18a OS=Mus musculus GN=Rpl18a PE=1 SV=1, 176, 67.6, 6, 72.1, 2
+CP39A_MOUSE, 24-hydroxycholesterol 7-alpha-hydroxylase OS=Mus musculus GN=Cyp39a1 PE=1 SV=1, 470, 67.5, 4, 60.9, 11
+LEG9_MOUSE, Galectin-9 OS=Mus musculus GN=Lgals9 PE=1 SV=1, 353, 67.1, 3,0.0, 0
+SEPT9_MOUSE, Septin-9 OS=Mus musculus GN=Sept9 PE=1 SV=1, 583, 67.0, 9,0.0, 0
+NDEL1_MOUSE, Nuclear distribution protein nudE-like 1 OS=Mus musculus GN=Ndel1 PE=1 SV=2, 345, 66.9, 9,0.0, 0
+MTU1_MOUSE, Mitochondrial tRNA-specific 2-thiouridylase 1 OS=Mus musculus GN=Trmu PE=1 SV=1, 417, 66.8, 7, 51.0, 6
+FIBA_MOUSE, Fibrinogen alpha chain OS=Mus musculus GN=Fga PE=1 SV=1, 789, 66.7, 6,0.0, 0
+NNRD_MOUSE, ATP-dependent (S)-NAD(P)H-hydrate dehydratase OS=Mus musculus GN=Naxd PE=1 SV=1, 343, 66.6, 6, 51.1, 2
+GLSL_MOUSE, Glutaminase liver isoform mitochondrial OS=Mus musculus GN=Gls2 PE=1 SV=2, 602, 66.1, 5, 30.6, 3
+ACSL1_MOUSE, Long-chain-fatty-acid--CoA ligase 1 OS=Mus musculus GN=Acsl1 PE=1 SV=2, 699, 65.2, 9, 29.7, 9
+S22AI_MOUSE, Solute carrier family 22 member 18 OS=Mus musculus GN=Slc22a18 PE=1 SV=2, 406, 64.9, 2, 37.4, 5
+TCO2_MOUSE, Transcobalamin-2 OS=Mus musculus GN=Tcn2 PE=1 SV=1, 430, 64.7, 5,0.0, 0
+EST1C_MOUSE, Carboxylesterase 1C OS=Mus musculus GN=Ces1c PE=1 SV=4, 554, 64.5, 7,0.0, 0
+VIME_MOUSE, Vimentin OS=Mus musculus GN=Vim PE=1 SV=3, 466, 64.3, 7, 42.9, 7
+ADR2_MOUSE, Adiponectin receptor protein 2 OS=Mus musculus GN=Adipor2 PE=1 SV=2, 386, 64.2, 4,0.0, 0
+SSRG_MOUSE, Translocon-associated protein subunit gamma OS=Mus musculus GN=Ssr3 PE=1 SV=1, 185, 63.9, 2,0.0, 0
+DECR_MOUSE, 24-dienoyl-CoA reductase mitochondrial OS=Mus musculus GN=Decr1 PE=1 SV=1, 335, 63.7, 23, 60.8, 25
+NUP43_MOUSE, Nucleoporin Nup43 OS=Mus musculus GN=Nup43 PE=1 SV=2, 380, 62.9, 4, 63.1, 3
+ACSM1_MOUSE, Acyl-coenzyme A synthetase ACSM1 mitochondrial OS=Mus musculus GN=Acsm1 PE=1 SV=1, 573, 62.6, 8, 38.0, 9
+3HAO_MOUSE, 3-hydroxyanthranilate 34-dioxygenase OS=Mus musculus GN=Haao PE=1 SV=1, 286, 62.4, 10,106.4, 10
+PICAL_MOUSE, Phosphatidylinositol-binding clathrin assembly protein OS=Mus musculus GN=Picalm PE=1 SV=1, 660, 62.0, 8,0.0, 0
+IMPA3_MOUSE, Inositol monophosphatase 3 OS=Mus musculus GN=Impad1 PE=1 SV=1, 356, 61.9, 4,0.0, 0
+CDC37_MOUSE, Hsp90 co-chaperone Cdc37 OS=Mus musculus GN=Cdc37 PE=1 SV=1, 379, 61.4, 15,0.0, 0
+DJC28_MOUSE, DnaJ homolog subfamily C member 28 OS=Mus musculus GN=Dnajc28 PE=1 SV=2, 385, 61.4, 10,0.0, 0
+RS3_MOUSE, 40S ribosomal protein S3 OS=Mus musculus GN=Rps3 PE=1 SV=1, 243, 61.2, 12, 61.6, 12
+WDR18_MOUSE, WD repeat-containing protein 18 OS=Mus musculus GN=Wdr18 PE=1 SV=1, 431, 61.2, 2, 33.1, 2
+KPRA_MOUSE, Phosphoribosyl pyrophosphate synthase-associated protein 1 OS=Mus musculus GN=Prpsap1 PE=1 SV=1, 356, 60.8, 8, 29.8, 6
+KIME_MOUSE, Mevalonate kinase OS=Mus musculus GN=Mvk PE=1 SV=1, 395, 60.7, 15,0.0, 0
+LGUL_MOUSE, Lactoylglutathione lyase OS=Mus musculus GN=Glo1 PE=1 SV=3, 184, 60.5, 7, 58.4, 7
+AASD1_MOUSE, Alanyl-tRNA editing protein Aarsd1 OS=Mus musculus GN=Aarsd1 PE=1 SV=2, 412, 60.5, 5,0.0, 0
+FIBG_MOUSE, Fibrinogen gamma chain OS=Mus musculus GN=Fgg PE=1 SV=1, 436, 60.4, 5, 61.1, 6
+TCPD_MOUSE, T-complex protein 1 subunit delta OS=Mus musculus GN=Cct4 PE=1 SV=3, 539, 60.2, 7,0.0, 0
+SET1B_MOUSE, Histone-lysine N-methyltransferase SETD1B OS=Mus musculus GN=Setd1b PE=1 SV=2, 1985, 60.1, 21, 74.6, 23
+TTC1_MOUSE, Tetratricopeptide repeat protein 1 OS=Mus musculus GN=Ttc1 PE=1 SV=1, 292, 60.0, 13, 29.1, 15
+VPS36_MOUSE, Vacuolar protein-sorting-associated protein 36 OS=Mus musculus GN=Vps36 PE=1 SV=1, 386, 60.0, 7, 77.3, 15
+SGK2_MOUSE, Serine/threonine-protein kinase Sgk2 OS=Mus musculus GN=Sgk2 PE=1 SV=1, 367, 59.9, 3, 26.1, 2
+EXOG_MOUSE, Nuclease EXOG mitochondrial OS=Mus musculus GN=Exog PE=1 SV=1, 368, 59.8, 2,0.0, 0
+UBCP1_MOUSE, Ubiquitin-like domain-containing CTD phosphatase 1 OS=Mus musculus GN=Ublcp1 PE=1 SV=1, 318, 59.8, 5,0.0, 0
+ILKAP_MOUSE, Integrin-linked kinase-associated serine/threonine phosphatase 2C OS=Mus musculus GN=Ilkap PE=1 SV=1, 392, 59.6, 3, 43.9, 3
+ERF1_MOUSE, Eukaryotic peptide chain release factor subunit 1 OS=Mus musculus GN=Etf1 PE=1 SV=4, 437, 59.3, 8, 59.8, 5
+CNDP2_MOUSE, Cytosolic non-specific dipeptidase OS=Mus musculus GN=Cndp2 PE=1 SV=1, 475, 59.1, 5, 29.5, 5
+MBOA5_MOUSE, Lysophospholipid acyltransferase 5 OS=Mus musculus GN=Lpcat3 PE=1 SV=1, 487, 58.7, 3,0.0, 0
+REEP6_MOUSE, Receptor expression-enhancing protein 6 OS=Mus musculus GN=Reep6 PE=1 SV=1, 201, 58.6, 3,0.0, 0
+LMF1_MOUSE, Lipase maturation factor 1 OS=Mus musculus GN=Lmf1 PE=1 SV=1, 574, 58.3, 4, 36.1, 4
+YBOX3_MOUSE, Y-box-binding protein 3 OS=Mus musculus GN=Ybx3 PE=1 SV=2, 361, 58.2, 4, 25.9, 2
+GDPP1_MOUSE, GDP-D-glucose phosphorylase 1 OS=Mus musculus GN=Gdpgp1 PE=1 SV=2, 386, 57.9, 11, 32.5, 5
+SYNE1_MOUSE, Nesprin-1 OS=Mus musculus GN=Syne1 PE=1 SV=2, 8799, 56.5, 103, 69.0, 114
+VDAC1_MOUSE, Voltage-dependent anion-selective channel protein 1 OS=Mus musculus GN=Vdac1 PE=1 SV=3, 296, 56.4, 5, 42.3, 6
+PAFA2_MOUSE, Platelet-activating factor acetylhydrolase 2 cytoplasmic OS=Mus musculus GN=Pafah2 PE=1 SV=2, 390, 56.2, 2, 17.8, 2
+SNX5_MOUSE, Sorting nexin-5 OS=Mus musculus GN=Snx5 PE=1 SV=1, 404, 56.1, 13, 85.3, 16
+DCTN2_MOUSE, Dynactin subunit 2 OS=Mus musculus GN=Dctn2 PE=1 SV=3, 402, 56.1, 14,0.0, 0
+CB072_MOUSE, Uncharacterized protein C2orf72 homolog OS=Mus musculus PE=1 SV=2, 286, 55.8, 4,0.0, 0
+PACN3_MOUSE, Protein kinase C and casein kinase II substrate protein 3 OS=Mus musculus GN=Pacsin3 PE=1 SV=1, 424, 55.7, 4, 34.2, 6
+K1C42_MOUSE, Keratin type I cytoskeletal 42 OS=Mus musculus GN=Krt42 PE=1 SV=1, 452, 55.0, 8,134.1, 7
+UD3A1_MOUSE, UDP-glucuronosyltransferase 3A1 OS=Mus musculus GN=Ugt3a1 PE=1 SV=1, 523, 54.3, 6, 32.0, 3
+G6PI_MOUSE, Glucose-6-phosphate isomerase OS=Mus musculus GN=Gpi PE=1 SV=4, 558, 54.1, 8, 81.8, 7
+COASY_MOUSE, Bifunctional coenzyme A synthase OS=Mus musculus GN=Coasy PE=1 SV=2, 563, 53.9, 8,0.0, 0
+PPIA_MOUSE, Peptidyl-prolyl cis-trans isomerase A OS=Mus musculus GN=Ppia PE=1 SV=2, 164, 53.9, 4,0.0, 0
+GSTA3_MOUSE, Glutathione S-transferase A3 OS=Mus musculus GN=Gsta3 PE=1 SV=2, 221, 53.9, 2, 77.5, 9
+NMI_MOUSE, N-myc-interactor OS=Mus musculus GN=Nmi PE=1 SV=1, 314, 52.5, 5,0.0, 0
+ODPX_MOUSE, Pyruvate dehydrogenase protein X component mitochondrial OS=Mus musculus GN=Pdhx PE=1 SV=1, 501, 52.3, 5,0.0, 0
+CDS2_MOUSE, Phosphatidate cytidylyltransferase 2 OS=Mus musculus GN=Cds2 PE=1 SV=1, 444, 52.2, 5, 15.3, 5
+AT1B3_MOUSE, Sodium/potassium-transporting ATPase subunit beta-3 OS=Mus musculus GN=Atp1b3 PE=1 SV=1, 278, 52.2, 6, 69.1, 8
+EIF3H_MOUSE, Eukaryotic translation initiation factor 3 subunit H OS=Mus musculus GN=Eif3h PE=1 SV=1, 352, 51.7, 6,0.0, 0
+K22O_MOUSE, Keratin type II cytoskeletal 2 oral OS=Mus musculus GN=Krt76 PE=1 SV=1, 594, 51.6, 9,154.4, 15
+MAOX_MOUSE, NADP-dependent malic enzyme OS=Mus musculus GN=Me1 PE=1 SV=2, 572, 51.5, 15,0.0, 0
+VINEX_MOUSE, Vinexin OS=Mus musculus GN=Sorbs3 PE=1 SV=1, 733, 51.5, 9, 40.2, 6
+PDIA3_MOUSE, Protein disulfide-isomerase A3 OS=Mus musculus GN=Pdia3 PE=1 SV=2, 505, 51.3, 6, 35.1, 11
+SND1_MOUSE, Staphylococcal nuclease domain-containing protein 1 OS=Mus musculus GN=Snd1 PE=1 SV=1, 910, 51.2, 12,0.0, 0
+VAT1_MOUSE, Synaptic vesicle membrane protein VAT-1 homolog OS=Mus musculus GN=Vat1 PE=1 SV=3, 406, 51.1, 2,0.0, 0
+SARDH_MOUSE, Sarcosine dehydrogenase mitochondrial OS=Mus musculus GN=Sardh PE=1 SV=1, 919, 50.6, 7,0.0, 0
+DIA1_MOUSE, Deleted in autism protein 1 homolog OS=Mus musculus PE=1 SV=2, 430, 50.5, 6, 70.0, 4
+RL5_MOUSE, 60S ribosomal protein L5 OS=Mus musculus GN=Rpl5 PE=1 SV=3, 297, 50.0, 6, 44.1, 5
+BABA1_MOUSE, BRISC and BRCA1-A complex member 1 OS=Mus musculus GN=Babam1 PE=1 SV=1, 333, 49.9, 6, 67.8, 5
+GLYG_MOUSE, Glycogenin-1 OS=Mus musculus GN=Gyg1 PE=1 SV=3, 333, 49.7, 4,0.0, 0
+BACH_MOUSE, Cytosolic acyl coenzyme A thioester hydrolase OS=Mus musculus GN=Acot7 PE=1 SV=2, 381, 49.7, 6, 25.1, 5
+GSTT3_MOUSE, Glutathione S-transferase theta-3 OS=Mus musculus GN=Gstt3 PE=1 SV=1, 241, 49.6, 2,0.0, 0
+MTCH1_MOUSE, Mitochondrial carrier homolog 1 OS=Mus musculus GN=Mtch1 PE=1 SV=1, 389, 48.5, 2,0.0, 0
+OSBL1_MOUSE, Oxysterol-binding protein-related protein 1 OS=Mus musculus GN=Osbpl1a PE=1 SV=2, 950, 48.2, 19,0.0, 0
+LRC59_MOUSE, Leucine-rich repeat-containing protein 59 OS=Mus musculus GN=Lrrc59 PE=1 SV=1, 307, 47.8, 4, 30.6, 1
+PCTL_MOUSE, PCTP-like protein OS=Mus musculus GN=Stard10 PE=1 SV=1, 291, 47.6, 8, 90.7, 5
+SIAS_MOUSE, Sialic acid synthase OS=Mus musculus GN=Nans PE=1 SV=1, 359, 47.5, 5,0.0, 0
+NB5R3_MOUSE, NADH-cytochrome b5 reductase 3 OS=Mus musculus GN=Cyb5r3 PE=1 SV=3, 301, 47.5, 3, 58.4, 4
+FPPS_MOUSE, Farnesyl pyrophosphate synthase OS=Mus musculus GN=Fdps PE=1 SV=1, 353, 47.5, 6, 90.5, 6
+PURA1_MOUSE, Adenylosuccinate synthetase isozyme 1 OS=Mus musculus GN=Adssl1 PE=1 SV=2, 457, 47.4, 10,0.0, 0
+TPIS_MOUSE, Triosephosphate isomerase OS=Mus musculus GN=Tpi1 PE=1 SV=4, 299, 47.2, 2,0.0, 0
+SRSF6_MOUSE, Serine/arginine-rich splicing factor 6 OS=Mus musculus GN=Srsf6 PE=1 SV=1, 339, 47.1, 8, 46.2, 9
+IFIT3_MOUSE, Interferon-induced protein with tetratricopeptide repeats 3 OS=Mus musculus GN=Ifit3 PE=1 SV=1, 403, 47.1, 4,0.0, 0
+GNAI2_MOUSE, Guanine nucleotide-binding protein G(i) subunit alpha-2 OS=Mus musculus GN=Gnai2 PE=1 SV=5, 355, 47.0, 7, 79.8, 6
+NECP1_MOUSE, Adaptin ear-binding coat-associated protein 1 OS=Mus musculus GN=Necap1 PE=1 SV=2, 275, 46.8, 9,0.0, 0
+CP4F3_MOUSE, Leukotriene-B(4) omega-hydroxylase 2 OS=Mus musculus GN=Cyp4f3 PE=1 SV=2, 524, 46.6, 8,0.0, 0
+NU160_MOUSE, Nuclear pore complex protein Nup160 OS=Mus musculus GN=Nup160 PE=1 SV=2, 1402, 46.5, 8, 45.2, 7
+COX2_MOUSE, Cytochrome c oxidase subunit 2 OS=Mus musculus GN=Mtco2 PE=1 SV=1, 227, 46.5, 2, 26.6, 1
+ATPO_MOUSE, ATP synthase subunit O mitochondrial OS=Mus musculus GN=Atp5o PE=1 SV=1, 213, 46.4, 3,117.8, 4
+TRUB1_MOUSE, Probable tRNA pseudouridine synthase 1 OS=Mus musculus GN=Trub1 PE=1 SV=1, 338, 46.2, 12, 30.9, 14
+ISC2A_MOUSE, Isochorismatase domain-containing protein 2A OS=Mus musculus GN=Isoc2a PE=1 SV=1, 206, 46.1, 2,0.0, 0
+ELMD3_MOUSE, ELMO domain-containing protein 3 OS=Mus musculus GN=Elmod3 PE=1 SV=1, 381, 46.0, 7, 45.3, 6
+RRBP1_MOUSE, Ribosome-binding protein 1 OS=Mus musculus GN=Rrbp1 PE=1 SV=2, 1605, 46.0, 55, 34.3, 52
+MTCH2_MOUSE, Mitochondrial carrier homolog 2 OS=Mus musculus GN=Mtch2 PE=1 SV=1, 303, 45.6, 3, 39.1, 3
+LGMN_MOUSE, Legumain OS=Mus musculus GN=Lgmn PE=1 SV=1, 435, 45.6, 2, 32.7, 5
+LAMA3_MOUSE, Laminin subunit alpha-3 OS=Mus musculus GN=Lama3 PE=1 SV=4, 3330, 45.2, 39, 50.9, 25
+DAPK2_MOUSE, Death-associated protein kinase 2 OS=Mus musculus GN=Dapk2 PE=1 SV=1, 370, 45.1, 5,0.0, 0
+K1C19_MOUSE, Keratin type I cytoskeletal 19 OS=Mus musculus GN=Krt19 PE=1 SV=1, 403, 44.9, 11, 79.4, 10
+GPAT3_MOUSE, Glycerol-3-phosphate acyltransferase 3 OS=Mus musculus GN=Gpat3 PE=1 SV=1, 438, 44.9, 3, 35.0, 4
+NUDT7_MOUSE, Peroxisomal coenzyme A diphosphatase NUDT7 OS=Mus musculus GN=Nudt7 PE=1 SV=2, 236, 44.3, 5, 43.9, 5
+RL15_MOUSE, 60S ribosomal protein L15 OS=Mus musculus GN=Rpl15 PE=2 SV=4, 204, 44.2, 4,0.0, 0
+SODC_MOUSE, Superoxide dismutase [Cu-Zn] OS=Mus musculus GN=Sod1 PE=1 SV=2, 154, 44.1, 4, 42.7, 1
+AP1M1_MOUSE, AP-1 complex subunit mu-1 OS=Mus musculus GN=Ap1m1 PE=1 SV=3, 423, 44.1, 9, 55.5, 8
+GNA12_MOUSE, Guanine nucleotide-binding protein subunit alpha-12 OS=Mus musculus GN=Gna12 PE=1 SV=3, 379, 43.9, 5, 60.5, 8
+GNAT1_MOUSE, Guanine nucleotide-binding protein G(t) subunit alpha-1 OS=Mus musculus GN=Gnat1 PE=1 SV=3, 350, 43.9, 4,0.0, 0
+SUCA_MOUSE, Succinate--CoA ligase [ADP/GDP-forming] subunit alpha mitochondrial OS=Mus musculus GN=Suclg1 PE=1 SV=4, 346, 43.9, 3,0.0, 0
+GRHPR_MOUSE, Glyoxylate reductase/hydroxypyruvate reductase OS=Mus musculus GN=Grhpr PE=1 SV=1, 328, 43.8, 3, 25.3, 2
+SEP11_MOUSE, Septin-11 OS=Mus musculus GN=Sept11 PE=1 SV=4, 431, 43.6, 6, 27.5, 9
+BCKD_MOUSE, [3-methyl-2-oxobutanoate dehydrogenase [lipoamide]] kinase mitochondrial OS=Mus musculus GN=Bckdk PE=1 SV=1, 412, 43.5, 9, 46.5, 4
+PLIN3_MOUSE, Perilipin-3 OS=Mus musculus GN=Plin3 PE=1 SV=1, 437, 43.4, 7,0.0, 0
+FBX4_MOUSE, F-box only protein 4 OS=Mus musculus GN=Fbxo4 PE=1 SV=2, 385, 42.8, 6,0.0, 0
+SUMF1_MOUSE, Sulfatase-modifying factor 1 OS=Mus musculus GN=Sumf1 PE=1 SV=2, 372, 42.8, 8,0.0, 0
+RMI2_MOUSE, RecQ-mediated genome instability protein 2 OS=Mus musculus GN=Rmi2 PE=2 SV=1, 149, 42.6, 5, 44.3, 4
+BGAL_MOUSE, Beta-galactosidase OS=Mus musculus GN=Glb1 PE=1 SV=1, 647, 42.4, 3, 51.0, 3
+SERPH_MOUSE, Serpin H1 OS=Mus musculus GN=Serpinh1 PE=1 SV=3, 417, 42.4, 6,0.0, 0
+TECR_MOUSE, Very-long-chain enoyl-CoA reductase OS=Mus musculus GN=Tecr PE=1 SV=1, 308, 42.3, 17, 68.8, 13
+VWA1_MOUSE, von Willebrand factor A domain-containing protein 1 OS=Mus musculus GN=Vwa1 PE=1 SV=1, 415, 41.8, 8,0.0, 0
+APOE_MOUSE, Apolipoprotein E OS=Mus musculus GN=Apoe PE=1 SV=2, 311, 40.5, 3,0.0, 0
+CD82_MOUSE, CD82 antigen OS=Mus musculus GN=Cd82 PE=1 SV=1, 266, 40.3, 3,0.0, 0
+GPI8_MOUSE, GPI-anchor transamidase OS=Mus musculus GN=Pigk PE=1 SV=2, 395, 40.0, 6,0.0, 0
+ERGI2_MOUSE, Endoplasmic reticulum-Golgi intermediate compartment protein 2 OS=Mus musculus GN=Ergic2 PE=1 SV=1, 377, 40.0, 3,0.0, 0
+PGK2_MOUSE, Phosphoglycerate kinase 2 OS=Mus musculus GN=Pgk2 PE=1 SV=4, 417,0.0, 0,847.3, 70
+TBA1C_MOUSE, Tubulin alpha-1C chain OS=Mus musculus GN=Tuba1c PE=1 SV=1, 449,0.0, 0,523.8, 30
+K2C5_MOUSE, Keratin type II cytoskeletal 5 OS=Mus musculus GN=Krt5 PE=1 SV=1, 580,0.0, 0,403.1, 21
+K2C1B_MOUSE, Keratin type II cytoskeletal 1b OS=Mus musculus GN=Krt77 PE=1 SV=1, 572,0.0, 0,286.6, 17
+K2C6B_MOUSE, Keratin type II cytoskeletal 6B OS=Mus musculus GN=Krt6b PE=1 SV=3, 562,0.0, 0,283.3, 18
+AL1A3_MOUSE, Aldehyde dehydrogenase family 1 member A3 OS=Mus musculus GN=Aldh1a3 PE=1 SV=1, 512,0.0, 0,272.2, 16
+GDIA_MOUSE, Rab GDP dissociation inhibitor alpha OS=Mus musculus GN=Gdi1 PE=1 SV=3, 447,0.0, 0,232.8, 11
+K2C79_MOUSE, Keratin type II cytoskeletal 79 OS=Mus musculus GN=Krt79 PE=1 SV=2, 531,0.0, 0,221.7, 19
+TBB3_MOUSE, Tubulin beta-3 chain OS=Mus musculus GN=Tubb3 PE=1 SV=1, 450,0.0, 0,194.1, 20
+CP341_MOUSE, Cytochrome P450 3A41 OS=Mus musculus GN=Cyp3a41a PE=1 SV=2, 504,0.0, 0,168.9, 20
+K1C17_MOUSE, Keratin type I cytoskeletal 17 OS=Mus musculus GN=Krt17 PE=1 SV=3, 433,0.0, 0,147.2, 11
+AT131_MOUSE, Manganese-transporting ATPase 13A1 OS=Mus musculus GN=Atp13a1 PE=1 SV=2, 1200,0.0, 0,139.5, 16
+K22E_MOUSE, Keratin type II cytoskeletal 2 epidermal OS=Mus musculus GN=Krt2 PE=1 SV=1, 707,0.0, 0,128.6, 6
+ROA3_MOUSE, Heterogeneous nuclear ribonucleoprotein A3 OS=Mus musculus GN=Hnrnpa3 PE=1 SV=1, 379,0.0, 0,121.5, 12
+CMLO2_MOUSE, Probable N-acetyltransferase CML2 OS=Mus musculus GN=Cml2 PE=1 SV=1, 238,0.0, 0, 99.6, 3
+HMCS1_MOUSE, Hydroxymethylglutaryl-CoA synthase cytoplasmic OS=Mus musculus GN=Hmgcs1 PE=1 SV=1, 520,0.0, 0, 99.4, 6
+RBMX_MOUSE, RNA-binding motif protein X chromosome OS=Mus musculus GN=Rbmx PE=1 SV=1, 391,0.0, 0, 98.0, 9
+CP239_MOUSE, Cytochrome P450 2C39 OS=Mus musculus GN=Cyp2c39 PE=1 SV=2, 490,0.0, 0, 90.9, 21
+EST3B_MOUSE, Carboxylesterase 3B OS=Mus musculus GN=Ces3b PE=1 SV=2, 571,0.0, 0, 88.7, 7
+DX39A_MOUSE, ATP-dependent RNA helicase DDX39A OS=Mus musculus GN=Ddx39a PE=1 SV=1, 427,0.0, 0, 80.5, 14
+K1C15_MOUSE, Keratin type I cytoskeletal 15 OS=Mus musculus GN=Krt15 PE=1 SV=2, 452, 20.7, 7, 74.7, 10
+CARL2_MOUSE, Capping protein Arp2/3 and myosin-I linker protein 2 OS=Mus musculus GN=Carmil2 PE=1 SV=2, 1296,0.0, 0, 74.1, 15
+GP180_MOUSE, Integral membrane protein GPR180 OS=Mus musculus GN=Gpr180 PE=1 SV=1, 441, 37.1, 3, 73.5, 5
+AL3A1_MOUSE, Aldehyde dehydrogenase dimeric NADP-preferring OS=Mus musculus GN=Aldh3a1 PE=1 SV=2, 453,0.0, 0, 73.5, 9
+F185A_MOUSE, Protein FAM185A OS=Mus musculus GN=Fam185a PE=2 SV=1, 378,0.0, 0, 67.0, 6
+RDH7_MOUSE, Retinol dehydrogenase 7 OS=Mus musculus GN=Rdh7 PE=1 SV=1, 316,0.0, 0, 66.5, 4
+CP4FE_MOUSE, Leukotriene-B4 omega-hydroxylase 3 OS=Mus musculus GN=Cyp4f14 PE=1 SV=1, 524,0.0, 0, 65.3, 6
+PSD12_MOUSE, 26S proteasome non-ATPase regulatory subunit 12 OS=Mus musculus GN=Psmd12 PE=1 SV=4, 456, 17.5, 4, 65.1, 6
+TM205_MOUSE, Transmembrane protein 205 OS=Mus musculus GN=Tmem205 PE=1 SV=1, 189, 77.5, 2, 64.2, 4
+AK1CL_MOUSE, Aldo-keto reductase family 1 member C21 OS=Mus musculus GN=Akr1c21 PE=1 SV=2, 323,0.0, 0, 62.8, 10
+PGLT1_MOUSE, Protein O-glucosyltransferase 1 OS=Mus musculus GN=Poglut1 PE=1 SV=2, 392,0.0, 0, 60.5, 4
+GNAI3_MOUSE, Guanine nucleotide-binding protein G(k) subunit alpha OS=Mus musculus GN=Gnai3 PE=1 SV=3, 354,0.0, 0, 60.5, 4
+GNAT3_MOUSE, Guanine nucleotide-binding protein G(t) subunit alpha-3 OS=Mus musculus GN=Gnat3 PE=1 SV=2, 354,0.0, 0, 60.5, 7
+KRT35_MOUSE, Keratin type I cuticular Ha5 OS=Mus musculus GN=Krt35 PE=1 SV=1, 455, 20.7, 9, 60.1, 10
+KT33B_MOUSE, Keratin type I cuticular Ha3-II OS=Mus musculus GN=Krt33b PE=1 SV=2, 404, 20.7, 5, 60.1, 4
+K1C24_MOUSE, Keratin type I cytoskeletal 24 OS=Mus musculus GN=Krt24 PE=2 SV=2, 512, 20.7, 6, 60.1, 7
+K1C40_MOUSE, Keratin type I cytoskeletal 40 OS=Mus musculus GN=Krt40 PE=2 SV=1, 439,0.0, 0, 60.1, 6
+K1C28_MOUSE, Keratin type I cytoskeletal 28 OS=Mus musculus GN=Krt28 PE=1 SV=1, 462,0.0, 0, 60.1, 4
+KAP2_MOUSE, cAMP-dependent protein kinase type II-alpha regulatory subunit OS=Mus musculus GN=Prkar2a PE=1 SV=2, 401, 67.4, 1, 57.5, 2
+FGGY_MOUSE, FGGY carbohydrate kinase domain-containing protein OS=Mus musculus GN=Fggy PE=1 SV=1, 552, 34.9, 5, 56.2, 3
+ETFB_MOUSE, Electron transfer flavoprotein subunit beta OS=Mus musculus GN=Etfb PE=1 SV=3, 255,0.0, 0, 55.8, 2
+CCD77_MOUSE, Coiled-coil domain-containing protein 77 OS=Mus musculus GN=Ccdc77 PE=1 SV=1, 489,0.0, 0, 55.7, 16
+PYC_MOUSE, Pyruvate carboxylase mitochondrial OS=Mus musculus GN=Pc PE=1 SV=1, 1178,0.0, 0, 55.0, 23
+AP2M1_MOUSE, AP-2 complex subunit mu OS=Mus musculus GN=Ap2m1 PE=1 SV=1, 435, 32.4, 10, 54.4, 12
+RHOG_MOUSE, Rho-related GTP-binding protein RhoG OS=Mus musculus GN=Rhog PE=1 SV=1, 191, 29.8, 11, 52.3, 13
+AK1CD_MOUSE, Aldo-keto reductase family 1 member C13 OS=Mus musculus GN=Akr1c13 PE=1 SV=2, 323, 34.8, 6, 52.1, 5
+FETUA_MOUSE, Alpha-2-HS-glycoprotein OS=Mus musculus GN=Ahsg PE=1 SV=1, 345, 82.6, 1, 51.4, 6
+IPYR_MOUSE, Inorganic pyrophosphatase OS=Mus musculus GN=Ppa1 PE=1 SV=1, 289, 37.5, 7, 50.6, 8
+HMGCL_MOUSE, Hydroxymethylglutaryl-CoA lyase mitochondrial OS=Mus musculus GN=Hmgcl PE=1 SV=2, 325,0.0, 0, 48.8, 8
+GLO2_MOUSE, Hydroxyacylglutathione hydrolase mitochondrial OS=Mus musculus GN=Hagh PE=1 SV=2, 309, 18.3, 1, 47.8, 3
+TRUA_MOUSE, tRNA pseudouridine synthase A mitochondrial OS=Mus musculus GN=Pus1 PE=1 SV=2, 423,0.0, 0, 47.4, 5
+PEPL1_MOUSE, Probable aminopeptidase NPEPL1 OS=Mus musculus GN=Npepl1 PE=1 SV=1, 524,0.0, 0, 45.6, 10
+IF2G_MOUSE, Eukaryotic translation initiation factor 2 subunit 3 X-linked OS=Mus musculus GN=Eif2s3x PE=1 SV=2, 472, 28.1, 6, 44.3, 2
+PRDX3_MOUSE, Thioredoxin-dependent peroxide reductase mitochondrial OS=Mus musculus GN=Prdx3 PE=1 SV=1, 257,0.0, 0, 44.1, 3
+AK1D1_MOUSE, 3-oxo-5-beta-steroid 4-dehydrogenase OS=Mus musculus GN=Akr1d1 PE=1 SV=1, 325, 36.2, 2, 43.5, 2
+MK04_MOUSE, Mitogen-activated protein kinase 4 OS=Mus musculus GN=Mapk4 PE=1 SV=1, 583,0.0, 0, 42.3, 11
+GSTK1_MOUSE, Glutathione S-transferase kappa 1 OS=Mus musculus GN=Gstk1 PE=1 SV=3, 226,0.0, 0, 41.2, 7
+PREX2_MOUSE, Phosphatidylinositol 345-trisphosphate-dependent Rac exchanger 2 protein OS=Mus musculus GN=Prex2 PE=1 SV=2, 1598,0.0, 0, 40.9, 30
+HSF2_MOUSE, Heat shock factor protein 2 OS=Mus musculus GN=Hsf2 PE=2 SV=2, 535,0.0, 0, 40.2, 14
