@@ -553,7 +553,7 @@ namespace VC_Form_Application {
 			// 
 			this->About_button->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->About_button->ImageAlign = System::Drawing::ContentAlignment::BottomLeft;
-			this->About_button->Location = System::Drawing::Point(700, 462);
+			this->About_button->Location = System::Drawing::Point(700, 552);
 			this->About_button->Name = L"About_button";
 			this->About_button->Size = System::Drawing::Size(215, 79);
 			this->About_button->TabIndex = 19;
@@ -1300,9 +1300,9 @@ namespace VC_Form_Application {
 			// Output_visualize_button
 			// 
 			this->Output_visualize_button->Anchor = System::Windows::Forms::AnchorStyles::None;
-			this->Output_visualize_button->Location = System::Drawing::Point(953, 360);
+			this->Output_visualize_button->Location = System::Drawing::Point(700, 462);
 			this->Output_visualize_button->Name = L"Output_visualize_button";
-			this->Output_visualize_button->Size = System::Drawing::Size(75, 23);
+			this->Output_visualize_button->Size = System::Drawing::Size(215, 79);
 			this->Output_visualize_button->TabIndex = 72;
 			this->Output_visualize_button->Text = L"Visualization";
 			this->Output_visualize_button->UseVisualStyleBackColor = true;
