@@ -1,2 +1,6 @@
 v2/v2/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttributes.cs
 v2/v2/obj/Debug/v2.csproj.AssemblyReference.cache
+*.db
+*.ipch
+*.pdb
+*.pch
