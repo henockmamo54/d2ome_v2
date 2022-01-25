@@ -11,3 +11,10 @@ GUI_HeavyWater_09_21_2021/.vs/VC_Form_Application/v17/ipch/e2ec3a705dd00583.ipch
 *.db-shm
 *.db-wal
 *.opendb
+GUI_HeavyWater_09_21_2021/VC_Form_Application.VC.VC.opendb
+*.db
+*.ipch
+*.pdb
+*.pch
+v2/.vs/d2ome_v2/v17/Browse.VC.opendb
+

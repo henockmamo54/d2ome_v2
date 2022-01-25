@@ -1,0 +1,2 @@
+0 C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzML C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_0ha.mzID 0.00
+72 C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_72ha.mzML C:\Users\hmdebern\Desktop\mzML_mzID\Band10\LDLnD_SE_Band10_72ha.mzID 0.0302

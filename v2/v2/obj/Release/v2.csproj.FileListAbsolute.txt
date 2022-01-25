@@ -1,0 +1,13 @@
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.csproj.AssemblyReference.cache
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.csproj.SuggestedBindingRedirects.cache
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.Form1.resources
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.Main.resources
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.Properties.Resources.resources
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.csproj.GenerateResource.cache
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.csproj.CoreCompileInputs.cache
+F:\workplace\d2ome_v2\v2\v2\bin\Release\v2.exe.config
+F:\workplace\d2ome_v2\v2\v2\bin\Release\v2.exe
+F:\workplace\d2ome_v2\v2\v2\bin\Release\v2.pdb
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.exe
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.pdb
+F:\workplace\d2ome_v2\v2\v2\obj\Release\v2.test.resources

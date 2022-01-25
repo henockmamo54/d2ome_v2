@@ -10,7 +10,12 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Miscellaneous Files",
       "ColorIndex": -1
+    },
+    "ac869d33-0592-4b93-b90f-a45edfda7cb8": {
+      "ProjectGuid": "ac869d33-0592-4b93-b90f-a45edfda7cb8",
+      "DisplayName": "VC_Form_Application",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }

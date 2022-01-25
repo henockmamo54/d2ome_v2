@@ -19,6 +19,9 @@ namespace v2.Helper
         public ReadFilesInfo_txt(string path)
         {
             this.path = path;
+            time = new List<int>();
+            experimentIDs = new List<string>();
+            filecontents = new List<FileContent>();
         }
         public void readFile()
         {
