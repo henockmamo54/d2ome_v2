@@ -54,7 +54,6 @@ namespace v2
                 }
             }
         }
-
         public void loaduiprops()
         {
             chart1.ChartAreas[0].AxisX.Minimum = 0;
@@ -127,7 +126,6 @@ namespace v2
 
 
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             loaduiprops();
@@ -242,8 +240,6 @@ namespace v2
                 column.HeaderCell.Style.SelectionForeColor = Color.Black;
             }
         }
-
-
         public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<ExpectedI0Value> expectedI0Valuespassedvalue)
         {
             try
@@ -299,7 +295,6 @@ namespace v2
             }
 
         }
-
         public bool exportchart(string path, string name)
         {
 
@@ -325,7 +320,6 @@ namespace v2
                 return false;
             }
         }
-
         private void button_exportPeptideChart_Click(object sender, EventArgs e)
         {
             try
@@ -350,7 +344,6 @@ namespace v2
                 MessageBox.Show(ex.Message, "Error");
             }
         }
-
         private void button_exportAllPeptideChart_Click(object sender, EventArgs e)
         {
             try
@@ -442,7 +435,6 @@ namespace v2
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "Error"); }
         }
-
         private void dataGridView_peptide_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //int rowIndex = e.RowIndex;
@@ -458,7 +450,6 @@ namespace v2
 
             //}
         }
-
         private void btn_Browsefolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -482,7 +473,6 @@ namespace v2
                 }
             }
         }
-
         private void comboBox_proteinNameSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
             //MessageBox.Show(comboBox_proteinNameSelector.SelectedValue.ToString());
@@ -498,8 +488,13 @@ namespace v2
             if (File.Exists(temppath)) files_txt_path = temppath;
 
             if (!File.Exists(files_txt_path)) { MessageBox.Show("filex.txt is not available in the specified directory.", "Error"); return; }
+            else { try { string[] lines = System.IO.File.ReadAllLines(files_txt_path); } catch (Exception ex) { MessageBox.Show(ex.Message); return; } }
+
             if (!File.Exists(quant_csv_path)) { MessageBox.Show(proteinName + ".Quant.csv" + " is not available in the specified directory.", "Error"); return; }
+            else { try { string[] lines = System.IO.File.ReadAllLines(quant_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); return; } }
+
             if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); return; }
+            else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); return; } }
 
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
 
@@ -531,7 +526,6 @@ namespace v2
             }
 
         }
-
         public string formatdoubletothreedecimalplace(double n)
         {
             var tempval = "";
@@ -543,7 +537,6 @@ namespace v2
 
             return tempval;
         }
-
         private void dataGridView_peptide_SelectionChanged(object sender, EventArgs e)
         {
             //////int rowIndex = dataGridView_peptide.SelectedRows[0].Index;
@@ -581,7 +574,6 @@ namespace v2
             catch (Exception ex) { }
 
         }
-
         private void button_exportProteinChart_Click(object sender, EventArgs e)
         {
             try
@@ -618,7 +610,6 @@ namespace v2
                 MessageBox.Show(ex.Message, "Error");
             }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             //ExportAllProteinData
@@ -655,7 +646,6 @@ namespace v2
                 MessageBox.Show(ex.Message, "Error");
             }
         }
-
         private void button2_cancelled_Click(object sender, EventArgs e)
         {
             if (allProteinExporterThread == null) return;
