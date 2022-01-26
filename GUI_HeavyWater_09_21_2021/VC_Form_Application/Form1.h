@@ -1306,6 +1306,7 @@ namespace VC_Form_Application {
 			this->Output_visualize_button->TabIndex = 72;
 			this->Output_visualize_button->Text = L"Visualization";
 			this->Output_visualize_button->UseVisualStyleBackColor = true;
+			this->Output_visualize_button->BackColor = Color::CadetBlue;
 			this->Output_visualize_button->Click += gcnew System::EventHandler(this, &Form1::Output_visualize_button_Click);
 			// 
 
