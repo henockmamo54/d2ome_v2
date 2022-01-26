@@ -402,6 +402,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         mzMlmzIDModel k = new mzMlmzIDModel();
                         k.mzML = mz;
                         k.mzID = mz.Replace(".mzML", ".mzid");
+                        k.T = 0;
+                        k.BWE = 0;
                         inputdata.Add(k);
                     }
 
@@ -410,8 +412,84 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 }
 
                 dataGridView1_records.DataSource = inputdata;
-                this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+                //this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             }
+        }
+
+        private void dataGridView1_records_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            Console.WriteLine("test");
+
+            string headerText =
+        dataGridView1_records.Columns[e.ColumnIndex].HeaderText.Trim();
+
+            if (headerText.Equals("mzML"))
+            {
+                if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
+                {
+                    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+                        "mzML file name must not be empty";
+                    e.Cancel = true;
+                }
+                else if (!(Path.GetExtension(e.FormattedValue.ToString()).Trim().Equals(".mzML")))
+                {
+                    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+                        "mzML file is not found in this path. Please check the file path";
+                    e.Cancel = true;
+                }
+            }
+            if (headerText.Equals("mzID"))
+            {
+                if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
+                {
+                    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+                        "mzID file name must not be empty";
+                    e.Cancel = true;
+                }
+                else if (!(Path.GetExtension(e.FormattedValue.ToString()).Trim().Equals(".mzid")))
+                {
+                    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+                        "mzID file is not found in this path. Please check the file path";
+                    e.Cancel = true;
+                }
+            }
+            if (headerText.Equals("T")) {
+                double i = 0;
+                if (!double.TryParse(e.FormattedValue.ToString(), out i))
+                {
+                    dataGridView1_records.Rows[e.RowIndex].ErrorText = ("Time value is Not valid.");
+                    e.Cancel = true;
+                }
+            
+            }
+            if (headerText.Equals("BWE")) {
+                double i = 0;
+                if (!double.TryParse(e.FormattedValue.ToString(), out i))
+                {
+                    dataGridView1_records.Rows[e.RowIndex].ErrorText = ("BWE value is Not valid.");
+                    e.Cancel = true;
+                }
+            }
+
+
+            //// Confirm that the cell is not empty.
+            //if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
+            //{
+            //    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+            //        "Company Name must not be empty";
+            //    e.Cancel = true;
+            //}
+
+        }
+
+        private void dataGridView1_records_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_records_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView1_records.Rows[e.RowIndex].ErrorText = String.Empty;
         }
     }
 }
