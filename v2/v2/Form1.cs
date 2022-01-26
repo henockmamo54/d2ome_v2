@@ -453,6 +453,10 @@ namespace v2
         private void btn_Browsefolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
+
+            if (txt_source.Text.Length > 0 & Directory.Exists(txt_source.Text))
+                dialog.SelectedPath = txt_source.Text;
+
             if (DialogResult.OK == dialog.ShowDialog())
             {
                 string path = dialog.SelectedPath;
