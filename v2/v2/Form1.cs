@@ -627,7 +627,7 @@ namespace v2
                     string outputpath = dialog.SelectedPath;
                     string sourcepath = txt_source.Text;
 
-                    MessageBox.Show("This process will take longer time to complete. please check the exported graphs in " + outputpath, "Message");
+                    MessageBox.Show("This process will take a few minutes to complete. \nPlease check the exported graphs in " + outputpath, "Message");
 
                     if (outputpath.Length > 0 & sourcepath.Length > 0)
                     {
