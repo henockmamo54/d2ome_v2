@@ -218,8 +218,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             var sCommandFile = sExecsFolder + "\\d2ome.exe " + "files.txt";
 
             System.Diagnostics.Process p = new System.Diagnostics.Process();
-            p.StartInfo = new System.Diagnostics.ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", "files.txt"); 
-            p.Start();        
+            p.StartInfo = new System.Diagnostics.ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", "files.txt");
+            p.Start();
 
         }
 
@@ -337,6 +337,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         private void button_browseoutputfolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
+
+            if (textBox_outputfolderpath.Text.Length > 0 & Directory.Exists(textBox_outputfolderpath.Text))
+                dialog.SelectedPath = textBox_outputfolderpath.Text;
+
             if (DialogResult.OK == dialog.ShowDialog())
             {
                 string path = dialog.SelectedPath;
@@ -359,6 +363,55 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 }
             }
 
+        }
+
+        private void button_autofillBrowse_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (textBox1_mzmlidfiles.Text.Length > 0 & Directory.Exists(textBox1_mzmlidfiles.Text))
+                dialog.SelectedPath = textBox1_mzmlidfiles.Text;
+
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.SelectedPath;
+
+                textBox1_mzmlidfiles.Text = path;
+
+                string[] filePaths = Directory.GetFiles(path);
+
+                var mzml = filePaths.Where(x => x.Contains(".mzML")).ToList();
+                var mzid = filePaths.Where(x => x.Contains(".mzid")).ToList();
+
+                if (mzml.Count() != mzid.Count())
+                {
+                    MessageBox.Show("ERROR", "mzML and mzid files should be in matched pairs");
+                    return;
+                }
+
+                if (mzml.Count() == 0 | mzid.Count() == 0)
+                {
+                    MessageBox.Show("The folder does not contain the required files (.mzML and .mzid files)", "ERROR");
+                    return;
+                }
+
+                else
+                {
+                    inputdata = new List<mzMlmzIDModel>();
+                    foreach (var mz in mzml)
+                    {
+                        mzMlmzIDModel k = new mzMlmzIDModel();
+                        k.mzML = mz;
+                        k.mzID = mz.Replace(".mzML", ".mzid");
+                        inputdata.Add(k);
+                    }
+
+                    //comboBox_mzidfilelist.DataSource = mzid;
+                    //comboBox_mzmlfilelist.DataSource = mzml;
+                }
+
+                dataGridView1_records.DataSource = inputdata;
+                this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            }
         }
     }
 }
