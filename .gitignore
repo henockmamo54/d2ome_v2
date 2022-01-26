@@ -23,3 +23,6 @@ v2/.vs/d2ome_v2/v17/.suo
 v2/v2/bin/Debug/v2.exe
 *.cache
 *.exe
+*.obj
+*.log
+*.tlog
