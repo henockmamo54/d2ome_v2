@@ -520,6 +520,7 @@ namespace v2
 
                 loadProteinchart(chartdata);
                 groupBox3_proteinchart.Text = proteinName;
+                button_exportAllPeptideChart.Text = "Export " + proteinName;
 
                 var p = proteinExperimentData.peptides.First();
                 loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
