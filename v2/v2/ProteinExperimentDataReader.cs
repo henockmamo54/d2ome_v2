@@ -401,6 +401,11 @@ namespace v2
                     var temp_computedRIAValue = expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
                     var temp_computedRIAValue_withexperimentalIO = expectedI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
 
+                    if (r.PeptideSeq == "VASGQALAAFcLTEPSSGSDVASIR" | r.PeptideSeq== "GILLYGTK")
+                    {
+                        Console.WriteLine("Test");
+                    }
+
                     if (temp_computedRIAValue_withexperimentalIO.Count == 0)
                     {
 

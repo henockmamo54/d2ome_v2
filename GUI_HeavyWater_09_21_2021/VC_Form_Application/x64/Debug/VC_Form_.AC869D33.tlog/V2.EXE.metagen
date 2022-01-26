@@ -1,6 +1,7 @@
   v2.Form1.resources - Embedded, ContainedInManifestFile, 
   v2.Main.resources - Embedded, ContainedInManifestFile, 
   v2.Properties.Resources.resources - Embedded, ContainedInManifestFile, 
+  v2.test.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
 Assembly v2, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=SHA1, flags=PublicKey
@@ -64,6 +65,9 @@ Class v2.ProteinExperimentDataReader: AutoLayout, AnsiClass, Class, Public, Befo
     computeRSquare(): PrivateScope, Public, HideBySig
     computeValuesForEnhancedPerProtienPlot(): PrivateScope, Public, HideBySig
     computeValuesForEnhancedPerProtienPlot2(): PrivateScope, Public, HideBySig
+Class v2.test: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class v2.Model.ExperimentRecord: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Properties:
@@ -160,6 +164,7 @@ Class v2.Model.Peptide: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     System.Nullable`1[System.Double] M5 'get set' : 
     System.Nullable`1[System.Double] Total_Labeling 'get set' : 
     System.Nullable`1[System.Double] RMSE_value 'get set' : 
+    Int32 order 'get set' : 
   Methods:
     get_PeptideSeq(): PrivateScope, Public, HideBySig, SpecialName
     set_PeptideSeq(String): PrivateScope, Public, HideBySig, SpecialName
@@ -193,6 +198,8 @@ Class v2.Model.Peptide: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     set_Total_Labeling(Nullable`1): PrivateScope, Public, HideBySig, SpecialName
     get_RMSE_value(): PrivateScope, Public, HideBySig, SpecialName
     set_RMSE_value(Nullable`1): PrivateScope, Public, HideBySig, SpecialName
+    get_order(): PrivateScope, Public, HideBySig, SpecialName
+    set_order(Int32): PrivateScope, Public, HideBySig, SpecialName
 Class v2.Model.RateConstant: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Properties:
@@ -201,6 +208,7 @@ Class v2.Model.RateConstant: AutoLayout, AnsiClass, Class, Public, BeforeFieldIn
     System.Nullable`1[System.Double] Correlations 'get set' : 
     System.Nullable`1[System.Double] RootMeanRSS 'get set' : 
     System.Nullable`1[System.Double] AbsoluteIsotopeError 'get set' : 
+    Int32 order 'get set' : 
   Methods:
     get_PeptideSeq(): PrivateScope, Public, HideBySig, SpecialName
     set_PeptideSeq(String): PrivateScope, Public, HideBySig, SpecialName
@@ -212,6 +220,8 @@ Class v2.Model.RateConstant: AutoLayout, AnsiClass, Class, Public, BeforeFieldIn
     set_RootMeanRSS(Nullable`1): PrivateScope, Public, HideBySig, SpecialName
     get_AbsoluteIsotopeError(): PrivateScope, Public, HideBySig, SpecialName
     set_AbsoluteIsotopeError(Nullable`1): PrivateScope, Public, HideBySig, SpecialName
+    get_order(): PrivateScope, Public, HideBySig, SpecialName
+    set_order(Int32): PrivateScope, Public, HideBySig, SpecialName
 Class v2.Model.RIA: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Properties:
@@ -241,6 +251,11 @@ Class v2.Helper.BasicFunctions: AutoLayout, AnsiClass, Class, Public, BeforeFiel
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
     computeRIA(Double, Double, Double, Double, Double, Double): PrivateScope, Public, Static, HideBySig
+Class v2.Helper.ExportAllProteinData: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(System.String, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    Export_all_ProteinChart(ProgressBar): PrivateScope, Public, HideBySig
+    preppare_chart(): PrivateScope, Public, HideBySig
 Class v2.Helper.ReadExperiments: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
@@ -287,10 +302,10 @@ Struct v2.ProteinExperimentDataReader+ProtienchartDataValues: AutoLayout, AnsiCl
     System.Collections.Generic.List`1[System.Double] y : Public
 Struct v2.ProteinExperimentDataReader+ExpectedI0Value: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit
   :System.ValueType
-    Void .ctor(System.String, Int32, Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String, Double, Double, Double): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
     System.String peptideseq : Public
-    Int32 time : Public
+    Double time : Public
     Double value : Public
     System.Nullable`1[System.Double] charge : Public
 Struct v2.Helper.ReadFilesInfo_txt+FileContent: AutoLayout, AnsiClass, Class, NestedPublic, SequentialLayout, Sealed, BeforeFieldInit

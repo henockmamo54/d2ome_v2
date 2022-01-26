@@ -246,7 +246,7 @@ namespace v2.Helper
                         title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
                         chart2.Titles.Add(title);
 
-                        chart2.ChartAreas[0].AxisY.Maximum = (double)(chart_data.Select(x => x.RIA_value).Max() + 0.1);
+                        chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.1;
 
                         bool exists = System.IO.Directory.Exists(outputpath);
                         if (!exists)
