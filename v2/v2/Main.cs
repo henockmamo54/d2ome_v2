@@ -47,16 +47,16 @@ namespace v2
 
                 #region files.txt 
 
-                ////TextWriter tw = new StreamWriter(path + "\\files.txt");
+                TextWriter tw = new StreamWriter(path + "\\files.txt");
                 //TextWriter tw = new StreamWriter("files.txt");
-                //string fileContent = "";
-                //foreach (var x in inputdata)
-                //{
-                //    fileContent += x.T.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
-                //}
+                string fileContent = "";
+                foreach (var x in inputdata)
+                {
+                    fileContent += x.T.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
+                }
 
-                //tw.WriteLine(fileContent);
-                //tw.Close();
+                tw.WriteLine(fileContent);
+                tw.Close();
 
                 #endregion
 
@@ -188,8 +188,8 @@ protein_consistency = {4}  // minimum number of experiments for protein consiste
 peptide_consistency = {4}   //mininum number of experiments for a peptide consistency
 NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2", massaccuracy, MS1_Type, peptidescore, elutionwindow, peptideconsistency, rate_constant_choice);
 
-                //TextWriter tw2 = new StreamWriter(path + "\\quant.state");
-                TextWriter tw2 = new StreamWriter("quant.state");
+                TextWriter tw2 = new StreamWriter(path + "\\quant.state");
+                //TextWriter tw2 = new StreamWriter("quant.state");
 
 
                 tw2.WriteLine(quantstatefile);
@@ -217,10 +217,26 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             Console.WriteLine(sExecsFolder);
             var sCommandFile = sExecsFolder + "\\d2ome.exe " + "files.txt";
 
-            System.Diagnostics.Process p = new System.Diagnostics.Process();
-            p.StartInfo = new System.Diagnostics.ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", "files.txt");
+            Process p = new Process();
+            p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt");
+            p.EnableRaisingEvents = true;
+            p.Exited += P_Exited;
+
             p.Start();
 
+
+            p.WaitForExit();
+
+
+        }
+
+        private void P_Exited(object sender, EventArgs e)
+        {
+            Process p = (Process)sender;
+            var temp = p.ExitCode;
+
+
+            MessageBox.Show(temp.ToString());
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -247,6 +263,15 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                                 mzmlIDfilerecord.mzID = textBox_mzidfile.Text.Trim();
                                 mzmlIDfilerecord.T = double.Parse(textBox_T.Text.Trim());
                                 mzmlIDfilerecord.BWE = double.Parse(textBox_BWE.Text.Trim());
+
+                                if (mzmlIDfilerecord.BWE < 0 || mzmlIDfilerecord.BWE > 1)
+                                {
+                                    MessageBox.Show("BWE should be non-negative and less than 1.0\n"); return;
+                                }
+                                if (mzmlIDfilerecord.T < 0)
+                                {
+                                    MessageBox.Show("T should be non-negative \n"); return;
+                                }
 
                                 inputdata.Add(mzmlIDfilerecord);
 
@@ -453,32 +478,35 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     e.Cancel = true;
                 }
             }
-            if (headerText.Equals("T")) {
+            if (headerText.Equals("T"))
+            {
                 double i = 0;
                 if (!double.TryParse(e.FormattedValue.ToString(), out i))
                 {
                     dataGridView1_records.Rows[e.RowIndex].ErrorText = ("Time value is Not valid.");
                     e.Cancel = true;
                 }
-            
+                else if (double.Parse(e.FormattedValue.ToString()) < 0)
+                {
+                    dataGridView1_records.Rows[e.RowIndex].ErrorText = ("Time value is Not valid.");
+                    e.Cancel = true;
+                }
+
             }
-            if (headerText.Equals("BWE")) {
+            if (headerText.Equals("BWE"))
+            {
                 double i = 0;
                 if (!double.TryParse(e.FormattedValue.ToString(), out i))
                 {
                     dataGridView1_records.Rows[e.RowIndex].ErrorText = ("BWE value is Not valid.");
                     e.Cancel = true;
                 }
+                else if (double.Parse(e.FormattedValue.ToString()) < 0 || double.Parse(e.FormattedValue.ToString()) > 1)
+                {
+                    dataGridView1_records.Rows[e.RowIndex].ErrorText = ("BWE value is Not valid.");
+                    e.Cancel = true;
+                }
             }
-
-
-            //// Confirm that the cell is not empty.
-            //if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
-            //{
-            //    dataGridView1_records.Rows[e.RowIndex].ErrorText =
-            //        "Company Name must not be empty";
-            //    e.Cancel = true;
-            //}
 
         }
 
