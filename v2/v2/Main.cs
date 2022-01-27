@@ -217,25 +217,100 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             Console.WriteLine(sExecsFolder);
             var sCommandFile = sExecsFolder + "\\d2ome.exe " + "files.txt";
 
-            Process p = new Process();
-            p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt");
-            p.EnableRaisingEvents = true;
-            p.Exited += P_Exited;
+            using (Process p = new Process())
+            {
+                // set start info
+                p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt")
+                {
+                    //RedirectStandardInput = true,
+                    UseShellExecute = false,
+                    WorkingDirectory = textBox_outputfolderpath.Text
+                };
+                // event handlers for output & error
+                p.OutputDataReceived += p_OutputDataReceived;
+                p.ErrorDataReceived += p_ErrorDataReceived;
 
-            p.Start();
+                p.EnableRaisingEvents = true;
+                p.Exited += P_Exited;
+
+                // start process
+                p.Start();
+
+                //wait
+                p.WaitForExit();
+            }
 
 
-            p.WaitForExit();
+
+            //using (Process p = new Process())
+            //{
+            //    // set start info
+            //    p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt")
+            //    {
+            //        //RedirectStandardInput = true,
+            //        UseShellExecute = false,
+            //        WorkingDirectory = textBox_outputfolderpath.Text
+            //    };
+            //    // event handlers for output & error
+            //    p.OutputDataReceived += p_OutputDataReceived;
+            //    p.ErrorDataReceived += p_ErrorDataReceived;
+
+            //    p.EnableRaisingEvents = true;
+            //    p.Exited += P_Exited;
+
+            //    // start process
+            //    p.Start();
+
+            //    //wait
+            //    p.WaitForExit();
+            //}
+
+
+
+            ////Process p = new Process();
+            ////p.EnableRaisingEvents = true;
+            ////p.Exited += P_Exited;
+
+            ////ProcessStartInfo processStartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt");
+            ////processStartInfo.RedirectStandardInput = true;
+            ////processStartInfo.UseShellExecute = false;
+
+            ////p.StartInfo = processStartInfo;
+            ////p.OutputDataReceived += p_OutputDataReceived;
+            ////p.ErrorDataReceived += p_ErrorDataReceived;
+
+            ////p.Start();
+            ////p.WaitForExit();
 
 
         }
+
+        public void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Process p = sender as Process;
+            if (p == null)
+                return;
+            Console.WriteLine(e.Data);
+        }
+
+        public void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            Process p = sender as Process;
+            if (p == null)
+                return;
+
+            Console.WriteLine(e.Data);
+
+
+        }
+
+
+
 
         private void P_Exited(object sender, EventArgs e)
         {
             Process p = (Process)sender;
             var temp = p.ExitCode;
-
-
             MessageBox.Show(temp.ToString());
         }
 

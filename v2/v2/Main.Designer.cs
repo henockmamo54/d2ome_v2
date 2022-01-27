@@ -28,31 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea31 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend31 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series61 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series62 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea32 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend32 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series63 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series64 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.textBox_mzidfile = new System.Windows.Forms.TextBox();
-            this.button_mzidbrowse = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.textBox1_mzmlidfiles = new System.Windows.Forms.TextBox();
+            this.button_autofillBrowse = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.textBox_mzmlfile = new System.Windows.Forms.TextBox();
-            this.button_mzmlbrowse = new System.Windows.Forms.Button();
-            this.button_clear = new System.Windows.Forms.Button();
-            this.button_delete = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox_mzidfile = new System.Windows.Forms.TextBox();
             this.button_add = new System.Windows.Forms.Button();
             this.textBox_BWE = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.textBox_T = new System.Windows.Forms.TextBox();
+            this.button_mzidbrowse = new System.Windows.Forms.Button();
+            this.button_mzmlbrowse = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.textBox_T = new System.Windows.Forms.TextBox();
+            this.button_clear = new System.Windows.Forms.Button();
+            this.button_delete = new System.Windows.Forms.Button();
             this.dataGridView1_records = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.textBox_peptideConsistency = new System.Windows.Forms.TextBox();
@@ -92,15 +98,12 @@
             this.dataGridView_peptide = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1_mzmlidfiles = new System.Windows.Forms.TextBox();
-            this.button_autofillBrowse = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1_records)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -112,9 +115,6 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_peptide)).BeginInit();
             this.tabPage3.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -125,7 +125,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1202, 866);
+            this.tabControl1.Size = new System.Drawing.Size(1202, 734);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -137,7 +137,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1194, 840);
+            this.tabPage1.Size = new System.Drawing.Size(1194, 708);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Computation";
             // 
@@ -153,12 +153,115 @@
             this.groupBox6.TabIndex = 8;
             this.groupBox6.TabStop = false;
             // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Location = new System.Drawing.Point(7, 10);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(1115, 103);
+            this.tabControl2.TabIndex = 27;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage4.Controls.Add(this.textBox1_mzmlidfiles);
+            this.tabPage4.Controls.Add(this.button_autofillBrowse);
+            this.tabPage4.Controls.Add(this.label5);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1107, 77);
+            this.tabPage4.TabIndex = 0;
+            this.tabPage4.Text = "Autofill";
+            // 
+            // textBox1_mzmlidfiles
+            // 
+            this.textBox1_mzmlidfiles.Location = new System.Drawing.Point(118, 24);
+            this.textBox1_mzmlidfiles.Name = "textBox1_mzmlidfiles";
+            this.textBox1_mzmlidfiles.Size = new System.Drawing.Size(234, 20);
+            this.textBox1_mzmlidfiles.TabIndex = 7;
+            // 
+            // button_autofillBrowse
+            // 
+            this.button_autofillBrowse.Location = new System.Drawing.Point(362, 24);
+            this.button_autofillBrowse.Name = "button_autofillBrowse";
+            this.button_autofillBrowse.Size = new System.Drawing.Size(75, 23);
+            this.button_autofillBrowse.TabIndex = 8;
+            this.button_autofillBrowse.Text = "Browse";
+            this.button_autofillBrowse.UseVisualStyleBackColor = true;
+            this.button_autofillBrowse.Click += new System.EventHandler(this.button_autofillBrowse_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(17, 28);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(97, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "mzML / mzID  Files";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage5.Controls.Add(this.textBox_mzmlfile);
+            this.tabPage5.Controls.Add(this.label14);
+            this.tabPage5.Controls.Add(this.textBox_mzidfile);
+            this.tabPage5.Controls.Add(this.button_add);
+            this.tabPage5.Controls.Add(this.textBox_BWE);
+            this.tabPage5.Controls.Add(this.button_mzidbrowse);
+            this.tabPage5.Controls.Add(this.button_mzmlbrowse);
+            this.tabPage5.Controls.Add(this.label16);
+            this.tabPage5.Controls.Add(this.label17);
+            this.tabPage5.Controls.Add(this.label18);
+            this.tabPage5.Controls.Add(this.textBox_T);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(1107, 77);
+            this.tabPage5.TabIndex = 1;
+            this.tabPage5.Text = "Manual input";
+            // 
+            // textBox_mzmlfile
+            // 
+            this.textBox_mzmlfile.Location = new System.Drawing.Point(77, 26);
+            this.textBox_mzmlfile.Name = "textBox_mzmlfile";
+            this.textBox_mzmlfile.Size = new System.Drawing.Size(234, 20);
+            this.textBox_mzmlfile.TabIndex = 20;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(19, 29);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(54, 13);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "mzML File";
+            // 
             // textBox_mzidfile
             // 
             this.textBox_mzidfile.Location = new System.Drawing.Point(466, 26);
             this.textBox_mzidfile.Name = "textBox_mzidfile";
             this.textBox_mzidfile.Size = new System.Drawing.Size(234, 20);
             this.textBox_mzidfile.TabIndex = 23;
+            // 
+            // button_add
+            // 
+            this.button_add.Location = new System.Drawing.Point(1017, 24);
+            this.button_add.Name = "button_add";
+            this.button_add.Size = new System.Drawing.Size(75, 23);
+            this.button_add.TabIndex = 16;
+            this.button_add.Text = "Add";
+            this.button_add.UseVisualStyleBackColor = true;
+            this.button_add.Click += new System.EventHandler(this.button_add_Click);
+            // 
+            // textBox_BWE
+            // 
+            this.textBox_BWE.Location = new System.Drawing.Point(948, 24);
+            this.textBox_BWE.Name = "textBox_BWE";
+            this.textBox_BWE.Size = new System.Drawing.Size(38, 20);
+            this.textBox_BWE.TabIndex = 15;
             // 
             // button_mzidbrowse
             // 
@@ -170,22 +273,6 @@
             this.button_mzidbrowse.UseVisualStyleBackColor = true;
             this.button_mzidbrowse.Click += new System.EventHandler(this.button_mzidbrowse_Click);
             // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(410, 29);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(50, 13);
-            this.label18.TabIndex = 22;
-            this.label18.Text = "mzID File";
-            // 
-            // textBox_mzmlfile
-            // 
-            this.textBox_mzmlfile.Location = new System.Drawing.Point(77, 26);
-            this.textBox_mzmlfile.Name = "textBox_mzmlfile";
-            this.textBox_mzmlfile.Size = new System.Drawing.Size(234, 20);
-            this.textBox_mzmlfile.TabIndex = 20;
-            // 
             // button_mzmlbrowse
             // 
             this.button_mzmlbrowse.Location = new System.Drawing.Point(317, 23);
@@ -195,6 +282,40 @@
             this.button_mzmlbrowse.Text = "Browse";
             this.button_mzmlbrowse.UseVisualStyleBackColor = true;
             this.button_mzmlbrowse.Click += new System.EventHandler(this.button_mzmlbrowse_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(817, 29);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(14, 13);
+            this.label16.TabIndex = 12;
+            this.label16.Text = "T";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(907, 28);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(32, 13);
+            this.label17.TabIndex = 14;
+            this.label17.Text = "BWE";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(410, 29);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(50, 13);
+            this.label18.TabIndex = 22;
+            this.label18.Text = "mzID File";
+            // 
+            // textBox_T
+            // 
+            this.textBox_T.Location = new System.Drawing.Point(840, 24);
+            this.textBox_T.Name = "textBox_T";
+            this.textBox_T.Size = new System.Drawing.Size(38, 20);
+            this.textBox_T.TabIndex = 13;
             // 
             // button_clear
             // 
@@ -215,57 +336,6 @@
             this.button_delete.Text = "Delete";
             this.button_delete.UseVisualStyleBackColor = true;
             this.button_delete.Click += new System.EventHandler(this.button_delete_Click);
-            // 
-            // button_add
-            // 
-            this.button_add.Location = new System.Drawing.Point(1017, 24);
-            this.button_add.Name = "button_add";
-            this.button_add.Size = new System.Drawing.Size(75, 23);
-            this.button_add.TabIndex = 16;
-            this.button_add.Text = "Add";
-            this.button_add.UseVisualStyleBackColor = true;
-            this.button_add.Click += new System.EventHandler(this.button_add_Click);
-            // 
-            // textBox_BWE
-            // 
-            this.textBox_BWE.Location = new System.Drawing.Point(948, 24);
-            this.textBox_BWE.Name = "textBox_BWE";
-            this.textBox_BWE.Size = new System.Drawing.Size(38, 20);
-            this.textBox_BWE.TabIndex = 15;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(907, 28);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(32, 13);
-            this.label17.TabIndex = 14;
-            this.label17.Text = "BWE";
-            // 
-            // textBox_T
-            // 
-            this.textBox_T.Location = new System.Drawing.Point(840, 24);
-            this.textBox_T.Name = "textBox_T";
-            this.textBox_T.Size = new System.Drawing.Size(38, 20);
-            this.textBox_T.TabIndex = 13;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(817, 29);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(14, 13);
-            this.label16.TabIndex = 12;
-            this.label16.Text = "T";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(19, 29);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(54, 13);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "mzML File";
             // 
             // dataGridView1_records
             // 
@@ -493,7 +563,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1194, 682);
+            this.tabPage2.Size = new System.Drawing.Size(1194, 840);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Visualization";
             // 
@@ -569,27 +639,27 @@
             // 
             // chart1
             // 
-            chartArea31.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea31);
-            legend31.Name = "Legend1";
-            this.chart1.Legends.Add(legend31);
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(6, 13);
             this.chart1.Name = "chart1";
-            series61.ChartArea = "ChartArea1";
-            series61.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series61.Legend = "Legend1";
-            series61.MarkerColor = System.Drawing.Color.MidnightBlue;
-            series61.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
-            series61.Name = "Series1";
-            series61.YValuesPerPoint = 2;
-            series62.BorderWidth = 3;
-            series62.ChartArea = "ChartArea1";
-            series62.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series62.Color = System.Drawing.Color.Purple;
-            series62.Legend = "Legend1";
-            series62.Name = "Series2";
-            this.chart1.Series.Add(series61);
-            this.chart1.Series.Add(series62);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series9.Legend = "Legend1";
+            series9.MarkerColor = System.Drawing.Color.MidnightBlue;
+            series9.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
+            series9.Name = "Series1";
+            series9.YValuesPerPoint = 2;
+            series10.BorderWidth = 3;
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series10.Color = System.Drawing.Color.Purple;
+            series10.Legend = "Legend1";
+            series10.Name = "Series2";
+            this.chart1.Series.Add(series9);
+            this.chart1.Series.Add(series10);
             this.chart1.Size = new System.Drawing.Size(662, 239);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -625,29 +695,29 @@
             // chart_peptide
             // 
             this.chart_peptide.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            chartArea32.Name = "ChartArea1";
-            this.chart_peptide.ChartAreas.Add(chartArea32);
-            legend32.Name = "Legend1";
-            this.chart_peptide.Legends.Add(legend32);
+            chartArea6.Name = "ChartArea1";
+            this.chart_peptide.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart_peptide.Legends.Add(legend6);
             this.chart_peptide.Location = new System.Drawing.Point(6, 16);
             this.chart_peptide.Name = "chart_peptide";
-            series63.ChartArea = "ChartArea1";
-            series63.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series63.Legend = "Legend1";
-            series63.MarkerColor = System.Drawing.Color.Black;
-            series63.MarkerSize = 7;
-            series63.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series63.Name = "Series1";
-            series63.YValuesPerPoint = 2;
-            series64.BorderWidth = 2;
-            series64.ChartArea = "ChartArea1";
-            series64.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series64.Color = System.Drawing.Color.Purple;
-            series64.Legend = "Legend1";
-            series64.MarkerSize = 7;
-            series64.Name = "Series3";
-            this.chart_peptide.Series.Add(series63);
-            this.chart_peptide.Series.Add(series64);
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series11.Legend = "Legend1";
+            series11.MarkerColor = System.Drawing.Color.Black;
+            series11.MarkerSize = 7;
+            series11.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series11.Name = "Series1";
+            series11.YValuesPerPoint = 2;
+            series12.BorderWidth = 2;
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series12.Color = System.Drawing.Color.Purple;
+            series12.Legend = "Legend1";
+            series12.MarkerSize = 7;
+            series12.Name = "Series3";
+            this.chart_peptide.Series.Add(series11);
+            this.chart_peptide.Series.Add(series12);
             this.chart_peptide.Size = new System.Drawing.Size(662, 316);
             this.chart_peptide.TabIndex = 0;
             this.chart_peptide.Text = "chart1";
@@ -687,7 +757,7 @@
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1194, 682);
+            this.tabPage3.Size = new System.Drawing.Size(1194, 840);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "About Heavy water";
             // 
@@ -701,82 +771,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
-            // textBox1_mzmlidfiles
-            // 
-            this.textBox1_mzmlidfiles.Location = new System.Drawing.Point(118, 24);
-            this.textBox1_mzmlidfiles.Name = "textBox1_mzmlidfiles";
-            this.textBox1_mzmlidfiles.Size = new System.Drawing.Size(234, 20);
-            this.textBox1_mzmlidfiles.TabIndex = 7;
-            // 
-            // button_autofillBrowse
-            // 
-            this.button_autofillBrowse.Location = new System.Drawing.Point(362, 24);
-            this.button_autofillBrowse.Name = "button_autofillBrowse";
-            this.button_autofillBrowse.Size = new System.Drawing.Size(75, 23);
-            this.button_autofillBrowse.TabIndex = 8;
-            this.button_autofillBrowse.Text = "Browse";
-            this.button_autofillBrowse.UseVisualStyleBackColor = true;
-            this.button_autofillBrowse.Click += new System.EventHandler(this.button_autofillBrowse_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 28);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(97, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "mzML / mzID  Files";
-            // 
-            // tabControl2
-            // 
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Location = new System.Drawing.Point(7, 10);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1115, 103);
-            this.tabControl2.TabIndex = 27;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage4.Controls.Add(this.textBox1_mzmlidfiles);
-            this.tabPage4.Controls.Add(this.button_autofillBrowse);
-            this.tabPage4.Controls.Add(this.label5);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1107, 77);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "Autofill";
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage5.Controls.Add(this.textBox_mzmlfile);
-            this.tabPage5.Controls.Add(this.label14);
-            this.tabPage5.Controls.Add(this.textBox_mzidfile);
-            this.tabPage5.Controls.Add(this.button_add);
-            this.tabPage5.Controls.Add(this.textBox_BWE);
-            this.tabPage5.Controls.Add(this.button_mzidbrowse);
-            this.tabPage5.Controls.Add(this.button_mzmlbrowse);
-            this.tabPage5.Controls.Add(this.label16);
-            this.tabPage5.Controls.Add(this.label17);
-            this.tabPage5.Controls.Add(this.label18);
-            this.tabPage5.Controls.Add(this.textBox_T);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1107, 77);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "Manual input";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1226, 718);
+            this.ClientSize = new System.Drawing.Size(1226, 758);
             this.Controls.Add(this.tabControl1);
             this.Name = "Main";
             this.Text = "Main";
@@ -784,6 +784,11 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1_records)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -799,11 +804,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_peptide)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
