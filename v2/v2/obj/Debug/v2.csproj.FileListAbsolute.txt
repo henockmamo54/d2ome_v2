@@ -19,13 +19,13 @@ c:\users\rgsadygo\documents\visual studio 2015\Projects\v2\v2\bin\Debug\LiveChar
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.exe.config
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.exe
 F:\workplace\d2ome_v2\v2\v2\bin\Debug\v2.pdb
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.AssemblyReference.cache
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.SuggestedBindingRedirects.cache
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Form1.resources
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Main.resources
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.Properties.Resources.resources
+F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.test.resources
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.GenerateResource.cache
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.CoreCompileInputs.cache
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.exe
 F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.pdb
-F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.csproj.AssemblyReference.cache
-F:\workplace\d2ome_v2\v2\v2\obj\Debug\v2.test.resources

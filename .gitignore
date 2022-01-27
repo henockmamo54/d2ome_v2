@@ -17,7 +17,6 @@ GUI_HeavyWater_09_21_2021/VC_Form_Application.VC.VC.opendb
 *.pdb
 *.pch
 v2/.vs/d2ome_v2/v17/Browse.VC.opendb
-
 GUI_HeavyWater_09_21_2021/VC_Form_Application/x64/Release/VC_Form_Application.vcxproj.AssemblyReference.cache
 v2/.vs/d2ome_v2/v17/.suo
 v2/v2/bin/Debug/v2.exe
@@ -28,6 +27,10 @@ v2/v2/bin/Debug/v2.exe
 *.tlog
 GUI_HeavyWater_09_21_2021/VC_Form_Application/x64/Release/VC_Form_Application.vcxproj.FileListAbsolute.txt
 v2/v2/obj/Release/v2.csproj.FileListAbsolute.txt
-*.csv
+*.csv 
 v2/v2/bin/Release/
-v2/v2/obj/Release/
+v2/v2/obj/Release/ 
+v2/v2/bin/
+v2/v2/obj/
+GUI_HeavyWater_09_21_2021/VC_Form_Application/x64/Release/
+ 
