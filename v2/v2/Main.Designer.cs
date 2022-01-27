@@ -28,18 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea35 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend35 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series69 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series70 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea36 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend36 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series71 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series72 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.textBox1_mzmlidfiles = new System.Windows.Forms.TextBox();
@@ -57,8 +56,6 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.textBox_T = new System.Windows.Forms.TextBox();
-            this.button_clear = new System.Windows.Forms.Button();
-            this.button_delete = new System.Windows.Forms.Button();
             this.dataGridView1_records = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.textBox_peptideConsistency = new System.Windows.Forms.TextBox();
@@ -98,9 +95,9 @@
             this.dataGridView_peptide = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -115,52 +112,44 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_peptide)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(29, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1202, 734);
+            this.tabControl1.Size = new System.Drawing.Size(1208, 761);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage1.Controls.Add(this.groupBox6);
-            this.tabPage1.Controls.Add(this.groupBox5);
-            this.tabPage1.Controls.Add(this.groupBox4);
+            this.tabPage1.Controls.Add(this.tableLayoutPanel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1194, 708);
+            this.tabPage1.Size = new System.Drawing.Size(1200, 735);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Computation";
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.tabControl2);
-            this.groupBox6.Controls.Add(this.button_clear);
-            this.groupBox6.Controls.Add(this.button_delete);
-            this.groupBox6.Controls.Add(this.dataGridView1_records);
-            this.groupBox6.Location = new System.Drawing.Point(23, 130);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1137, 474);
-            this.groupBox6.TabIndex = 8;
-            this.groupBox6.TabStop = false;
-            // 
             // tabControl2
             // 
+            this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl2.Controls.Add(this.tabPage4);
             this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Location = new System.Drawing.Point(7, 10);
+            this.tabControl2.Location = new System.Drawing.Point(3, 103);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1115, 103);
+            this.tabControl2.Size = new System.Drawing.Size(1188, 98);
             this.tabControl2.TabIndex = 27;
             // 
             // tabPage4
@@ -172,7 +161,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1107, 77);
+            this.tabPage4.Size = new System.Drawing.Size(1107, 51);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "Autofill";
             // 
@@ -219,7 +208,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1107, 77);
+            this.tabPage5.Size = new System.Drawing.Size(1180, 72);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Manual input";
             // 
@@ -317,34 +306,17 @@
             this.textBox_T.Size = new System.Drawing.Size(38, 20);
             this.textBox_T.TabIndex = 13;
             // 
-            // button_clear
-            // 
-            this.button_clear.Location = new System.Drawing.Point(1047, 438);
-            this.button_clear.Name = "button_clear";
-            this.button_clear.Size = new System.Drawing.Size(75, 23);
-            this.button_clear.TabIndex = 18;
-            this.button_clear.Text = "Clear All";
-            this.button_clear.UseVisualStyleBackColor = true;
-            this.button_clear.Click += new System.EventHandler(this.button_clear_Click);
-            // 
-            // button_delete
-            // 
-            this.button_delete.Location = new System.Drawing.Point(943, 438);
-            this.button_delete.Name = "button_delete";
-            this.button_delete.Size = new System.Drawing.Size(75, 23);
-            this.button_delete.TabIndex = 17;
-            this.button_delete.Text = "Delete";
-            this.button_delete.UseVisualStyleBackColor = true;
-            this.button_delete.Click += new System.EventHandler(this.button_delete_Click);
-            // 
             // dataGridView1_records
             // 
+            this.dataGridView1_records.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1_records.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dataGridView1_records.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1_records.Location = new System.Drawing.Point(6, 119);
+            this.dataGridView1_records.Location = new System.Drawing.Point(3, 217);
             this.dataGridView1_records.Name = "dataGridView1_records";
             this.dataGridView1_records.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1_records.Size = new System.Drawing.Size(1116, 313);
+            this.dataGridView1_records.Size = new System.Drawing.Size(1188, 405);
             this.dataGridView1_records.TabIndex = 4;
             this.dataGridView1_records.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_records_CellEndEdit);
             this.dataGridView1_records.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_records_CellValidating);
@@ -352,6 +324,8 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.Controls.Add(this.textBox_peptideConsistency);
             this.groupBox5.Controls.Add(this.textBox_peptideScore);
             this.groupBox5.Controls.Add(this.textBox_ElutionWindow);
@@ -366,9 +340,9 @@
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Controls.Add(this.label7);
             this.groupBox5.Controls.Add(this.label6);
-            this.groupBox5.Location = new System.Drawing.Point(23, 29);
+            this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(1137, 95);
+            this.groupBox5.Size = new System.Drawing.Size(1188, 94);
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
             // 
@@ -376,28 +350,28 @@
             // 
             this.textBox_peptideConsistency.Location = new System.Drawing.Point(677, 18);
             this.textBox_peptideConsistency.Name = "textBox_peptideConsistency";
-            this.textBox_peptideConsistency.Size = new System.Drawing.Size(100, 20);
+            this.textBox_peptideConsistency.Size = new System.Drawing.Size(124, 20);
             this.textBox_peptideConsistency.TabIndex = 13;
             // 
             // textBox_peptideScore
             // 
             this.textBox_peptideScore.Location = new System.Drawing.Point(677, 62);
             this.textBox_peptideScore.Name = "textBox_peptideScore";
-            this.textBox_peptideScore.Size = new System.Drawing.Size(100, 20);
+            this.textBox_peptideScore.Size = new System.Drawing.Size(124, 20);
             this.textBox_peptideScore.TabIndex = 12;
             // 
             // textBox_ElutionWindow
             // 
             this.textBox_ElutionWindow.Location = new System.Drawing.Point(388, 66);
             this.textBox_ElutionWindow.Name = "textBox_ElutionWindow";
-            this.textBox_ElutionWindow.Size = new System.Drawing.Size(100, 20);
+            this.textBox_ElutionWindow.Size = new System.Drawing.Size(124, 20);
             this.textBox_ElutionWindow.TabIndex = 11;
             // 
             // textBox_massAccuracy
             // 
             this.textBox_massAccuracy.Location = new System.Drawing.Point(388, 21);
             this.textBox_massAccuracy.Name = "textBox_massAccuracy";
-            this.textBox_massAccuracy.Size = new System.Drawing.Size(100, 20);
+            this.textBox_massAccuracy.Size = new System.Drawing.Size(124, 20);
             this.textBox_massAccuracy.TabIndex = 10;
             // 
             // comboBox_Rate_Constant_Method
@@ -408,7 +382,7 @@
             "Two Parameter"});
             this.comboBox_Rate_Constant_Method.Location = new System.Drawing.Point(958, 17);
             this.comboBox_Rate_Constant_Method.Name = "comboBox_Rate_Constant_Method";
-            this.comboBox_Rate_Constant_Method.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_Rate_Constant_Method.Size = new System.Drawing.Size(145, 21);
             this.comboBox_Rate_Constant_Method.TabIndex = 9;
             // 
             // comboBox_MS1Data
@@ -419,7 +393,7 @@
             "Profile"});
             this.comboBox_MS1Data.Location = new System.Drawing.Point(91, 61);
             this.comboBox_MS1Data.Name = "comboBox_MS1Data";
-            this.comboBox_MS1Data.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_MS1Data.Size = new System.Drawing.Size(145, 21);
             this.comboBox_MS1Data.TabIndex = 8;
             // 
             // comboBox_Enrichment
@@ -432,7 +406,7 @@
             "18O"});
             this.comboBox_Enrichment.Location = new System.Drawing.Point(91, 21);
             this.comboBox_Enrichment.Name = "comboBox_Enrichment";
-            this.comboBox_Enrichment.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_Enrichment.Size = new System.Drawing.Size(145, 21);
             this.comboBox_Enrichment.TabIndex = 7;
             // 
             // label12
@@ -500,13 +474,15 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.textBox_outputfolderpath);
             this.groupBox4.Controls.Add(this.button_browseoutputfolder);
             this.groupBox4.Controls.Add(this.label13);
             this.groupBox4.Controls.Add(this.button_start);
-            this.groupBox4.Location = new System.Drawing.Point(23, 610);
+            this.groupBox4.Location = new System.Drawing.Point(3, 628);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(1137, 67);
+            this.groupBox4.Size = new System.Drawing.Size(1188, 67);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             // 
@@ -563,7 +539,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1194, 840);
+            this.tabPage2.Size = new System.Drawing.Size(1194, 708);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Visualization";
             // 
@@ -639,27 +615,27 @@
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
+            chartArea35.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea35);
+            legend35.Name = "Legend1";
+            this.chart1.Legends.Add(legend35);
             this.chart1.Location = new System.Drawing.Point(6, 13);
             this.chart1.Name = "chart1";
-            series9.ChartArea = "ChartArea1";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series9.Legend = "Legend1";
-            series9.MarkerColor = System.Drawing.Color.MidnightBlue;
-            series9.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
-            series9.Name = "Series1";
-            series9.YValuesPerPoint = 2;
-            series10.BorderWidth = 3;
-            series10.ChartArea = "ChartArea1";
-            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series10.Color = System.Drawing.Color.Purple;
-            series10.Legend = "Legend1";
-            series10.Name = "Series2";
-            this.chart1.Series.Add(series9);
-            this.chart1.Series.Add(series10);
+            series69.ChartArea = "ChartArea1";
+            series69.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series69.Legend = "Legend1";
+            series69.MarkerColor = System.Drawing.Color.MidnightBlue;
+            series69.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
+            series69.Name = "Series1";
+            series69.YValuesPerPoint = 2;
+            series70.BorderWidth = 3;
+            series70.ChartArea = "ChartArea1";
+            series70.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series70.Color = System.Drawing.Color.Purple;
+            series70.Legend = "Legend1";
+            series70.Name = "Series2";
+            this.chart1.Series.Add(series69);
+            this.chart1.Series.Add(series70);
             this.chart1.Size = new System.Drawing.Size(662, 239);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -695,29 +671,29 @@
             // chart_peptide
             // 
             this.chart_peptide.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            chartArea6.Name = "ChartArea1";
-            this.chart_peptide.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart_peptide.Legends.Add(legend6);
+            chartArea36.Name = "ChartArea1";
+            this.chart_peptide.ChartAreas.Add(chartArea36);
+            legend36.Name = "Legend1";
+            this.chart_peptide.Legends.Add(legend36);
             this.chart_peptide.Location = new System.Drawing.Point(6, 16);
             this.chart_peptide.Name = "chart_peptide";
-            series11.ChartArea = "ChartArea1";
-            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series11.Legend = "Legend1";
-            series11.MarkerColor = System.Drawing.Color.Black;
-            series11.MarkerSize = 7;
-            series11.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series11.Name = "Series1";
-            series11.YValuesPerPoint = 2;
-            series12.BorderWidth = 2;
-            series12.ChartArea = "ChartArea1";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series12.Color = System.Drawing.Color.Purple;
-            series12.Legend = "Legend1";
-            series12.MarkerSize = 7;
-            series12.Name = "Series3";
-            this.chart_peptide.Series.Add(series11);
-            this.chart_peptide.Series.Add(series12);
+            series71.ChartArea = "ChartArea1";
+            series71.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series71.Legend = "Legend1";
+            series71.MarkerColor = System.Drawing.Color.Black;
+            series71.MarkerSize = 7;
+            series71.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series71.Name = "Series1";
+            series71.YValuesPerPoint = 2;
+            series72.BorderWidth = 2;
+            series72.ChartArea = "ChartArea1";
+            series72.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series72.Color = System.Drawing.Color.Purple;
+            series72.Legend = "Legend1";
+            series72.MarkerSize = 7;
+            series72.Name = "Series3";
+            this.chart_peptide.Series.Add(series71);
+            this.chart_peptide.Series.Add(series72);
             this.chart_peptide.Size = new System.Drawing.Size(662, 316);
             this.chart_peptide.TabIndex = 0;
             this.chart_peptide.Text = "chart1";
@@ -757,7 +733,7 @@
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1194, 840);
+            this.tabPage3.Size = new System.Drawing.Size(1194, 708);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "About Heavy water";
             // 
@@ -771,19 +747,37 @@
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.groupBox5, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.dataGridView1_records, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tabControl2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox4, 0, 3);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 114F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1194, 729);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1226, 758);
+            this.ClientSize = new System.Drawing.Size(1269, 785);
             this.Controls.Add(this.tabControl1);
             this.Name = "Main";
             this.Text = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
@@ -804,6 +798,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_peptide)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -851,9 +846,6 @@
         private System.Windows.Forms.TextBox textBox_outputfolderpath;
         private System.Windows.Forms.Button button_browseoutputfolder;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Button button_delete;
-        private System.Windows.Forms.Button button_clear;
         private System.Windows.Forms.Button button_add;
         private System.Windows.Forms.TextBox textBox_BWE;
         private System.Windows.Forms.Label label17;
@@ -871,5 +863,6 @@
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
