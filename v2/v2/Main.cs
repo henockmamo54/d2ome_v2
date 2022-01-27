@@ -25,6 +25,7 @@ namespace v2
         string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
         ProteinExperimentDataReader proteinExperimentData;
         Thread allProteinExporterThread;
+        public bool isvisualizationLoadForThepath=false;
 
         public Main()
         {
@@ -1290,28 +1291,29 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if (tabControl1.SelectedIndex == 1)
-            //{
+            if(!isvisualizationLoadForThepath)
+            {
 
-            //    var path = txt_source.Text;
+                var path = txt_source.Text;
 
-            //    if (!Directory.Exists(path))
-            //    {
-            //        return;
-            //    }
-            //    string[] filePaths = Directory.GetFiles(path);
-            //    var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
+                if (!Directory.Exists(path))
+                {
+                    return;
+                }
+                string[] filePaths = Directory.GetFiles(path);
+                var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
 
-            //    if (csvfilePaths.Count == 0)
-            //    {
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
-            //        comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
-            //    }
+                if (csvfilePaths.Count == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
+                    comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
+                }
 
-            //}
+            }
         }
 
         private void textBox_outputfolderpath_TextChanged(object sender, EventArgs e)
@@ -1326,6 +1328,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
             if (!Directory.Exists(path))
             {
+                isvisualizationLoadForThepath = false;
                 return;
             }
             string[] filePaths = Directory.GetFiles(path);
@@ -1333,12 +1336,14 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
             if (csvfilePaths.Count == 0)
             {
+                isvisualizationLoadForThepath = false;
                 return;
             }
             else
             {
                 var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
                 comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
+                isvisualizationLoadForThepath = true;
             }
         }
     }
