@@ -485,7 +485,13 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                                 inputdata.Add(mzmlIDfilerecord);
 
-                                dataGridView1_records.DataSource = inputdata.ToList();
+                                var temp = inputdata;
+                                temp = temp.OrderBy(x => x.T).ToList();
+                                dataGridView1_records.DataSource = temp;
+                                inputdata = new List<mzMlmzIDModel>();
+                                inputdata = temp;
+
+                                //dataGridView1_records.DataSource = inputdata.ToList();
 
                                 //sucssful insertion of record. clear the input
                                 textBox_mzmlfile.Text = "";
@@ -728,7 +734,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void dataGridView1_records_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1_records.Rows[e.RowIndex].ErrorText = String.Empty;
+            dataGridView1_records.Rows[e.RowIndex].ErrorText = String.Empty;            
         }
         #endregion
 
@@ -1257,7 +1263,16 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
 
 
+
         #endregion
 
+        private void dataGridView1_records_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
+            temp = temp.OrderBy(x => x.T).ToList();
+            dataGridView1_records.DataSource = temp;
+            inputdata = new List<mzMlmzIDModel>();
+            inputdata = temp;
+        }
     }
 }
