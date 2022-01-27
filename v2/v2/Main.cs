@@ -1059,7 +1059,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 txt_source.Text = path;
 
-                if (Directory.Exists(path))
+                if (!Directory.Exists(path))
                 {
                     MessageBox.Show("Please select a valid path.");
                     return;
