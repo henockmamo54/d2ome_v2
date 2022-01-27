@@ -43,6 +43,17 @@ namespace v2
                 if (inputdata.Count == 0) { MessageBox.Show("Please input mzML and mzID files records!", "Error"); return; }
                 if (textBox_outputfolderpath.Text.Length == 0) { MessageBox.Show("Please select a valid output directory!", "Error"); return; }
 
+                string[] filePaths = Directory.GetFiles(textBox_outputfolderpath.Text);
+                var csvfilePaths = filePaths.Where(x => x.Contains(".csv") || (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
+
+                if (csvfilePaths.Count != 0)
+                {
+                    MessageBox.Show("There are *.csv files in the output folder: " +
+                                    textBox_outputfolderpath.Text + "\n\r" + "They may interfere with output files.\r\n" +
+                                    "Remove the csv files from the folder and run the program again.\n\r", "Error");
+                }
+
+
                 var path = textBox_outputfolderpath.Text;
 
                 #region files.txt 
@@ -236,6 +247,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 // start process
                 p.Start();
 
+                button_start.Invoke(new Action(() =>
+                 button_start.Enabled = false));
+
                 //wait
                 p.WaitForExit();
             }
@@ -310,8 +324,38 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         private void P_Exited(object sender, EventArgs e)
         {
             Process p = (Process)sender;
-            var temp = p.ExitCode;
-            MessageBox.Show(temp.ToString());
+            var ret = p.ExitCode;
+            MessageBox.Show(ret.ToString());
+
+            button_start.Invoke(new Action(() =>
+                 button_start.Enabled = true));
+
+            if (ret == 0)
+            {
+                MessageBox.Show("Finished... Please check the for the results in " + textBox_outputfolderpath.Text + " folder.");
+
+            }
+            else if (-10 == ret)
+            {
+                var stError = "Program terminates with error.\n";
+                //if (1 == this->MS1_type)
+                if (comboBox_MS1Data.SelectedValue.ToString().Trim() == "Centroid")
+                {
+                    stError = stError + "The specified MS1 data type is Centroid \n";
+
+                    stError = stError + "It does not match with the MS1 type in mzML file\n";
+                }
+
+                MessageBox.Show(stError);
+
+            }
+            else
+            {
+
+                var stError = "Program terminates with error.\n";
+
+                MessageBox.Show(stError);
+            }
         }
 
         private void Main_Load(object sender, EventArgs e)
