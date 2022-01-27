@@ -646,6 +646,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     //comboBox_mzmlfilelist.DataSource = mzml;
                 }
 
+                inputdata = inputdata.OrderBy(x => x.T).ToList();
                 dataGridView1_records.DataSource = inputdata;
                 //this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             }
