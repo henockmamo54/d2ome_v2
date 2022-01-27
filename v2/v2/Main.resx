@@ -123,7 +123,7 @@
 System Requirement:
 
 OS : Windows 7 or higher (64 bit)
-RAM : Atleast 10 GB
+RAM : At least 10 GB
 version: 1.00
 
 This is the graphical user interface of the heavy water software, d2ome. The program produces protein degradation rate constants from the time course of the deuterium incorporation during labeling with heavy water. 

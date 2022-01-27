@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -135,10 +135,10 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 2);
+            this.tabControl1.Location = new System.Drawing.Point(0, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1231, 862);
+            this.tabControl1.Size = new System.Drawing.Size(1231, 852);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -148,7 +148,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1223, 836);
+            this.tabPage1.Size = new System.Drawing.Size(1223, 826);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Computation";
             // 
@@ -158,8 +158,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.groupBox5, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.dataGridView1_records, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tabControl2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.groupBox4, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tabControl2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -168,7 +168,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 114F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1217, 830);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1217, 820);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // groupBox5
@@ -331,7 +331,7 @@
             this.dataGridView1_records.Location = new System.Drawing.Point(3, 217);
             this.dataGridView1_records.Name = "dataGridView1_records";
             this.dataGridView1_records.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1_records.Size = new System.Drawing.Size(1211, 506);
+            this.dataGridView1_records.Size = new System.Drawing.Size(1211, 496);
             this.dataGridView1_records.TabIndex = 4;
             this.dataGridView1_records.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_records_CellEndEdit);
             this.dataGridView1_records.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_records_CellValidating);
@@ -351,7 +351,7 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage4.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabPage4.Controls.Add(this.textBox1_mzmlidfiles);
             this.tabPage4.Controls.Add(this.button_autofillBrowse);
             this.tabPage4.Controls.Add(this.label5);
@@ -390,7 +390,7 @@
             // 
             // tabPage5
             // 
-            this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage5.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabPage5.Controls.Add(this.textBox_mzmlfile);
             this.tabPage5.Controls.Add(this.label14);
             this.tabPage5.Controls.Add(this.textBox_mzidfile);
@@ -511,7 +511,7 @@
             this.groupBox4.Controls.Add(this.button_browseoutputfolder);
             this.groupBox4.Controls.Add(this.label13);
             this.groupBox4.Controls.Add(this.button_start);
-            this.groupBox4.Location = new System.Drawing.Point(3, 729);
+            this.groupBox4.Location = new System.Drawing.Point(3, 719);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(1211, 67);
             this.groupBox4.TabIndex = 6;
@@ -555,13 +555,13 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage2.Controls.Add(this.groupBox7);
             this.tabPage2.Controls.Add(this.tableLayoutPanel2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1223, 836);
+            this.tabPage2.Size = new System.Drawing.Size(1223, 826);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Visualization";
             // 
@@ -569,6 +569,7 @@
             // 
             this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox7.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox7.Controls.Add(this.label2);
             this.groupBox7.Controls.Add(this.txt_source);
             this.groupBox7.Controls.Add(this.btn_Browsefolder);
@@ -684,7 +685,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 58.47107F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 41.52893F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1190, 716);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1190, 706);
             this.tableLayoutPanel2.TabIndex = 26;
             // 
             // groupBox1
@@ -695,14 +696,14 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(495, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(692, 365);
+            this.groupBox1.Size = new System.Drawing.Size(692, 359);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
             // button_exportPeptideChart
             // 
             this.button_exportPeptideChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_exportPeptideChart.Location = new System.Drawing.Point(611, 336);
+            this.button_exportPeptideChart.Location = new System.Drawing.Point(611, 330);
             this.button_exportPeptideChart.Name = "button_exportPeptideChart";
             this.button_exportPeptideChart.Size = new System.Drawing.Size(75, 23);
             this.button_exportPeptideChart.TabIndex = 9;
@@ -713,30 +714,30 @@
             // chart_peptide
             // 
             this.chart_peptide.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            chartArea1.Name = "ChartArea1";
-            this.chart_peptide.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chart_peptide.ChartAreas.Add(chartArea3);
             this.chart_peptide.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chart_peptide.Legends.Add(legend1);
+            legend3.Name = "Legend1";
+            this.chart_peptide.Legends.Add(legend3);
             this.chart_peptide.Location = new System.Drawing.Point(3, 16);
             this.chart_peptide.Name = "chart_peptide";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series1.Legend = "Legend1";
-            series1.MarkerColor = System.Drawing.Color.Black;
-            series1.MarkerSize = 7;
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series1.Name = "Series1";
-            series1.YValuesPerPoint = 2;
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Color = System.Drawing.Color.Purple;
-            series2.Legend = "Legend1";
-            series2.Name = "Series3";
-            this.chart_peptide.Series.Add(series1);
-            this.chart_peptide.Series.Add(series2);
-            this.chart_peptide.Size = new System.Drawing.Size(686, 346);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series5.Legend = "Legend1";
+            series5.MarkerColor = System.Drawing.Color.Black;
+            series5.MarkerSize = 7;
+            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series5.Name = "Series1";
+            series5.YValuesPerPoint = 2;
+            series6.BorderWidth = 2;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Color = System.Drawing.Color.Purple;
+            series6.Legend = "Legend1";
+            series6.Name = "Series3";
+            this.chart_peptide.Series.Add(series5);
+            this.chart_peptide.Series.Add(series6);
+            this.chart_peptide.Size = new System.Drawing.Size(686, 340);
             this.chart_peptide.TabIndex = 0;
             this.chart_peptide.Text = "chart1";
             // 
@@ -748,7 +749,7 @@
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
             this.tableLayoutPanel2.SetRowSpan(this.groupBox3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(486, 628);
+            this.groupBox3.Size = new System.Drawing.Size(486, 618);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Peptide";
@@ -768,7 +769,7 @@
             this.dataGridView_peptide.ReadOnly = true;
             this.dataGridView_peptide.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView_peptide.ShowEditingIcon = false;
-            this.dataGridView_peptide.Size = new System.Drawing.Size(480, 609);
+            this.dataGridView_peptide.Size = new System.Drawing.Size(480, 599);
             this.dataGridView_peptide.TabIndex = 1;
             this.dataGridView_peptide.SelectionChanged += new System.EventHandler(this.dataGridView_peptide_SelectionChanged);
             // 
@@ -778,16 +779,16 @@
             this.groupBox3_proteinchart.Controls.Add(this.button_exportProteinChart);
             this.groupBox3_proteinchart.Controls.Add(this.chart1);
             this.groupBox3_proteinchart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3_proteinchart.Location = new System.Drawing.Point(495, 374);
+            this.groupBox3_proteinchart.Location = new System.Drawing.Point(495, 368);
             this.groupBox3_proteinchart.Name = "groupBox3_proteinchart";
-            this.groupBox3_proteinchart.Size = new System.Drawing.Size(692, 257);
+            this.groupBox3_proteinchart.Size = new System.Drawing.Size(692, 253);
             this.groupBox3_proteinchart.TabIndex = 0;
             this.groupBox3_proteinchart.TabStop = false;
             // 
             // button_exportProteinChart
             // 
             this.button_exportProteinChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_exportProteinChart.Location = new System.Drawing.Point(611, 228);
+            this.button_exportProteinChart.Location = new System.Drawing.Point(611, 224);
             this.button_exportProteinChart.Name = "button_exportProteinChart";
             this.button_exportProteinChart.Size = new System.Drawing.Size(75, 23);
             this.button_exportProteinChart.TabIndex = 10;
@@ -797,29 +798,29 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(3, 16);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series3.Legend = "Legend1";
-            series3.MarkerColor = System.Drawing.Color.MidnightBlue;
-            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
-            series3.Name = "Series1";
-            series3.YValuesPerPoint = 2;
-            series4.BorderWidth = 2;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Color = System.Drawing.Color.Purple;
-            series4.Legend = "Legend1";
-            series4.Name = "Series2";
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(686, 238);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series7.Legend = "Legend1";
+            series7.MarkerColor = System.Drawing.Color.MidnightBlue;
+            series7.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
+            series7.Name = "Series1";
+            series7.YValuesPerPoint = 2;
+            series8.BorderWidth = 2;
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series8.Color = System.Drawing.Color.Purple;
+            series8.Legend = "Legend1";
+            series8.Name = "Series2";
+            this.chart1.Series.Add(series7);
+            this.chart1.Series.Add(series8);
+            this.chart1.Size = new System.Drawing.Size(686, 234);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -831,7 +832,7 @@
             this.groupBox6.Controls.Add(this.button2_cancelled);
             this.groupBox6.Controls.Add(this.button1);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox6.Location = new System.Drawing.Point(3, 637);
+            this.groupBox6.Location = new System.Drawing.Point(3, 627);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(486, 76);
             this.groupBox6.TabIndex = 3;
@@ -881,7 +882,7 @@
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1223, 836);
+            this.tabPage3.Size = new System.Drawing.Size(1223, 826);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "About Heavy water";
             // 
@@ -900,7 +901,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1269, 866);
+            this.ClientSize = new System.Drawing.Size(1232, 866);
             this.Controls.Add(this.tabControl1);
             this.MinimumSize = new System.Drawing.Size(1248, 897);
             this.Name = "Main";
