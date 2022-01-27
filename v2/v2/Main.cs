@@ -410,7 +410,6 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             {
                 Process p = (Process)sender;
                 var ret = p.ExitCode;
-                MessageBox.Show(ret.ToString());
 
                 button_start.Invoke(new Action(() =>
                      button_start.Enabled = true));
@@ -444,7 +443,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                //MessageBox.Show(ex.Message, "Error");
             }
         }
 
@@ -588,19 +587,26 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 txt_source.Text = path;
 
-                string[] filePaths = Directory.GetFiles(path);
-                var csvfilePaths = filePaths.Where(x => x.Contains(".csv") || (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
-
-                if (csvfilePaths.Count == 0)
+                if (Directory.Exists(path))
                 {
-                    textBox_outputfolderpath.Text = path;
+                    string[] filePaths = Directory.GetFiles(path);
+                    var csvfilePaths = filePaths.Where(x => x.Contains(".csv") || (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
 
+                    if (csvfilePaths.Count == 0)
+                    {
+                        textBox_outputfolderpath.Text = path;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("There are *.csv files in the output folder: " +
+                                        path + "\n\r" + "They may interfere with output files.\r\n" +
+                                        "Remove the csv files from the folder and run the program again.\n\r", "Error");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("There are *.csv files in the output folder: " +
-                                    path + "\n\r" + "They may interfere with output files.\r\n" +
-                                    "Remove the csv files from the folder and run the program again.\n\r", "Error");
+                    MessageBox.Show("Please select a valid path");
                 }
             }
 
@@ -625,13 +631,13 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 if (mzml.Count() != mzid.Count())
                 {
-                    MessageBox.Show("ERROR", "mzML and mzid files should be in matched pairs");
+                    MessageBox.Show("mzML and mzid files should be in matched pairs", "Error");
                     return;
                 }
 
                 if (mzml.Count() == 0 | mzid.Count() == 0)
                 {
-                    MessageBox.Show("The folder does not contain the required files (.mzML and .mzid files)", "ERROR");
+                    MessageBox.Show("The folder does not contain the required files (.mzML and .mzid files)", "Error");
                     return;
                 }
 
@@ -734,7 +740,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void dataGridView1_records_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1_records.Rows[e.RowIndex].ErrorText = String.Empty;            
+            dataGridView1_records.Rows[e.RowIndex].ErrorText = String.Empty;
         }
         #endregion
 
