@@ -1072,11 +1072,11 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 {
                     MessageBox.Show("This directory doesn't contain the necessary files. Please select another directory.");
                 }
-                else
-                {
-                    var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
-                    comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
-                }
+                //else
+                //{
+                //    var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
+                //    comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
+                //}
             }
         }
         private void comboBox_proteinNameSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -1289,35 +1289,57 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 1)
-            {
+            //if (tabControl1.SelectedIndex == 1)
+            //{
 
-                var path = txt_source.Text;
+            //    var path = txt_source.Text;
 
-                if (!Directory.Exists(path))
-                {
-                    return;
-                }
-                string[] filePaths = Directory.GetFiles(path);
-                var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
+            //    if (!Directory.Exists(path))
+            //    {
+            //        return;
+            //    }
+            //    string[] filePaths = Directory.GetFiles(path);
+            //    var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
 
-                if (csvfilePaths.Count == 0)
-                {
-                    return;
-                }
-                else
-                {
-                    var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
-                    comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
-                }
+            //    if (csvfilePaths.Count == 0)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
+            //        comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
+            //    }
 
-            }
+            //}
         }
 
         private void textBox_outputfolderpath_TextChanged(object sender, EventArgs e)
         {
             if (textBox_outputfolderpath.Text.Length > 0 & Directory.Exists(textBox_outputfolderpath.Text))
                 txt_source.Text = textBox_outputfolderpath.Text;
+        }
+
+        private void txt_source_TextChanged(object sender, EventArgs e)
+        {
+            var path = txt_source.Text;
+
+            if (!Directory.Exists(path))
+            {
+                return;
+            }
+            string[] filePaths = Directory.GetFiles(path);
+            var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
+
+            if (csvfilePaths.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).ToList();
+                comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
+            }
         }
     }
 }
