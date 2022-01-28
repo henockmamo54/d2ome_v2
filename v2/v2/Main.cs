@@ -139,6 +139,7 @@ namespace v2
 
 
                 var path = textBox_outputfolderpath.Text;
+                sortInputDataGridView();
 
                 #region files.txt 
 
@@ -1345,6 +1346,22 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         }
 
         private void dataGridView1_records_Leave(object sender, EventArgs e)
+        {
+            //List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
+            //temp = temp.OrderBy(x => x.Time).ToList();
+            //dataGridView1_records.DataSource = temp;
+            //inputdata = new List<mzMlmzIDModel>();
+            //inputdata = temp;
+
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sortInputDataGridView();
+        }
+
+        public void sortInputDataGridView()
         {
             List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
             temp = temp.OrderBy(x => x.Time).ToList();
