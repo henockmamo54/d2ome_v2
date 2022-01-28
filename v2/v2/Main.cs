@@ -147,7 +147,7 @@ namespace v2
                 string fileContent = "";
                 foreach (var x in inputdata)
                 {
-                    fileContent += x.T.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
+                    fileContent += x.Time.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
                 }
 
                 tw.WriteLine(fileContent);
@@ -471,14 +471,14 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                                 var mzmlIDfilerecord = new mzMlmzIDModel();
                                 mzmlIDfilerecord.mzML = textBox_mzmlfile.Text.Trim();
                                 mzmlIDfilerecord.mzID = textBox_mzidfile.Text.Trim();
-                                mzmlIDfilerecord.T = double.Parse(textBox_T.Text.Trim());
+                                mzmlIDfilerecord.Time = double.Parse(textBox_T.Text.Trim());
                                 mzmlIDfilerecord.BWE = double.Parse(textBox_BWE.Text.Trim());
 
                                 if (mzmlIDfilerecord.BWE < 0 || mzmlIDfilerecord.BWE > 1)
                                 {
                                     MessageBox.Show("BWE should be non-negative and less than 1.0\n"); return;
                                 }
-                                if (mzmlIDfilerecord.T < 0)
+                                if (mzmlIDfilerecord.Time < 0)
                                 {
                                     MessageBox.Show("T should be non-negative \n"); return;
                                 }
@@ -486,7 +486,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                                 inputdata.Add(mzmlIDfilerecord);
 
                                 var temp = inputdata;
-                                temp = temp.OrderBy(x => x.T).ToList();
+                                temp = temp.OrderBy(x => x.Time).ToList();
                                 dataGridView1_records.DataSource = temp;
                                 inputdata = new List<mzMlmzIDModel>();
                                 inputdata = temp;
@@ -653,7 +653,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         mzMlmzIDModel k = new mzMlmzIDModel();
                         k.mzML = mz;
                         k.mzID = mz.Replace(".mzML", ".mzid");
-                        k.T = 0;
+                        k.Time = 0;
                         k.BWE = 0;
                         inputdata.Add(k);
                     }
@@ -662,7 +662,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     //comboBox_mzmlfilelist.DataSource = mzml;
                 }
 
-                inputdata = inputdata.OrderBy(x => x.T).ToList();
+                inputdata = inputdata.OrderBy(x => x.Time).ToList();
                 dataGridView1_records.DataSource = inputdata;
                 //this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             }
@@ -1347,7 +1347,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         private void dataGridView1_records_Leave(object sender, EventArgs e)
         {
             List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
-            temp = temp.OrderBy(x => x.T).ToList();
+            temp = temp.OrderBy(x => x.Time).ToList();
             dataGridView1_records.DataSource = temp;
             inputdata = new List<mzMlmzIDModel>();
             inputdata = temp;
