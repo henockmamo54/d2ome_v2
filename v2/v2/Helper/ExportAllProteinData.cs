@@ -211,8 +211,8 @@ namespace v2.Helper
                         #region experimental data plot
 
                         // prepare the chart data
-                        var chart_data = proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
-                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+                        var chart_data = proteinExperimentData.mergedRIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
+                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
                         #endregion
 

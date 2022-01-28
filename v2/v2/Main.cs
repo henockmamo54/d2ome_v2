@@ -19,7 +19,7 @@ namespace v2
 {
     public partial class Main : Form
     {
-        List<mzMlmzIDModel> inputdata = new List<mzMlmzIDModel>();
+        List<MzMLmzIDFilePair> inputdata = new List<MzMLmzIDFilePair>();
         string files_txt_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
         string quant_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
         string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
@@ -148,7 +148,7 @@ namespace v2
                 string fileContent = "";
                 foreach (var x in inputdata)
                 {
-                    fileContent += x.Time.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
+                    fileContent += x.Time.ToString() + " " + x.MzML_FileName + " " + x.MzID_FileName + " " + x.BWE.ToString() + "\n";
                 }
 
                 tw.WriteLine(fileContent);
@@ -453,7 +453,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         {
             loaduiprops();
             load_defaultValues();
-            inputdata = new List<mzMlmzIDModel>();
+            inputdata = new List<MzMLmzIDFilePair>();
             this.dataGridView1_mzMLmzIDData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
 
@@ -469,9 +469,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         {
                             if (File.Exists(textBox_mzidfile.Text.Trim()))
                             {
-                                var mzmlIDfilerecord = new mzMlmzIDModel();
-                                mzmlIDfilerecord.mzML = textBox_mzmlfile.Text.Trim();
-                                mzmlIDfilerecord.mzID = textBox_mzidfile.Text.Trim();
+                                var mzmlIDfilerecord = new MzMLmzIDFilePair();
+                                mzmlIDfilerecord.MzML_FileName = textBox_mzmlfile.Text.Trim();
+                                mzmlIDfilerecord.MzID_FileName = textBox_mzidfile.Text.Trim();
                                 mzmlIDfilerecord.Time = double.Parse(textBox_T.Text.Trim());
                                 mzmlIDfilerecord.BWE = double.Parse(textBox_BWE.Text.Trim());
 
@@ -489,7 +489,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                                 var temp = inputdata;
                                 temp = temp.OrderBy(x => x.Time).ToList();
                                 dataGridView1_mzMLmzIDData.DataSource = temp;
-                                inputdata = new List<mzMlmzIDModel>();
+                                inputdata = new List<MzMLmzIDFilePair>();
                                 inputdata = temp;
 
                                 //dataGridView1_records.DataSource = inputdata.ToList();
@@ -553,7 +553,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         private void button_clear_Click(object sender, EventArgs e)
         {
             dataGridView1_mzMLmzIDData.DataSource = null;
-            inputdata = new List<mzMlmzIDModel>();
+            inputdata = new List<MzMLmzIDFilePair>();
             dataGridView1_mzMLmzIDData.DataSource = inputdata;
         }
 
@@ -648,12 +648,12 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 else
                 {
-                    inputdata = new List<mzMlmzIDModel>();
+                    inputdata = new List<MzMLmzIDFilePair>();
                     foreach (var mz in mzml)
                     {
-                        mzMlmzIDModel k = new mzMlmzIDModel();
-                        k.mzML = mz;
-                        k.mzID = mz.Replace(".mzML", ".mzid");
+                        MzMLmzIDFilePair k = new MzMLmzIDFilePair();
+                        k.MzML_FileName = mz;
+                        k.MzID_FileName = mz.Replace(".mzML", ".mzid");
                         k.Time = 0;
                         k.BWE = 0;
                         inputdata.Add(k);
@@ -851,8 +851,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 #region experimental data plot
 
                 // prepare the chart data
-                var chart_data = mergedRIAvalues.Where(x => x.peptideSeq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
-                chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+                var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
+                chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
                 //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
@@ -973,8 +973,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         #region experimental data plot
 
                         // prepare the chart data
-                        var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
-                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+                        var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
+                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
                         #endregion
 
@@ -1363,10 +1363,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         public void sortInputDataGridView()
         {
-            List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_mzMLmzIDData.DataSource;
+            List<MzMLmzIDFilePair> temp = (List<MzMLmzIDFilePair>)dataGridView1_mzMLmzIDData.DataSource;
             temp = temp.OrderBy(x => x.Time).ToList();
             dataGridView1_mzMLmzIDData.DataSource = temp;
-            inputdata = new List<mzMlmzIDModel>();
+            inputdata = new List<MzMLmzIDFilePair>();
             inputdata = temp;
         }
     }
