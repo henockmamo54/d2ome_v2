@@ -560,18 +560,21 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         {
             try
             {
-                var index = dataGridView1_records.SelectedRows[0].Index;
+                int index = -1;
+                if (dataGridView1_records.SelectedRows.Count > 0) index = dataGridView1_records.SelectedRows[0].Index;
+                else if (dataGridView1_records.SelectedCells.Count > 0) index = dataGridView1_records.SelectedCells[0].RowIndex;
+
                 if (index < inputdata.Count & index >= 0)
                 {
                     dataGridView1_records.DataSource = null;
                     inputdata.RemoveAt(index);
                     dataGridView1_records.DataSource = inputdata;
                 }
-
+                else MessageBox.Show("Please select the row you want to delete. \n");
             }
             catch (Exception ex1)
             {
-                MessageBox.Show("Please select the row you want to delete. " + ex1.Message, "Error");
+                MessageBox.Show("Please select the row you want to delete. \n" + ex1.Message, "Error");
             }
         }
 
