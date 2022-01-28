@@ -25,7 +25,7 @@ namespace v2
         string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
         ProteinExperimentDataReader proteinExperimentData;
         Thread allProteinExporterThread;
-        public bool isvisualizationLoadForThepath=false;
+        public bool isvisualizationLoadForThepath = false;
 
         public Main()
         {
@@ -1271,27 +1271,21 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             }
         }
 
-
-
-
-
-
-
         #endregion
 
         private void dataGridView1_records_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
-            temp = temp.OrderBy(x => x.T).ToList();
-            dataGridView1_records.DataSource = temp;
-            inputdata = new List<mzMlmzIDModel>();
-            inputdata = temp;
+            //List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
+            //temp = temp.OrderBy(x => x.T).ToList();
+            //dataGridView1_records.DataSource = temp;
+            //inputdata = new List<mzMlmzIDModel>();
+            //inputdata = temp;
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if (tabControl1.SelectedIndex == 1)
-            if(!isvisualizationLoadForThepath)
+            if (!isvisualizationLoadForThepath)
             {
 
                 var path = txt_source.Text;
@@ -1345,6 +1339,15 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 comboBox_proteinNameSelector.DataSource = temp.Distinct().ToList();
                 isvisualizationLoadForThepath = true;
             }
+        }
+
+        private void dataGridView1_records_Leave(object sender, EventArgs e)
+        {
+            List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
+            temp = temp.OrderBy(x => x.T).ToList();
+            dataGridView1_records.DataSource = temp;
+            inputdata = new List<mzMlmzIDModel>();
+            inputdata = temp;
         }
     }
 }
