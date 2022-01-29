@@ -96,7 +96,7 @@ namespace v2.Helper
                 catch (Exception e)
                 {
                     Console.WriteLine("error ==>" + e.Message);
-                    MessageBox.Show("error reading files.txt ==> " + e.Message);
+                    MessageBox.Show("Error reading .RateConst.csv ==> " + e.Message);
                 }
             }
         }

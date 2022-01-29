@@ -49,7 +49,9 @@ namespace v2.Helper
                     // for now we assume "Peptide" should be on the fourth row
 
 
-                    if (lines.Length > 2 & lines[1].Trim().Contains("Peptide"))
+                    if (lines.Length > 2 & (lines[1].Trim().Contains("Peptide, UniqueToProtein") ||
+                        lines[1].Trim().Contains("Peptide,UniqueToProtein") ||
+                        lines[1].Trim().Contains("Peptide ,UniqueToProtein")))
                     {
                         // the other varation of quant file drops the first two lines (line #1 & #2), which are protein name and desciption.
                         // to handel this, we strat read from first line as name of experiment
@@ -63,7 +65,9 @@ namespace v2.Helper
                         }
 
                     }
-                    else if (lines.Length > 3 & lines[3].Trim().Contains("Peptide"))
+                    else if (lines.Length > 3 & (lines[3].Trim().Contains("Peptide, UniqueToProtein") ||
+                         lines[3].Trim().Contains("Peptide,UniqueToProtein") ||
+                         lines[3].Trim().Contains("Peptide ,UniqueToProtein")))
                     {
                         experimentNames = getExperimentNames(lines[2].Trim());
 
@@ -161,7 +165,7 @@ namespace v2.Helper
             catch (Exception e)
             {
                 Console.WriteLine("error ==>" + e.Message);
-                MessageBox.Show("error reading files.txt ==> " + e.Message);
+                MessageBox.Show("Error reading .Quant.csv ==> " + e.Message);
                 return null;
             }
 
@@ -195,7 +199,7 @@ namespace v2.Helper
             catch (Exception e)
             {
                 Console.WriteLine("error ==>" + e.Message);
-                MessageBox.Show("error reading files.txt ==> " + e.Message);
+                MessageBox.Show("Error reading .Quant.csv ==> " + e.Message);
             }
 
             return null;
