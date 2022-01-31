@@ -873,10 +873,6 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 chart_peptide.ChartAreas[0].AxisX.Interval = (int)x_val.Max() / 10;
                 chart_peptide.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
 
-                chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
-                chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-
-
 
                 #endregion
 
@@ -889,7 +885,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ", z = " + charge.ToString() + ")";
                 chart_peptide.Titles.Add(title);
 
-                chart_peptide.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.1;
+                chart_peptide.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
+
+                chart_peptide.ChartAreas[0].AxisY.Interval = chart_peptide.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
+                chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
 
 
@@ -1011,7 +1010,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
                         chart2.Titles.Add(title);
 
-                        chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.1;
+                        chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
+
+                        chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
+                        chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         bool exists = System.IO.Directory.Exists(path);
                         if (!exists)
