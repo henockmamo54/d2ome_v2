@@ -756,7 +756,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             //chart1.ChartAreas[0].AxisX.Maximum = proteinExperimentData.Experiment_time.Max();
 
             var temp_xval = new List<double>();
-            var temp_maxval = proteinExperimentData.Experiment_time.Max();
+            var temp_maxval = proteinExperimentData.experiment_time.Max();
             //var step = 0.1;
             var step = temp_maxval / 200.0;
             List<double> yval = new List<double>();
@@ -765,14 +765,14 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             {
                 var temp_x = step * i;
                 temp_xval.Add(temp_x);
-                yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst_CorrCutOff_mean * temp_x)));
+                yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst * temp_x)));
             }
 
             chart_protein.Series["Series2"].Points.DataBindXY(temp_xval, yval);
 
             chart_protein.ChartAreas[0].AxisX.Interval = (int)temp_maxval / 10;
-            chart_protein.ChartAreas[0].AxisX.Maximum = temp_maxval +0.01;
-            
+            chart_protein.ChartAreas[0].AxisX.Maximum = temp_maxval + 0.01;
+
             chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
             chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
@@ -843,7 +843,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 column.HeaderCell.Style.SelectionForeColor = Color.Black;
             }
         }
-        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<ExpectedI0Value> expectedI0Valuespassedvalue)
+        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> expectedI0Valuespassedvalue)
         {
             try
             {
@@ -984,7 +984,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                         #region expected data plot 
 
-                        var expected_chart_data = this.proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
+                        var expected_chart_data = this.proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
                         //
                         List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
                         List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
@@ -1119,16 +1119,16 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.mergeMultipleRIAPerDay2();
-            proteinExperimentData.computeExpectedCurvePoints();
-            proteinExperimentData.computeExpectedCurvePointsBasedOnExperimentalIo();
+            proteinExperimentData.computeTheoreticalCurvePoints();
+            proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
             try
             {
 
 
-                label4_proteinRateConstantValue.Text = formatdoubletothreedecimalplace((double)proteinExperimentData.MeanRateConst_CorrCutOff_mean) + " \u00B1 " + formatdoubletothreedecimalplace((double)proteinExperimentData.StandDev_NumberPeptides_mean);
-                label5_Ic.Text = ((double)proteinExperimentData.TotalIonCurrent_1).ToString("G2");
+                label4_proteinRateConstantValue.Text = formatdoubletothreedecimalplace((double)proteinExperimentData.MeanRateConst) + " \u00B1 " + formatdoubletothreedecimalplace((double)proteinExperimentData.StandDev_NumberPeptides_StandDev);
+                label5_Ic.Text = ((double)proteinExperimentData.TotalIonCurrent).ToString("G2");
                 loadDataGridView();
 
                 loadProteinchart(chartdata);
@@ -1136,7 +1136,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 button_exportAllPeptideChart.Text = "Export " + proteinName;
 
                 var p = proteinExperimentData.peptides.First();
-                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
             }
             catch (Exception xe)
             {
@@ -1184,7 +1184,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
                         var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
 
-                        loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
+                        loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
 
                     }
                 }
@@ -1244,7 +1244,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                     if (outputpath.Length > 0 & sourcepath.Length > 0)
                     {
-                        ExportAllProteinData exp = new ExportAllProteinData(sourcepath, outputpath);
+                        ExportAllProteinsData exp = new ExportAllProteinsData(sourcepath, outputpath);
                         //exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall);
 
                         //allProteinExporterThread = new Thread(new ThreadStart(exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall)));

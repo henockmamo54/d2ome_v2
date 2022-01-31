@@ -16,7 +16,7 @@ namespace v2
         string RateConst_csv_path = @"";
 
         // propperites from Protein.files.txt
-        public List<int> Experiment_time = new List<int>(); //contains unique time values
+        public List<int> experiment_time = new List<int>(); //contains unique time values
         public List<string> experimentIDs = new List<string>();
         public List<FileContent> filecontents = new List<FileContent>();
 
@@ -26,20 +26,20 @@ namespace v2
 
         // propeties from Protein.Rateconst.csv
         public List<RateConstant> rateConstants = new List<RateConstant>();
-        public double? MeanRateConst_CorrCutOff_mean;
-        double? MeanRateConst_CorrCutOff_median;
-        double? MedianRateConst_RMSSCutOff_mean;
-        double? MedianRateConst_RMSSCutOff_median;
-        public double? StandDev_NumberPeptides_mean;
-        double? StandDev_NumberPeptides_median;
-        public double? TotalIonCurrent_1;
+        public double? MeanRateConst;
+        double? MeanRateConst_CorrCutOff;
+        double? MedianRateConst;
+        double? MedianRateConst_RMSSCutOff;
+        public double? StandDev_NumberPeptides_StandDev;
+        double? StandDev_NumberPeptides_NumberPeptides;
+        public double? TotalIonCurrent;
 
         // computed values
         List<RIA> RIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvalues = new List<RIA>();
-        public List<ExpectedI0Value> expectedI0Values = new List<ExpectedI0Value>();
-        public List<ExpectedI0Value> expectedI0Values_withExperimentalIO = new List<ExpectedI0Value>();
-        public List<ExpectedI0Value> temp_expectedI0Values = new List<ExpectedI0Value>();
+        public List<TheoreticalI0Value> theoreticalI0Values = new List<TheoreticalI0Value>();
+        public List<TheoreticalI0Value> theoreticalI0Values_withExperimentalIO = new List<TheoreticalI0Value>();
+        public List<TheoreticalI0Value> temp_theoreticalI0Values = new List<TheoreticalI0Value>();
 
         public ProteinExperimentDataReader(string files_txt_path, string quant_csv_path, string RateConst_csv_path)
         {
@@ -54,7 +54,7 @@ namespace v2
             ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt(files_txt_path);
             filesinfo.readFile();
 
-            this.Experiment_time = filesinfo.time;
+            this.experiment_time = filesinfo.time;
             this.experimentIDs = filesinfo.experimentIDs;
             this.filecontents = filesinfo.filecontents;
 
@@ -71,13 +71,13 @@ namespace v2
             rateConstInfoReader.readRateConstantsCSV();
 
             this.rateConstants = rateConstInfoReader.rateConstants;
-            this.MeanRateConst_CorrCutOff_mean = rateConstInfoReader.MeanRateConst;
-            this.MeanRateConst_CorrCutOff_median = rateConstInfoReader.MeanRateConst_CorrCutOff;
-            this.MedianRateConst_RMSSCutOff_mean = rateConstInfoReader.MedianRateConst;
-            this.MedianRateConst_RMSSCutOff_median = rateConstInfoReader.MedianRateConst_RMSSCutOff;
-            this.StandDev_NumberPeptides_mean = rateConstInfoReader.StandDev_NumberPeptides_StandDev;
-            this.StandDev_NumberPeptides_median = rateConstInfoReader.StandDev_NumberPeptides_NumberPeptides;
-            this.TotalIonCurrent_1 = rateConstInfoReader.TotalIonCurrent;
+            this.MeanRateConst = rateConstInfoReader.MeanRateConst;
+            this.MeanRateConst_CorrCutOff = rateConstInfoReader.MeanRateConst_CorrCutOff;
+            this.MedianRateConst = rateConstInfoReader.MedianRateConst;
+            this.MedianRateConst_RMSSCutOff = rateConstInfoReader.MedianRateConst_RMSSCutOff;
+            this.StandDev_NumberPeptides_StandDev = rateConstInfoReader.StandDev_NumberPeptides_StandDev;
+            this.StandDev_NumberPeptides_NumberPeptides = rateConstInfoReader.StandDev_NumberPeptides_NumberPeptides;
+            this.TotalIonCurrent = rateConstInfoReader.TotalIonCurrent;
 
             // add rate constant values to peptied list
             foreach (Peptide p in peptides)
@@ -180,7 +180,7 @@ namespace v2
 
             foreach (Peptide p in this.peptides)
             {
-                foreach (int t in this.Experiment_time)
+                foreach (int t in this.experiment_time)
                 {
                     var temp = RIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge & x.Time == t).ToList();
 
@@ -237,7 +237,7 @@ namespace v2
                 }
 
 
-                foreach (int t in this.Experiment_time)
+                foreach (int t in this.experiment_time)
                 {
                     //var temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.time == t).ToList();
                     List<RIA> temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.Time == t).ToList();
@@ -265,7 +265,7 @@ namespace v2
 
 
         }
-        public void computeExpectedCurvePoints()
+        public void computeTheoreticalCurvePoints()
         {
             try
             {
@@ -280,9 +280,9 @@ namespace v2
                     if (peptides[i].Rateconst == null) continue;
 
                     List<double> mytimelist = new List<double>();
-                    foreach (var x in Experiment_time) mytimelist.Add(x);
+                    foreach (var x in experiment_time) mytimelist.Add(x);
 
-                    var temp_maxval = Experiment_time.Max();
+                    var temp_maxval = experiment_time.Max();
                     var step = temp_maxval / 200.0;
                     for (int j = 0; j * step < temp_maxval; j++)
                     { mytimelist.Add(j * step); }
@@ -304,8 +304,8 @@ namespace v2
 
                             var val = val1 + val2;
 
-                            ExpectedI0Value expectedI0Value = new ExpectedI0Value(peptides[i].PeptideSeq, t, val, (double)peptides[i].Charge);
-                            expectedI0Values.Add(expectedI0Value);
+                            TheoreticalI0Value theoreticalI0Value = new TheoreticalI0Value(peptides[i].PeptideSeq, t, val, (double)peptides[i].Charge);
+                            theoreticalI0Values.Add(theoreticalI0Value);
                         }
                         catch (Exception ex)
                         {
@@ -320,7 +320,7 @@ namespace v2
 
 
         }
-        public void computeExpectedCurvePointsBasedOnExperimentalIo()
+        public void computeTheoreticalCurvePointsBasedOnExperimentalI0()
         {
             try
             {
@@ -346,9 +346,9 @@ namespace v2
                     if (temp_experimentalvalue.Count != 1) continue;
 
                     List<double> mytimelist = new List<double>();
-                    foreach (var x in Experiment_time) mytimelist.Add(x);
+                    foreach (var x in experiment_time) mytimelist.Add(x);
 
-                    var temp_maxval = Experiment_time.Max();
+                    var temp_maxval = experiment_time.Max();
                     var step = temp_maxval / 200.0;
                     for (int j = 0; j * step < temp_maxval; j++)
                     { mytimelist.Add(j * step); }
@@ -368,8 +368,8 @@ namespace v2
 
                             var val = val1 + val2;
 
-                            ExpectedI0Value expectedI0Value_withExperimentalIO = new ExpectedI0Value(peptides[i].PeptideSeq, t, val, (double)peptides[i].Charge);
-                            expectedI0Values_withExperimentalIO.Add(expectedI0Value_withExperimentalIO);
+                            TheoreticalI0Value theoreticalI0Value_withExperimentalIO = new TheoreticalI0Value(peptides[i].PeptideSeq, t, val, (double)peptides[i].Charge);
+                            theoreticalI0Values_withExperimentalIO.Add(theoreticalI0Value_withExperimentalIO);
                         }
                         catch (Exception ex)
                         {
@@ -386,7 +386,7 @@ namespace v2
         }
         public void computeRSquare()
         {
-            temp_expectedI0Values = new List<ExpectedI0Value>();
+            temp_theoreticalI0Values = new List<TheoreticalI0Value>();
 
             //foreach (RateConstant r in rateConstants)
             foreach (Peptide r in this.peptides)
@@ -398,8 +398,8 @@ namespace v2
                     var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
                     var meanval_ria = temp_experimentalvalue.Average(x => x.RIA_value);
 
-                    var temp_computedRIAValue = expectedI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
-                    var temp_computedRIAValue_withexperimentalIO = expectedI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
+                    var temp_computedRIAValue = theoreticalI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
+                    var temp_computedRIAValue_withexperimentalIO = theoreticalI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
 
                     if (r.PeptideSeq == "VASGQALAAFcLTEPSSGSDVASIR" | r.PeptideSeq== "GILLYGTK")
                     {
@@ -426,7 +426,7 @@ namespace v2
                         r.RSquare = RSquare;
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
                         //temp_expectedI0Values.AddRange(temp_computedRIAValue);
-                        foreach (var x in temp_computedRIAValue) temp_expectedI0Values.Add(x);
+                        foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
                     }
 
                     else
@@ -455,13 +455,13 @@ namespace v2
 
                         if (rss_mo < rss_io)
                         {
-                            foreach (var x in temp_computedRIAValue) temp_expectedI0Values.Add(x);
+                            foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
                             //temp_expectedI0Values.AddRange(temp_computedRIAValue);
                         }
                         else
                         {
                             //temp_expectedI0Values.AddRange(temp_computedRIAValue_withexperimentalIO);
-                            foreach (var x in temp_computedRIAValue_withexperimentalIO) temp_expectedI0Values.Add(x);
+                            foreach (var x in temp_computedRIAValue_withexperimentalIO) temp_theoreticalI0Values.Add(x);
                         }
 
                     }
@@ -472,8 +472,8 @@ namespace v2
                 }
             }
 
-            expectedI0Values = new List<ExpectedI0Value>();
-            expectedI0Values = temp_expectedI0Values;
+            theoreticalI0Values = new List<TheoreticalI0Value>();
+            theoreticalI0Values = temp_theoreticalI0Values;
 
         }
         public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot()
@@ -489,7 +489,7 @@ namespace v2
 
             for (int i = 0; i < peptides.Count(); i++)
             {
-                foreach (int t in this.Experiment_time)
+                foreach (int t in this.experiment_time)
                 {
                     try
                     {
@@ -576,14 +576,14 @@ namespace v2
                 this.y = y;
             }
         }
-        public struct ExpectedI0Value
+        public struct TheoreticalI0Value
         {
             public string peptideseq;
             public double time;
             public double value;
             public double? charge;
 
-            public ExpectedI0Value(string peptideSeq, double t, double val, double charge)
+            public TheoreticalI0Value(string peptideSeq, double t, double val, double charge)
             {
                 peptideseq = peptideSeq;
                 time = t;

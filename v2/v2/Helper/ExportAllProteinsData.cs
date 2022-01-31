@@ -13,11 +13,11 @@ using static v2.ProteinExperimentDataReader;
 
 namespace v2.Helper
 {
-    public class ExportAllProteinData
+    public class ExportAllProteinsData
     {
         string outputPath = "";
         string sourcePath = "";
-        public ExportAllProteinData(string sourcePath, string outputPath)
+        public ExportAllProteinsData(string sourcePath, string outputPath)
         {
             this.sourcePath = sourcePath;
             this.outputPath = outputPath;
@@ -80,8 +80,8 @@ namespace v2.Helper
                     proteinExperimentData.loadAllExperimentData();
                     proteinExperimentData.computeRIAPerExperiment();
                     proteinExperimentData.mergeMultipleRIAPerDay2();
-                    proteinExperimentData.computeExpectedCurvePoints();
-                    proteinExperimentData.computeExpectedCurvePointsBasedOnExperimentalIo();
+                    proteinExperimentData.computeTheoreticalCurvePoints();
+                    proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
                     proteinExperimentData.computeRSquare();
                     ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
@@ -218,7 +218,7 @@ namespace v2.Helper
 
                         #region expected data plot 
 
-                        var expected_chart_data = proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
+                        var expected_chart_data = proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
                         //
                         List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
                         List<double> y_val = expected_chart_data.Select(x => x.value).ToList();

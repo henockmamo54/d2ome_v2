@@ -60,7 +60,7 @@
     </Compile>
     <Compile Include="FormLoader.cs" />
     <Compile Include="Helper\BasicFunctions.cs" />
-    <Compile Include="Helper\ExportAllProteinData.cs" />
+    <Compile Include="Helper\ExportAllProteinsData.cs" />
     <Compile Include="Helper\ReadExperiments.cs" />
     <Compile Include="Helper\ReadFilesInfo_txt.cs" />
     <Compile Include="Helper\ReadRateConstants.cs" />
