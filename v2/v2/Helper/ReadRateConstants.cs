@@ -11,13 +11,13 @@ namespace v2.Helper
     public class ReadRateConstants
     {
         public List<RateConstant> rateConstants = new List<RateConstant>();
-        public double? MeanRateConst_CorrCutOff_mean;
-        public double? MeanRateConst_CorrCutOff_CorrCutOff;
-        public double? MedianRateConst_RMSSCutOff_Median;
-        public double? MedianRateConst_RMSSCutOff_RMSSCutOff;
+        public double? MeanRateConst;
+        public double? MeanRateConst_CorrCutOff;
+        public double? MedianRateConst;
+        public double? MedianRateConst_RMSSCutOff;
         public double? StandDev_NumberPeptides_StandDev;
         public double? StandDev_NumberPeptides_NumberPeptides;
-        public double? TotalIonCurrent_1;
+        public double? TotalIonCurrent;
         public string path = @"";
 
         public ReadRateConstants(string path)
@@ -57,14 +57,14 @@ namespace v2.Helper
                         if (line.Contains("MeanRateConst/CorrCutOff"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) MeanRateConst_CorrCutOff_mean = double.Parse(columns[1].Trim());
-                            if (columns[2].Trim().Length > 0) MeanRateConst_CorrCutOff_CorrCutOff = double.Parse(columns[2].Trim());
+                            if (columns[1].Trim().Length > 0) MeanRateConst = double.Parse(columns[1].Trim());
+                            if (columns[2].Trim().Length > 0) MeanRateConst_CorrCutOff = double.Parse(columns[2].Trim());
                         }
                         else if (line.Contains("MedianRateConst/RMSSCutOff"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) MedianRateConst_RMSSCutOff_Median = double.Parse(columns[1].Trim());
-                            if (columns[2].Trim().Length > 0) MedianRateConst_RMSSCutOff_RMSSCutOff = double.Parse(columns[2].Trim());
+                            if (columns[1].Trim().Length > 0) MedianRateConst = double.Parse(columns[1].Trim());
+                            if (columns[2].Trim().Length > 0) MedianRateConst_RMSSCutOff = double.Parse(columns[2].Trim());
                         }
                         else if (line.Contains("StandDev/NumberPeptides"))
                         {
@@ -75,7 +75,7 @@ namespace v2.Helper
                         else if (line.Contains("TotalIonCurrent"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) TotalIonCurrent_1 = double.Parse(columns[1].Trim());
+                            if (columns[1].Trim().Length > 0) TotalIonCurrent = double.Parse(columns[1].Trim());
                         }
                         else
                         {

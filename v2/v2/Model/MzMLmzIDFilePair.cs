@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace v2.Model
 {
-    public class mzMlmzIDModel
+    public class MzMLmzIDFilePair
     {
-        public string mzML { get; set; }
-        public string mzID { get; set; }
+        public string MzML_FileName { get; set; }
+        public string MzID_FileName { get; set; }
         public double Time { get; set; }
         public double BWE { get; set; }
     }

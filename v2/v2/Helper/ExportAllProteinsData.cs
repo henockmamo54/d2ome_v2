@@ -13,11 +13,11 @@ using static v2.ProteinExperimentDataReader;
 
 namespace v2.Helper
 {
-    public class ExportAllProteinData
+    public class ExportAllProteinsData
     {
         string outputPath = "";
         string sourcePath = "";
-        public ExportAllProteinData(string sourcePath, string outputPath)
+        public ExportAllProteinsData(string sourcePath, string outputPath)
         {
             this.sourcePath = sourcePath;
             this.outputPath = outputPath;
@@ -80,8 +80,8 @@ namespace v2.Helper
                     proteinExperimentData.loadAllExperimentData();
                     proteinExperimentData.computeRIAPerExperiment();
                     proteinExperimentData.mergeMultipleRIAPerDay2();
-                    proteinExperimentData.computeExpectedCurvePoints();
-                    proteinExperimentData.computeExpectedCurvePointsBasedOnExperimentalIo();
+                    proteinExperimentData.computeTheoreticalCurvePoints();
+                    proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
                     proteinExperimentData.computeRSquare();
                     ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
@@ -211,14 +211,14 @@ namespace v2.Helper
                         #region experimental data plot
 
                         // prepare the chart data
-                        var chart_data = proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
-                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+                        var chart_data = proteinExperimentData.mergedRIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
+                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
                         #endregion
 
                         #region expected data plot 
 
-                        var expected_chart_data = proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
+                        var expected_chart_data = proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
                         //
                         List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
                         List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
@@ -229,7 +229,9 @@ namespace v2.Helper
                             chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
 
                             // set x axis chart interval
-                            chart2.ChartAreas[0].AxisX.Interval = expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                            chart2.ChartAreas[0].AxisX.Interval = (int)expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                            chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+
                             chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
                             chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
@@ -248,7 +250,9 @@ namespace v2.Helper
                         title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
                         chart2.Titles.Add(title);
 
-                        chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.1;
+                        chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
+                        chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
+                        chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         bool exists = System.IO.Directory.Exists(outputpath);
                         if (!exists)

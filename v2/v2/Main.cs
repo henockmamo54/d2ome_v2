@@ -19,7 +19,7 @@ namespace v2
 {
     public partial class Main : Form
     {
-        List<mzMlmzIDModel> inputdata = new List<mzMlmzIDModel>();
+        List<MzMLmzIDFilePair> inputdata = new List<MzMLmzIDFilePair>();
         string files_txt_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\files.txt";
         string quant_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.Quant.csv";
         string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
@@ -31,11 +31,11 @@ namespace v2
         {
             InitializeComponent();
         }
-        public void loaduiprops()
+        public void loadUiProps()
         {
-            chart1.ChartAreas[0].AxisX.Minimum = 0;
-            chart1.ChartAreas[0].AxisY.Minimum = 0;
-            chart1.ChartAreas[0].AxisY.Maximum = 1.5;
+            chart_protein.ChartAreas[0].AxisX.Minimum = 0;
+            chart_protein.ChartAreas[0].AxisY.Minimum = 0;
+            chart_protein.ChartAreas[0].AxisY.Maximum = 1.5;
 
 
             // remove grid lines
@@ -44,23 +44,23 @@ namespace v2
             chart_peptide.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
             chart_peptide.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
-            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-            chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+            chart_protein.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart_protein.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart_protein.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart_protein.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
 
 
             // chart labels added 
-            chart1.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
+            chart_protein.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
             chart_peptide.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
 
             chart_peptide.ChartAreas[0].AxisY.Title = "Relative abundance \n of monoisotope";
-            chart1.ChartAreas[0].AxisY.Title = "Fractional protein \n synthesis";
+            chart_protein.ChartAreas[0].AxisY.Title = "Fractional protein \n synthesis";
             chart_peptide.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
 
-            chart1.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
-            chart1.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
+            chart_protein.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
+            chart_protein.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
             chart_peptide.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
             chart_peptide.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
 
@@ -70,8 +70,8 @@ namespace v2
             chart_peptide.Series["Series3"].LegendText = "Theoretical fit";
             chart_peptide.Series["Series1"].LegendText = "Experimental value";
 
-            chart1.Series["Series2"].LegendText = "Theoretical fit";
-            chart1.Series["Series1"].LegendText = "Experimental value";
+            chart_protein.Series["Series2"].LegendText = "Theoretical fit";
+            chart_protein.Series["Series1"].LegendText = "Experimental value";
 
             // chart legend size
             chart_peptide.Legends[0].Position.Auto = false;
@@ -80,25 +80,25 @@ namespace v2
             chart_peptide.Legends[0].Position.Width = 30;
             chart_peptide.Legends[0].Position.Height = 15;
 
-            chart1.Legends[0].Position.Auto = false;
-            chart1.Legends[0].Position.X = 65;
-            chart1.Legends[0].Position.Y = 0;
-            chart1.Legends[0].Position.Width = 30;
-            chart1.Legends[0].Position.Height = 15;
+            chart_protein.Legends[0].Position.Auto = false;
+            chart_protein.Legends[0].Position.X = 65;
+            chart_protein.Legends[0].Position.Y = 0;
+            chart_protein.Legends[0].Position.Width = 30;
+            chart_protein.Legends[0].Position.Height = 15;
 
             // cahrt font
             chart_peptide.Legends[0].Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 9);
-            chart1.Legends[0].Font = new Font(chart1.Legends[0].Font.FontFamily, 9);
+            chart_protein.Legends[0].Font = new Font(chart_protein.Legends[0].Font.FontFamily, 9);
 
             // chartline tension
             chart_peptide.Series["Series3"]["LineTension"] = "0.1";
-            chart1.Series["Series2"]["LineTension"] = "0.1";
+            chart_protein.Series["Series2"]["LineTension"] = "0.1";
 
             chart_peptide.Series["Series3"].BorderWidth = 1;
-            chart1.Series["Series2"].BorderWidth = 1;
+            chart_protein.Series["Series2"].BorderWidth = 1;
 
             chart_peptide.Series["Series3"].Color = Color.Navy;
-            chart1.Series["Series2"].Color = Color.Navy;
+            chart_protein.Series["Series2"].Color = Color.Navy;
 
 
 
@@ -106,7 +106,7 @@ namespace v2
 
         #region computation
 
-        public void load_defaultValues()
+        public void loadDefaultValues()
         {
             comboBox_Enrichment.SelectedIndex = 0;
             comboBox_MS1Data.SelectedIndex = 0;
@@ -148,7 +148,7 @@ namespace v2
                 string fileContent = "";
                 foreach (var x in inputdata)
                 {
-                    fileContent += x.Time.ToString() + " " + x.mzML + " " + x.mzID + " " + x.BWE.ToString() + "\n";
+                    fileContent += x.Time.ToString() + " " + x.MzML_FileName + " " + x.MzID_FileName + " " + x.BWE.ToString() + "\n";
                 }
 
                 tw.WriteLine(fileContent);
@@ -294,7 +294,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 #endregion
 
 
-                Thread thread = new Thread(new ThreadStart(WorkThreadFunction));
+                Thread thread = new Thread(new ThreadStart(workThreadFunction));
                 thread.Start();
             }
 
@@ -307,7 +307,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         }
 
-        private void WorkThreadFunction()
+        private void workThreadFunction()
         {
             var sExecsFolder = Directory.GetCurrentDirectory();
             Console.WriteLine(sExecsFolder);
@@ -323,8 +323,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     WorkingDirectory = textBox_outputfolderpath.Text
                 };
                 // event handlers for output & error
-                p.OutputDataReceived += p_OutputDataReceived;
-                p.ErrorDataReceived += p_ErrorDataReceived;
+                p.OutputDataReceived += outputDataReceived;
+                p.ErrorDataReceived += errorDataReceived;
 
                 p.EnableRaisingEvents = true;
                 p.Exited += P_Exited;
@@ -339,52 +339,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 p.WaitForExit();
             }
 
-
-
-            //using (Process p = new Process())
-            //{
-            //    // set start info
-            //    p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt")
-            //    {
-            //        //RedirectStandardInput = true,
-            //        UseShellExecute = false,
-            //        WorkingDirectory = textBox_outputfolderpath.Text
-            //    };
-            //    // event handlers for output & error
-            //    p.OutputDataReceived += p_OutputDataReceived;
-            //    p.ErrorDataReceived += p_ErrorDataReceived;
-
-            //    p.EnableRaisingEvents = true;
-            //    p.Exited += P_Exited;
-
-            //    // start process
-            //    p.Start();
-
-            //    //wait
-            //    p.WaitForExit();
-            //}
-
-
-
-            ////Process p = new Process();
-            ////p.EnableRaisingEvents = true;
-            ////p.Exited += P_Exited;
-
-            ////ProcessStartInfo processStartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt");
-            ////processStartInfo.RedirectStandardInput = true;
-            ////processStartInfo.UseShellExecute = false;
-
-            ////p.StartInfo = processStartInfo;
-            ////p.OutputDataReceived += p_OutputDataReceived;
-            ////p.ErrorDataReceived += p_ErrorDataReceived;
-
-            ////p.Start();
-            ////p.WaitForExit();
-
-
         }
 
-        public void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        public void errorDataReceived(object sender, DataReceivedEventArgs e)
         {
             Process p = sender as Process;
             if (p == null)
@@ -392,18 +349,14 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             Console.WriteLine(e.Data);
         }
 
-        public void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        public void outputDataReceived(object sender, DataReceivedEventArgs e)
         {
             Process p = sender as Process;
             if (p == null)
                 return;
 
             Console.WriteLine(e.Data);
-
-
         }
-
-
 
 
         private void P_Exited(object sender, EventArgs e)
@@ -451,10 +404,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void Main_Load(object sender, EventArgs e)
         {
-            loaduiprops();
-            load_defaultValues();
-            inputdata = new List<mzMlmzIDModel>();
-            this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            loadUiProps();
+            loadDefaultValues();
+            inputdata = new List<MzMLmzIDFilePair>();
+            this.dataGridView1_mzMLmzIDData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
 
         private void button_add_Click(object sender, EventArgs e)
@@ -469,9 +422,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         {
                             if (File.Exists(textBox_mzidfile.Text.Trim()))
                             {
-                                var mzmlIDfilerecord = new mzMlmzIDModel();
-                                mzmlIDfilerecord.mzML = textBox_mzmlfile.Text.Trim();
-                                mzmlIDfilerecord.mzID = textBox_mzidfile.Text.Trim();
+                                var mzmlIDfilerecord = new MzMLmzIDFilePair();
+                                mzmlIDfilerecord.MzML_FileName = textBox_mzmlfile.Text.Trim();
+                                mzmlIDfilerecord.MzID_FileName = textBox_mzidfile.Text.Trim();
                                 mzmlIDfilerecord.Time = double.Parse(textBox_T.Text.Trim());
                                 mzmlIDfilerecord.BWE = double.Parse(textBox_BWE.Text.Trim());
 
@@ -488,8 +441,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                                 var temp = inputdata;
                                 temp = temp.OrderBy(x => x.Time).ToList();
-                                dataGridView1_records.DataSource = temp;
-                                inputdata = new List<mzMlmzIDModel>();
+                                dataGridView1_mzMLmzIDData.DataSource = temp;
+                                inputdata = new List<MzMLmzIDFilePair>();
                                 inputdata = temp;
 
                                 //dataGridView1_records.DataSource = inputdata.ToList();
@@ -552,9 +505,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void button_clear_Click(object sender, EventArgs e)
         {
-            dataGridView1_records.DataSource = null;
-            inputdata = new List<mzMlmzIDModel>();
-            dataGridView1_records.DataSource = inputdata;
+            dataGridView1_mzMLmzIDData.DataSource = null;
+            inputdata = new List<MzMLmzIDFilePair>();
+            dataGridView1_mzMLmzIDData.DataSource = inputdata;
         }
 
         private void button_delete_Click(object sender, EventArgs e)
@@ -562,15 +515,15 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             try
             {
                 List<int> selectedRows = new List<int>();
-                foreach (DataGridViewRow r in dataGridView1_records.SelectedRows) selectedRows.Add(r.Index);
-                foreach (DataGridViewCell c in dataGridView1_records.SelectedCells) selectedRows.Add(c.RowIndex);
+                foreach (DataGridViewRow r in dataGridView1_mzMLmzIDData.SelectedRows) selectedRows.Add(r.Index);
+                foreach (DataGridViewCell c in dataGridView1_mzMLmzIDData.SelectedCells) selectedRows.Add(c.RowIndex);
                 selectedRows = selectedRows.Distinct().ToList();
 
                 foreach (int index in selectedRows)
                 {
-                    dataGridView1_records.DataSource = null;
+                    dataGridView1_mzMLmzIDData.DataSource = null;
                     inputdata.RemoveAt(index);
-                    dataGridView1_records.DataSource = inputdata;
+                    dataGridView1_mzMLmzIDData.DataSource = inputdata;
                 }
             }
             catch (Exception ex1)
@@ -648,12 +601,12 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 else
                 {
-                    inputdata = new List<mzMlmzIDModel>();
+                    inputdata = new List<MzMLmzIDFilePair>();
                     foreach (var mz in mzml)
                     {
-                        mzMlmzIDModel k = new mzMlmzIDModel();
-                        k.mzML = mz;
-                        k.mzID = mz.Replace(".mzML", ".mzid");
+                        MzMLmzIDFilePair k = new MzMLmzIDFilePair();
+                        k.MzML_FileName = mz;
+                        k.MzID_FileName = mz.Replace(".mzML", ".mzid");
                         k.Time = 0;
                         k.BWE = 0;
                         inputdata.Add(k);
@@ -664,7 +617,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 }
 
                 inputdata = inputdata.OrderBy(x => x.Time).ToList();
-                dataGridView1_records.DataSource = inputdata;
+                dataGridView1_mzMLmzIDData.DataSource = inputdata;
                 //this.dataGridView1_records.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             }
         }
@@ -674,19 +627,19 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             Console.WriteLine("test");
 
             string headerText =
-        dataGridView1_records.Columns[e.ColumnIndex].HeaderText.Trim();
+        dataGridView1_mzMLmzIDData.Columns[e.ColumnIndex].HeaderText.Trim();
 
             if (headerText.Equals("mzML"))
             {
                 if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
                 {
-                    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+                    dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText =
                         "mzML file name must not be empty";
                     e.Cancel = true;
                 }
                 else if (!(Path.GetExtension(e.FormattedValue.ToString()).Trim().Equals(".mzML")))
                 {
-                    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+                    dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText =
                         "mzML file is not found in this path. Please check the file path";
                     e.Cancel = true;
                 }
@@ -695,13 +648,13 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             {
                 if (string.IsNullOrEmpty(e.FormattedValue.ToString()))
                 {
-                    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+                    dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText =
                         "mzID file name must not be empty";
                     e.Cancel = true;
                 }
                 else if (!(Path.GetExtension(e.FormattedValue.ToString()).Trim().Equals(".mzid")))
                 {
-                    dataGridView1_records.Rows[e.RowIndex].ErrorText =
+                    dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText =
                         "mzID file is not found in this path. Please check the file path";
                     e.Cancel = true;
                 }
@@ -711,12 +664,12 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 double i = 0;
                 if (!double.TryParse(e.FormattedValue.ToString(), out i))
                 {
-                    dataGridView1_records.Rows[e.RowIndex].ErrorText = ("Time value is Not valid.");
+                    dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText = ("Time value is Not valid.");
                     e.Cancel = true;
                 }
                 else if (double.Parse(e.FormattedValue.ToString()) < 0)
                 {
-                    dataGridView1_records.Rows[e.RowIndex].ErrorText = ("Time value is Not valid.");
+                    dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText = ("Time value is Not valid.");
                     e.Cancel = true;
                 }
 
@@ -726,12 +679,12 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 double i = 0;
                 if (!double.TryParse(e.FormattedValue.ToString(), out i))
                 {
-                    dataGridView1_records.Rows[e.RowIndex].ErrorText = ("BWE value is Not valid.");
+                    dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText = ("BWE value is Not valid.");
                     e.Cancel = true;
                 }
                 else if (double.Parse(e.FormattedValue.ToString()) < 0 || double.Parse(e.FormattedValue.ToString()) > 1)
                 {
-                    dataGridView1_records.Rows[e.RowIndex].ErrorText = ("BWE value is Not valid.");
+                    dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText = ("BWE value is Not valid.");
                     e.Cancel = true;
                 }
             }
@@ -745,18 +698,18 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void dataGridView1_records_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1_records.Rows[e.RowIndex].ErrorText = String.Empty;
+            dataGridView1_mzMLmzIDData.Rows[e.RowIndex].ErrorText = String.Empty;
         }
         #endregion
 
         #region visualization
         public void loadProteinchart(ProtienchartDataValues chartdata)
         {
-            chart1.Series["Series1"].Points.DataBindXY(chartdata.x, chartdata.y);
+            chart_protein.Series["Series1"].Points.DataBindXY(chartdata.x, chartdata.y);
             //chart1.ChartAreas[0].AxisX.Maximum = proteinExperimentData.Experiment_time.Max();
 
             var temp_xval = new List<double>();
-            var temp_maxval = proteinExperimentData.Experiment_time.Max();
+            var temp_maxval = proteinExperimentData.experiment_time.Max();
             //var step = 0.1;
             var step = temp_maxval / 200.0;
             List<double> yval = new List<double>();
@@ -765,12 +718,14 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             {
                 var temp_x = step * i;
                 temp_xval.Add(temp_x);
-                yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst_CorrCutOff_mean * temp_x)));
+                yval.Add(1 - Math.Pow(Math.E, (double)(-1 * proteinExperimentData.MeanRateConst * temp_x)));
             }
 
-            chart1.Series["Series2"].Points.DataBindXY(temp_xval, yval);
+            chart_protein.Series["Series2"].Points.DataBindXY(temp_xval, yval);
 
-            chart1.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
+            chart_protein.ChartAreas[0].AxisX.Interval = (int)temp_maxval / 10;
+            chart_protein.ChartAreas[0].AxisX.Maximum = temp_maxval + 0.01;
+
             chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
             chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
@@ -841,7 +796,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 column.HeaderCell.Style.SelectionForeColor = Color.Black;
             }
         }
-        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<ExpectedI0Value> expectedI0Valuespassedvalue)
+        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue)
         {
             try
             {
@@ -851,8 +806,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 #region experimental data plot
 
                 // prepare the chart data
-                var chart_data = mergedRIAvalues.Where(x => x.peptideSeq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
-                chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+                var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
+                chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
                 //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
@@ -861,17 +816,15 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 #region expected data plot 
 
-                var expected_chart_data = expectedI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
-                List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
-                List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
+                var theoretical_chart_data = theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
+                List<double> x_val = theoretical_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+                List<double> y_val = theoretical_chart_data.Select(x => x.value).ToList();
                 var pep = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq).FirstOrDefault();
 
                 chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
                 // set x axis chart interval
-                chart_peptide.ChartAreas[0].AxisX.Interval = x_val.Max() / 10;
-                chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
-                chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-
+                chart_peptide.ChartAreas[0].AxisX.Interval = (int)x_val.Max() / 10;
+                chart_peptide.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
 
 
                 #endregion
@@ -885,7 +838,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ", z = " + charge.ToString() + ")";
                 chart_peptide.Titles.Add(title);
 
-                chart_peptide.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.1;
+                chart_peptide.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
+
+                chart_peptide.ChartAreas[0].AxisY.Interval = chart_peptide.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
+                chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
 
 
@@ -896,7 +852,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             }
 
         }
-        public bool exportchart(string path, string name)
+        public bool exportChart(string path, string name)
         {
 
             name = name.Replace("/", "");
@@ -930,7 +886,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 {
                     string path = dialog.SelectedPath + "\\" + comboBox_proteinNameSelector.SelectedValue.ToString();
 
-                    if (exportchart(path, chart_peptide.Titles[0].Text))
+                    if (exportChart(path, chart_peptide.Titles[0].Text))
                     {
                         MessageBox.Show("Chart Exported!");
                     }
@@ -973,23 +929,25 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         #region experimental data plot
 
                         // prepare the chart data
-                        var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
-                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+                        var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
+                        chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
                         #endregion
 
                         #region expected data plot 
 
-                        var expected_chart_data = this.proteinExperimentData.expectedI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
+                        var theoretical_chart_data = this.proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
                         //
-                        List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
-                        List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
+                        List<double> x_val = theoretical_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+                        List<double> y_val = theoretical_chart_data.Select(x => x.value).ToList();
 
-                        chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
+                        chart2.Series["Series3"].Points.DataBindXY(theoretical_chart_data.Select(x => x.time).ToArray(), theoretical_chart_data.Select(x => x.value).ToArray());
 
-                        // set x axis chart interval
-                        chart2.ChartAreas[0].AxisX.Interval = expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
-                        chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
+                        // set x axis chart interval                        
+                        chart2.ChartAreas[0].AxisX.Interval = (int)theoretical_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                        chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+
+                        chart2.ChartAreas[0].AxisY.Interval = theoretical_chart_data.Select(x => x.value).ToArray().Max() / 5;
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
 
@@ -1005,7 +963,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
                         chart2.Titles.Add(title);
 
-                        chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.1;
+                        chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
+
+                        chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
+                        chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         bool exists = System.IO.Directory.Exists(path);
                         if (!exists)
@@ -1113,16 +1074,16 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.mergeMultipleRIAPerDay2();
-            proteinExperimentData.computeExpectedCurvePoints();
-            proteinExperimentData.computeExpectedCurvePointsBasedOnExperimentalIo();
+            proteinExperimentData.computeTheoreticalCurvePoints();
+            proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
             try
             {
 
 
-                label4_proteinRateConstantValue.Text = formatdoubletothreedecimalplace((double)proteinExperimentData.MeanRateConst_CorrCutOff_mean) + " \u00B1 " + formatdoubletothreedecimalplace((double)proteinExperimentData.StandDev_NumberPeptides_mean);
-                label5_Ic.Text = ((double)proteinExperimentData.TotalIonCurrent_1).ToString("G2");
+                label4_proteinRateConstantValue.Text = formatdoubletothreedecimalplace((double)proteinExperimentData.MeanRateConst) + " \u00B1 " + formatdoubletothreedecimalplace((double)proteinExperimentData.StandDev_NumberPeptides_StandDev);
+                label5_Ic.Text = ((double)proteinExperimentData.TotalIonCurrent).ToString("G2");
                 loadDataGridView();
 
                 loadProteinchart(chartdata);
@@ -1130,7 +1091,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 button_exportAllPeptideChart.Text = "Export " + proteinName;
 
                 var p = proteinExperimentData.peptides.First();
-                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
             }
             catch (Exception xe)
             {
@@ -1178,7 +1139,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
                         var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
 
-                        loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_expectedI0Values);
+                        loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
 
                     }
                 }
@@ -1201,9 +1162,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                     try
                     {
-                        using (Bitmap im = new Bitmap(chart1.Width, chart1.Height))
+                        using (Bitmap im = new Bitmap(chart_protein.Width, chart_protein.Height))
                         {
-                            chart1.DrawToBitmap(im, new Rectangle(0, 0, chart1.Width, chart1.Height));
+                            chart_protein.DrawToBitmap(im, new Rectangle(0, 0, chart_protein.Width, chart_protein.Height));
 
                             im.Save(path + @"\" + comboBox_proteinNameSelector.SelectedValue.ToString() + ".jpeg");
                         }
@@ -1238,7 +1199,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                     if (outputpath.Length > 0 & sourcepath.Length > 0)
                     {
-                        ExportAllProteinData exp = new ExportAllProteinData(sourcepath, outputpath);
+                        ExportAllProteinsData exp = new ExportAllProteinsData(sourcepath, outputpath);
                         //exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall);
 
                         //allProteinExporterThread = new Thread(new ThreadStart(exp.Export_all_ProteinChart(chart_peptide, progressBar_exportall)));
@@ -1363,10 +1324,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         public void sortInputDataGridView()
         {
-            List<mzMlmzIDModel> temp = (List<mzMlmzIDModel>)dataGridView1_records.DataSource;
+            List<MzMLmzIDFilePair> temp = (List<MzMLmzIDFilePair>)dataGridView1_mzMLmzIDData.DataSource;
             temp = temp.OrderBy(x => x.Time).ToList();
-            dataGridView1_records.DataSource = temp;
-            inputdata = new List<mzMlmzIDModel>();
+            dataGridView1_mzMLmzIDData.DataSource = temp;
+            inputdata = new List<MzMLmzIDFilePair>();
             inputdata = temp;
         }
     }

@@ -24,6 +24,6 @@ namespace v2.Model
         public double? M5 { get; set; }
         public double? Total_Labeling { get; set; }
         public double? RMSE_value { get; set; }
-        public int order { get; set; }
+        public int Order { get; set; }
     }
 }
