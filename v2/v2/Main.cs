@@ -31,7 +31,7 @@ namespace v2
         {
             InitializeComponent();
         }
-        public void loaduiprops()
+        public void loadUiProps()
         {
             chart_protein.ChartAreas[0].AxisX.Minimum = 0;
             chart_protein.ChartAreas[0].AxisY.Minimum = 0;
@@ -106,7 +106,7 @@ namespace v2
 
         #region computation
 
-        public void load_defaultValues()
+        public void loadDefaultValues()
         {
             comboBox_Enrichment.SelectedIndex = 0;
             comboBox_MS1Data.SelectedIndex = 0;
@@ -294,7 +294,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 #endregion
 
 
-                Thread thread = new Thread(new ThreadStart(WorkThreadFunction));
+                Thread thread = new Thread(new ThreadStart(workThreadFunction));
                 thread.Start();
             }
 
@@ -307,7 +307,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         }
 
-        private void WorkThreadFunction()
+        private void workThreadFunction()
         {
             var sExecsFolder = Directory.GetCurrentDirectory();
             Console.WriteLine(sExecsFolder);
@@ -323,8 +323,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     WorkingDirectory = textBox_outputfolderpath.Text
                 };
                 // event handlers for output & error
-                p.OutputDataReceived += p_OutputDataReceived;
-                p.ErrorDataReceived += p_ErrorDataReceived;
+                p.OutputDataReceived += outputDataReceived;
+                p.ErrorDataReceived += errorDataReceived;
 
                 p.EnableRaisingEvents = true;
                 p.Exited += P_Exited;
@@ -339,52 +339,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 p.WaitForExit();
             }
 
-
-
-            //using (Process p = new Process())
-            //{
-            //    // set start info
-            //    p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt")
-            //    {
-            //        //RedirectStandardInput = true,
-            //        UseShellExecute = false,
-            //        WorkingDirectory = textBox_outputfolderpath.Text
-            //    };
-            //    // event handlers for output & error
-            //    p.OutputDataReceived += p_OutputDataReceived;
-            //    p.ErrorDataReceived += p_ErrorDataReceived;
-
-            //    p.EnableRaisingEvents = true;
-            //    p.Exited += P_Exited;
-
-            //    // start process
-            //    p.Start();
-
-            //    //wait
-            //    p.WaitForExit();
-            //}
-
-
-
-            ////Process p = new Process();
-            ////p.EnableRaisingEvents = true;
-            ////p.Exited += P_Exited;
-
-            ////ProcessStartInfo processStartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt");
-            ////processStartInfo.RedirectStandardInput = true;
-            ////processStartInfo.UseShellExecute = false;
-
-            ////p.StartInfo = processStartInfo;
-            ////p.OutputDataReceived += p_OutputDataReceived;
-            ////p.ErrorDataReceived += p_ErrorDataReceived;
-
-            ////p.Start();
-            ////p.WaitForExit();
-
-
         }
 
-        public void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        public void errorDataReceived(object sender, DataReceivedEventArgs e)
         {
             Process p = sender as Process;
             if (p == null)
@@ -392,18 +349,14 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             Console.WriteLine(e.Data);
         }
 
-        public void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        public void outputDataReceived(object sender, DataReceivedEventArgs e)
         {
             Process p = sender as Process;
             if (p == null)
                 return;
 
             Console.WriteLine(e.Data);
-
-
         }
-
-
 
 
         private void P_Exited(object sender, EventArgs e)
@@ -451,8 +404,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void Main_Load(object sender, EventArgs e)
         {
-            loaduiprops();
-            load_defaultValues();
+            loadUiProps();
+            loadDefaultValues();
             inputdata = new List<MzMLmzIDFilePair>();
             this.dataGridView1_mzMLmzIDData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
@@ -843,7 +796,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 column.HeaderCell.Style.SelectionForeColor = Color.Black;
             }
         }
-        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> expectedI0Valuespassedvalue)
+        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue)
         {
             try
             {
@@ -863,9 +816,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 #region expected data plot 
 
-                var expected_chart_data = expectedI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
-                List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
-                List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
+                var theoretical_chart_data = theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
+                List<double> x_val = theoretical_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+                List<double> y_val = theoretical_chart_data.Select(x => x.value).ToList();
                 var pep = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq).FirstOrDefault();
 
                 chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
@@ -899,7 +852,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             }
 
         }
-        public bool exportchart(string path, string name)
+        public bool exportChart(string path, string name)
         {
 
             name = name.Replace("/", "");
@@ -933,7 +886,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 {
                     string path = dialog.SelectedPath + "\\" + comboBox_proteinNameSelector.SelectedValue.ToString();
 
-                    if (exportchart(path, chart_peptide.Titles[0].Text))
+                    if (exportChart(path, chart_peptide.Titles[0].Text))
                     {
                         MessageBox.Show("Chart Exported!");
                     }
@@ -983,18 +936,18 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                         #region expected data plot 
 
-                        var expected_chart_data = this.proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
+                        var theoretical_chart_data = this.proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
                         //
-                        List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
-                        List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
+                        List<double> x_val = theoretical_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+                        List<double> y_val = theoretical_chart_data.Select(x => x.value).ToList();
 
-                        chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
+                        chart2.Series["Series3"].Points.DataBindXY(theoretical_chart_data.Select(x => x.time).ToArray(), theoretical_chart_data.Select(x => x.value).ToArray());
 
                         // set x axis chart interval                        
-                        chart2.ChartAreas[0].AxisX.Interval = (int)expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                        chart2.ChartAreas[0].AxisX.Interval = (int)theoretical_chart_data.Select(x => x.time).ToArray().Max() / 10;
                         chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
 
-                        chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
+                        chart2.ChartAreas[0].AxisY.Interval = theoretical_chart_data.Select(x => x.value).ToArray().Max() / 5;
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
 
