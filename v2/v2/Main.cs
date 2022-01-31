@@ -770,7 +770,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
             chart_protein.Series["Series2"].Points.DataBindXY(temp_xval, yval);
 
-            chart_protein.ChartAreas[0].AxisX.Interval = temp_maxval / 10;
+            chart_protein.ChartAreas[0].AxisX.Interval = (int)temp_maxval / 10;
+            chart_protein.ChartAreas[0].AxisX.Maximum = temp_maxval +0.01;
+            
             chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
             chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
