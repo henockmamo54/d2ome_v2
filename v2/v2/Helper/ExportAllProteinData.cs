@@ -229,7 +229,9 @@ namespace v2.Helper
                             chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
 
                             // set x axis chart interval
-                            chart2.ChartAreas[0].AxisX.Interval = expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                            chart2.ChartAreas[0].AxisX.Interval = (int)expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                            chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+
                             chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
                             chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 

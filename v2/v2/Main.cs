@@ -868,7 +868,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
                 // set x axis chart interval
-                chart_peptide.ChartAreas[0].AxisX.Interval = x_val.Max() / 10;
+                chart_peptide.ChartAreas[0].AxisX.Interval = (int)x_val.Max() / 10;
+                chart_peptide.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+
                 chart_peptide.ChartAreas[0].AxisY.Interval = y_val.Max() / 5;
                 chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
@@ -987,8 +989,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                         chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
 
-                        // set x axis chart interval
-                        chart2.ChartAreas[0].AxisX.Interval = expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                        // set x axis chart interval                        
+                        chart2.ChartAreas[0].AxisX.Interval = (int)expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                        chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+
                         chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
