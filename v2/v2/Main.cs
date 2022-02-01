@@ -809,6 +809,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
                 chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
+                var chart_data2 = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
+                chart_peptide.Series["Series4"].Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.I0_t).ToArray());
+
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
                 //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
 
