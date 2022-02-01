@@ -40,7 +40,6 @@ namespace v2
         public List<TheoreticalI0Value> theoreticalI0Values = new List<TheoreticalI0Value>();
         public List<TheoreticalI0Value> theoreticalI0Values_withExperimentalIO = new List<TheoreticalI0Value>();
         public List<TheoreticalI0Value> temp_theoreticalI0Values = new List<TheoreticalI0Value>();
-
         public ProteinExperimentDataReader(string files_txt_path, string quant_csv_path, string RateConst_csv_path)
         {
             this.files_txt_path = files_txt_path;
@@ -147,6 +146,50 @@ namespace v2
 
             //}
         }
+        public void computeDeuteriumenrichmentInPeptide()
+        {
+            // this function computes pX(t)
+            // which is the deuterium enrichment in a peptide from the heavy water at the
+            // labeling duration time t
+
+            double ph = 1.3E-4;
+            foreach (Peptide peptide in peptides)
+            {
+
+                var experimentRecordsPerPeptide = experimentRecords.Where(p => p.PeptideSeq == peptide.PeptideSeq).ToList();
+                if (experimentRecordsPerPeptide.Count > 0)
+                {
+                    //experiments at t=0
+                    var experimentsAt_t_0 = experimentRecordsPerPeptide.Where(t => t.ExperimentTime == 0).ToList();
+                    if (experimentsAt_t_0.Count == 0) continue; // if there are no records at time =0, continue to the next peptide
+
+                    var A1_0 = experimentsAt_t_0.First().I1;
+                    var A0_0 = experimentsAt_t_0.First().I0;
+                    var NEH = peptide.Exchangeable_Hydrogens;
+
+                    if (A0_0 == 0) continue; // to avoid division by zero
+
+                    // compute pX(t) for each experiment
+                    foreach (ExperimentRecord er in experimentRecordsPerPeptide)
+                    {
+                        var A1_t = er.I1;
+                        var A0_t = er.I0;
+                        if (A0_t == 0) continue; // to avoid division by zero
+
+                        var k_t = (1 / NEH) * (A1_t / A0_t) * (A1_0 / A0_0);
+                        var px_t = (k_t * (1 - ph)) / (1 + k_t);
+
+                        er.Deuteriumenrichment = px_t;
+
+                        // compute modified I0(t)
+                        var I0_t = A0_0 * Math.Pow((double)(1 - (px_t / (1 - ph))), (double)NEH);
+                        er.I0_t = I0_t;
+
+                    }
+                }
+
+            }
+        }
         public void computeRIAPerExperiment()
         {
 
@@ -162,10 +205,15 @@ namespace v2
                     ria.RIA_value = er.I0 / sum_val;
                     ria.I0 = er.I0;
                     ria.Charge = er.Charge;
+                    ria.I0_t = er.I0_t;
 
                     //get the experiment time from files.txt values
                     var temp = filecontents.Where(x => x.experimentID == er.ExperimentName).Select(t => t.time).ToArray();
-                    if (temp.Length > 0) ria.Time = temp[0];
+                    if (temp.Length > 0)
+                    {
+                        ria.Time = temp[0];
+                        er.ExperimentTime = temp[0]; // add experiment time to Experiment records
+                    }
 
                     RIAvalues.Add(ria);
                 }
@@ -249,14 +297,24 @@ namespace v2
                     ria.Charge = p.Charge;
                     ria.Time = t;
 
-                    //var sum_io = temp_RIAvalues_pertime.Sum(x => x.I0);
-                    //var sum_ioria = temp_RIAvalues_pertime.Sum(x => x.I0 * x.RIA_value);
+                    #region original IO computaion
+                    ////var sum_io = temp_RIAvalues_pertime.Sum(x => x.I0);
+                    ////var sum_ioria = temp_RIAvalues_pertime.Sum(x => x.I0 * x.RIA_value);
                     double sum_io = 0; for (int i = 0; i < temp_RIAvalues_pertime.Count(); i++) sum_io = (double)(sum_io + temp_RIAvalues_pertime[i].I0);
                     double sum_ioria = 0; for (int i = 0; i < temp_RIAvalues_pertime.Count(); i++) sum_ioria = (double)(
                             sum_ioria + (temp_RIAvalues_pertime[i].I0 * temp_RIAvalues_pertime[i].RIA_value));
                     var new_ria = sum_ioria / sum_io;
-
                     ria.RIA_value = new_ria;
+                    #endregion
+
+                    #region compute the modified I0_t
+                    sum_io = 0; for (int i = 0; i < temp_RIAvalues_pertime.Count(); i++) sum_io = (double)(sum_io + temp_RIAvalues_pertime[i].I0);
+                    double sum_ioI0_t = 0; for (int i = 0; i < temp_RIAvalues_pertime.Count(); i++) sum_ioI0_t = (double)(
+                           sum_ioI0_t + (temp_RIAvalues_pertime[i].I0 * temp_RIAvalues_pertime[i].I0_t));
+                    var new_I0_t = sum_ioI0_t / sum_io;
+                    ria.I0_t = new_I0_t;
+                    #endregion
+
                     ria.ExperimentNames = temp_RIAvalues_pertime.Select(x => x.ExperimentName).ToList();
                     mergedRIAvalues.Add(ria);
 
@@ -401,7 +459,7 @@ namespace v2
                     var temp_computedRIAValue = theoreticalI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
                     var temp_computedRIAValue_withexperimentalIO = theoreticalI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
 
-                    if (r.PeptideSeq == "VASGQALAAFcLTEPSSGSDVASIR" | r.PeptideSeq== "GILLYGTK")
+                    if (r.PeptideSeq == "VASGQALAAFcLTEPSSGSDVASIR" | r.PeptideSeq == "GILLYGTK")
                     {
                         Console.WriteLine("Test");
                     }

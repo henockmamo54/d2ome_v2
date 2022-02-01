@@ -27,6 +27,9 @@ namespace v2.Model
         public double? I0_Peak_Width { get; set; }
         public double? Total_Labeling { get; set; }
         public double? Net_Labeling { get; set; }
+        public double? Deuteriumenrichment { get; set; } //pX(t)
+        public double? ExperimentTime { get; set; }
+        public double? I0_t { get; set; }
 
     }
 }

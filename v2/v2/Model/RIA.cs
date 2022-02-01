@@ -15,5 +15,6 @@ namespace v2.Model
         public int Time { get; set; }
         public double? I0 { get; set; }
         public double? RIA_value { get; set; }
+        public double? I0_t { get; set; }
     }
 }

@@ -1072,6 +1072,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
 
             proteinExperimentData.loadAllExperimentData();
+            proteinExperimentData.computeDeuteriumenrichmentInPeptide();
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.mergeMultipleRIAPerDay2();
             proteinExperimentData.computeTheoreticalCurvePoints();
