@@ -148,8 +148,12 @@ namespace v2
                     //experiments at t=0
                     var experimentsAt_t_0 = experimentRecordsPerPeptide.Where(t => t.ExperimentTime == 0 & t.I0 != null & t.I0 > 0).ToList();
                     double sum_io_t_0 = experimentsAt_t_0.Sum(x => x.I0).Value;
+
                     double sum_a1_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I1 / x.I0))).Value;
                     double al_a0_t_0 = sum_a1_ao_t_0 / sum_io_t_0;
+
+                    double sum_a2_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I2 / x.I0))).Value;
+                    double a2_a0_t_0 = sum_a2_ao_t_0 / sum_io_t_0;
 
                     foreach (ExperimentRecord er in experimentRecordsPerPeptide)
                     {
@@ -169,6 +173,7 @@ namespace v2
 
                         // compute modified I0(t)
                         double I0_t = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (px_t / (1 - ph))), (double)NEH));
+                        er.I0_t = I0_t;
 
                         if (px_t > 0.05 | px_t < (-0.2))
                         {
@@ -177,9 +182,39 @@ namespace v2
                         }
                         #endregion
 
+                        #region A2(t)/A1(t) 
+
+                        double sum_a2_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I2 / x.I0))).Value;
+                        double a2_a0_t = sum_a2_ao_t / sum_io_t;
+
+                        var del_a_1_0 = al_a0_t - al_a0_t_0;
+                        var del_a_2_0 = a2_a0_t - a2_a0_t_0;
+
+                        //var a = del_a_2_0 - (al_a0_t_0 * ph * del_a_1_0) - (al_a0_t * (1 - ph) * del_a_1_0) + 0.5 * ((-Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_1_0 * ((2 * ph - 1) / (1 - ph))));
+                        var a = del_a_2_0;
+                        a = a - (al_a0_t_0 * ph * del_a_1_0);
+                        a = a - (al_a0_t * (1 - ph) * del_a_1_0);
+                        a = a + 0.5 * (-1 * (Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_2_0 * ((2 * ph - 1) / (1 - ph))));
 
 
-                        er.I0_t = I0_t;
+                        //var b = (-1 * del_a_2_0 * (1 - ph)) + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph)) + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0) +
+                        //    0.5 * ((Math.Pow(del_a_1_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
+                        var b = (-1 * del_a_2_0 * (1 - ph));
+                        b = b + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph));
+                        b = b + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0);
+                        b = b + 0.5 * ((Math.Pow(del_a_2_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
+                        
+
+
+                        var new_px_t = -b / a;
+                        double I0_t_new_a2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (new_px_t / (1 - ph))), (double)NEH));
+                        er.I0_t_new_a2 = I0_t_new_a2;
+
+
+
+                        #endregion
+
+
 
                     }
 
@@ -203,6 +238,7 @@ namespace v2
                     ria.I0 = er.I0;
                     ria.Charge = er.Charge;
                     ria.I0_t = er.I0_t;
+                    ria.I0_t_new_a2 = er.I0_t_new_a2;
                     ria.pX_greaterthanThreshold = er.pX_greaterthanThreshold;
 
                     //get the experiment time from files.txt values
@@ -261,6 +297,7 @@ namespace v2
                     #region compute the modified I0_t
 
                     ria.I0_t = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.FirstOrDefault().I0_t : null;
+                    ria.I0_t_new_a2 = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.FirstOrDefault().I0_t_new_a2 : null;
                     ria.pX_greaterthanThreshold = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.FirstOrDefault().pX_greaterthanThreshold : null;
                     #endregion
 

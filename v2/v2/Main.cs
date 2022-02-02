@@ -816,6 +816,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
                 chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t).ToArray());
                 chart_peptide.Series["Series5"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());
+                chart_peptide.Series["Series6"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_new_a2).ToArray());
 
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
                 //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
