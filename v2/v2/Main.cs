@@ -777,6 +777,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             //set number formationg for the columns
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
             dataGridView_peptide.Columns["RMSE_value"].DefaultCellStyle.Format = "#0.####";
+            dataGridView_peptide.Columns["A0_average"].DefaultCellStyle.Format = "G2";
 
             // resizeable columns
             dataGridView_peptide.AllowUserToResizeColumns = true;
@@ -1107,6 +1108,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
 
             proteinExperimentData.loadAllExperimentData();
+            proteinExperimentData.computeAverageA0();
             proteinExperimentData.computeDeuteriumenrichmentInPeptide();
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.mergeMultipleRIAPerDay2();

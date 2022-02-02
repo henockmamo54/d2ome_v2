@@ -152,6 +152,17 @@ namespace v2
             //}
         }
 
+        public void computeAverageA0()
+        {
+            foreach (Peptide peptide in peptides)
+            {
+                var experimentRecordsPerPeptide = this.experimentRecords.Where(p => p.PeptideSeq == peptide.PeptideSeq
+                            & p.Charge == peptide.Charge & p.IonScore != 0 & p.I0 != null & p.I0 > 0).Select(x => x.I0).ToList();
+                var average_value = experimentRecordsPerPeptide.Average().Value;
+
+                peptide.A0_average = average_value;
+            }
+        }
         public void computeDeuteriumenrichmentInPeptide()
         {
             // this function computes pX(t)
