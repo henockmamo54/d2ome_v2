@@ -734,11 +734,12 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         public void loadDataGridView()
         {
 
-            // update the datasource for the data gridview
-            var selected = (from u in proteinExperimentData.peptides
-                            where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
-                            select u).Distinct().ToList();
-            dataGridView_peptide.DataSource = selected;
+            //// update the datasource for the data gridview
+            //var selected = (from u in proteinExperimentData.peptides
+            //                where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
+            //                select u).Distinct().ToList();
+            //dataGridView_peptide.DataSource = selected;
+            dataGridView_peptide.DataSource = proteinExperimentData.peptides;
 
             //hide some columns from the datasource
             dataGridView_peptide.RowHeadersVisible = false; // hide row selector
@@ -797,7 +798,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 column.HeaderCell.Style.SelectionForeColor = Color.Black;
             }
         }
-        public void loadPeptideChart(string peptideSeq, int charge, double Rateconst, double RSquare, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue)
+        public void loadPeptideChart(string peptideSeq, int charge, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, double Rateconst = Double.NaN, double RSquare = Double.NaN)
         {
             try
             {
@@ -1105,9 +1106,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); return; }
             else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); return; } }
 
+            // clean peptide chart
+            chart_peptide.DataSource = null;
+
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
-
-
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeAverageA0();
             proteinExperimentData.computeDeuteriumenrichmentInPeptide();
@@ -1130,7 +1132,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 button_exportAllPeptideChart.Text = "Export " + proteinName;
 
                 var p = proteinExperimentData.peptides.First();
-                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.Rateconst, (double)p.RSquare, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, (double)p.Rateconst, (double)p.RSquare);
             }
             catch (Exception xe)
             {
@@ -1172,18 +1174,36 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     if (indexofselctedrow >= 0)
                     {
                         DataGridViewRow row = dataGridView_peptide.Rows[indexofselctedrow];
-                        var temp = dataGridView_peptide.Rows[indexofselctedrow].Cells[0].Value.ToString();
-                        var charge = int.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[4].Value.ToString());
-                        var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
-                        var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
-                        var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
 
-                        loadPeptideChart(temp, charge, rateconst, rsquare, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
+                        // check for rate constant value 
+                        var rateconstvaluefromgrid = dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value;
+                        if (rateconstvaluefromgrid == null)
+                        {
+                            var temp = dataGridView_peptide.Rows[indexofselctedrow].Cells[0].Value.ToString();
+                            var charge = int.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[4].Value.ToString());
+                            //var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
+                            //var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
+                            var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
 
+                            loadPeptideChart(temp, charge, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
+                        }
+                        else
+                        {
+                            var temp = dataGridView_peptide.Rows[indexofselctedrow].Cells[0].Value.ToString();
+                            var charge = int.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[4].Value.ToString());
+                            var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
+                            var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
+                            var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
+
+                            loadPeptideChart(temp, charge, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, rateconst, rsquare);
+                        }
                     }
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                Console.WriteLine("test" + ex.Message);
+            }
 
         }
         private void button_exportProteinChart_Click(object sender, EventArgs e)

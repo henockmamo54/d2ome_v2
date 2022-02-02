@@ -204,7 +204,7 @@ namespace v2
                         // compute modified I0(t)
                         double I0_t = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (px_t / (1 - ph))), (double)NEH));
 
-                        if (Double.IsNaN(I0_t))
+                        if (I0_t < 0.03)
                         {
                             Console.WriteLine("test");
                         }
