@@ -16,5 +16,6 @@ namespace v2.Model
         public double? I0 { get; set; }
         public double? RIA_value { get; set; }
         public double? I0_t { get; set; }
+        public double? pX_greaterthanThreshold { get; set; } //pX(t) > 0.05
     }
 }

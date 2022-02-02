@@ -810,9 +810,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 // prepare the chart data
                 var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
                 chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
-
-                var chart_data2 = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
-                chart_peptide.Series["Series4"].Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.I0_t).ToArray());
+                chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t).ToArray());
+                chart_peptide.Series["Series5"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());
 
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
                 //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
@@ -823,14 +822,21 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 #region expected data plot 
 
                 var theoretical_chart_data = theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
-                List<double> x_val = theoretical_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
-                List<double> y_val = theoretical_chart_data.Select(x => x.value).ToList();
+                if (theoretical_chart_data.Count() > 0)
+                {
+                    List<double> x_val = theoretical_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+                    List<double> y_val = theoretical_chart_data.Select(x => x.value).ToList();
 
+                    chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
+                    // set x axis chart interval
+                    chart_peptide.ChartAreas[0].AxisX.Interval = (int)x_val.Max() / 10;
+                    chart_peptide.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
 
-                chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
-                // set x axis chart interval
-                chart_peptide.ChartAreas[0].AxisX.Interval = (int)x_val.Max() / 10;
-                chart_peptide.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+                    chart_peptide.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
+                    chart_peptide.ChartAreas[0].AxisY.Interval = chart_peptide.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
+                    chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+                }
+
 
 
                 #endregion
@@ -873,15 +879,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 Title title = new Title();
                 title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
                 //title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ")";
-                title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ", z = " + charge.ToString() + ")";
+                if (Double.IsNaN(Rateconst)) title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", m/z = " + masstocharge.ToString("#0.###") + ", z = " + charge.ToString() + ")";
+                else title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ", z = " + charge.ToString() + ")";
                 chart_peptide.Titles.Add(title);
-
-                chart_peptide.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
-
-                chart_peptide.ChartAreas[0].AxisY.Interval = chart_peptide.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
-                chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-
-
 
             }
             catch (Exception e)
@@ -1108,6 +1108,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
             // clean peptide chart
             chart_peptide.DataSource = null;
+            chart_peptide.Titles.Clear();
 
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
             proteinExperimentData.loadAllExperimentData();

@@ -30,6 +30,7 @@ namespace v2.Model
         public double? Deuteriumenrichment { get; set; } //pX(t)
         public double? ExperimentTime { get; set; }
         public double? I0_t { get; set; }
+        public double? pX_greaterthanThreshold { get; set; } //pX(t) > 0.05
 
     }
 }
