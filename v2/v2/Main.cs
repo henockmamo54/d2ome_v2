@@ -834,6 +834,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 #endregion
 
+                /*
                 #region temp 
                 List<double> x_val_temp = new List<double>();
                 List<double> y_val_temp = new List<double>();
@@ -863,7 +864,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 chart_peptide.Series["Series5"].Points.DataBindXY(x_val_temp.OrderBy(x => x).ToList(), y_val_temp.OrderByDescending(x => x).ToList());
 
                 #endregion
-
+                */
 
                 // chart title
                 //chart_peptide.Titles.Add(peptideSeq);    
