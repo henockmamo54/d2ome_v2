@@ -121,9 +121,12 @@ namespace v2
             {
                 var experimentRecordsPerPeptide = this.experimentRecords.Where(p => p.PeptideSeq == peptide.PeptideSeq
                             & p.Charge == peptide.Charge & p.IonScore != 0 & p.I0 != null & p.I0 > 0).Select(x => x.I0).ToList();
-                var average_value = experimentRecordsPerPeptide.Average().Value;
-
-                peptide.A0_average = average_value;
+                if (experimentRecordsPerPeptide.Count() == 0) peptide.A0_average = 0;
+                else
+                {
+                    var average_value = experimentRecordsPerPeptide.Average().Value;
+                    peptide.A0_average = average_value;
+                }
             }
         }
         public void computeDeuteriumenrichmentInPeptide()
@@ -167,7 +170,7 @@ namespace v2
                         // compute modified I0(t)
                         double I0_t = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (px_t / (1 - ph))), (double)NEH));
 
-                        if (px_t > 0.05)
+                        if (px_t > 0.05 | px_t < (-0.2))
                         {
                             Console.WriteLine("test");
                             er.pX_greaterthanThreshold = 0;
@@ -257,8 +260,8 @@ namespace v2
 
                     #region compute the modified I0_t
 
-                    ria.I0_t = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.FirstOrDefault().I0_t : null; 
-                    ria.pX_greaterthanThreshold = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.FirstOrDefault().pX_greaterthanThreshold : null; 
+                    ria.I0_t = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.FirstOrDefault().I0_t : null;
+                    ria.pX_greaterthanThreshold = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.FirstOrDefault().pX_greaterthanThreshold : null;
                     #endregion
 
                     ria.ExperimentNames = temp_RIAvalues_pertime.Select(x => x.ExperimentName).ToList();

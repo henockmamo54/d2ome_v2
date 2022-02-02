@@ -804,7 +804,11 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             {
                 //clear chart area
                 chart_peptide.Titles.Clear();
-
+                chart_peptide.DataSource = null;
+                chart_peptide.Series["Series1"].Points.Clear();
+                chart_peptide.Series["Series3"].Points.Clear();
+                chart_peptide.Series["Series4"].Points.Clear();
+                chart_peptide.Series["Series5"].Points.Clear();
                 #region experimental data plot
 
                 // prepare the chart data
@@ -1109,7 +1113,13 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             // clean peptide chart
             chart_peptide.DataSource = null;
             chart_peptide.Titles.Clear();
+            chart_peptide.DataSource = null;
+            chart_peptide.Series["Series1"].Points.Clear();
+            chart_peptide.Series["Series3"].Points.Clear();
+            chart_peptide.Series["Series4"].Points.Clear();
+            chart_peptide.Series["Series5"].Points.Clear();
 
+            //computation
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeAverageA0();
