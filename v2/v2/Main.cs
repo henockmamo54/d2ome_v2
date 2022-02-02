@@ -817,12 +817,13 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 #endregion
 
+
                 #region expected data plot 
 
                 var theoretical_chart_data = theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).OrderBy(x => x.time).ToArray();
                 List<double> x_val = theoretical_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
                 List<double> y_val = theoretical_chart_data.Select(x => x.value).ToList();
-                var pep = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq).FirstOrDefault();
+
 
                 chart_peptide.Series["Series3"].Points.DataBindXY(x_val, y_val);
                 // set x axis chart interval
@@ -831,6 +832,37 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
 
                 #endregion
+
+                #region temp 
+                List<double> x_val_temp = new List<double>();
+                List<double> y_val_temp = new List<double>();
+
+                // add additional data points to make the graph smooth
+                var pep = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).FirstOrDefault();
+                double io = (double)(pep.M0 / 100);
+                double neh = (double)(pep.Exchangeable_Hydrogens);
+                double k = (double)(pep.Rateconst);
+                double ph = 1.5574E-4;
+                double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
+
+                var temp_maxval = proteinExperimentData.experiment_time.Max();
+                //var step = 0.1;
+                var step = 0.01;
+                for (int i = 0; i * step < temp_maxval; i++)
+                {
+                    double temp_X = step * i;
+                    x_val_temp.Add(temp_X);
+
+                    var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                    var val2 = io * Math.Pow(Math.E, -1 * k * temp_X) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+
+                    var val = val1 + val2;
+                    y_val_temp.Add(val);
+                }
+                chart_peptide.Series["Series5"].Points.DataBindXY(x_val_temp.OrderBy(x => x).ToList(), y_val_temp.OrderByDescending(x => x).ToList());
+
+                #endregion
+
 
                 // chart title
                 //chart_peptide.Titles.Add(peptideSeq);    
