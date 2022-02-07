@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using v2.Helper;
@@ -190,25 +192,35 @@ namespace v2
                         var del_a_1_0 = al_a0_t - al_a0_t_0;
                         var del_a_2_0 = a2_a0_t - a2_a0_t_0;
 
-                        //var a = del_a_2_0 - (al_a0_t_0 * ph * del_a_1_0) - (al_a0_t * (1 - ph) * del_a_1_0) + 0.5 * ((-Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_1_0 * ((2 * ph - 1) / (1 - ph))));
-                        var a = del_a_2_0;
-                        a = a - (al_a0_t_0 * ph * del_a_1_0);
-                        a = a - (al_a0_t * (1 - ph) * del_a_1_0);
-                        a = a + 0.5 * (-1 * (Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_2_0 * ((2 * ph - 1) / (1 - ph))));
+                        //////var a = del_a_2_0 - (al_a0_t_0 * ph * del_a_1_0) - (al_a0_t * (1 - ph) * del_a_1_0) + 0.5 * ((-Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_1_0 * ((2 * ph - 1) / (1 - ph))));
+                        ////double a = del_a_2_0;
+                        ////a = a - (al_a0_t_0 * ph * del_a_1_0);
+                        ////a = a - (al_a0_t * (1 - ph) * del_a_1_0);
+                        ////a = a + 0.5 * (-1.0 * (Math.Pow(del_a_1_0, 2) * (2.0 * ph - 1.0)) + (del_a_1_0 * ((2.0 * ph - 1) / (1.0 - ph))));
 
 
-                        //var b = (-1 * del_a_2_0 * (1 - ph)) + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph)) + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0) +
-                        //    0.5 * ((Math.Pow(del_a_1_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
-                        var b = (-1 * del_a_2_0 * (1 - ph));
-                        b = b + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph));
-                        b = b + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0);
-                        b = b + 0.5 * ((Math.Pow(del_a_2_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
-                        
+                        //////var b = (-1 * del_a_2_0 * (1 - ph)) + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph)) + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0) +
+                        //////    0.5 * ((Math.Pow(del_a_1_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
+                        ////double b = (-1 * del_a_2_0 * (1 - ph));
+                        ////b = b + (al_a0_t_0 * ph * del_a_1_0 * 2.0 * (1 - ph));
+                        ////b = b + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0);
+                        ////b = b + 0.5 * (
+                        ////    (Math.Pow(del_a_1_0, 2) * (1 - ph) * (2 * ph - 1)) 
+                        ////    + (Math.Pow(del_a_1_0, 2) * 2.0 * ph * (1 - ph))
+                        ////    - (del_a_1_0 * 2.0 * ph)
+                        ////    );
+
+                        double n = -del_a_2_0 - 0.5 * Math.Pow(del_a_1_0, 2) + del_a_1_0 * al_a0_t;
+                        double d = -del_a_2_0 - 0.5 * Math.Pow(del_a_1_0, 2) + del_a_1_0 * al_a0_t + 0.5 * del_a_1_0;
+
+                        double c = -2 * del_a_2_0 - Math.Pow(del_a_1_0, 2) + 2 * del_a_1_0 * al_a0_t;
 
 
-                        var new_px_t = -b / a;
+                        //double new_px_t = -b / a;
+                        double new_px_t = n/d;
+                        double new_px_t2 = c / (c + del_a_1_0);
                         double I0_t_new_a2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (new_px_t / (1 - ph))), (double)NEH));
-                        er.I0_t_new_a2 = I0_t_new_a2;
+                        //er.I0_t_new_a2 = I0_t_new_a2;
 
 
 
@@ -432,6 +444,16 @@ namespace v2
         {
             temp_theoreticalI0Values = new List<TheoreticalI0Value>();
 
+            List<TheoreticalI0Value> target = new List<TheoreticalI0Value>();
+            List<RIA> label = new List<RIA>();
+
+            string targets = "";
+            string labels = "";
+
+            List<double> temp_timelist = new List<double>();
+            foreach (var t in experiment_time) temp_timelist.Add((double)t);
+
+
             //foreach (RateConstant r in rateConstants)
             foreach (Peptide r in this.peptides)
             {
@@ -471,6 +493,32 @@ namespace v2
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
                         //temp_expectedI0Values.AddRange(temp_computedRIAValue);
                         foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
+
+                        //===================================================
+                        //===================================================
+
+                        label.AddRange(temp_experimentalvalue);
+                        target.AddRange(temp_computedRIAValue.Distinct());
+
+                        //List<double> temp_timelist = new List<double>();
+                        //foreach (var t in temp_experimentalvalue) temp_timelist.Add((double)t.Time);
+
+                        var s = r.PeptideSeq + "," + RSquare.ToString() + "," + r.RMSE_value.ToString() + ",";
+                        foreach (var t in temp_timelist) s += t.ToString() + ",";
+                        //foreach (var l in temp_experimentalvalue.OrderBy(x => x.Time).ToList()) s += l.RIA_value + ",";
+                        foreach (var l in temp_timelist)
+                        {
+                            var val = temp_experimentalvalue.Where(x => x.Time == l).ToList();
+                            if (val.Count > 0) s += val.FirstOrDefault().RIA_value.ToString() + ",";
+                            else s += ",";
+                        }
+                        labels += (s.Substring(0, s.Length - 1)) + "\n";
+
+
+                        s = r.PeptideSeq + ",";
+                        foreach (var l in temp_computedRIAValue.Where(x => temp_timelist.Contains(x.time)).Distinct().ToList()) s += l.value + ",";
+                        targets += (s.Substring(0, s.Length - 1)) + "\n";
+
                     }
 
                     else
@@ -501,11 +549,62 @@ namespace v2
                         {
                             foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
                             //temp_expectedI0Values.AddRange(temp_computedRIAValue);
+
+                            //===================================================
+                            //===================================================
+
+                            //List<double> temp_timelist = new List<double>();
+                            //foreach (var t in temp_experimentalvalue) temp_timelist.Add((double)t.Time);
+
+                            label.AddRange(temp_experimentalvalue);
+                            target.AddRange(temp_computedRIAValue.Where(x => temp_timelist.Contains(x.time)).Distinct().ToList());
+
+                            var s = r.PeptideSeq + "," + RSquare.ToString() + "," + r.RMSE_value.ToString() + ",";
+                            foreach (var t in temp_timelist) s += t.ToString() + ",";
+
+                            //foreach (var l in temp_experimentalvalue.OrderBy(x => x.Time).ToList()) s += l.RIA_value + ",";
+                            foreach (var l in temp_timelist)
+                            {
+                                var val = temp_experimentalvalue.Where(x => x.Time == l).ToList();
+                                if (val.Count > 0) s += val.FirstOrDefault().RIA_value.ToString() + ",";
+                                else s += ",";
+                            }
+                            labels += (s.Substring(0, s.Length - 1)) + "\n";
+
+                            s = r.PeptideSeq + ",";
+                            foreach (var l in temp_computedRIAValue_withexperimentalIO.Where(x => temp_timelist.Contains(x.time)).Distinct().ToList()) s += l.value + ",";
+                            targets += (s.Substring(0, s.Length - 1)) + "\n";
+
                         }
                         else
                         {
                             //temp_expectedI0Values.AddRange(temp_computedRIAValue_withexperimentalIO);
                             foreach (var x in temp_computedRIAValue_withexperimentalIO) temp_theoreticalI0Values.Add(x);
+
+                            //===================================================
+                            //===================================================
+
+
+
+                            label.AddRange(temp_experimentalvalue);
+                            target.AddRange(temp_computedRIAValue_withexperimentalIO.Where(x => temp_timelist.Contains(x.time)).Distinct().ToList());
+
+                            var s = r.PeptideSeq + "," + RSquare.ToString() + "," + r.RMSE_value.ToString() + ",";
+                            foreach (var t in temp_timelist) s += t.ToString() + ",";
+
+                            //foreach (var l in temp_experimentalvalue.OrderBy(x => x.Time).ToList()) s += l.RIA_value + ",";
+                            foreach (var l in temp_timelist)
+                            {
+                                var val = temp_experimentalvalue.Where(x => x.Time == l).ToList();
+                                if (val.Count > 0) s += val.FirstOrDefault().RIA_value.ToString() + ",";
+                                else s += ",";
+                            }
+                            labels += (s.Substring(0, s.Length - 1)) + "\n";
+
+                            s = r.PeptideSeq + ",";
+                            foreach (var l in temp_computedRIAValue_withexperimentalIO.Where(x => temp_timelist.Contains(x.time)).Distinct().ToList()) s += l.value + ",";
+                            targets += (s.Substring(0, s.Length - 1)) + "\n";
+
                         }
 
                     }
@@ -519,7 +618,62 @@ namespace v2
             theoreticalI0Values = new List<TheoreticalI0Value>();
             theoreticalI0Values = temp_theoreticalI0Values;
 
+            //string csv = String.Join(",", target.Select(x => x.ToString()).ToArray());
+            //File.WriteLine("target.txt", csv);
+            WriteCSV2(target, "target.csv");
+
+            //TextWriter tw = new StreamWriter("target2.csv");
+            TextWriter tw = File.AppendText("target2.csv");
+
+            tw.WriteLine(targets);
+            tw.Close();
+
+            //tw = new StreamWriter("label2.csv");
+            tw = File.AppendText("label2.csv");
+            tw.WriteLine(labels);
+            tw.Close();
+
+            int numLines1 = labels.Split('\n').Length;
+            int numLines2 = targets.Split('\n').Length;
+
+            if (numLines1 != numLines2)
+            {
+                Console.WriteLine("error");
+            }
+
         }
+        public void WriteCSV<T>(IEnumerable<T> items, string path)
+        {
+            Type itemType = typeof(T);
+            var props = itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                .OrderBy(p => p.Name);
+
+            using (var writer = new StreamWriter(path))
+            {
+                writer.WriteLine(string.Join(", ", props.Select(p => p.Name)));
+
+                foreach (var item in items)
+                {
+                    writer.WriteLine(string.Join(", ", props.Select(p => p.GetValue(item, null))));
+                }
+            }
+        }
+
+        public void WriteCSV2(List<TheoreticalI0Value> items, string path)
+        {
+
+            TextWriter tw = new StreamWriter(path);
+            string fileContent = "peptideseq,charge,time,value\n";
+
+            foreach (var item in items)
+            {
+                fileContent += item.peptideseq + "," + item.charge + "," + item.time + "," + item.value + "\n";
+            }
+
+            tw.WriteLine(fileContent.Trim());
+            tw.Close();
+        }
+
         public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot()
         {
             List<double> xval = new List<double>();
