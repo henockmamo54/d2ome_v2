@@ -190,23 +190,31 @@ namespace v2
                         var del_a_1_0 = al_a0_t - al_a0_t_0;
                         var del_a_2_0 = a2_a0_t - a2_a0_t_0;
 
-                        //var a = del_a_2_0 - (al_a0_t_0 * ph * del_a_1_0) - (al_a0_t * (1 - ph) * del_a_1_0) + 0.5 * ((-Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_1_0 * ((2 * ph - 1) / (1 - ph))));
-                        var a = del_a_2_0;
-                        a = a - (al_a0_t_0 * ph * del_a_1_0);
-                        a = a - (al_a0_t * (1 - ph) * del_a_1_0);
-                        a = a + 0.5 * (-1 * (Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_2_0 * ((2 * ph - 1) / (1 - ph))));
+                        ////var a = del_a_2_0 - (al_a0_t_0 * ph * del_a_1_0) - (al_a0_t * (1 - ph) * del_a_1_0) + 0.5 * ((-Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_1_0 * ((2 * ph - 1) / (1 - ph))));
+                        //var a = del_a_2_0;
+                        //a = a - (al_a0_t_0 * ph * del_a_1_0);
+                        //a = a - (al_a0_t * (1 - ph) * del_a_1_0);
+                        //a = a + 0.5 * (-1 * (Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_2_0 * ((2 * ph - 1) / (1 - ph))));
 
 
-                        //var b = (-1 * del_a_2_0 * (1 - ph)) + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph)) + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0) +
-                        //    0.5 * ((Math.Pow(del_a_1_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
-                        var b = (-1 * del_a_2_0 * (1 - ph));
-                        b = b + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph));
-                        b = b + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0);
-                        b = b + 0.5 * ((Math.Pow(del_a_2_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
-                        
+                        ////var b = (-1 * del_a_2_0 * (1 - ph)) + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph)) + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0) +
+                        ////    0.5 * ((Math.Pow(del_a_1_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
+                        //var b = (-1 * del_a_2_0 * (1 - ph));
+                        //b = b + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph));
+                        //b = b + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0);
+                        //b = b + 0.5 * ((Math.Pow(del_a_2_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
 
+                        double c = a2_a0_t_0 - a2_a0_t - al_a0_t_0 * ((ph * NEH) / (1 - ph)) + (Math.Pow((ph / (1 - ph)), 2)) * (NEH * (NEH + 1)) * 0.5;
+                        double a = -0.5 * NEH * (NEH + 1);
+                        double b = NEH * al_a0_t;
 
-                        var new_px_t = -b / a;
+                        c = c + al_a0_t_0 - al_a0_t;
+                        b = b + (NEH / (1 - ph));
+
+                        double temp = Math.Sqrt((b * b) - 4 * a * c);
+                        double y = (-b + temp) / (2 * a);
+                        double new_px_t = (y * (1 + ph) - ph) / (1 + y);
+                        //var new_px_t = -b / a;
                         double I0_t_new_a2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (new_px_t / (1 - ph))), (double)NEH));
                         er.I0_t_new_a2 = I0_t_new_a2;
 
