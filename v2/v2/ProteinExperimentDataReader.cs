@@ -141,6 +141,8 @@ namespace v2
                 var experimentRecordsPerPeptide = this.experimentRecords.Where(p => p.PeptideSeq == peptide.PeptideSeq
                             & p.Charge == peptide.Charge).ToList();
 
+                Console.WriteLine("//////////////////////////////////////********************* " + peptide.PeptideSeq);
+
                 if (experimentRecordsPerPeptide.Count > 0)
                 {
                     var NEH = (double)peptide.Exchangeable_Hydrogens;
@@ -204,19 +206,73 @@ namespace v2
                         //b = b + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0);
                         //b = b + 0.5 * ((Math.Pow(del_a_2_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
 
+                        //=======================================
+                        //=======================================
+                        //=======================================
+                        // a2/a0
                         double c = a2_a0_t_0 - a2_a0_t - al_a0_t_0 * ((ph * NEH) / (1 - ph)) + (Math.Pow((ph / (1 - ph)), 2)) * (NEH * (NEH + 1)) * 0.5;
                         double a = -0.5 * NEH * (NEH + 1);
                         double b = NEH * al_a0_t;
 
+
+                        //=======================================
+                        //=======================================
+                        //=======================================
+                        // a2/a0 + a1/ao
                         c = c + al_a0_t_0 - al_a0_t;
                         b = b + (NEH / (1 - ph));
 
                         double temp = Math.Sqrt((b * b) - 4 * a * c);
                         double y = (-b + temp) / (2 * a);
                         double new_px_t = (y * (1 + ph) - ph) / (1 + y);
+
                         //var new_px_t = -b / a;
                         double I0_t_new_a2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (new_px_t / (1 - ph))), (double)NEH));
                         er.I0_t_new_a2 = I0_t_new_a2;
+
+
+                        var temp2 = a2_a0_t;
+                        var temp1 = al_a0_t;
+
+                        Console.WriteLine("======================================== " + er.ExperimentTime.ToString());
+
+                        var step = 0.001;
+                        List<double> testvals = new List<double>();
+
+                        List<double> temp2_t_list = new List<double>();
+                        List<double> temp1_t_list = new List<double>();
+                        List<double> neh_list = new List<double>();
+
+                        for (int i = 0; i * step < 0.06; i++)
+                        {
+                            for (int k = 0; k < 20; k++)
+                            {
+                                double px_t_new = step * i;
+                                double NEH_new = k; // ((1 - ph - px_t_new) / px_t_new) * del_a_1_0 * (1.0 - ph);
+
+                                var temp2_t = a2_a0_t_0 - (al_a0_t_0 * (ph * NEH_new) / (1 - ph)) +
+                                    (Math.Pow((ph / (1 - ph)), 2) * NEH_new * (NEH_new + 1) / 2) -
+                                   (Math.Pow((px_t_new + ph) / (1 - ph - px_t_new), 2) * NEH_new * (NEH_new + 1) / 2) +
+                                   (NEH_new * (px_t_new + ph) * al_a0_t / (1 - ph - px_t_new));
+
+                                var temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
+                                var way = ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
+
+                                var diff = Math.Abs(temp2 - temp2_t) + Math.Abs(temp1 - temp1_t); ;
+
+                                System.Console.WriteLine(i+","+k+","+diff);
+                                if (i != 0)
+                                {
+                                    testvals.Add(diff);
+                                    temp2_t_list.Add(temp2_t);
+                                    temp1_t_list.Add(temp1_t);
+                                    neh_list.Add(NEH_new);
+                                }
+                            }
+                        }
+                        Console.WriteLine("===================" + (testvals.Min().ToString()) + "=====================");
+
+
 
 
 
