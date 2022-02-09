@@ -263,7 +263,7 @@ namespace v2
                         double I0_t_new_a2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (new_px_t / (1 - ph))), (double)NEH));
                         er.I0_t_new_a2 = I0_t_new_a2;
 
-                        //Console.WriteLine("New Px_t " + peptide.PeptideSeq + " " + er.ExperimentTime.ToString() + " = " + new_px_t.ToString());
+                        //Console.WriteLine("New Px_t " + peptide.PeptideSeq + " " + er.ExperimentTime.ToString() + " = " + new_px_t.ToString());                       
 
                         #region varying pxt only
                         var temp2 = a2_a0_t;
@@ -327,11 +327,14 @@ namespace v2
                                 px_t_new = i * step;
                                 NEH_new = k;
 
+                                temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
+
                                 temp2_t = a2_a0_t_0 - (al_a0_t_0 * (ph * NEH_new) / (1 - ph)) +
                                    (Math.Pow((ph / (1 - ph)), 2) * NEH_new * (NEH_new + 1) / 2) -
                                   (Math.Pow((px_t_new + ph) / (1 - ph - px_t_new), 2) * NEH_new * (NEH_new + 1) / 2) +
                                   (NEH_new * (px_t_new + ph) * al_a0_t / (1 - ph - px_t_new));
-                                temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
+
+
                                 var diff = Math.Abs(temp2_t + temp1_t - temp2 - temp1);
                                 difflist.Add(diff);
                                 pxtlist.Add(px_t_new);
@@ -339,8 +342,8 @@ namespace v2
                                 fileval += (i * step + "," + k + "," + diff + "\n");
                             }
                         }
-                         minval = difflist.Min();
-                         minimumValueIndex = difflist.IndexOf(minval);
+                        minval = difflist.Min();
+                        minimumValueIndex = difflist.IndexOf(minval);
                         Console.WriteLine("==min==2  " + minval + " px = " + pxtlist[minimumValueIndex] + " NEH=" + NEHlist[minimumValueIndex]);
 
                         TextWriter tw = new StreamWriter(peptide.PeptideSeq + er.ExperimentTime.ToString() + ".csv");
@@ -348,6 +351,28 @@ namespace v2
                         tw.Close();
 
                         #endregion
+
+                        var test = ((-del_a_1_0 * del_a_1_0) / ((2 * del_a_2_0) + (del_a_1_0 * del_a_1_0) - (2 * del_a_1_0 * al_a0_t)));
+                        Console.WriteLine("temp test ======//*/*/*/*/======> " + test);
+
+                        //#region a3/a0
+
+                        //double sum_a3_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
+                        //double a3_a0_t = sum_a2_ao_t / sum_io_t;
+
+
+                        //var ph_px_const = (new_px_t + ph) / (1 - ph - new_px_t);
+                        //var a_t = binomialCoefficient(NEH_new, 3) * Math.Pow(ph_px_const, 3);
+                        //var b_t = binomialCoefficient(NEH_new, 2) * Math.Pow(ph_px_const, 2);
+                        //var c_t = NEH_new * ph_px_const;
+                        //var nt = 0;
+
+                        //var temp3_t = a_t + b_t * (al_a0_t - c_t);
+                        //temp3_t += c_t * (a2_a0_t - c_t * (al_a0_t - c_t) - b);
+                        //temp3_t += a3_a0_t - NEH_new * (ph / (1 - ph)) * (a2_a0_t_0 - (((NEH_new + 1) * 0.5 * ph) / (1 - ph)) * (al_a0_t_0 - ((nt * ph) / (1 - ph))) - 
+                        //    (3*nt*NEH_new+3*nt-NEH_new*NEH_new-3*NEH_new-2)*(Math.Pow(ph/1-ph,2))/6  );
+
+                        //#endregion
 
                         //////string fileval = "";
 
@@ -414,6 +439,17 @@ namespace v2
                 }
 
             }
+        }
+
+        public double binomialCoefficient(double N, int K)
+        {
+            double result = 1;
+            for (int i = 1; i <= K; i++)
+            {
+                result *= N - (K - i);
+                result /= i;
+            }
+            return result;
         }
         public void computeRIAPerExperiment()
         {
