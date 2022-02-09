@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -157,11 +158,43 @@ namespace v2
                     double sum_a2_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I2 / x.I0))).Value;
                     double a2_a0_t_0 = sum_a2_ao_t_0 / sum_io_t_0;
 
+                    //double n = 0;
+                    //double d = 0;
+                    //foreach (var er in experimentsAt_t_0)
+                    //{
+                    //    var tempsum = er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5;
+                    //    double sum_val = tempsum != null ? (double)(er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5) : 0;
+                    //    var ria = er.I0 / sum_val;
+
+                    //    n += (double)(ria * er.I0);
+                    //    d += (double)er.I0;
+                    //}
+
+                    //double io_0 = n / d;
+
+
+
                     foreach (ExperimentRecord er in experimentRecordsPerPeptide)
                     {
                         if (er.I0_t != null) continue;
                         var experimentsAt_t = experimentRecordsPerPeptide.Where(t => t.ExperimentTime == er.ExperimentTime & t.I0 != null & t.I0 > 0).ToList();
                         if (experimentsAt_t.Count == 0) continue;
+
+                        //n = 0;
+                        //d = 0;
+                        //foreach (var r in experimentsAt_t)
+                        //{
+                        //    var tempsum = r.I0 + r.I1 + r.I2 + r.I3 + r.I4 + r.I5;
+                        //    double sum_val = tempsum != null ? (double)(r.I0 + r.I1 + r.I2 + r.I3 + r.I4 + r.I5) : 0;
+                        //    var ria = er.I0 / sum_val;
+
+                        //    n += (double)(ria * r.I0);
+                        //    d += (double)r.I0;
+                        //}
+
+                        //double io_t = n / d;
+
+                        //var new_val = 1 - Math.Pow();
 
                         #region A1(t)/A0(t)
                         double sum_io_t = experimentsAt_t.Sum(x => x.I0).Value;
@@ -236,6 +269,8 @@ namespace v2
 
                         Console.WriteLine("======================================== " + er.ExperimentTime.ToString());
 
+                        string fileval = "";
+
                         var step = 0.001;
                         List<double> testvals = new List<double>();
 
@@ -245,22 +280,33 @@ namespace v2
 
                         for (int i = 0; i * step < 0.06; i++)
                         {
-                            for (int k = 0; k < 20; k++)
+                            for (int k = 0; k < 30; k++)
                             {
                                 double px_t_new = step * i;
                                 double NEH_new = k; // ((1 - ph - px_t_new) / px_t_new) * del_a_1_0 * (1.0 - ph);
 
+                                //var temp2_t = a2_a0_t_0 - (al_a0_t_0 * (ph * NEH_new) / (1 - ph)) +
+                                //    (Math.Pow((ph / (1 - ph)), 2) * NEH_new * (NEH_new + 1) / 2) -
+                                //   (Math.Pow((px_t_new + ph) / (1 - ph - px_t_new), 2) * NEH_new * (NEH_new + 1) / 2) +
+                                //   (NEH_new * (px_t_new + ph) * al_a0_t / (1 - ph - px_t_new));
+
+                                var temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
+
                                 var temp2_t = a2_a0_t_0 - (al_a0_t_0 * (ph * NEH_new) / (1 - ph)) +
                                     (Math.Pow((ph / (1 - ph)), 2) * NEH_new * (NEH_new + 1) / 2) -
                                    (Math.Pow((px_t_new + ph) / (1 - ph - px_t_new), 2) * NEH_new * (NEH_new + 1) / 2) +
-                                   (NEH_new * (px_t_new + ph) * al_a0_t / (1 - ph - px_t_new));
+                                   (NEH_new * (px_t_new + ph) * (temp1_t) / (1 - ph - px_t_new));
 
-                                var temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
                                 var way = ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
 
-                                var diff = Math.Abs(temp2 - temp2_t) + Math.Abs(temp1 - temp1_t); ;
+                                //var diff = Math.Abs(temp2 - temp2_t) + Math.Abs(temp1 - temp1_t); ;
+                                var diff = (temp2 - temp2_t) + (temp1 - temp1_t); ;
+                                //var diff = Math.Abs(temp2 - temp2_t) ;
+                                //var diff = Math.Abs(temp1 - temp1_t); ;
 
-                                System.Console.WriteLine(i+","+k+","+diff);
+                                //System.Console.WriteLine(i * step + "," + k + "," + diff);
+                                fileval += (i * step + "," + k + "," + diff + "\n");
+
                                 if (i != 0)
                                 {
                                     testvals.Add(diff);
@@ -272,7 +318,10 @@ namespace v2
                         }
                         Console.WriteLine("===================" + (testvals.Min().ToString()) + "=====================");
 
+                        TextWriter tw = new StreamWriter(peptide.PeptideSeq + er.ExperimentTime.ToString() + ".csv");
 
+                        tw.WriteLine(fileval.Trim());
+                        tw.Close();
 
 
 
