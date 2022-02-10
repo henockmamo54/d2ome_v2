@@ -319,13 +319,16 @@ namespace v2
                         var NEHlist = new List<double>();
                         fileval = "";
 
-                        step = 0.001;
-                        for (int k = 1; k < 35; k++)
+                        step = 0.01;
+                        //for (int k = 1; k < 35; k++)
                         {
-                            for (int i = 1; i * step < 0.06; i++)
+                            for (int i = 1; i * step <= 0.06; i++)
                             {
                                 px_t_new = i * step;
-                                NEH_new = k;
+                                NEH_new = Math.Round(((1 - ph - px_t) / px_t_new) * del_a_1_0 * (1 - ph));
+                                var k = NEH_new;
+
+                                if (k > 50) { /*Console.WriteLine("==neh>30== " + minval + " px = " + px_t_new + " neh="+k); */ continue; }
 
                                 temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
 
@@ -336,15 +339,24 @@ namespace v2
 
 
                                 var diff = Math.Abs(temp2_t + temp1_t - temp2 - temp1);
-                                difflist.Add(diff);
-                                pxtlist.Add(px_t_new);
-                                NEHlist.Add(k);
-                                fileval += (i * step + "," + k + "," + diff + "\n");
+
+
+                                if (diff < 0.1)
+                                {
+
+                                    difflist.Add(diff);
+                                    pxtlist.Add(px_t_new);
+                                    NEHlist.Add(k);
+                                    fileval += (i * step + "," + k + "," + diff + "\n");
+                                }
                             }
                         }
-                        minval = difflist.Min();
-                        minimumValueIndex = difflist.IndexOf(minval);
-                        Console.WriteLine("==min==2  " + minval + " px = " + pxtlist[minimumValueIndex] + " NEH=" + NEHlist[minimumValueIndex]);
+                        if (difflist.Count > 0)
+                        {
+                            minval = difflist.Min();
+                            minimumValueIndex = difflist.IndexOf(minval);
+                            Console.WriteLine("==min==2  " + minval + " px = " + pxtlist[minimumValueIndex] + " NEH=" + NEHlist[minimumValueIndex]);
+                        }
 
                         TextWriter tw = new StreamWriter(peptide.PeptideSeq + er.ExperimentTime.ToString() + ".csv");
                         tw.WriteLine(fileval.Trim());
@@ -352,8 +364,8 @@ namespace v2
 
                         #endregion
 
-                        var test = ((-del_a_1_0 * del_a_1_0) / ((2 * del_a_2_0) + (del_a_1_0 * del_a_1_0) - (2 * del_a_1_0 * al_a0_t)));
-                        Console.WriteLine("temp test ======//*/*/*/*/======> " + test);
+                        //var test = ((-del_a_1_0 * del_a_1_0) / ((2 * del_a_2_0) + (del_a_1_0 * del_a_1_0) - (2 * del_a_1_0 * al_a0_t)));
+                        //Console.WriteLine("temp test ======//*/*/*/*/======> " + test);
 
                         //#region a3/a0
 
