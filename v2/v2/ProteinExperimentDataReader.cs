@@ -263,13 +263,35 @@ namespace v2
                         double I0_t_new_a2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (new_px_t / (1 - ph))), (double)NEH));
                         er.I0_t_new_a2 = I0_t_new_a2;
 
-                        //Console.WriteLine("New Px_t " + peptide.PeptideSeq + " " + er.ExperimentTime.ToString() + " = " + new_px_t.ToString());                       
+                        //Console.WriteLine("New Px_t " + peptide.PeptideSeq + " " + er.ExperimentTime.ToString() + " = " + new_px_t.ToString());
+                        var computedNeh = ((1 - ph - new_px_t) / new_px_t) * del_a_1_0 * (1 - ph);
+                        Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH +
+                            " computedNeh = " + computedNeh);
+
+                        #endregion
+
+                        #region new trial
+                        //var k_const = del_a_1_0 * (1 - ph);
+                        //var new_a = -al_a0_t_0 * ph;
+                        //var new_b = -0.5 * k_const * k_const + k_const * al_a0_t - del_a_2_0;
+                        //var new_c = -0.5 * k_const * k_const;
+                        //var tempval = new_b * new_b - 4 * new_a * new_c;
+
+                        //if (tempval > 0)
+                        //{
+                        //    var s1 = (-new_b + Math.Sqrt(tempval)) / (2 * new_a);
+                        //    var s2 = (-new_b - Math.Sqrt(tempval)) / (2 * new_a);                            
+                        //    Console.WriteLine("*********************************************---------------," + tempval + (tempval >= 0) + " s1= " + s1 + " s2= " + s2);
+                        //}
+                        //var tempval = -(del_a_1_0 * del_a_1_0) / (2 * del_a_2_0 + del_a_1_0 * del_a_1_0 + 2 * del_a_1_0 * al_a0_t);
+                        //Console.WriteLine("*********************************************---------------, " + tempval);
+                        #endregion
 
                         #region varying pxt only
                         var temp2 = a2_a0_t;
                         var temp1 = al_a0_t;
 
-                        Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH);
+                        //Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH);
 
                         var px_t_new = new_px_t;
                         var NEH_new = NEH;
@@ -319,7 +341,7 @@ namespace v2
                         var NEHlist = new List<double>();
                         fileval = "";
 
-                        step = 0.01;
+                        step = 0.001;
                         //for (int k = 1; k < 35; k++)
                         {
                             for (int i = 1; i * step <= 0.06; i++)
@@ -327,8 +349,13 @@ namespace v2
                                 px_t_new = i * step;
                                 NEH_new = Math.Round(((1 - ph - px_t) / px_t_new) * del_a_1_0 * (1 - ph));
                                 var k = NEH_new;
-
                                 if (k > 50) { /*Console.WriteLine("==neh>30== " + minval + " px = " + px_t_new + " neh="+k); */ continue; }
+
+
+                                //NEH_new = k;
+                                //var tempc = NEH_new / (del_a_1_0 * (1 - ph));
+                                //px_t_new = (1 - ph) / (1 + c);
+                                //if (px_t_new > 0.05 | px_t_new < 0) continue;
 
                                 temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
 
@@ -341,13 +368,13 @@ namespace v2
                                 var diff = Math.Abs(temp2_t + temp1_t - temp2 - temp1);
 
 
-                                if (diff < 0.1)
+                                //if (diff < 0.1)
                                 {
 
                                     difflist.Add(diff);
                                     pxtlist.Add(px_t_new);
                                     NEHlist.Add(k);
-                                    fileval += (i * step + "," + k + "," + diff + "\n");
+                                    fileval += (px_t_new + "," + k + "," + diff + "\n");
                                 }
                             }
                         }
@@ -363,6 +390,8 @@ namespace v2
                         tw.Close();
 
                         #endregion
+
+
 
                         //var test = ((-del_a_1_0 * del_a_1_0) / ((2 * del_a_2_0) + (del_a_1_0 * del_a_1_0) - (2 * del_a_1_0 * al_a0_t)));
                         //Console.WriteLine("temp test ======//*/*/*/*/======> " + test);
@@ -441,8 +470,6 @@ namespace v2
                         //////tw.Close();
 
 
-
-                        #endregion
 
 
 
