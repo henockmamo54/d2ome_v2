@@ -198,9 +198,11 @@ namespace v2.Helper
 
                     Chart chart2 = preppare_chart();
 
-                    var selected = (from u in proteinExperimentData.peptides
-                                    where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
-                                    select u).Distinct().ToList();
+                    //var selected = (from u in proteinExperimentData.peptides
+                    //                where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
+                    //                select u).Distinct().ToList();
+                    var selected = proteinExperimentData.peptides;
+
                     int count = 1;
                     //foreach (Peptide p in proteinExperimentData.peptides)
                     foreach (Peptide p in selected)
@@ -229,11 +231,14 @@ namespace v2.Helper
                             chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
 
                             // set x axis chart interval
-                            chart2.ChartAreas[0].AxisX.Interval = (int)expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
-                            chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+                            if (x_val.Count > 0)
+                            {
+                                chart2.ChartAreas[0].AxisX.Interval = (int)expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                                chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+                            }
 
-                            chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
-                            chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+                            //chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
+                            //chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         }
 
@@ -247,12 +252,45 @@ namespace v2.Helper
                         Title title = new Title();
                         title.Font = new Font(chart2.Legends[0].Font.FontFamily, 8, System.Drawing.FontStyle.Bold);
                         //title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
-                        title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
+                        //title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
+                        try
+                        {
+                            if (p.Rateconst != null)
+                            {
+                                title.Text = p.PeptideSeq + " (k = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
+                            }
+                            else
+                            {
+                                title.Text = p.PeptideSeq + " (m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
+                            }
+                        }
+                        catch (Exception fex)
+                        {
+                            Console.WriteLine(fex.Message);
+                        }
+
                         chart2.Titles.Add(title);
 
-                        chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
+                        //chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
+                        //chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
+                        //chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+
+                        var max_y_list = new List<double>();
+                        foreach (var series in chart2.Series)
+                        {
+                            if (series.Points.Count > 0)
+                            {
+                                var maxvalue = series.Points.FindMaxByValue();
+                                if (maxvalue != null)
+                                    max_y_list.Add(maxvalue.YValues[0]);
+                            }
+                        }
+                        chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
+
                         chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+
+
 
                         bool exists = System.IO.Directory.Exists(outputpath);
                         if (!exists)
