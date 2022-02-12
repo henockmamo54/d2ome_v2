@@ -323,8 +323,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     WorkingDirectory = textBox_outputfolderpath.Text
                 };
                 // event handlers for output & error
-                p.OutputDataReceived += outputDataReceived;
-                p.ErrorDataReceived += errorDataReceived;
+                //p.OutputDataReceived += outputDataReceived;
+                //p.ErrorDataReceived += errorDataReceived;
 
                 p.EnableRaisingEvents = true;
                 p.Exited += P_Exited;
