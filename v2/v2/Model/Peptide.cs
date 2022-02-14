@@ -26,5 +26,8 @@ namespace v2.Model
         public double? RMSE_value { get; set; }
         public int Order { get; set; }
         public double? A0_average { get; set; }
+
+        public List<double> possibleNehs = new List<double>();
+        public List<List<double>> possibleI0s = new List<List<double>>();
     }
 }

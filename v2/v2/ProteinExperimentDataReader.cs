@@ -131,6 +131,14 @@ namespace v2
                 }
             }
         }
+
+        struct dataloader
+        {
+            public double neh;
+            public double ext;
+            public double error;
+        }
+
         public void computeDeuteriumenrichmentInPeptide()
         {
             // this function computes pX(t)
@@ -140,6 +148,9 @@ namespace v2
             double ph = 1.5574E-4;
             foreach (Peptide peptide in peptides)
             {
+                List<double> _neh_list = new List<double>();
+                List<dataloader> _dataErrorlist = new List<dataloader>();
+
                 var experimentRecordsPerPeptide = this.experimentRecords.Where(p => p.PeptideSeq == peptide.PeptideSeq
                             & p.Charge == peptide.Charge).ToList();
 
@@ -296,10 +307,14 @@ namespace v2
                         string newfileval = "pxt,neh,A3/A0 (Exp.),A3/A0 (Theo.),A2/A0 (Exp.),A2/A0 (Theo.),A1/A0 (Exp.),A1/A0 (Theo.),A3/A0 (Exp.)-A3/A0 (Theo.),A2/A0 (Exp.)-A2/A0 (Theo.),A1/A0 (Exp.)-A1/A0 (Theo.)\n";
                         //string newfileval = "pxt,neh,diff\n";
 
-                        for (int neh = 9; neh < 15; neh++)
+                        for (int neh = 1; neh < 45; neh++)
                         {
-                            for (float fBWE = (float)0.001; fBWE <= 0.06; fBWE = fBWE + (float)0.001)
+                            //for (float fBWE = (float)0.001; fBWE <= 0.06; fBWE = fBWE + (float)0.001)
                             {
+                                var tempc = neh / (del_a_1_0 * (1 - ph));
+                                float fBWE = (float)((float)(1.0 - ph) / (1.0 + tempc));
+                                if (fBWE > 0.05 | fBWE < 0) continue;
+
                                 //float fBWE = (float)(0.000 + (it - 1) * 0.35 / 100.0);
 
                                 int Nall_Hyd = 83;
@@ -316,8 +331,22 @@ namespace v2
                                 newfileval += (fBWE + "," + neh + "," + a3_a0_t + "," + new_a3_a0_t + "," + a2_a0_t + "," + new_a2_a0_t + "," + al_a0_t + "," + new_a1_a0_t + "," + a3diff + "," + a2diff + "," + a1diff + "\n");
                                 //newfileval += (fBWE + "," + neh + "," + (a3diff + a2diff + a1diff) + "\n");
 
+                                dataloader dl = new dataloader();
+                                dl.neh = neh;
+                                dl.ext = neh * fBWE;
+                                dl.error = Math.Abs(a2diff);
+                                _dataErrorlist.Add(dl);
+
                             }
                         }
+
+                        if (er.ExperimentTime != 0)
+                        {
+                            var best_neh = _dataErrorlist.OrderBy(re => re.error).Select(u => u.neh).ToList().Distinct().Take(15);
+                            _neh_list.AddRange(best_neh);
+
+                        }
+
                         TextWriter tw = new StreamWriter("_" + peptide.PeptideSeq + er.ExperimentTime.ToString() + ".csv");
                         tw.WriteLine(newfileval.Trim());
                         tw.Close();
@@ -330,7 +359,9 @@ namespace v2
                         var _b = 0.5 * (Math.Pow(ph / (1 - ph), 2));
                         var _a = -al_a0_t_0 * (ph / (1 - ph));
 
-                        var coeff = new double[] { 2 * _b, _a + _b, _d-_c * _c  , -0.5*_c * _c };
+                        //var coeff = new double[] { 2 * _b, _a + _b, _d-_c * _c  , -0.5*_c * _c };
+                        var coeff = new double[] { _b, _a, (-del_a_2_0 + _b - 0.5 * _c * _c + _d), -0.5 * _c * _c };
+
                         var sol = RealPolynomialRootFinder.FindRoots(coeff);
                         #endregion
 
@@ -526,8 +557,216 @@ namespace v2
                     }
 
                 }
+                _neh_list = _neh_list.Distinct().ToList();
+                peptide.possibleNehs = _neh_list;
+            }
+        }
+
+        public void computeDeuteriumenrichmentInPeptide2()
+        {
+
+            double ph = 1.5574E-4;
+            foreach (Peptide peptide in peptides)
+            {
+                var experimentRecordsPerPeptide = this.experimentRecords.Where(p => p.PeptideSeq == peptide.PeptideSeq
+                            & p.Charge == peptide.Charge).OrderBy(x => x.ExperimentTime).ToList();
+
+                if (experimentRecordsPerPeptide.Count > 0)
+                {
+
+
+                    foreach (var NEH in peptide.possibleNehs)
+                    {
+                        //var NEH = (double)peptide.Exchangeable_Hydrogens;
+
+                        List<double> possibleIOs = new List<double>();
+                        foreach (var t in experiment_time.Distinct().ToList()) possibleIOs.Add(Double.NaN);
+
+                        //experiments at t=0
+                        var experimentsAt_t_0 = experimentRecordsPerPeptide.Where(t => t.ExperimentTime == 0 & t.I0 != null & t.I0 > 0).ToList();
+                        double sum_io_t_0 = experimentsAt_t_0.Sum(x => x.I0).Value;
+
+                        double sum_a1_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I1 / x.I0))).Value;
+                        double al_a0_t_0 = sum_a1_ao_t_0 / sum_io_t_0;
+
+                        double sum_a2_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I2 / x.I0))).Value;
+                        double a2_a0_t_0 = sum_a2_ao_t_0 / sum_io_t_0;
+
+                        double sum_a3_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
+                        double a3_a0_t_0 = sum_a3_ao_t_0 / sum_io_t_0;
+
+                        List<int> experimentTime = new List<int>();
+                        foreach (ExperimentRecord er in experimentRecordsPerPeptide)
+                        {
+                            //if (er.I0_t != null) continue;
+                            if (experimentTime.Contains((int)er.ExperimentTime)) continue;
+                            else experimentTime.Add((int)er.ExperimentTime);
+
+                            var experimentsAt_t = experimentRecordsPerPeptide.Where(t => t.ExperimentTime == er.ExperimentTime & t.I0 != null & t.I0 > 0).ToList();
+                            if (experimentsAt_t.Count == 0) continue;
+
+                            #region A1(t)/A0(t)
+                            double sum_io_t = experimentsAt_t.Sum(x => x.I0).Value;
+                            double sum_a1_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I1 / x.I0))).Value;
+                            double al_a0_t = sum_a1_ao_t / sum_io_t;
+                            #endregion
+
+                            #region A2(t)/A1(t) 
+                            double sum_a2_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I2 / x.I0))).Value;
+                            double a2_a0_t = sum_a2_ao_t / sum_io_t;
+                            double sum_a3_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
+                            double a3_a0_t = sum_a3_ao_t / sum_io_t;
+
+                            var del_a_1_0 = al_a0_t - al_a0_t_0;
+                            var del_a_2_0 = a2_a0_t - a2_a0_t_0;
+
+                            //=======================================
+                            //=======================================
+                            //=======================================
+                            // a2/a0
+                            double c = a2_a0_t_0 - a2_a0_t - al_a0_t_0 * ((ph * NEH) / (1 - ph)) + (Math.Pow((ph / (1 - ph)), 2)) * (NEH * (NEH + 1)) * 0.5;
+                            double a = -0.5 * NEH * (NEH + 1);
+                            double b = NEH * al_a0_t;
+
+                            //=======================================
+                            //=======================================
+                            //=======================================
+                            // a2/a0 + a1/ao
+                            c = c + al_a0_t_0 - al_a0_t;
+                            b = b + (NEH / (1 - ph));
+
+                            double temp = Math.Sqrt((b * b) - 4 * a * c);
+                            double y = (-b + temp) / (2 * a);
+                            double new_px_t = (y * (1 + ph) - ph) / (1 + y);
+
+
+                            double I0_t_new_a2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (new_px_t / (1 - ph))), (double)NEH));
+
+                            var indexofdata = this.experiment_time.IndexOf((int)er.ExperimentTime);
+                            possibleIOs[indexofdata] = I0_t_new_a2;
+
+                            #endregion
+                            //er.I0_t_new_a2 = I0_t_new_a2;
+
+                            ////Console.WriteLine("New Px_t " + peptide.PeptideSeq + " " + er.ExperimentTime.ToString() + " = " + new_px_t.ToString());
+                            //var computedNeh = ((1 - ph - new_px_t) / new_px_t) * del_a_1_0 * (1 - ph);
+                            //Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH +
+                            //    " computedNeh = " + computedNeh + " , " + (new_px_t * NEH));
+
+                        }
+
+                        peptide.possibleI0s.Add(possibleIOs);
+
+                    }
+                }
+            }
+        }
+
+        public void getBestNehValue()
+        {
+
+
+            foreach (Peptide r in this.peptides)
+            {
+                var rsqs = new List<double>();
+
+                //for (int uy = 0; uy < r.possibleNehs.Count(); uy++)
+                foreach (var possibleI0s in r.possibleI0s)
+                {
+                    try
+                    {
+                        //var experimentalvalue = mergedRIAvalues.Where(x => x.Charge == r.Charge).ToList();
+                        //experimentalvalue = experimentalvalue.Where(x => x.PeptideSeq == r.PeptideSeq).ToList();
+                        //var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
+
+
+                        var temp_experimentalvalue = possibleI0s.ToList();
+                        var meanval_ria = temp_experimentalvalue.Where(x => x >= 0).ToList().Average();
+
+                        var temp_computedRIAValue = theoreticalI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
+                        var temp_computedRIAValue_withexperimentalIO = theoreticalI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
+
+                        if (temp_computedRIAValue_withexperimentalIO.Count == 0)
+                        {
+
+                            double ss = 0;
+                            double rss = 0;
+
+                            for (int t = 0; t < experiment_time.Count(); t++)
+                            {
+                                try
+                                {
+                                    var computedRIAValue = temp_computedRIAValue.Where(x => x.time == experiment_time[t]).First().value;
+                                    if (Double.IsNaN(temp_experimentalvalue[t])) continue;
+                                    ss = ss + Math.Pow((double)(temp_experimentalvalue[t] - meanval_ria), 2);
+                                    rss = rss + Math.Pow((double)(temp_experimentalvalue[t] - computedRIAValue), 2);
+                                }
+                                catch (Exception exx) { continue; }
+                            }
+
+                            double RSquare = 1 - (rss / ss);
+                            //r.RSquare = RSquare;
+                            //r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
+                            rsqs.Add(RSquare);
+                            ////temp_expectedI0Values.AddRange(temp_computedRIAValue);
+                            //foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
+                        }
+
+                        else
+                        {
+                            double ss = 0;
+                            double rss_mo = 0;
+                            double rss_io = 0;
+
+                            for (int t = 0; t < experiment_time.Count(); t++)
+                            {
+                                try
+                                {
+                                    var computedRIAValue_mo = temp_computedRIAValue.Where(x => x.time == experiment_time[t]).First().value;
+                                    var computedRIAValue_io = temp_computedRIAValue_withexperimentalIO.Where(x => x.time == experiment_time[t]).First().value;
+                                    if (Double.IsNaN(temp_experimentalvalue[t])) continue;
+                                    else
+                                    {
+                                        ss = ss + Math.Pow((double)(temp_experimentalvalue[t] - meanval_ria), 2);
+                                        rss_mo = rss_mo + Math.Pow((double)(temp_experimentalvalue[t] - computedRIAValue_mo), 2);
+                                        rss_io = rss_io + Math.Pow((double)(temp_experimentalvalue[t] - computedRIAValue_io), 2);
+                                    }
+                                }
+                                catch (Exception ex) { continue; }
+                            }
+
+                            var rss = rss_mo < rss_io ? rss_mo : rss_io;
+                            double RSquare = 1 - (rss / ss);
+                            //r.RSquare = RSquare;
+                            //r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
+                            rsqs.Add(RSquare);
+
+                            //if (rss_mo < rss_io)
+                            //{
+                            //    foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
+                            //    //temp_expectedI0Values.AddRange(temp_computedRIAValue);
+                            //}
+                            //else
+                            //{
+                            //    //temp_expectedI0Values.AddRange(temp_computedRIAValue_withexperimentalIO);
+                            //    foreach (var x in temp_computedRIAValue_withexperimentalIO) temp_theoreticalI0Values.Add(x);
+                            //}
+
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error => computeRSquare(), " + e.Message);
+                    }
+                }
+
+                Console.WriteLine("********************4$$$$$$$$$$$$$$$$$$$$$$$$$$ " + rsqs.Max() + ", " + r.possibleNehs[rsqs.IndexOf(rsqs.Max())]);
 
             }
+
+
+
+
         }
 
         public double binomialCoefficient(double N, int K)
