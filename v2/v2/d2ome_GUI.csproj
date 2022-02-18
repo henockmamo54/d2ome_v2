@@ -9,9 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>v2</RootNamespace>
     <AssemblyName>v2</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,9 +41,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\IsotopePeaks.dll</HintPath>
     </Reference>
-    <Reference Include="IsotopomerDynamics, Version=1.0.8031.26607, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\IsotopomerDynamics.dll</HintPath>
+    <Reference Include="IsotopomerDynamics">
+      <HintPath>..\..\..\IsotopomerDynamics\x64\Debug\IsotopomerDynamics.dll</HintPath>
     </Reference>
     <Reference Include="lbfgs_caller, Version=1.0.6586.26314, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>

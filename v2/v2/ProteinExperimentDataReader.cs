@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using v2.Helper;
 using v2.Model;
 using static v2.Helper.ReadFilesInfo_txt;
@@ -289,11 +287,7 @@ namespace v2
                         Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH +
                             " computedNeh = " + computedNeh + " , " + (new_px_t * NEH)
                             );
-                        var tempexp = (new_px_t * NEH);
-                        var pp = 1 - ph - (tempexp / (del_a_1_0 * (1 - ph)));
-                        var nehp = tempexp / pp;
-
-                        Console.WriteLine("WTF PX= " + pp.ToString() + " nehp= " + nehp.ToString() + " ** =" + (pp * nehp).ToString());
+                        
                         #endregion
 
                         #region new trial with MassIsotopomers dll
@@ -318,7 +312,9 @@ namespace v2
                         List<string> newfileval_list = new List<string>();
 
 
-                        int Nall_Hyd = 128;
+                        int Nall_Hyd=MIDyn.NumberOfHydrogens(peptide.PeptideSeq);
+                        //int Nall_Hyd = 128;
+
                         if (peptide.PeptideSeq == "VTVLEGDILDTQYLR")
                             Nall_Hyd = 128;
                         else if (peptide.PeptideSeq == "QTILDVNLK")
