@@ -170,7 +170,7 @@ namespace v2
 
                     double sum_a3_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
                     double a3_a0_t_0 = sum_a3_ao_t_0 / sum_io_t_0;
-                    
+
                     double sum_a4_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I4 / x.I0))).Value;
                     double a4_a0_t_0 = sum_a4_ao_t_0 / sum_io_t_0;
 
@@ -214,7 +214,11 @@ namespace v2
 
                         #region A1(t)/A0(t)
                         double sum_io_t = experimentsAt_t.Sum(x => x.I0).Value;
-                        double sum_a1_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I1 / x.I0))).Value;
+
+                        double sum_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I0 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
+                        double a0_t = sum_ao_t / sum_io_t;
+
+                        double sum_a1_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I1 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
                         double al_a0_t = sum_a1_ao_t / sum_io_t;
 
                         var k_t = (1 / NEH) * (al_a0_t - al_a0_t_0);
@@ -235,13 +239,13 @@ namespace v2
 
                         #region A2(t)/A1(t) 
 
-                        double sum_a2_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I2 / x.I0))).Value;
+                        double sum_a2_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I2 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
                         double a2_a0_t = sum_a2_ao_t / sum_io_t;
 
-                        double sum_a3_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
+                        double sum_a3_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I3 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
                         double a3_a0_t = sum_a3_ao_t / sum_io_t;
 
-                        double sum_a4_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I4 / x.I0))).Value;
+                        double sum_a4_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I4 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
                         double a4_a0_t = sum_a4_ao_t / sum_io_t;
 
                         var del_a_1_0 = al_a0_t - al_a0_t_0;
@@ -293,7 +297,7 @@ namespace v2
                         Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH +
                             " computedNeh = " + computedNeh + " , " + (new_px_t * NEH)
                             );
-                        
+
                         #endregion
 
                         #region new trial with MassIsotopomers dll
@@ -318,7 +322,7 @@ namespace v2
                         List<string> newfileval_list = new List<string>();
 
 
-                        int Nall_Hyd=MIDyn.NumberOfHydrogens(peptide.PeptideSeq);
+                        int Nall_Hyd = MIDyn.NumberOfHydrogens(peptide.PeptideSeq);
                         //int Nall_Hyd = 128;
 
                         if (peptide.PeptideSeq == "VTVLEGDILDTQYLR")
@@ -334,9 +338,9 @@ namespace v2
                         else if (peptide.PeptideSeq == "AVLAANGSMLK")
                             Nall_Hyd = 84;
 
-                        for (double neh = 1; neh < 45; neh = neh + 0.1)
+                        for (double neh = 1; neh < 45; neh = neh + 1)
                         {
-                            //for (float fBWE = (float)0.001; fBWE <= 0.06; fBWE = fBWE + (float)0.001)
+                            for (float fBWE = (float)0.001; fBWE <= 0.06; fBWE = fBWE + (float)0.001)
                             //for (float fBWE = (float)0.03; fBWE <= 0.04; fBWE = fBWE + (float)0.001)
                             {
                                 //var tempc = neh / (del_a_1_0 * (1 - ph));
@@ -344,19 +348,27 @@ namespace v2
                                 //if (fBWE > 0.05 | fBWE < 0) continue;
 
                                 //float fBWE = (float)(0.000 + (it - 1) * 0.35 / 100.0);
-                                float fBWE = (float)(0.0335);
+                                //float fBWE = (float)(0.0335);
 
                                 MIDyn.CalculateMIDynamics(fNatIsotopes, fLabIsotopes, fBWE, (float)neh, Nall_Hyd);
 
-                                var new_a3_a0_t = fLabIsotopes[3] / fLabIsotopes[0];
-                                var new_a2_a0_t = fLabIsotopes[2] / fLabIsotopes[0];
-                                var new_a1_a0_t = fLabIsotopes[1] / fLabIsotopes[0];
+                                //var new_a3_a0_t = fLabIsotopes[3] / fLabIsotopes[0];
+                                //var new_a2_a0_t = fLabIsotopes[2] / fLabIsotopes[0];
+                                //var new_a1_a0_t = fLabIsotopes[1] / fLabIsotopes[0];
+
+                                var new_a4_a0_t = fLabIsotopes[4] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3] + fLabIsotopes[4]);
+                                var new_a3_a0_t = fLabIsotopes[3] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3] + fLabIsotopes[4]);
+                                var new_a2_a0_t = fLabIsotopes[2] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3] + fLabIsotopes[4]);
+                                var new_a1_a0_t = fLabIsotopes[1] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3] + fLabIsotopes[4]);
+                                var new_a0_t = fLabIsotopes[0] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3] + fLabIsotopes[4]);
 
                                 var a3diff = new_a3_a0_t - a3_a0_t; var a3diff_s = a3diff * a3diff;
                                 var a2diff = new_a2_a0_t - a2_a0_t; var a2diff_s = a2diff * a2diff;
                                 var a1diff = new_a1_a0_t - al_a0_t; var a1diff_s = a1diff * a1diff;
+                                var a0diff = new_a0_t - a0_t; var a0diff_s = a0diff * a0diff;
 
-                                var a1a2a3s = a3diff_s + a2diff_s + a1diff_s;
+                                var a1a2a3s = a3diff_s + a2diff_s + a1diff_s+ a0diff_s;
+
                                 var a1a2a3abs = Math.Abs(a3diff + a2diff + a1diff);
 
                                 var a1a2a3s_421 = 4 * a3diff_s + 2 * a2diff_s + a1diff_s;
