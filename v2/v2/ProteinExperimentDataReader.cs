@@ -170,6 +170,9 @@ namespace v2
 
                     double sum_a3_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
                     double a3_a0_t_0 = sum_a3_ao_t_0 / sum_io_t_0;
+                    
+                    double sum_a4_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I4 / x.I0))).Value;
+                    double a4_a0_t_0 = sum_a4_ao_t_0 / sum_io_t_0;
 
                     //double n = 0;
                     //double d = 0;
@@ -237,6 +240,9 @@ namespace v2
 
                         double sum_a3_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
                         double a3_a0_t = sum_a3_ao_t / sum_io_t;
+
+                        double sum_a4_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I4 / x.I0))).Value;
+                        double a4_a0_t = sum_a4_ao_t / sum_io_t;
 
                         var del_a_1_0 = al_a0_t - al_a0_t_0;
                         var del_a_2_0 = a2_a0_t - a2_a0_t_0;
@@ -328,7 +334,7 @@ namespace v2
                         else if (peptide.PeptideSeq == "AVLAANGSMLK")
                             Nall_Hyd = 84;
 
-                        for (double neh = 1; neh < 45; neh = neh + 1)
+                        for (double neh = 1; neh < 45; neh = neh + 0.1)
                         {
                             //for (float fBWE = (float)0.001; fBWE <= 0.06; fBWE = fBWE + (float)0.001)
                             //for (float fBWE = (float)0.03; fBWE <= 0.04; fBWE = fBWE + (float)0.001)
@@ -340,7 +346,7 @@ namespace v2
                                 //float fBWE = (float)(0.000 + (it - 1) * 0.35 / 100.0);
                                 float fBWE = (float)(0.0335);
 
-                                MIDyn.CalculateMIDynamics(fNatIsotopes, fLabIsotopes, fBWE, (int)neh, Nall_Hyd);
+                                MIDyn.CalculateMIDynamics(fNatIsotopes, fLabIsotopes, fBWE, (float)neh, Nall_Hyd);
 
                                 var new_a3_a0_t = fLabIsotopes[3] / fLabIsotopes[0];
                                 var new_a2_a0_t = fLabIsotopes[2] / fLabIsotopes[0];
@@ -403,7 +409,7 @@ namespace v2
 
 
 
-                        TextWriter tw = new StreamWriter("_" + peptide.PeptideSeq + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
+                        TextWriter tw = new StreamWriter("test/_" + peptide.PeptideSeq + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
                         tw.WriteLine(newfileval.Trim());
                         foreach (var l in newfileval_list)
                             tw.WriteLine(l.Trim());
