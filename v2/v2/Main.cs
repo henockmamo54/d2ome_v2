@@ -846,6 +846,26 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 #endregion
 
+                chart_peptide.Series["Series1"].ToolTip = "test";
+                foreach (var point in chart_peptide.Series["Series1"].Points)
+                {
+
+                    var exper = proteinExperimentData.experimentRecords.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).ToList();
+                    var ernames = exper.Select(x => x.ExperimentName).Distinct().ToList();
+
+                    string tooltip = "";
+                    foreach (var er in ernames)
+                    {
+                        var exper_l2 = exper.Where(x => x.ExperimentName == er).ToList();
+                        foreach (var er2 in exper_l2)
+                        {
+                            tooltip += er + "\tI0 = " + er2.I0.ToString().PadLeft(9,' ') + "\tI1 = " + er2.I1.ToString().PadLeft(9, ' ') + "\tI2 = " + er2.I2.ToString().PadLeft(9, ' ') + "\tI3 = " + er2.I3.ToString().PadLeft(9, ' ') + "\tI4 = " + er2.I4.ToString().PadLeft(9, ' ') + "\tI5 = " + er2.I5.ToString().PadLeft(9, ' ') + "\n";
+                        }
+                    }
+
+                    point.ToolTip = tooltip;
+                }
+
                 /*
                 #region temp 
                 List<double> x_val_temp = new List<double>();

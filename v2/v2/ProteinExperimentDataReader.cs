@@ -22,7 +22,7 @@ namespace v2
 
         // properties from Protein.quant.csv 
         public List<Peptide> peptides = new List<Peptide>();
-        List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
+        public List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
 
         // propeties from Protein.Rateconst.csv
         public List<RateConstant> rateConstants = new List<RateConstant>();
