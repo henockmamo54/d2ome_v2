@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -851,52 +852,24 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 {
 
                     var exper = proteinExperimentData.experimentRecords.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).ToList();
+                    if (exper.Count == 0) continue;
                     var ernames = exper.Select(x => x.ExperimentName).Distinct().ToList();
 
-                    string tooltip = "";
+                    //string tooltip = "Experiment".ToString().PadLeft(60, ' ') + "\tI0".PadLeft(9, ' ') + "\tI1".ToString().PadLeft(9, ' ') + "\tI2".ToString().PadLeft(9, ' ') + "\tI3".ToString().PadLeft(9, ' ') + "\tI4".ToString().PadLeft(9, ' ') + "\tI5".ToString().PadLeft(9, ' ') + "\n";
+                    string tooltip = "Experiment".PadRight(ernames.Last().Length, '_') + "\t\t" + "I0".PadLeft(8, ' ') + "\t\t" + "I1".PadLeft(8, ' ') + "\t\t" + "I2".PadLeft(8, ' ') + "\t\t" + "I3".PadLeft(8, ' ') + "\t\t" + "I4".PadLeft(8, ' ') + "\t\t" + "I5".PadLeft(8, ' ') + "\n";
+
                     foreach (var er in ernames)
                     {
                         var exper_l2 = exper.Where(x => x.ExperimentName == er).ToList();
                         foreach (var er2 in exper_l2)
                         {
-                            tooltip += er + "\tI0 = " + er2.I0.ToString().PadLeft(9,' ') + "\tI1 = " + er2.I1.ToString().PadLeft(9, ' ') + "\tI2 = " + er2.I2.ToString().PadLeft(9, ' ') + "\tI3 = " + er2.I3.ToString().PadLeft(9, ' ') + "\tI4 = " + er2.I4.ToString().PadLeft(9, ' ') + "\tI5 = " + er2.I5.ToString().PadLeft(9, ' ') + "\n";
+                            tooltip += er + "\t\t" + string.Format("{0:#.##E+0}", er2.I0).PadLeft(8, ' ') + "\t\t" + string.Format("{0:#.##E+0}", er2.I1).PadLeft(8, ' ') + "\t\t" + string.Format("{0:#.##E+0}", er2.I2).PadLeft(8, ' ') + "\t\t" + string.Format("{0:#.##E+0}", er2.I3).PadLeft(8, ' ') + "\t\t" + string.Format("{0:#.##E+0}", er2.I4).PadLeft(8, ' ') + "\t\t" + string.Format("{0:#.##E+0}", er2.I5).PadLeft(8, ' ') + "\n";
+
                         }
                     }
-
                     point.ToolTip = tooltip;
                 }
 
-                /*
-                #region temp 
-                List<double> x_val_temp = new List<double>();
-                List<double> y_val_temp = new List<double>();
-
-                // add additional data points to make the graph smooth
-                var pep = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).FirstOrDefault();
-                double io = (double)(pep.M0 / 100);
-                double neh = (double)(pep.Exchangeable_Hydrogens);
-                double k = (double)(pep.Rateconst);
-                double ph = 1.5574E-4;
-                double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
-
-                var temp_maxval = proteinExperimentData.experiment_time.Max();
-                //var step = 0.1;
-                var step = 0.01;
-                for (int i = 0; i * step < temp_maxval; i++)
-                {
-                    double temp_X = step * i;
-                    x_val_temp.Add(temp_X);
-
-                    var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
-                    var val2 = io * Math.Pow(Math.E, -1 * k * temp_X) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
-
-                    var val = val1 + val2;
-                    y_val_temp.Add(val);
-                }
-                chart_peptide.Series["Series5"].Points.DataBindXY(x_val_temp.OrderBy(x => x).ToList(), y_val_temp.OrderByDescending(x => x).ToList());
-
-                #endregion
-                */
 
                 // chart title
                 //chart_peptide.Titles.Add(peptideSeq);    
@@ -915,6 +888,42 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             }
 
         }
+
+        public string HTMLToText(string HTMLCode)
+        {
+            // Remove new lines since they are not visible in HTML
+            HTMLCode = HTMLCode.Replace("\n", " ");
+            // Remove tab spaces
+            HTMLCode = HTMLCode.Replace("\t", " ");
+            // Remove multiple white spaces from HTML
+            HTMLCode = Regex.Replace(HTMLCode, "\\s+", " ");
+            // Remove HEAD tag
+            HTMLCode = Regex.Replace(HTMLCode, "<head.*?</head>", ""
+                                , RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            // Remove any JavaScript
+            HTMLCode = Regex.Replace(HTMLCode, "<script.*?</script>", ""
+              , RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            // Replace special characters like &, <, >, " etc.
+            StringBuilder sbHTML = new StringBuilder(HTMLCode);
+            // Note: There are many more special characters, these are just
+            // most common. You can add new characters in this arrays if needed
+            string[] OldWords = {"&nbsp;", "&amp;", "&quot;", "&lt;",
+    "&gt;", "&reg;", "&copy;", "&bull;", "&trade;","&#39;"};
+            string[] NewWords = { " ", "&", "\"", "<", ">", "Â®", "Â©", "â€¢", "â„¢", "\'" };
+            for (int i = 0; i < OldWords.Length; i++)
+            {
+                sbHTML.Replace(OldWords[i], NewWords[i]);
+            }
+            // Check if there are line breaks (<br>) or paragraph (<p>)
+            sbHTML.Replace("<br>", "\n<br>");
+            sbHTML.Replace("<br ", "\n<br ");
+            sbHTML.Replace("<p ", "\n<p ");
+            // Finally, remove all HTML tags and return plain text
+            return System.Text.RegularExpressions.Regex.Replace(
+              sbHTML.ToString(), "<[^>]*>", "");
+
+        }
+
         public bool exportChart(string path, string name)
         {
 

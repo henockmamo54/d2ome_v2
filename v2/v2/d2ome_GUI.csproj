@@ -92,6 +92,9 @@
     </Compile>
     <Compile Include="FormLoader.cs" />
     <Compile Include="Helper\BasicFunctions.cs" />
+    <Compile Include="Helper\CustomTooltip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Helper\ExportAllProteinsData.cs" />
     <Compile Include="Helper\PolynomialRootFinder.cs" />
     <Compile Include="Helper\ReadExperiments.cs" />
