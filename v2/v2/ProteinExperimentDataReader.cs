@@ -170,7 +170,7 @@ namespace v2
 
                     double sum_a3_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
                     double a3_a0_t_0 = sum_a3_ao_t_0 / sum_io_t_0;
-                    
+
                     double sum_a4_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I4 / x.I0))).Value;
                     double a4_a0_t_0 = sum_a4_ao_t_0 / sum_io_t_0;
 
@@ -293,7 +293,7 @@ namespace v2
                         Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH +
                             " computedNeh = " + computedNeh + " , " + (new_px_t * NEH)
                             );
-                        
+
                         #endregion
 
                         #region new trial with MassIsotopomers dll
@@ -310,7 +310,7 @@ namespace v2
                         MassIsotopomers MIDyn = new MassIsotopomers();
 
                         string newfileval = "px(t),NEH,A3/A0 (Exp.),A3/A0 (Theo.),A2/A0 (Exp.),A2/A0 (Theo.),A1/A0 (Exp.),A1/A0 (Theo.),A3/A0 (Exp.)-A3/A0 (Theo.),A2/A0 (Exp.)-A2/A0 (Theo.),A1/A0 (Exp.)-A1/A0 (Theo.)," +
-                            " SSE, ABS(SE), E(t), px(t)_f,NEH_f, \u0394A10, SSE_421,SSE_211,SSE_221," +
+                            "SSE, ABS(SE), E(t), px(t)_f,NEH_f, \u0394A10, SSE_421,SSE_211,SSE_221," +
                             "SSE_212 ,SSE_511 ,SSE_531,SSE_532,SSE_732," +
                             "SSE_242 , SSE_261 , SSE_241," +
                             "SSE_224 , SSE_216 , SSE_124  \n";
@@ -318,7 +318,7 @@ namespace v2
                         List<string> newfileval_list = new List<string>();
 
 
-                        int Nall_Hyd=MIDyn.NumberOfHydrogens(peptide.PeptideSeq);
+                        int Nall_Hyd = MIDyn.NumberOfHydrogens(peptide.PeptideSeq);
                         //int Nall_Hyd = 128;
 
                         if (peptide.PeptideSeq == "VTVLEGDILDTQYLR")
@@ -344,7 +344,29 @@ namespace v2
                                 //if (fBWE > 0.05 | fBWE < 0) continue;
 
                                 //float fBWE = (float)(0.000 + (it - 1) * 0.35 / 100.0);
-                                float fBWE = (float)(0.0335);
+                                //float fBWE = (float)(0.0335);
+
+                                //var tempc = neh / (del_a_1_0 * (1 - ph));
+                                //float fBWE = (float)((1.0 - ph) / (1.0 + tempc));
+
+                                c = a2_a0_t_0 - a2_a0_t - al_a0_t_0 * ((ph * NEH) / (1 - ph)) + (Math.Pow((ph / (1 - ph)), 2)) * (NEH * (NEH + 1)) * 0.5;
+                                a = -0.5 * NEH * (NEH + 1);
+                                b = NEH * al_a0_t;
+
+
+                                //=======================================
+                                //=======================================
+                                //=======================================
+                                // a2/a0 + a1/ao
+                                c = c + al_a0_t_0 - al_a0_t;
+                                b = b + (NEH / (1 - ph));
+
+                                temp = Math.Sqrt((b * b) - 4 * a * c);
+                                y = (-b + temp) / (2 * a);
+                                new_px_t = (y * (1 + ph) - ph) / (1 + y);
+                                float fBWE = (float)new_px_t;
+
+
 
                                 MIDyn.CalculateMIDynamics(fNatIsotopes, fLabIsotopes, fBWE, (float)neh, Nall_Hyd);
 
@@ -356,7 +378,8 @@ namespace v2
                                 var a2diff = new_a2_a0_t - a2_a0_t; var a2diff_s = a2diff * a2diff;
                                 var a1diff = new_a1_a0_t - al_a0_t; var a1diff_s = a1diff * a1diff;
 
-                                var a1a2a3s = a3diff_s + a2diff_s + a1diff_s;
+                                //var a1a2a3s = a3diff_s + a2diff_s + a1diff_s;
+                                var a1a2a3s = a2diff_s + a1diff_s;
                                 var a1a2a3abs = Math.Abs(a3diff + a2diff + a1diff);
 
                                 var a1a2a3s_421 = 4 * a3diff_s + 2 * a2diff_s + a1diff_s;
@@ -409,7 +432,8 @@ namespace v2
 
 
 
-                        TextWriter tw = new StreamWriter("test/_" + peptide.PeptideSeq + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
+                        //TextWriter tw = new StreamWriter("test/_" + peptide.PeptideSeq + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
+                        TextWriter tw = new StreamWriter("F:/workplace/d2ome_v2/v2/v2/bin/Debug/test/_" + peptide.PeptideSeq + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
                         tw.WriteLine(newfileval.Trim());
                         foreach (var l in newfileval_list)
                             tw.WriteLine(l.Trim());
