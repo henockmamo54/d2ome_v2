@@ -191,7 +191,7 @@ namespace v2.Helper
             return chart2;
         }
 
-        public void computeDeuteriumenrichmentInPeptide(List<Peptide> selected,List<ExperimentRecord> experimentRecords,string outputpath)
+        public void computeDeuteriumenrichmentInPeptide(List<Peptide> selected, List<ExperimentRecord> experimentRecords, string outputpath)
         {
             // this function computes pX(t)
             // which is the deuterium enrichment in a peptide from the heavy water at the
@@ -470,7 +470,7 @@ namespace v2.Helper
                                     + "," + a1a2a3s_212 + "," + a1a2a3s_511 + "," + a1a2a3s_531 + "," + a1a2a3s_532 + "," + a1a2a3s_732
                                     + "," + a1a2a3s_242 + "," + a1a2a3s_261 + "," + a1a2a3s_241
                                     + "," + a1a2a3s_224 + "," + a1a2a3s_216 + "," + a1a2a3s_124
-                                    + "," + peptide.Exchangeable_Hydrogens + "," + peptide.RSquare + "," + peptide.A0_average 
+                                    + "," + peptide.Exchangeable_Hydrogens + "," + peptide.RSquare + "," + peptide.A0_average
                                     + "\n");
                                 //newfileval += (fBWE + "," + neh + "," + a3_a0_t + "," + new_a3_a0_t + "," + a2_a0_t + "," + new_a2_a0_t + "," + al_a0_t + "," + new_a1_a0_t + "," + a3diff + "," + a2diff + "," + a1diff + "\n");
                                 //newfileval += (fBWE + "," + neh + "," + (a3diff + a2diff + a1diff) + "\n");
@@ -494,7 +494,7 @@ namespace v2.Helper
 
 
                         //TextWriter tw = new StreamWriter("test/_" + peptide.PeptideSeq + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
-                        TextWriter tw = new StreamWriter(outputpath+@"\_" + peptide.PeptideSeq +"_"+ er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
+                        TextWriter tw = new StreamWriter(outputpath + @"\_" + peptide.PeptideSeq + "_" + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
                         tw.WriteLine(newfileval.Trim());
                         foreach (var l in newfileval_list)
                             tw.WriteLine(l.Trim());
@@ -633,9 +633,434 @@ namespace v2.Helper
 
                     }
 
-                } 
+                }
             }
         }
+
+        public void computeDeuteriumenrichmentInPeptide2(List<Peptide> selected, List<ExperimentRecord> experimentRecords, string outputpath)
+        {
+            // this function computes pX(t)
+            // which is the deuterium enrichment in a peptide from the heavy water at the
+            // labeling duration time t
+            bool exists = System.IO.Directory.Exists(outputpath);
+            if (!exists)
+                System.IO.Directory.CreateDirectory(outputpath);
+
+            double ph = 1.5574E-4;
+            foreach (Peptide peptide in selected)
+            {
+
+                var experimentRecordsPerPeptide = experimentRecords.Where(p => p.PeptideSeq == peptide.PeptideSeq
+                            & p.Charge == peptide.Charge).ToList();
+
+
+                if (experimentRecordsPerPeptide.Count > 0)
+                {
+                    var NEH = (double)peptide.Exchangeable_Hydrogens;
+
+                    //experiments at t=0
+                    var experimentsAt_t_0 = experimentRecordsPerPeptide.Where(t => t.ExperimentTime == 0 & t.I0 != null & t.I0 > 0).ToList();
+                    double sum_io_t_0 = experimentsAt_t_0.Sum(x => x.I0).Value;
+
+                    double sum_a1_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I1 / x.I0))).Value;
+                    double al_a0_t_0 = sum_a1_ao_t_0 / sum_io_t_0;
+
+                    double sum_a2_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I2 / x.I0))).Value;
+                    double a2_a0_t_0 = sum_a2_ao_t_0 / sum_io_t_0;
+
+                    double sum_a3_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I3 / x.I0))).Value;
+                    double a3_a0_t_0 = sum_a3_ao_t_0 / sum_io_t_0;
+
+                    double sum_a4_ao_t_0 = experimentsAt_t_0.Sum(x => (x.I0 * (x.I4 / x.I0))).Value;
+                    double a4_a0_t_0 = sum_a4_ao_t_0 / sum_io_t_0;
+
+
+
+
+                    foreach (ExperimentRecord er in experimentRecordsPerPeptide)
+                    {
+                        if (er.I0_t != null) continue;
+                        var experimentsAt_t = experimentRecordsPerPeptide.Where(t => t.ExperimentTime == er.ExperimentTime & t.I0 != null & t.I0 > 0).ToList();
+                        if (experimentsAt_t.Count == 0) continue;
+
+                        #region A1(t)/A0(t)
+                        double sum_io_t = experimentsAt_t.Sum(x => x.I0).Value;
+                        double sum_ao_t = experimentsAt_t.Sum(x => (x.I0 * (x.I0 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
+                        double a0_t = sum_ao_t / sum_io_t;
+
+                        double sum_i1_t = experimentsAt_t.Sum(x => x.I1).Value;
+                        double sum_a1_ao_t = experimentsAt_t.Sum(x => (x.I1 * (x.I1 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
+                        double al_a0_t = sum_a1_ao_t / sum_i1_t;
+
+                        var k_t = (1 / NEH) * (al_a0_t - al_a0_t_0);
+                        var px_t = (k_t * (1 - ph)) / (1 + k_t);
+
+                        er.Deuteriumenrichment = px_t;
+
+                        // compute modified I0(t)
+                        double I0_t = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (px_t / (1 - ph))), (double)NEH));
+                        er.I0_t = I0_t;
+
+                        if (px_t > 0.05 | px_t < (-0.2))
+                        {
+                            Console.WriteLine("test");
+                            er.pX_greaterthanThreshold = 0;
+                        }
+                        #endregion
+
+                        #region A2(t)/A1(t) 
+
+                        double sum_i2_t = experimentsAt_t.Sum(x => x.I2).Value;
+                        double sum_a2_ao_t = experimentsAt_t.Sum(x => (x.I2 * (x.I2 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
+                        double a2_a0_t = sum_a2_ao_t / sum_i2_t;
+
+                        double sum_i3_t = experimentsAt_t.Sum(x => x.I3).Value;
+                        double sum_a3_ao_t = experimentsAt_t.Sum(x => (x.I3 * (x.I3 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
+                        double a3_a0_t = sum_a3_ao_t / sum_i3_t;
+
+                        double sum_i4_t = experimentsAt_t.Sum(x => x.I4).Value;
+                        double sum_a4_ao_t = experimentsAt_t.Sum(x => (x.I4 * (x.I4 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4)))).Value;
+                        double a4_a0_t = sum_a4_ao_t / sum_i4_t;
+
+                        var del_a_1_0 = al_a0_t - al_a0_t_0;
+                        var del_a_2_0 = a2_a0_t - a2_a0_t_0;
+
+                        //////var a = del_a_2_0 - (al_a0_t_0 * ph * del_a_1_0) - (al_a0_t * (1 - ph) * del_a_1_0) + 0.5 * ((-Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_1_0 * ((2 * ph - 1) / (1 - ph))));
+                        ////var a = del_a_2_0;
+                        ////a = a - (al_a0_t_0 * ph * del_a_1_0);
+                        ////a = a - (al_a0_t * (1 - ph) * del_a_1_0);
+                        ////a = a + 0.5 * (-1 * (Math.Pow(del_a_1_0, 2) * (2 * ph - 1)) + (del_a_2_0 * ((2 * ph - 1) / (1 - ph))));
+
+
+                        //////var b = (-1 * del_a_2_0 * (1 - ph)) + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph)) + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0) +
+                        //////    0.5 * ((Math.Pow(del_a_1_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
+                        ////var b = (-1 * del_a_2_0 * (1 - ph));
+                        ////b = b + (al_a0_t_0 * ph * del_a_1_0 * 2 * (1 - ph));
+                        ////b = b + ((1 - 2 * ph) * al_a0_t * (1 - ph) * del_a_1_0);
+                        ////b = b + 0.5 * ((Math.Pow(del_a_2_0, 2) * (1 - ph) * (2 * ph - 1)) + (Math.Pow(del_a_1_0, 2) * 2 * ph * (1 - ph)) - (del_a_1_0 * 2 * ph));
+
+                        ////var new_px_t = -b / a;
+                        ////var new_temp_neh = Math.Round(((1 - ph - new_px_t) / new_px_t) * del_a_1_0 * (1 - ph));
+                        ////Console.WriteLine("999999999999990000000000000000000000 => " + new_px_t + " , " + new_temp_neh);
+                        //=======================================
+                        //=======================================
+                        //=======================================
+                        // a2/a0
+                        double c = a2_a0_t_0 - a2_a0_t - al_a0_t_0 * ((ph * NEH) / (1 - ph)) + (Math.Pow((ph / (1 - ph)), 2)) * (NEH * (NEH + 1)) * 0.5;
+                        double a = -0.5 * NEH * (NEH + 1);
+                        double b = NEH * al_a0_t;
+
+
+                        //=======================================
+                        //=======================================
+                        //=======================================
+                        // a2/a0 + a1/ao
+                        c = c + al_a0_t_0 - al_a0_t;
+                        b = b + (NEH / (1 - ph));
+
+                        double temp = Math.Sqrt((b * b) - 4 * a * c);
+                        double y = (-b + temp) / (2 * a);
+                        double new_px_t = (y * (1 + ph) - ph) / (1 + y);
+
+
+                        double I0_t_new_a2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (new_px_t / (1 - ph))), (double)NEH));
+                        er.I0_t_new_a2 = I0_t_new_a2;
+
+                        //Console.WriteLine("New Px_t " + peptide.PeptideSeq + " " + er.ExperimentTime.ToString() + " = " + new_px_t.ToString());
+                        var computedNeh = ((1 - ph - new_px_t) / new_px_t) * del_a_1_0 * (1 - ph);
+                        Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH +
+                            " computedNeh = " + computedNeh + " , " + (new_px_t * NEH)
+                            );
+
+                        #endregion
+
+                        #region new trial with MassIsotopomers dll
+
+                        float[] fNatIsotopes = new float[10];
+                        float[] fLabIsotopes = new float[10];
+
+                        fNatIsotopes[0] = (float)((double)peptide.M0);
+                        fNatIsotopes[1] = (float)((double)peptide.M1);
+                        fNatIsotopes[2] = (float)((double)peptide.M2);
+                        fNatIsotopes[3] = (float)((double)peptide.M3);
+                        fNatIsotopes[4] = (float)((double)peptide.M4);
+                        fNatIsotopes[5] = (float)((double)peptide.M5);
+                        MassIsotopomers MIDyn = new MassIsotopomers();
+
+                        string newfileval = "px(t),NEH,A3/A0 (Exp.),A3/A0 (Theo.),A2/A0 (Exp.),A2/A0 (Theo.),A1/A0 (Exp.),A1/A0 (Theo.),A3/A0 (Exp.)-A3/A0 (Theo.),A2/A0 (Exp.)-A2/A0 (Theo.),A1/A0 (Exp.)-A1/A0 (Theo.)," +
+                            "SSE, ABS(SE), E(t), px(t)_f,NEH_f, \u0394A10, SSE_421,SSE_211,SSE_221," +
+                            "SSE_212 ,SSE_511 ,SSE_531,SSE_532,SSE_732," +
+                            "SSE_242 , SSE_261 , SSE_241," +
+                            "SSE_224 , SSE_216 , SSE_124,A_NEH,rsquared,I0_average  \n";
+                        //string newfileval = "pxt,neh,diff\n";
+                        List<string> newfileval_list = new List<string>();
+
+
+                        int Nall_Hyd = MIDyn.NumberOfHydrogens(peptide.PeptideSeq);
+                        //int Nall_Hyd = 128;
+
+                        if (peptide.PeptideSeq == "VTVLEGDILDTQYLR")
+                            Nall_Hyd = 128;
+                        else if (peptide.PeptideSeq == "QTILDVNLK")
+                            Nall_Hyd = 83;
+                        else if (peptide.PeptideSeq == "PGWScLVTGAGGFLGQR")
+                            Nall_Hyd = 117;
+                        else if (peptide.PeptideSeq == "KEFFNLETSIK")
+                            Nall_Hyd = 99;
+                        else if (peptide.PeptideSeq == "DLGYEPLVSWEEAK")
+                            Nall_Hyd = 111;
+                        else if (peptide.PeptideSeq == "AVLAANGSMLK")
+                            Nall_Hyd = 84;
+
+                        var maxneh = selected.Select(x => x.Exchangeable_Hydrogens).Max() + 1;
+                        for (double neh = 1; neh < maxneh; neh = neh + 0.1)
+                        {
+                            for (float fBWE = (float)0.001; fBWE <= 0.06; fBWE = fBWE + (float)0.001)
+                            //for (float fBWE = (float)0.03; fBWE <= 0.04; fBWE = fBWE + (float)0.001)
+                            {
+                                //var tempc = neh / (del_a_1_0 * (1 - ph));
+                                //float fBWE = (float)((float)(1.0 - ph) / (1.0 + tempc));
+                                //if (fBWE > 0.05 | fBWE < 0) continue;
+
+                                //float fBWE = (float)(0.000 + (it - 1) * 0.35 / 100.0);
+                                //float fBWE = (float)(0.0335);
+
+                                //var tempc = neh / (del_a_1_0 * (1 - ph));
+                                //float fBWE = (float)((1.0 - ph) / (1.0 + tempc));
+
+
+
+
+                                ////=======================================
+                                ////=======================================
+                                ////=======================================
+
+                                //c = a2_a0_t_0 - a2_a0_t - al_a0_t_0 * ((ph * NEH) / (1 - ph)) + (Math.Pow((ph / (1 - ph)), 2)) * (NEH * (NEH + 1)) * 0.5;
+                                //a = -0.5 * NEH * (NEH + 1);
+                                //b = NEH * al_a0_t;
+                                //// a2/a0 + a1/ao
+                                //c = c + al_a0_t_0 - al_a0_t;
+                                //b = b + (NEH / (1 - ph));
+
+                                //temp = Math.Sqrt((b * b) - 4 * a * c);
+                                //y = (-b + temp) / (2 * a);
+                                //new_px_t = (y * (1 + ph) - ph) / (1 + y);
+                                //float fBWE = (float)(new_px_t);
+
+
+
+                                MIDyn.CalculateMIDynamics(fNatIsotopes, fLabIsotopes, fBWE, (float)neh, Nall_Hyd);
+
+                                var new_a4_a0_t = fLabIsotopes[4] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3]+ fLabIsotopes[4] );
+                                var new_a3_a0_t = fLabIsotopes[3] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3] + fLabIsotopes[4]);
+                                var new_a2_a0_t = fLabIsotopes[2] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3] + fLabIsotopes[4]);
+                                var new_a1_a0_t = fLabIsotopes[1] / (fLabIsotopes[0] + fLabIsotopes[1] + fLabIsotopes[2] + fLabIsotopes[3] + fLabIsotopes[4]);
+
+                                var a4diff = new_a4_a0_t - a4_a0_t; var a4diff_s = a4diff * a4diff;
+                                var a3diff = new_a3_a0_t - a3_a0_t; var a3diff_s = a3diff * a3diff;
+                                var a2diff = new_a2_a0_t - a2_a0_t; var a2diff_s = a2diff * a2diff;
+                                var a1diff = new_a1_a0_t - al_a0_t; var a1diff_s = a1diff * a1diff;
+
+                                var a1a2a3s = a4diff_s + a3diff_s + a2diff_s + a1diff_s;
+
+                                //var a1a2a3s = a2diff_s + a1diff_s;
+                                var a1a2a3abs = Math.Abs(a3diff + a2diff + a1diff);
+
+                                var a1a2a3s_421 = 4 * a3diff_s + 2 * a2diff_s + a1diff_s;
+                                var a1a2a3s_211 = 2 * a3diff_s + a2diff_s + a1diff_s;
+                                var a1a2a3s_221 = 2 * a3diff_s + 2 * a2diff_s + a1diff_s;
+
+                                var a1a2a3s_212 = 2 * a3diff_s + 1 * a2diff_s + 2 * a1diff_s;
+                                var a1a2a3s_511 = 5 * a3diff_s + 1 * a2diff_s + 1 * a1diff_s;
+                                var a1a2a3s_531 = 5 * a3diff_s + 3 * a2diff_s + 1 * a1diff_s;
+                                var a1a2a3s_532 = 5 * a3diff_s + 3 * a2diff_s + 2 * a1diff_s;
+                                var a1a2a3s_732 = 7 * a3diff_s + 3 * a2diff_s + 2 * a1diff_s;
+
+                                var a1a2a3s_242 = 2 * a3diff_s + 4 * a2diff_s + 2 * a1diff_s;
+                                var a1a2a3s_261 = 2 * a3diff_s + 6 * a2diff_s + a1diff_s;
+                                var a1a2a3s_241 = 2 * a3diff_s + 4 * a2diff_s + a1diff_s;
+
+                                var a1a2a3s_224 = 2 * a3diff_s + 2 * a2diff_s + 4 * a1diff_s;
+                                var a1a2a3s_216 = 2 * a3diff_s + 1 * a2diff_s + 6 * a1diff_s;
+                                var a1a2a3s_124 = a3diff_s + 2 * a2diff_s + 4 * a1diff_s;
+
+                                var e_t = fBWE * neh;
+                                var px_f = 1 - ph - (e_t / (del_a_1_0 * (1 - ph)));
+                                var neh_f = e_t / px_f;
+
+                                newfileval_list.Add(fBWE + "," + neh + "," + a3_a0_t + "," + new_a3_a0_t + "," + a2_a0_t + "," + new_a2_a0_t + "," + al_a0_t + "," + new_a1_a0_t + "," + a3diff + "," + a2diff + "," + a1diff + "," + a1a2a3s + "," + a1a2a3abs
+                                    + "," + e_t + "," + px_f + "," + neh_f + "," + del_a_1_0
+                                    + "," + a1a2a3s_421 + "," + a1a2a3s_211 + "," + a1a2a3s_221
+                                    + "," + a1a2a3s_212 + "," + a1a2a3s_511 + "," + a1a2a3s_531 + "," + a1a2a3s_532 + "," + a1a2a3s_732
+                                    + "," + a1a2a3s_242 + "," + a1a2a3s_261 + "," + a1a2a3s_241
+                                    + "," + a1a2a3s_224 + "," + a1a2a3s_216 + "," + a1a2a3s_124
+                                    + "," + peptide.Exchangeable_Hydrogens + "," + peptide.RSquare + "," + peptide.A0_average
+                                    + "\n");
+                                //newfileval += (fBWE + "," + neh + "," + a3_a0_t + "," + new_a3_a0_t + "," + a2_a0_t + "," + new_a2_a0_t + "," + al_a0_t + "," + new_a1_a0_t + "," + a3diff + "," + a2diff + "," + a1diff + "\n");
+                                //newfileval += (fBWE + "," + neh + "," + (a3diff + a2diff + a1diff) + "\n");
+
+                                //dataloader dl = new dataloader();
+                                //dl.neh = neh;
+                                //dl.ext = neh * fBWE;
+                                //dl.error = Math.Abs(a2diff);
+                                //_dataErrorlist.Add(dl);
+
+                            }
+                        }
+
+                        //if (er.ExperimentTime != 0)
+                        //{
+                        //    var best_neh = _dataErrorlist.OrderBy(re => re.error).Select(u => u.neh).ToList().Distinct().Take(15);
+                        //    _neh_list.AddRange(best_neh);
+
+                        //}
+
+
+
+                        //TextWriter tw = new StreamWriter("test/_" + peptide.PeptideSeq + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
+                        TextWriter tw = new StreamWriter(outputpath + @"\_" + peptide.PeptideSeq + "_" + er.ExperimentTime.ToString() + "_" + peptide.Charge.ToString() + ".csv");
+                        tw.WriteLine(newfileval.Trim());
+                        foreach (var l in newfileval_list)
+                            tw.WriteLine(l.Trim());
+                        tw.Close();
+
+                        #endregion
+
+                        #region test 
+
+                        //var _d = al_a0_t * del_a_1_0 * (1 - ph);
+                        //var _c = del_a_1_0 * (1 - ph);
+                        //var _b = 0.5 * (Math.Pow(ph / (1 - ph), 2));
+                        //var _a = -al_a0_t_0 * (ph / (1 - ph));
+
+                        ////var coeff = new double[] { 2 * _b, _a + _b, _d-_c * _c  , -0.5*_c * _c };
+                        //var coeff = new double[] { _b, _a, (-del_a_2_0 + _b - 0.5 * _c * _c + _d), -0.5 * _c * _c };
+
+                        ////var sol = RealPolynomialRootFinder.FindRoots(coeff);
+
+                        #endregion
+
+                        #region varying pxt only
+
+                        ////var temp2 = a2_a0_t;
+                        ////var temp1 = al_a0_t;
+
+                        //////Console.WriteLine("======================================== " + er.ExperimentTime.ToString() + " new_px_t = " + new_px_t + " NEH = " + NEH);
+
+                        ////var px_t_new = new_px_t;
+                        ////var NEH_new = NEH;
+
+                        ////var temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
+
+                        ////var temp2_t = a2_a0_t_0 - (al_a0_t_0 * (ph * NEH_new) / (1 - ph)) +
+                        ////    (Math.Pow((ph / (1 - ph)), 2) * NEH_new * (NEH_new + 1) / 2) -
+                        ////   (Math.Pow((px_t_new + ph) / (1 - ph - px_t_new), 2) * NEH_new * (NEH_new + 1) / 2) +
+                        ////   (NEH_new * (px_t_new + ph) * temp1_t / (1 - ph - px_t_new));
+
+                        //////Console.WriteLine(temp2_t + temp1_t - temp2 - temp1);
+
+                        ////List<double> difflist = new List<double>();
+                        ////List<double> pxtlist = new List<double>();
+                        ////string fileval = "";
+
+                        ////double step = 0.0005;
+                        ////for (int i = 1; i * step < 0.06; i++)
+                        ////{
+                        ////    px_t_new = i * step;
+
+                        ////    temp2_t = a2_a0_t_0 - (al_a0_t_0 * (ph * NEH_new) / (1 - ph)) +
+                        ////       (Math.Pow((ph / (1 - ph)), 2) * NEH_new * (NEH_new + 1) / 2) -
+                        ////      (Math.Pow((px_t_new + ph) / (1 - ph - px_t_new), 2) * NEH_new * (NEH_new + 1) / 2) +
+                        ////      (NEH_new * (px_t_new + ph) * al_a0_t / (1 - ph - px_t_new));
+                        ////    temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
+                        ////    var diff = Math.Abs(temp2_t + temp1_t - temp2 - temp1);
+                        ////    difflist.Add(diff);
+                        ////    pxtlist.Add(px_t_new);
+
+                        ////    fileval += (i * step + "," + diff + "\n");
+                        ////}
+                        ////double minval = difflist.Min();
+                        ////int minimumValueIndex = difflist.IndexOf(minval);
+                        ////Console.WriteLine("==min== " + minval + " px = " + pxtlist[minimumValueIndex] + " , " + (pxtlist[minimumValueIndex] * NEH));
+
+                        //////TextWriter tw = new StreamWriter(peptide.PeptideSeq + er.ExperimentTime.ToString() + ".csv");
+                        //////tw.WriteLine(fileval.Trim());
+                        //////tw.Close();
+
+                        #endregion
+
+                        #region varying pxt AND NEH
+
+                        ////difflist = new List<double>();
+                        ////pxtlist = new List<double>();
+                        ////var NEHlist = new List<double>();
+                        ////fileval = "";
+
+                        ////step = 0.001;
+                        ////for (int k = 1; k < 35; k++)
+                        ////{
+                        ////    for (int i = 1; i * step <= 0.06; i++)
+                        ////    {
+                        ////        px_t_new = i * step;
+                        ////        NEH_new = k;
+
+                        ////        //px_t_new = i * step;
+                        ////        //NEH_new = Math.Round(((1 - ph - px_t_new) / px_t_new) * del_a_1_0 * (1 - ph));
+                        ////        //var k = NEH_new;
+                        ////        //if (k > 50) { /*Console.WriteLine("==neh>30== " + minval + " px = " + px_t_new + " neh="+k); */ continue; }
+
+
+                        ////        //NEH_new = k;
+                        ////        //var tempc = NEH_new / (del_a_1_0 * (1 - ph));
+                        ////        //px_t_new = (1.0 - ph) / (1.0 + tempc);
+                        ////        //if (px_t_new > 0.05 | px_t_new < 0) continue;
+
+                        ////        temp1_t = al_a0_t_0 + ((px_t_new * NEH_new) / ((1.0 - ph) * (1.0 - ph - px_t_new)));
+
+                        ////        temp2_t = a2_a0_t_0 - (al_a0_t_0 * (ph * NEH_new) / (1 - ph)) +
+                        ////           (Math.Pow((ph / (1 - ph)), 2) * NEH_new * (NEH_new + 1) / 2) -
+                        ////          (Math.Pow((px_t_new + ph) / (1 - ph - px_t_new), 2) * NEH_new * (NEH_new + 1) / 2) +
+                        ////          (NEH_new * (px_t_new + ph) * temp1_t / (1 - ph - px_t_new));
+
+
+                        ////        var diff = Math.Abs(temp2_t + temp1_t - temp2 - temp1);
+
+
+                        ////        //if (diff < 0.1)
+                        ////        {
+
+                        ////            difflist.Add(diff);
+                        ////            pxtlist.Add(px_t_new);
+                        ////            NEHlist.Add(k);
+                        ////            fileval += (px_t_new + "," + k + "," + diff + "\n");
+                        ////        }
+                        ////    }
+                        ////}
+                        ////if (difflist.Count > 0)
+                        ////{
+                        ////    minval = difflist.Min();
+                        ////    minimumValueIndex = difflist.IndexOf(minval);
+                        ////    Console.WriteLine("==min==2  " + minval + " px = " + pxtlist[minimumValueIndex] + " NEH=" + NEHlist[minimumValueIndex] + ", " + (pxtlist[minimumValueIndex] * NEHlist[minimumValueIndex]));
+                        ////}
+
+                        ////TextWriter tw2 = new StreamWriter(peptide.PeptideSeq + er.ExperimentTime.ToString() + ".csv");
+                        ////tw2.WriteLine(fileval.Trim());
+                        ////tw2.Close();
+
+                        #endregion
+
+
+
+
+
+
+
+                    }
+
+                }
+            }
+        }
+
 
 
         private void draw_peptideChart(ProteinExperimentDataReader proteinExperimentData, string outputpath)
@@ -656,7 +1081,7 @@ namespace v2.Helper
                     #region modification for test
                     selected = selected.Where(p => p.RSquare > 0.95).ToList();
                     selected = selected.Where(p => p.A0_average > 1E7).ToList();
-                    computeDeuteriumenrichmentInPeptide(selected, proteinExperimentData.experimentRecords, outputpath);
+                    computeDeuteriumenrichmentInPeptide2(selected, proteinExperimentData.experimentRecords, outputpath);
                     return;
                     #endregion
 
