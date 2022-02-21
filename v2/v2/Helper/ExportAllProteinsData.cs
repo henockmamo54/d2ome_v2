@@ -394,7 +394,7 @@ namespace v2.Helper
                         var maxneh = selected.Select(x => x.Exchangeable_Hydrogens).Max() + 1;
                         for (double neh = 1; neh < maxneh; neh = neh + 0.1)
                         {
-                            //for (float fBWE = (float)0.001; fBWE <= 0.06; fBWE = fBWE + (float)0.001)
+                            for (float fBWE = (float)0.001; fBWE <= 0.06; fBWE = fBWE + (float)0.001)
                             //for (float fBWE = (float)0.03; fBWE <= 0.04; fBWE = fBWE + (float)0.001)
                             {
                                 //var tempc = neh / (del_a_1_0 * (1 - ph));
@@ -407,22 +407,24 @@ namespace v2.Helper
                                 //var tempc = neh / (del_a_1_0 * (1 - ph));
                                 //float fBWE = (float)((1.0 - ph) / (1.0 + tempc));
 
-                                c = a2_a0_t_0 - a2_a0_t - al_a0_t_0 * ((ph * NEH) / (1 - ph)) + (Math.Pow((ph / (1 - ph)), 2)) * (NEH * (NEH + 1)) * 0.5;
-                                a = -0.5 * NEH * (NEH + 1);
-                                b = NEH * al_a0_t;
 
 
-                                //=======================================
-                                //=======================================
-                                //=======================================
-                                // a2/a0 + a1/ao
-                                c = c + al_a0_t_0 - al_a0_t;
-                                b = b + (NEH / (1 - ph));
 
-                                temp = Math.Sqrt((b * b) - 4 * a * c);
-                                y = (-b + temp) / (2 * a);
-                                new_px_t = (y * (1 + ph) - ph) / (1 + y);
-                                float fBWE = (float)new_px_t;
+                                ////=======================================
+                                ////=======================================
+                                ////=======================================
+
+                                //c = a2_a0_t_0 - a2_a0_t - al_a0_t_0 * ((ph * NEH) / (1 - ph)) + (Math.Pow((ph / (1 - ph)), 2)) * (NEH * (NEH + 1)) * 0.5;
+                                //a = -0.5 * NEH * (NEH + 1);
+                                //b = NEH * al_a0_t;
+                                //// a2/a0 + a1/ao
+                                //c = c + al_a0_t_0 - al_a0_t;
+                                //b = b + (NEH / (1 - ph));
+
+                                //temp = Math.Sqrt((b * b) - 4 * a * c);
+                                //y = (-b + temp) / (2 * a);
+                                //new_px_t = (y * (1 + ph) - ph) / (1 + y);
+                                //float fBWE = (float)(new_px_t);
 
 
 
@@ -436,8 +438,8 @@ namespace v2.Helper
                                 var a2diff = new_a2_a0_t - a2_a0_t; var a2diff_s = a2diff * a2diff;
                                 var a1diff = new_a1_a0_t - al_a0_t; var a1diff_s = a1diff * a1diff;
 
-                                //var a1a2a3s = a3diff_s + a2diff_s + a1diff_s;
-                                var a1a2a3s = a2diff_s + a1diff_s;
+                                var a1a2a3s = a3diff_s + a2diff_s + a1diff_s;
+                                //var a1a2a3s = a2diff_s + a1diff_s;
                                 var a1a2a3abs = Math.Abs(a3diff + a2diff + a1diff);
 
                                 var a1a2a3s_421 = 4 * a3diff_s + 2 * a2diff_s + a1diff_s;
