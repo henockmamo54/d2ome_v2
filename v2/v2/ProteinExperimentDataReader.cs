@@ -536,7 +536,7 @@ namespace v2
                 double io = 0;
                 double neh = 0;
                 double k = 0;
-                var temp_pep = this.peptides.Where(x => x.RSquare > 0.25);
+                var temp_pep = this.peptides; // this.peptides.Where(x => x.RSquare > 0.25);
                 foreach (RIA r in mergedRIAvalues)
                 {
 
@@ -545,7 +545,9 @@ namespace v2
                     {
                         io = (double)(p.M0 / 100);
                         neh = (double)(p.Exchangeable_Hydrogens);
-                        k = (double)(p.Rateconst);
+
+                        if (p.Rateconst == null) continue;
+                        else k = (double)(p.Rateconst);
 
 
 
@@ -573,7 +575,7 @@ namespace v2
         {
             public List<double> x;
             public List<double> y;
-            public List<string> PeptideSeq  ; 
+            public List<string> PeptideSeq;
 
             public ProtienchartDataValues(List<double> x, List<double> y, List<string> PeptideSeq)
             {
