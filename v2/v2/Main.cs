@@ -1213,7 +1213,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
             }
 
-            if (chart_protein.Series.Count > 2)
+            while (chart_protein.Series.Count > 2)
                 chart_protein.Series.RemoveAt(chart_protein.Series.Count - 1);
 
             if (best_scores.Count > 0)
@@ -1224,6 +1224,26 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 s.Points.DataBindXY(experimentTime, best_paths[index_of_best_score]);
                 s.ChartType = SeriesChartType.Line;
                 chart_protein.Series.Add(s);
+
+                //if (best_scores.Count > 1)
+                //{
+                //    var temp = best_scores.OrderByDescending(x => x).ToList();
+                //    index_of_best_score = best_scores.IndexOf(temp[1]);
+                //    s = new Series();
+                //    s.Name = "Best Path 2";
+                //    s.Points.DataBindXY(experimentTime, best_paths[index_of_best_score]);
+                //    s.ChartType = SeriesChartType.Line;
+                //    chart_protein.Series.Add(s);
+
+                //    index_of_best_score = best_scores.IndexOf(temp[temp.Count - 1]);
+                //    s = new Series();
+                //    s.Name = "worest  Path ";
+                //    s.Points.DataBindXY(experimentTime, best_paths[index_of_best_score]);
+                //    s.ChartType = SeriesChartType.Line;
+                //    chart_protein.Series.Add(s);
+
+                //}
+
             }
 
         }
