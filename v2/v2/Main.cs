@@ -11,7 +11,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using v2.Helper;
 using v2.Model;
 using static v2.ProteinExperimentDataReader;
-//using Labeling_Path;
+using Labeling_Path;
 
 
 namespace v2
@@ -1169,13 +1169,63 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             var peptides = chartdata.PeptideSeq.Distinct().ToList();
             var experimentTime = chartdata.x.Distinct().OrderBy(x => x).ToList();
 
-            var inputForBestPathSearch = new double[peptides.Count, experimentTime.Count];
+            var inputForBestPathSearch = new float[peptides.Count, experimentTime.Count];
 
-            for(int i = 0; i < chartdata.x.Count; i++)
+            for (int i = 0; i < chartdata.x.Count; i++)
             {
                 var peptidedindex = peptides.IndexOf(chartdata.PeptideSeq[i]);
-                inputForBestPathSearch[peptidedindex, experimentTime.IndexOf((int)chartdata.x[i])] = chartdata.y[i];
+                inputForBestPathSearch[peptidedindex, experimentTime.IndexOf((int)chartdata.x[i])] = (Double.IsNaN(chartdata.y[i])) ? 0 : (float)chartdata.y[i];
             }
+
+            Labeling_Path.Label_Path lp = new Label_Path();
+            var bestpaths = lp.Labeling_Path_Fractional_Synthesis(inputForBestPathSearch, peptides.Count, experimentTime.Count(), 0, 0);
+
+            var best_scores = new List<float>();
+            var best_paths = new List<List<float>>();
+
+            foreach (var path in bestpaths)
+            {
+
+                var path_score = path.Trim().Split('#');
+
+                var path_indexs = path_score[0];
+                var score = path_score[1];
+
+                var temp_yval = new List<float>();
+                var value_indexs = path_indexs.Split(' ');
+
+                foreach (var index in value_indexs)
+                {
+                    var temp = index.Split(',');
+                    temp_yval.Add(inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
+                }
+
+                best_scores.Add(float.Parse(score));
+                best_paths.Add(temp_yval);
+
+
+
+                //Series s = new Series();
+                //s.Name = score.ToString();
+                //s.Points.DataBindXY(experimentTime, temp_yval);
+                //s.ChartType = SeriesChartType.Line;
+                //chart_protein.Series.Add(s);
+
+            }
+
+            if (chart_protein.Series.Count > 2)
+                chart_protein.Series.RemoveAt(chart_protein.Series.Count - 1);
+
+            if (best_scores.Count > 0)
+            {
+                var index_of_best_score = best_scores.IndexOf(best_scores.Max());
+                Series s = new Series();
+                s.Name = "Best Path ";
+                s.Points.DataBindXY(experimentTime, best_paths[index_of_best_score]);
+                s.ChartType = SeriesChartType.Line;
+                chart_protein.Series.Add(s);
+            }
+
         }
 
         public string formatdoubletothreedecimalplace(double n)
