@@ -528,7 +528,6 @@ namespace v2
             List<double> xval = new List<double>();
             List<double> yval = new List<double>();
             List<string> PeptideSeq = new List<string>();
-            List<double> ExperimentTime = new List<double>();
 
             try
             {
@@ -557,7 +556,6 @@ namespace v2
                         xval.Add(r.Time);
                         yval.Add((double)fv);
                         PeptideSeq.Add(p.PeptideSeq);
-                        ExperimentTime.Add(r.Time);
 
                     }
                 }
@@ -568,22 +566,20 @@ namespace v2
             }
 
             //ProtienchartDataValues pd = new ProtienchartDataValues(xval, yval);
-            return new ProtienchartDataValues(xval, yval, PeptideSeq, ExperimentTime);
+            return new ProtienchartDataValues(xval, yval, PeptideSeq);
 
         }
         public struct ProtienchartDataValues
         {
             public List<double> x;
             public List<double> y;
-            List<string> PeptideSeq  ;
-            List<double> ExperimentTime  ;
+            public List<string> PeptideSeq  ; 
 
-            public ProtienchartDataValues(List<double> x, List<double> y, List<string> PeptideSeq, List<double> ExperimentTime)
+            public ProtienchartDataValues(List<double> x, List<double> y, List<string> PeptideSeq)
             {
                 this.x = x;
                 this.y = y;
                 this.PeptideSeq = PeptideSeq;
-                this.ExperimentTime = ExperimentTime;
             }
         }
         public struct TheoreticalI0Value

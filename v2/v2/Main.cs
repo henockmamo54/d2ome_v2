@@ -24,7 +24,7 @@ namespace v2
         string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
         ProteinExperimentDataReader proteinExperimentData;
         Thread allProteinExporterThread;
-        public bool isvisualizationLoadForThepath = false; 
+        public bool isvisualizationLoadForThepath = false;
 
         public Main()
         {
@@ -993,7 +993,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                         //title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
                         try
                         {
-                            if (p.Rateconst != null )
+                            if (p.Rateconst != null)
                             {
                                 title.Text = p.PeptideSeq + " (k = " + formatdoubletothreedecimalplace((double)p.Rateconst) + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
                             }
@@ -1141,6 +1141,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
+            preparedDataForBestPathSearch(chartdata);
             try
             {
 
@@ -1162,6 +1163,21 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             }
 
         }
+
+        private void preparedDataForBestPathSearch(ProtienchartDataValues chartdata)
+        {
+            var peptides = chartdata.PeptideSeq.Distinct().ToList();
+            var experimentTime = chartdata.x.Distinct().OrderBy(x => x).ToList();
+
+            var inputForBestPathSearch = new double[peptides.Count, experimentTime.Count];
+
+            for(int i = 0; i < chartdata.x.Count; i++)
+            {
+                var peptidedindex = peptides.IndexOf(chartdata.PeptideSeq[i]);
+                inputForBestPathSearch[peptidedindex, experimentTime.IndexOf((int)chartdata.x[i])] = chartdata.y[i];
+            }
+        }
+
         public string formatdoubletothreedecimalplace(double n)
         {
             var tempval = "";
