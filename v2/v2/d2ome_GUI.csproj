@@ -113,6 +113,12 @@
   <ItemGroup>
     <Content Include="Resources\D2OMEIcon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Labeling_Path\Labeling_Path\Labeling_Path.vcxproj">
+      <Project>{6d7687f9-6726-4eea-9a62-e68a042a7bc0}</Project>
+      <Name>Labeling_Path</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
