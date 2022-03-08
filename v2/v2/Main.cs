@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using v2.Helper;
 using v2.Model;
 using static v2.ProteinExperimentDataReader;
+//using Labeling_Path;
+
 
 namespace v2
 {
@@ -25,7 +24,7 @@ namespace v2
         string RateConst_csv_path = @"F:\workplace\Data\temp_Mouse_Liver_0104_2022\CPSM_MOUSE.RateConst.csv";
         ProteinExperimentDataReader proteinExperimentData;
         Thread allProteinExporterThread;
-        public bool isvisualizationLoadForThepath = false;
+        public bool isvisualizationLoadForThepath = false; 
 
         public Main()
         {

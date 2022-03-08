@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "d2ome_GUI", "v2\d2ome_GUI.csproj", "{0C747F04-432D-48DB-AA55-DB5D75CB97BB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Labeling_Path", "..\Labeling_Path\Labeling_Path\Labeling_Path.vcxproj", "{6D7687F9-6726-4EEA-9A62-E68A042A7BC0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Labeling_Path", "..\..\ProteinRateConstant\git\ProteinRateconstant\Labeling_Path\Labeling_Path\Labeling_Path.vcxproj", "{6D7687F9-6726-4EEA-9A62-E68A042A7BC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

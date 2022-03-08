@@ -401,7 +401,7 @@ namespace v2
                     var temp_computedRIAValue = theoreticalI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
                     var temp_computedRIAValue_withexperimentalIO = theoreticalI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
 
-                    if (r.PeptideSeq == "VASGQALAAFcLTEPSSGSDVASIR" | r.PeptideSeq== "GILLYGTK")
+                    if (r.PeptideSeq == "VASGQALAAFcLTEPSSGSDVASIR" | r.PeptideSeq == "GILLYGTK")
                     {
                         Console.WriteLine("Test");
                     }
@@ -476,56 +476,59 @@ namespace v2
             theoreticalI0Values = temp_theoreticalI0Values;
 
         }
-        public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot()
-        {
-            List<double> xval = new List<double>();
-            List<double> yval = new List<double>();
+        ////public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot()
+        ////{
+        ////    List<double> xval = new List<double>();
+        ////    List<double> yval = new List<double>();
 
-            double ph = 1.5574E-4;
-            double pw = filecontents[filecontents.Count - 1].BWE;
-            double io = 0;
-            double neh = 0;
-            double k = 0;
+        ////    double ph = 1.5574E-4;
+        ////    double pw = filecontents[filecontents.Count - 1].BWE;
+        ////    double io = 0;
+        ////    double neh = 0;
+        ////    double k = 0;
 
-            for (int i = 0; i < peptides.Count(); i++)
-            {
-                foreach (int t in this.experiment_time)
-                {
-                    try
-                    {
-                        io = (double)(peptides[i].M0 / 100);
-                        neh = (double)(peptides[i].Exchangeable_Hydrogens);
-                        k = (double)(peptides[i].Rateconst);
+        ////    for (int i = 0; i < peptides.Count(); i++)
+        ////    {
+        ////        foreach (int t in this.experiment_time)
+        ////        {
+        ////            try
+        ////            {
+        ////                io = (double)(peptides[i].M0 / 100);
+        ////                neh = (double)(peptides[i].Exchangeable_Hydrogens);
+        ////                k = (double)(peptides[i].Rateconst);
 
-                        var ria_val2 = mergedRIAvalues.Where(x => x.PeptideSeq.Trim() == peptides[i].PeptideSeq.Trim() & x.Time == t & x.Charge == peptides[i].Charge).ToList();
-                        if (ria_val2.Count > 0)
-                        {
-                            var ria_val = ria_val2.First().RIA_value;
+        ////                var ria_val2 = mergedRIAvalues.Where(x => x.PeptideSeq.Trim() == peptides[i].PeptideSeq.Trim() & x.Time == t & x.Charge == peptides[i].Charge).ToList();
+        ////                if (ria_val2.Count > 0)
+        ////                {
+        ////                    var ria_val = ria_val2.First().RIA_value;
 
-                            var dn = io * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
-                            var nu = io - ria_val;
-                            var fv = nu / dn;
+        ////                    var dn = io * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+        ////                    var nu = io - ria_val;
+        ////                    var fv = nu / dn;
 
-                            xval.Add(t);
-                            yval.Add((double)fv);
-                        }
+        ////                    xval.Add(t);
+        ////                    yval.Add((double)fv);
+        ////                }
 
-                    }
-                    catch (Exception ex)
-                    {
-                        continue;
-                    }
+        ////            }
+        ////            catch (Exception ex)
+        ////            {
+        ////                continue;
+        ////            }
 
-                }
-            }
-            //ProtienchartDataValues pd = new ProtienchartDataValues(xval, yval);
-            return new ProtienchartDataValues(xval, yval);
+        ////        }
+        ////    }
+        ////    //ProtienchartDataValues pd = new ProtienchartDataValues(xval, yval);
+        ////    return new ProtienchartDataValues(xval, yval);
 
-        }
+        ////}
+
         public ProtienchartDataValues computeValuesForEnhancedPerProtienPlot2()
         {
             List<double> xval = new List<double>();
             List<double> yval = new List<double>();
+            List<string> PeptideSeq = new List<string>();
+            List<double> ExperimentTime = new List<double>();
 
             try
             {
@@ -534,7 +537,7 @@ namespace v2
                 double io = 0;
                 double neh = 0;
                 double k = 0;
-                var temp_pep = this.peptides.Where(x => x.RSquare > 0.8);
+                var temp_pep = this.peptides.Where(x => x.RSquare > 0.25);
                 foreach (RIA r in mergedRIAvalues)
                 {
 
@@ -553,6 +556,9 @@ namespace v2
 
                         xval.Add(r.Time);
                         yval.Add((double)fv);
+                        PeptideSeq.Add(p.PeptideSeq);
+                        ExperimentTime.Add(r.Time);
+
                     }
                 }
             }
@@ -562,18 +568,22 @@ namespace v2
             }
 
             //ProtienchartDataValues pd = new ProtienchartDataValues(xval, yval);
-            return new ProtienchartDataValues(xval, yval);
+            return new ProtienchartDataValues(xval, yval, PeptideSeq, ExperimentTime);
 
         }
         public struct ProtienchartDataValues
         {
             public List<double> x;
             public List<double> y;
+            List<string> PeptideSeq  ;
+            List<double> ExperimentTime  ;
 
-            public ProtienchartDataValues(List<double> x, List<double> y)
+            public ProtienchartDataValues(List<double> x, List<double> y, List<string> PeptideSeq, List<double> ExperimentTime)
             {
                 this.x = x;
                 this.y = y;
+                this.PeptideSeq = PeptideSeq;
+                this.ExperimentTime = ExperimentTime;
             }
         }
         public struct TheoreticalI0Value
