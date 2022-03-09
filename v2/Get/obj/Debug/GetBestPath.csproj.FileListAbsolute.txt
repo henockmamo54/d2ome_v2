@@ -1,0 +1,3 @@
+C:\c_Myworkplace\C++\d2ome_v2\v2\Get\obj\Debug\GetBestPath.csproj.AssemblyReference.cache
+C:\c_Myworkplace\C++\d2ome_v2\v2\Get\obj\Debug\GetBestPath.csproj.SuggestedBindingRedirects.cache
+C:\c_Myworkplace\C++\d2ome_v2\v2\Get\obj\Debug\GetBestPath.csproj.CoreCompileInputs.cache
