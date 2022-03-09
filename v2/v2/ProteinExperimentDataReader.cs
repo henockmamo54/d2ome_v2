@@ -546,8 +546,8 @@ namespace v2
                         io = (double)(p.M0 / 100);
                         neh = (double)(p.Exchangeable_Hydrogens);
 
-                        if (p.Rateconst == null) continue;
-                        else k = (double)(p.Rateconst);
+                        //if (p.Rateconst == null) continue;
+                        //else k = (double)(p.Rateconst);
 
 
 

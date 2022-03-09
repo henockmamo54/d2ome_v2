@@ -728,6 +728,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
             chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
+            chart_protein.ChartAreas[0].AxisY.Minimum = -3;
+            chart_protein.ChartAreas[0].AxisY.Maximum = 3;
+
 
         }
         public void loadDataGridView()
@@ -1166,44 +1169,47 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         private void preparedDataForBestPathSearch(ProtienchartDataValues chartdata)
         {
-            var peptides = chartdata.PeptideSeq.Distinct().ToList();
+
             var experimentTime = chartdata.x.Distinct().OrderBy(x => x).ToList();
 
-            var inputForBestPathSearch = new float[peptides.Count, experimentTime.Count];
+            var inputForBestPathSearch = new float[chartdata.x.Count / experimentTime.Count, experimentTime.Count];
 
             for (int i = 0; i < chartdata.x.Count; i++)
             {
-                var peptidedindex = peptides.IndexOf(chartdata.PeptideSeq[i]);
-                inputForBestPathSearch[peptidedindex, experimentTime.IndexOf((int)chartdata.x[i])] = ((Double.IsNaN(chartdata.y[i]))) ? 0 : (float)chartdata.y[i];
+
+                inputForBestPathSearch[(int)i / experimentTime.Count,
+                    experimentTime.IndexOf((int)chartdata.x[i])] =
+
+                    ((Double.IsNaN(chartdata.y[i]))) ? float.NaN : (float)chartdata.y[i];
             }
 
             while (chart_protein.Series.Count > 2)
                 chart_protein.Series.RemoveAt(chart_protein.Series.Count - 1);
 
             Labeling_Path.Label_Path lp = new Label_Path();
-            var bestpaths = lp.Labeling_Path_Fractional_Synthesis(inputForBestPathSearch, peptides.Count, experimentTime.Count(), 0, 0);
+            var bestpaths = lp.Labeling_Path_Fractional_Synthesis(inputForBestPathSearch, inputForBestPathSearch.GetLength(0), experimentTime.Count(), 0, 0);
 
             #region helper function
             ////=================================================================================================
             ////=================================================================================================
             ////=================================================================================================
-            //var mydata = Helper.BasicFunctions.GetBestPath(inputForBestPathSearch);
-            //foreach (var path in mydata)
-            //{
-            //    Series s = new Series();
-            //    s.Name = Environment.TickCount.ToString() + path[0].ToString() + path[1].ToString() + path.Sum().ToString();
-            //    //s.Points.DataBindXY(experimentTime, path);
-            //    for (int i = 0; i < path.Count; i++)
-            //    {
-            //        if (!double.IsNaN(path[i]))
-            //        {
-            //            s.Points.AddXY(experimentTime[i], path[i]);
-            //        }
-            //    }
+            ////var mydata = Helper.BasicFunctions.GetBestPath(inputForBestPathSearch);
+            ////foreach (var path in mydata)
+            ////{
+            ////    Series s = new Series();
+            ////    s.Name = Environment.TickCount.ToString() + path[0].ToString() + path[1].ToString() + path.Sum().ToString();
+            ////    //s.Points.DataBindXY(experimentTime, path);
+            ////    for (int i = 0; i < path.Count; i++)
+            ////    {
+            ////        if (!double.IsNaN(path[i]))
+            ////        {
+            ////            s.Points.AddXY(experimentTime[i], path[i]);
+            ////        }
+            ////    }
 
-            //    s.ChartType = SeriesChartType.Line;
-            //    chart_protein.Series.Add(s);
-            //}
+            ////    s.ChartType = SeriesChartType.Line;
+            ////    chart_protein.Series.Add(s);
+            ////}
 
             ////=================================================================================================
             ////=================================================================================================
@@ -1226,20 +1232,37 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 var temp_yval = new List<float>();
                 var value_indexs = path_indexs.Split(' ');
 
-                foreach (var index in value_indexs)
-                {
-                    var temp = index.Split(',');
-                    temp_yval.Add(inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
-                }
+                ////foreach (var index in value_indexs)
+                ////{
+                ////    var temp = index.Split(',');
+                ////    temp_yval.Add(inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
+                ////}
 
-                best_scores.Add(float.Parse(score));
-                best_paths.Add(temp_yval);
+                ////best_scores.Add(float.Parse(score));
+                ////best_paths.Add(temp_yval);
 
 
 
                 Series s = new Series();
                 s.Name = score.ToString() + path;
-                s.Points.DataBindXY(experimentTime, temp_yval);
+                //s.Points.DataBindXY(experimentTime, temp_yval);
+
+                for (int i = 0; i < value_indexs.Length; i++)
+                {
+                    var temp = value_indexs[i].Split(',');
+                    if (i == 0)
+                    {
+                        if (double.IsNaN(inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]))
+                            s.Points.AddXY(experimentTime[i], 0);
+                        else s.Points.AddXY(experimentTime[i], inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
+                    }
+                    else if (!double.IsNaN(inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]))
+                    {
+                        s.Points.AddXY(experimentTime[i], inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
+                    }
+                }
+
+
                 s.ChartType = SeriesChartType.Line;
                 chart_protein.Series.Add(s);
 
