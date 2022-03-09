@@ -1171,15 +1171,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         {
 
             var experimentTime = chartdata.x.Distinct().OrderBy(x => x).ToList();
-
             var inputForBestPathSearch = new float[chartdata.x.Count / experimentTime.Count, experimentTime.Count];
-
             for (int i = 0; i < chartdata.x.Count; i++)
             {
-
-                inputForBestPathSearch[(int)i / experimentTime.Count,
-                    experimentTime.IndexOf((int)chartdata.x[i])] =
-
+                inputForBestPathSearch[(int)i / experimentTime.Count, experimentTime.IndexOf((int)chartdata.x[i])] =
                     ((Double.IsNaN(chartdata.y[i]))) ? float.NaN : (float)chartdata.y[i];
             }
 
@@ -1189,33 +1184,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             Labeling_Path.Label_Path lp = new Label_Path();
             var bestpaths = lp.Labeling_Path_Fractional_Synthesis(inputForBestPathSearch, inputForBestPathSearch.GetLength(0), experimentTime.Count(), 0, 0);
 
-            #region helper function
-            ////=================================================================================================
-            ////=================================================================================================
-            ////=================================================================================================
-            ////var mydata = Helper.BasicFunctions.GetBestPath(inputForBestPathSearch);
-            ////foreach (var path in mydata)
-            ////{
-            ////    Series s = new Series();
-            ////    s.Name = Environment.TickCount.ToString() + path[0].ToString() + path[1].ToString() + path.Sum().ToString();
-            ////    //s.Points.DataBindXY(experimentTime, path);
-            ////    for (int i = 0; i < path.Count; i++)
-            ////    {
-            ////        if (!double.IsNaN(path[i]))
-            ////        {
-            ////            s.Points.AddXY(experimentTime[i], path[i]);
-            ////        }
-            ////    }
 
-            ////    s.ChartType = SeriesChartType.Line;
-            ////    chart_protein.Series.Add(s);
-            ////}
-
-            ////=================================================================================================
-            ////=================================================================================================
-            ////=================================================================================================
-
-            #endregion
 
             #region linking path
             var best_scores = new List<float>();
@@ -1267,40 +1236,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 chart_protein.Series.Add(s);
 
             }
-
-            ////while (chart_protein.Series.Count > 2)
-            ////    chart_protein.Series.RemoveAt(chart_protein.Series.Count - 1);
-
-            ////if (best_scores.Count > 0)
-            ////{
-            ////    var index_of_best_score = best_scores.IndexOf(best_scores.Max());
-            ////    Series s = new Series();
-            ////    s.Name = "Best Path ";
-            ////    s.Points.DataBindXY(experimentTime, best_paths[index_of_best_score]);
-            ////    s.ChartType = SeriesChartType.Line;
-            ////    chart_protein.Series.Add(s);
-
-            ////    //if (best_scores.Count > 1)
-            ////    //{
-            ////    //    var temp = best_scores.OrderByDescending(x => x).ToList();
-            ////    //    index_of_best_score = best_scores.IndexOf(temp[1]);
-            ////    //    s = new Series();
-            ////    //    s.Name = "Best Path 2";
-            ////    //    s.Points.DataBindXY(experimentTime, best_paths[index_of_best_score]);
-            ////    //    s.ChartType = SeriesChartType.Line;
-            ////    //    chart_protein.Series.Add(s);
-
-            ////    //    index_of_best_score = best_scores.IndexOf(temp[temp.Count - 1]);
-            ////    //    s = new Series();
-            ////    //    s.Name = "worest  Path ";
-            ////    //    s.Points.DataBindXY(experimentTime, best_paths[index_of_best_score]);
-            ////    //    s.ChartType = SeriesChartType.Line;
-            ////    //    chart_protein.Series.Add(s);
-
-            ////    //}
-
-            ////}
-            ///
+            
             #endregion
 
         }
