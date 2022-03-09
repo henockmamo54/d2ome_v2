@@ -55,7 +55,7 @@ namespace v2.Helper
 
 
                     // check montonosity. if the next data point is greater than the current value, choose it as the next path
-                    if (inputdata[i, j] > previous_dataPoint)
+                    if (inputdata[i, j] < 1.2 && inputdata[i, j] > 0 && inputdata[i, j] > previous_dataPoint)
                     {
                         temp_path_i.Add(inputdata[i, j]);
                     }
@@ -66,7 +66,7 @@ namespace v2.Helper
 
                         for (int k = 0; k < rows; k++)
                         {
-                            if (inputdata[k, j] >= previous_dataPoint && ((inputdata[k, j] - previous_dataPoint) <= min_value))
+                            if (inputdata[k, j] < 1.2 && inputdata[k, j] > 0 && inputdata[k, j] >= previous_dataPoint && ((inputdata[k, j] - previous_dataPoint) <= min_value))
                             {
                                 min_value = inputdata[k, j] - previous_dataPoint;
                                 next_value = inputdata[k, j];
@@ -78,7 +78,7 @@ namespace v2.Helper
                         {
                             for (int k = 0; k < rows; k++)
                             {
-                                if (Math.Abs(inputdata[k, j] - previous_dataPoint) <= min_value)
+                                if (inputdata[k, j] < 1.2 && inputdata[k, j] >0 && Math.Abs(inputdata[k, j] - previous_dataPoint) <= min_value)
                                 {
                                     min_value = Math.Abs(inputdata[k, j] - previous_dataPoint);
                                     next_value = inputdata[k, j];
