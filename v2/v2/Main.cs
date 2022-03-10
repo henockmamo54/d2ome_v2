@@ -12,6 +12,7 @@ using v2.Helper;
 using v2.Model;
 using static v2.ProteinExperimentDataReader;
 using Labeling_Path;
+using MathNet.Numerics.Statistics;
 
 
 namespace v2
@@ -1170,6 +1171,11 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
         private void preparedDataForBestPathSearch(ProtienchartDataValues chartdata)
         {
 
+            // clear previous plots
+            while (chart_protein.Series.Count > 2)
+                chart_protein.Series.RemoveAt(chart_protein.Series.Count - 1);
+
+
             var experimentTime = chartdata.x.Distinct().OrderBy(x => x).ToList();
             var inputForBestPathSearch = new float[chartdata.x.Count / experimentTime.Count, experimentTime.Count];
             for (int i = 0; i < chartdata.x.Count; i++)
@@ -1178,8 +1184,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     ((Double.IsNaN(chartdata.y[i]))) ? float.NaN : (float)chartdata.y[i];
             }
 
-            while (chart_protein.Series.Count > 2)
-                chart_protein.Series.RemoveAt(chart_protein.Series.Count - 1);
+
 
             Labeling_Path.Label_Path lp = new Label_Path();
             var bestpaths = lp.Labeling_Path_Fractional_Synthesis2(inputForBestPathSearch, inputForBestPathSearch.GetLength(0), experimentTime.Count(), 0, 0);
@@ -1225,7 +1230,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                             s.Points.AddXY(experimentTime[i], 0);
                         else s.Points.AddXY(experimentTime[i], inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
                     }
-                    else if ( int.Parse(temp[0]) != 0 && int.Parse(temp[1]) != 0 &&
+                    else if (int.Parse(temp[0]) != 0 && int.Parse(temp[1]) != 0 &&
                         !double.IsNaN(inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]))
                     {
                         s.Points.AddXY(experimentTime[i], inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
@@ -1240,6 +1245,37 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
             #endregion
 
+
+            #region median calculation
+            var medialdata = new List<double>();
+            var experimenttime_withdata = new List<int>();
+
+            foreach (int t in experimentTime)
+            {
+                var indices = Enumerable.Range(0, chartdata.x.Count).Where(i => chartdata.x[i] == t).ToList();   //chartdata.x.Where(x => x == 72).ToList();
+                var temp = new List<double>();
+                foreach (int i in indices)
+                {
+                    if (!double.IsNaN(chartdata.y[i]))
+                        temp.Add(chartdata.y[i]);
+                }
+                var computed_median = temp.Median(); // Helper.BasicFunctions.getMedian(temp);
+                if (!double.IsNaN(computed_median))
+                {
+                    medialdata.Add(computed_median);
+                    experimenttime_withdata.Add(t);
+                }
+            }
+
+            Series s1 = new Series();
+            s1.Name = "Median";
+            s1.Points.DataBindXY(experimenttime_withdata, medialdata);
+            s1.ChartType = SeriesChartType.Line;
+            s1.Color = Color.Red;
+            s1.BorderWidth = 4;
+            chart_protein.Series.Add(s1);
+
+            #endregion
         }
 
         public string formatdoubletothreedecimalplace(double n)

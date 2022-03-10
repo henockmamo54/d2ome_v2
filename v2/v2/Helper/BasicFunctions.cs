@@ -12,6 +12,23 @@ namespace v2.Helper
         {
             return i0 / (i0 + i1 + i2 + i3 + i4 + i5);
         }
+
+        public static double getMedian(List<double> sourceNumbers)
+        {
+            //Framework 2.0 version of this method. there is an easier way in F4        
+            if (sourceNumbers == null || sourceNumbers.Count == 0)
+                return double.NaN;
+            //throw new System.Exception("Median of empty array not defined.");
+
+            //make sure the list is sorted, but use a new array
+            double[] sortedPNumbers = sourceNumbers.OrderBy(x => x).ToArray();
+
+            //get the median
+            int size = sortedPNumbers.Length;
+            int mid = size / 2;
+            double median = (size % 2 != 0) ? (double)sortedPNumbers[mid] : ((double)sortedPNumbers[mid] + (double)sortedPNumbers[mid - 1]) / 2;
+            return median;
+        }
         public static string formatdoubletothreedecimalplace(double n)
         {
             var tempval = "";
@@ -78,7 +95,7 @@ namespace v2.Helper
                         {
                             for (int k = 0; k < rows; k++)
                             {
-                                if (inputdata[k, j] < 1.2 && inputdata[k, j] >0 && Math.Abs(inputdata[k, j] - previous_dataPoint) <= min_value)
+                                if (inputdata[k, j] < 1.2 && inputdata[k, j] > 0 && Math.Abs(inputdata[k, j] - previous_dataPoint) <= min_value)
                                 {
                                     min_value = Math.Abs(inputdata[k, j] - previous_dataPoint);
                                     next_value = inputdata[k, j];
