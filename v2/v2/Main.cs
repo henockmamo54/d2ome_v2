@@ -95,7 +95,7 @@ namespace v2
             chart_protein.Series["Series2"]["LineTension"] = "0.1";
 
             chart_peptide.Series["Series3"].BorderWidth = 1;
-            chart_protein.Series["Series2"].BorderWidth = 1;
+            chart_protein.Series["Series2"].BorderWidth = 4;
 
             chart_peptide.Series["Series3"].Color = Color.Navy;
             chart_protein.Series["Series2"].Color = Color.Navy;
@@ -1264,6 +1264,11 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 {
                     medialdata.Add(computed_median);
                     experimenttime_withdata.Add(t);
+                }
+                else if (t == 0)
+                {
+                    medialdata.Add(0);
+                    experimenttime_withdata.Add(0);
                 }
             }
 
