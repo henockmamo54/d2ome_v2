@@ -728,8 +728,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
             chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
             chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
-            chart_protein.ChartAreas[0].AxisY.Minimum = -3;
-            chart_protein.ChartAreas[0].AxisY.Maximum = 3;
+            chart_protein.ChartAreas[0].AxisY.Minimum = -1.5;
+            chart_protein.ChartAreas[0].AxisY.Maximum = 2;
 
 
         }
@@ -1182,7 +1182,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 chart_protein.Series.RemoveAt(chart_protein.Series.Count - 1);
 
             Labeling_Path.Label_Path lp = new Label_Path();
-            var bestpaths = lp.Labeling_Path_Fractional_Synthesis(inputForBestPathSearch, inputForBestPathSearch.GetLength(0), experimentTime.Count(), 0, 0);
+            var bestpaths = lp.Labeling_Path_Fractional_Synthesis2(inputForBestPathSearch, inputForBestPathSearch.GetLength(0), experimentTime.Count(), 0, 0);
 
 
 
@@ -1225,7 +1225,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                             s.Points.AddXY(experimentTime[i], 0);
                         else s.Points.AddXY(experimentTime[i], inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
                     }
-                    else if (!double.IsNaN(inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]))
+                    else if ( int.Parse(temp[0]) != 0 && int.Parse(temp[1]) != 0 &&
+                        !double.IsNaN(inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]))
                     {
                         s.Points.AddXY(experimentTime[i], inputForBestPathSearch[int.Parse(temp[0]), int.Parse(temp[1])]);
                     }
@@ -1236,7 +1237,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 chart_protein.Series.Add(s);
 
             }
-            
+
             #endregion
 
         }
