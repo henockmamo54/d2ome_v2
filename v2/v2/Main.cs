@@ -13,7 +13,7 @@ using v2.Model;
 using static v2.ProteinExperimentDataReader;
 using Labeling_Path;
 using MathNet.Numerics.Statistics;
-
+using LBFGS_Library_Call;
 
 namespace v2
 {
@@ -800,6 +800,175 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 column.HeaderCell.Style.SelectionForeColor = Color.Black;
             }
         }
+        public unsafe void computation(RIA[] chart_data, string peptideSeq, int charge)
+        {
+
+            try
+            {
+                float[] TimeCourseDates = chart_data.Select(x => (float)(x.Time)).ToArray();
+                float[] TimeCourseI0Isotope = chart_data.Select(x => float.Parse(x.RIA_value.ToString())).ToArray();
+
+                var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).FirstOrDefault();
+                var current_peptide_M0 = current_peptide.M0 / 100;
+                var experiment_peptide_I0 = chart_data.Where(x => x.Time == 0).Select(x => x.RIA_value).FirstOrDefault();
+
+                var selected_Io = experiment_peptide_I0;
+                if (Math.Abs((double)current_peptide_M0 - (double)experiment_peptide_I0) > 0.1)
+                    selected_Io = current_peptide_M0;
+
+                double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
+                var neh = (double)current_peptide.Exchangeable_Hydrogens;
+                var I0_AtAsymptote = selected_Io * Math.Pow((1 - (pw / 1 - Helper.Constants.ph)), neh);
+                float rkd, rks, fx1;
+
+                var new_k = computeRate(TimeCourseDates.ToList(), TimeCourseI0Isotope.ToList(), (double)selected_Io, (double)I0_AtAsymptote, pw, neh);
+
+                Drawewpeptideplot(new_k, (double)selected_Io, neh, pw, TimeCourseDates.ToList());
+
+                //fixed (float* ptr_TimeCourseDates = TimeCourseDates)
+                //fixed (float* ptr_TimeCourseI0Isotope = TimeCourseI0Isotope)
+                //{
+                //    LBFGS lbfgs = new LBFGS(ptr_TimeCourseDates, TimeCourseDates.Count(), 1, "One_Compartment_exponential");
+                //    lbfgs.InitializeTime();
+                //    var nret = lbfgs.Optimize(ptr_TimeCourseI0Isotope, (float)I0_AtAsymptote, (float)(selected_Io - I0_AtAsymptote), &rkd, &rks, &fx1);
+                //    double fDegradationConstant = Math.Exp(lbfgs.fParams[0]);
+
+                //    Console.WriteLine(nret.ToString() + "=======>" + fDegradationConstant.ToString());
+
+                //    for (int i = 0; i < 2; i++)
+                //    {
+                //        Console.WriteLine("Address of list[{0}]={1}", i, (int)(ptr_TimeCourseI0Isotope + i));
+                //        Console.WriteLine("Value of list[{0}]={1}", i, *(ptr_TimeCourseI0Isotope + i));
+                //    }
+
+                //}
+
+                //unsafe
+                //{
+                //    fixed (float* ptr_TimeCourseDates = TimeCourseDates)
+                //    fixed (float* ptr_TimeCourseI0Isotope = TimeCourseI0Isotope)
+                //    {
+                //        LBFGS lbfgs = new LBFGS(ptr_TimeCourseDates, TimeCourseDates.Count(), 1, "One_Compartment_exponential");
+                //        lbfgs.InitializeTime();
+                //        var nret = lbfgs.Optimize(ptr_TimeCourseI0Isotope, (float)I0_AtAsymptote, (float)(selected_Io - I0_AtAsymptote), &rkd, &rks, &fx1);
+                //        double fDegradationConstant = Math.Exp(lbfgs.fParams[0]);
+
+                //        Console.WriteLine(nret.ToString() + "=======>" + fDegradationConstant.ToString());
+                //    }
+                //}
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+
+        }
+
+        private void Drawewpeptideplot(double k, double io, double neh, double pw, List<float> experiment_time)
+        {
+            try
+            {
+                double ph = 1.5574E-4;
+                List<double> mytimelist = new List<double>();
+                var comptedvalue = new List<double>();                
+
+                var temp_maxval = experiment_time.Max();
+                var step = temp_maxval / 200.0;
+                for (int j = 0; j * step < temp_maxval; j++)
+                { mytimelist.Add(j * step); }
+
+                foreach (double t in mytimelist)
+                {
+                    var val1 = io * Math.Pow(1 - (pw / (1 - ph)), neh);
+                    var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+                    var val = val1 + val2;
+                    comptedvalue.Add(val);
+                }
+
+
+                Series s1 = new Series();
+                s1.Name = "Median";
+                s1.Points.DataBindXY(mytimelist, comptedvalue);
+                s1.ChartType = SeriesChartType.Line;
+                s1.Color = Color.Red;
+                s1.BorderWidth = 4;
+                chart_peptide.Series.Add(s1);
+
+
+            }
+            catch (Exception e) { Console.WriteLine("Error => computeExpectedCurvePoints(), " + e.Message); }
+
+        }
+
+        public static double computeRate(List<float> TimeCourseDates, List<float> TimeCourseI0Isotope, double nature_Io, double I0_AtAsymptote,
+            double pw, double neh)
+        {
+            double ph = 1.5574E-4;
+            float rkd, rks, fx1;
+
+            double previous_teta = 0;
+            double teta = Math.Log(1E-5);
+            double fit_error = 1;
+
+            while (Math.Abs(teta - previous_teta) > 1E-8)
+            {
+                float k = (float)Math.Exp(teta);
+
+                // compute derivatives for each time point
+                List<double> y = new List<double>();
+                foreach (var t in TimeCourseDates)
+                {
+                    double temp = (double)((nature_Io - I0_AtAsymptote) * Math.Exp(-k * t) * (-t) * k);
+                    y.Add(temp);
+                }
+
+                //comute del y
+                List<double> del_y = new List<double>();
+                for (int i = 0; i < TimeCourseI0Isotope.Count; i++)
+                {
+                    var fit_value = I0_AtAsymptote + (nature_Io - I0_AtAsymptote) * Math.Exp(-k * TimeCourseDates[i]);
+                    del_y.Add((double)(TimeCourseI0Isotope[i] - fit_value));
+                }
+
+                // compute yT*y
+                double val_1 = y.Select(x => x * x).ToList().Sum();
+
+                //compute yT*del_y
+                double val_2 = 0;
+                for (int i = 0; i < del_y.Count; i++)
+                {
+                    val_2 = val_2 + (del_y[i] * y[i]);
+                }
+
+                double del_teta = val_2 / val_1;
+                previous_teta = teta;
+                teta = teta + 0.0001 * del_teta;
+
+                //comute fit error
+
+                var previous_er = fit_error;
+                fit_error = 0;
+                for (int i = 0; i < TimeCourseI0Isotope.Count; i++)
+                {
+                    var fit_value = I0_AtAsymptote + (nature_Io - I0_AtAsymptote) * Math.Exp(-Math.Exp(teta) * TimeCourseDates[i]);
+                    fit_error += Math.Abs((TimeCourseI0Isotope[i] - fit_value));
+                }
+
+                Console.WriteLine(Math.Exp(teta) + " , " + Math.Abs(teta - previous_teta) + " , fit_error = " + fit_error);
+
+                Console.WriteLine(previous_er - fit_error);
+
+            }
+
+            Console.WriteLine("==> k = " + Math.Exp(teta).ToString());
+
+            return Math.Exp(teta);
+
+        }
+
+
         public void loadPeptideChart(string peptideSeq, int charge, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, double Rateconst = Double.NaN, double RSquare = Double.NaN)
         {
             try
@@ -815,6 +984,9 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
                 //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
+
+                computation(chart_data, peptideSeq, charge);
+
 
                 #endregion
 

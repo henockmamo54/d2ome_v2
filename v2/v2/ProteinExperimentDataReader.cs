@@ -298,7 +298,7 @@ namespace v2
                             neh = (double)(peptides[i].Exchangeable_Hydrogens);
                             k = (double)(peptides[i].Rateconst);
 
-                            var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                            var val1 = io * Math.Pow(1 - (pw / (1 - ph)), neh);
                             var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
 
 
@@ -362,7 +362,7 @@ namespace v2
                             neh = (double)(peptides[i].Exchangeable_Hydrogens);
                             k = (double)(peptides[i].Rateconst);
 
-                            var val1 = io * Math.Pow(1 - (pw / (1 - pw)), neh);
+                            var val1 = io * Math.Pow(1 - (pw / (1 - ph)), neh);
                             var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
 
 
@@ -384,6 +384,7 @@ namespace v2
 
 
         }
+
         public void computeRSquare()
         {
             temp_theoreticalI0Values = new List<TheoreticalI0Value>();
