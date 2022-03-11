@@ -823,7 +823,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 var new_k = computeRate(TimeCourseDates.ToList(), TimeCourseI0Isotope.ToList(), (double)selected_Io, (double)I0_AtAsymptote, pw, neh);
 
-                Drawewpeptideplot(new_k, (double)selected_Io, neh, pw, TimeCourseDates.ToList());
+                Drawewpeptideplot(new_k, (double)selected_Io, (double)I0_AtAsymptote, neh, pw, TimeCourseDates.ToList());
 
                 //fixed (float* ptr_TimeCourseDates = TimeCourseDates)
                 //fixed (float* ptr_TimeCourseI0Isotope = TimeCourseI0Isotope)
@@ -843,19 +843,6 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 //}
 
-                //unsafe
-                //{
-                //    fixed (float* ptr_TimeCourseDates = TimeCourseDates)
-                //    fixed (float* ptr_TimeCourseI0Isotope = TimeCourseI0Isotope)
-                //    {
-                //        LBFGS lbfgs = new LBFGS(ptr_TimeCourseDates, TimeCourseDates.Count(), 1, "One_Compartment_exponential");
-                //        lbfgs.InitializeTime();
-                //        var nret = lbfgs.Optimize(ptr_TimeCourseI0Isotope, (float)I0_AtAsymptote, (float)(selected_Io - I0_AtAsymptote), &rkd, &rks, &fx1);
-                //        double fDegradationConstant = Math.Exp(lbfgs.fParams[0]);
-
-                //        Console.WriteLine(nret.ToString() + "=======>" + fDegradationConstant.ToString());
-                //    }
-                //}
 
             }
             catch (Exception ex)
@@ -866,13 +853,13 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
         }
 
-        private void Drawewpeptideplot(double k, double io, double neh, double pw, List<float> experiment_time)
+        private void Drawewpeptideplot(double k, double io_nature, double io_assymptot, double neh, double pw, List<float> experiment_time)
         {
             try
             {
                 double ph = 1.5574E-4;
                 List<double> mytimelist = new List<double>();
-                var comptedvalue = new List<double>();                
+                var comptedvalue = new List<double>();
 
                 var temp_maxval = experiment_time.Max();
                 var step = temp_maxval / 200.0;
@@ -881,12 +868,13 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 foreach (double t in mytimelist)
                 {
-                    var val1 = io * Math.Pow(1 - (pw / (1 - ph)), neh);
-                    var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
-                    var val = val1 + val2;
+                    //var val1 = io * Math.Pow(1 - (pw / (1 - ph)), neh);
+                    //var val2 = io * Math.Pow(Math.E, -1 * k * t) * (1 - (Math.Pow(1 - (pw / (1 - ph)), neh)));
+                    var val = io_assymptot + (io_nature - io_assymptot) * Math.Exp(-k * t);
                     comptedvalue.Add(val);
                 }
 
+                chart_peptide.Series.Remove(chart_peptide.Series.FindByName("Median"));
 
                 Series s1 = new Series();
                 s1.Name = "Median";
@@ -944,21 +932,10 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 double del_teta = val_2 / val_1;
                 previous_teta = teta;
-                teta = teta + 0.0001 * del_teta;
-
-                //comute fit error
-
-                var previous_er = fit_error;
-                fit_error = 0;
-                for (int i = 0; i < TimeCourseI0Isotope.Count; i++)
-                {
-                    var fit_value = I0_AtAsymptote + (nature_Io - I0_AtAsymptote) * Math.Exp(-Math.Exp(teta) * TimeCourseDates[i]);
-                    fit_error += Math.Abs((TimeCourseI0Isotope[i] - fit_value));
-                }
+                teta = teta + 0.001 * del_teta;
 
                 Console.WriteLine(Math.Exp(teta) + " , " + Math.Abs(teta - previous_teta) + " , fit_error = " + fit_error);
 
-                Console.WriteLine(previous_er - fit_error);
 
             }
 
