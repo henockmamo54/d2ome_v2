@@ -832,7 +832,15 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 Drawewpeptideplot(new_k, (double)selected_Io, (double)I0_AtAsymptote, neh, pw, TimeCourseDates.ToList());
 
-                //fixed (float* ptr_TimeCourseDates = TimeCourseDates)
+                //float[] new_TimeCourseDates = new float[500];
+
+                //for (int i = 0; i < TimeCourseDates.Length; i++)
+                //{
+                //    new_TimeCourseDates[i] = TimeCourseDates[i];
+                //}
+
+
+                //fixed (float* ptr_TimeCourseDates = new_TimeCourseDates)
                 //fixed (float* ptr_TimeCourseI0Isotope = TimeCourseI0Isotope)
                 //{
                 //    LBFGS lbfgs = new LBFGS(ptr_TimeCourseDates, TimeCourseDates.Count(), 1, "One_Compartment_exponential");
