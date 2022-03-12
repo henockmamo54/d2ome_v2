@@ -805,6 +805,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
             try
             {
+                var scale = 60;
                 chart_data = chart_data.Where(x => (double)x.RIA_value > 0).ToArray();
 
                 float[] TimeCourseDates = chart_data.Select(x => (float)(x.Time)).ToArray();
@@ -839,24 +840,24 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 //    new_TimeCourseDates[i] = TimeCourseDates[i];
                 //}
 
+                float[] new_TimeCourseDates = TimeCourseDates.Select(x => x / scale).ToArray();
+                fixed (float* ptr_TimeCourseDates = new_TimeCourseDates)
+                fixed (float* ptr_TimeCourseI0Isotope = TimeCourseI0Isotope)
+                {
+                    LBFGS lbfgs = new LBFGS(ptr_TimeCourseDates, TimeCourseDates.Count(), 1, "One_Compartment_exponential");
+                    lbfgs.InitializeTime();
+                    var nret = lbfgs.Optimize(ptr_TimeCourseI0Isotope, (float)I0_AtAsymptote, (float)(selected_Io - I0_AtAsymptote), &rkd, &rks, &fx1);
+                    double fDegradationConstant = Math.Exp(lbfgs.fParams[0]) / 60;
 
-                //fixed (float* ptr_TimeCourseDates = new_TimeCourseDates)
-                //fixed (float* ptr_TimeCourseI0Isotope = TimeCourseI0Isotope)
-                //{
-                //    LBFGS lbfgs = new LBFGS(ptr_TimeCourseDates, TimeCourseDates.Count(), 1, "One_Compartment_exponential");
-                //    lbfgs.InitializeTime();
-                //    var nret = lbfgs.Optimize(ptr_TimeCourseI0Isotope, (float)I0_AtAsymptote, (float)(selected_Io - I0_AtAsymptote), &rkd, &rks, &fx1);
-                //    double fDegradationConstant = Math.Exp(lbfgs.fParams[0]);
+                    Console.WriteLine(nret.ToString() + "=======>" + fDegradationConstant.ToString());
 
-                //    Console.WriteLine(nret.ToString() + "=======>" + fDegradationConstant.ToString());
+                    //for (int i = 0; i < 2; i++)
+                    //{
+                    //    Console.WriteLine("Address of list[{0}]={1}", i, (int)(ptr_TimeCourseI0Isotope + i));
+                    //    Console.WriteLine("Value of list[{0}]={1}", i, *(ptr_TimeCourseI0Isotope + i));
+                    //}
 
-                //    for (int i = 0; i < 2; i++)
-                //    {
-                //        Console.WriteLine("Address of list[{0}]={1}", i, (int)(ptr_TimeCourseI0Isotope + i));
-                //        Console.WriteLine("Value of list[{0}]={1}", i, *(ptr_TimeCourseI0Isotope + i));
-                //    }
-
-                //}
+                }
 
 
             }
@@ -889,14 +890,14 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     comptedvalue.Add(val);
                 }
 
-                chart_peptide.Series.Remove(chart_peptide.Series.FindByName("Median"));
+                chart_peptide.Series.Remove(chart_peptide.Series.FindByName("new_k"));
 
                 Series s1 = new Series();
-                s1.Name = "Median";
+                s1.Name = "new_k";
                 s1.Points.DataBindXY(mytimelist, comptedvalue);
                 s1.ChartType = SeriesChartType.Line;
                 s1.Color = Color.Red;
-                s1.BorderWidth = 4;
+                s1.BorderWidth = 2;
                 chart_peptide.Series.Add(s1);
 
 
@@ -949,7 +950,12 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 previous_teta = teta;
                 teta = teta + 0.001 * del_teta;
 
-                Console.WriteLine(Math.Exp(teta) + " , " + Math.Abs(teta - previous_teta) + " , fit_error = " + fit_error);
+                //Console.WriteLine(Math.Exp(teta) + " , " + Math.Abs(teta - previous_teta) + " , fit_error = " + fit_error);
+
+                if (double.IsNaN(teta))
+                {
+                    Console.WriteLine("Teta is null");
+                }
 
 
             }
