@@ -805,6 +805,8 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
             try
             {
+                chart_data = chart_data.Where(x => (double)x.RIA_value > 0).ToArray();
+
                 float[] TimeCourseDates = chart_data.Select(x => (float)(x.Time)).ToArray();
                 float[] TimeCourseI0Isotope = chart_data.Select(x => float.Parse(x.RIA_value.ToString())).ToArray();
 
@@ -812,9 +814,14 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 var current_peptide_M0 = current_peptide.M0 / 100;
                 var experiment_peptide_I0 = chart_data.Where(x => x.Time == 0).Select(x => x.RIA_value).FirstOrDefault();
 
-                var selected_Io = experiment_peptide_I0;
-                if (Math.Abs((double)current_peptide_M0 - (double)experiment_peptide_I0) > 0.1)
-                    selected_Io = current_peptide_M0;
+                double selected_Io = 0;
+                if (experiment_peptide_I0.HasValue)
+                    selected_Io = (double)experiment_peptide_I0;
+                else
+                    selected_Io = (double)current_peptide_M0;
+
+                if (experiment_peptide_I0.HasValue && Math.Abs((double)current_peptide_M0 - (double)experiment_peptide_I0) > 0.1)
+                    selected_Io = (double)current_peptide_M0;
 
                 double pw = proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE;
                 var neh = (double)current_peptide.Exchangeable_Hydrogens;
