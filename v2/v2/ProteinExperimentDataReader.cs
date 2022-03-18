@@ -219,6 +219,48 @@ namespace v2
 
 
         }
+        public void normalizeRIAValues()
+        {
+
+            List<RIA> normalizedRIAvalues = new List<RIA>();
+            foreach (Peptide p in this.peptides)
+            {
+                var datapoints = mergedRIAvalues.AsParallel().Where(x => x.PeptideSeq == p.PeptideSeq && x.Charge == p.Charge).ToList();
+
+                //select proper io
+                double I0 = (double)p.M0 / 100;
+                var zeroTimePoint = datapoints.Where(x => x.Time == 0).ToList();
+                if (zeroTimePoint.Any())
+                {
+                    if (Math.Abs((double)zeroTimePoint.FirstOrDefault().I0 - I0) < 0.1) { I0 = (double)zeroTimePoint.FirstOrDefault().I0; }
+                }
+
+                //
+
+                var BWE = filecontents[filecontents.Count - 1].BWE;
+                var IO_asymptote = I0 * (1 - (BWE / (1 - Helper.Constants.ph)) * p.Exchangeable_Hydrogens);
+
+                // normalize each time point
+                foreach (var d in datapoints)
+                {
+                    var BWE_t = filecontents.Where(x => x.time == d.Time).FirstOrDefault().BWE;
+                    var IO_t_asymptote = I0 * (1 - (BWE_t / (1 - Helper.Constants.ph)) * p.Exchangeable_Hydrogens);
+
+                    // compute the new value 
+                    var I0_t = IO_asymptote + (d.RIA_value - IO_t_asymptote) / (I0 - IO_t_asymptote) * (I0 - IO_asymptote);
+
+                    //update the value
+                    d.RIA_value = I0_t;
+                    normalizedRIAvalues.Add(d);
+                }
+
+            }
+
+            this.mergedRIAvalues = normalizedRIAvalues;
+
+
+
+        }
         public void mergeMultipleRIAPerDay2()
         {
             //var peptides = RIAvalues.Select(x => new { peptideSeq = x.peptideSeq, charge = x.charge }).Distinct().ToList(); 

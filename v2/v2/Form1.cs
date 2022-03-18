@@ -506,6 +506,7 @@ namespace v2
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.mergeMultipleRIAPerDay2();
+            proteinExperimentData.normalizeRIAValues();
             proteinExperimentData.computeTheoreticalCurvePoints();
             proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
             proteinExperimentData.computeRSquare();
