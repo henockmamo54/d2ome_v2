@@ -466,6 +466,9 @@ namespace v2
                         }
 
                         double RSquare = 1 - (rss / ss);
+                        if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
+                            RSquare = double.NaN;
+
                         r.RSquare = RSquare;
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
                         //temp_expectedI0Values.AddRange(temp_computedRIAValue);
