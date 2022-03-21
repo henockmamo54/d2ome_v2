@@ -496,6 +496,8 @@ namespace v2
 
                         var rss = rss_mo < rss_io ? rss_mo : rss_io;
                         double RSquare = 1 - (rss / ss);
+                        if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
+                            RSquare = double.NaN;
                         r.RSquare = RSquare;
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
 
