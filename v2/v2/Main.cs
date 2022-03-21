@@ -95,10 +95,10 @@ namespace v2
             chart_protein.Series["Series2"]["LineTension"] = "0.1";
 
             chart_peptide.Series["Series3"].BorderWidth = 2;
-            chart_protein.Series["Series2"].BorderWidth = 4;
+            chart_protein.Series["Series2"].BorderWidth = 2;
 
-            chart_peptide.Series["Series3"].Color = Color.Navy;
-            chart_protein.Series["Series2"].Color = Color.Navy;
+            chart_peptide.Series["Series3"].Color = Color.Purple;
+            chart_protein.Series["Series2"].Color = Color.Purple;
 
 
 
@@ -1387,7 +1387,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
-            preparedDataForBestPathSearch(chartdata);
+            //preparedDataForBestPathSearch(chartdata);
             try
             {
 
