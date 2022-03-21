@@ -94,7 +94,7 @@ namespace v2
             chart_peptide.Series["Series3"]["LineTension"] = "0.1";
             chart_protein.Series["Series2"]["LineTension"] = "0.1";
 
-            chart_peptide.Series["Series3"].BorderWidth = 1;
+            chart_peptide.Series["Series3"].BorderWidth = 2;
             chart_protein.Series["Series2"].BorderWidth = 4;
 
             chart_peptide.Series["Series3"].Color = Color.Navy;
@@ -831,7 +831,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 var new_k = computeRate(TimeCourseDates.ToList(), TimeCourseI0Isotope.ToList(), (double)selected_Io, (double)I0_AtAsymptote, pw, neh);
 
-                label20.Text = "New k (red_line): " + new_k;
+                
 
                 Drawewpeptideplot(new_k, (double)selected_Io, (double)I0_AtAsymptote, neh, pw, TimeCourseDates.ToList());
 
@@ -852,7 +852,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     double fDegradationConstant = Math.Exp(lbfgs.fParams[0]) / 60;
 
                     Console.WriteLine(nret.ToString() + "=======>" + fDegradationConstant.ToString());
-                    label19_LBFGS.Text = "LBFGS -> k : " + fDegradationConstant;
+                    
 
                     //for (int i = 0; i < 2; i++)
                     //{
@@ -901,7 +901,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 s1.ChartType = SeriesChartType.Line;
                 s1.Color = Color.Red;
                 s1.BorderWidth = 2;
-                chart_peptide.Series.Add(s1);
+                //chart_peptide.Series.Add(s1);
 
 
             }
