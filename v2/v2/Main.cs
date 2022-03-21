@@ -115,6 +115,8 @@ namespace v2
             textBox_ElutionWindow.Text = "1.0";
             textBox_peptideConsistency.Text = "4";
             textBox_peptideScore.Text = "20";
+            textBox_protein_score.Text = "40";
+            textBox_protein_consistency.Text = "4";
 
             comboBox_Enrichment.Enabled = false;
 
@@ -253,6 +255,59 @@ namespace v2
                     return;
                 }
 
+                //================================================================
+                //================================================================
+
+                // peptidescore
+
+                double protienscore = 0;
+                if (textBox_protein_score.Text.Length > 0)
+                {
+                    try
+                    {
+                        protienscore = double.Parse(textBox_protein_score.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Invalid Protein Identification Score. " + textBox_protein_score.Text +
+                            " Please, re-enter Elution Window\n");
+
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid Protein Identification Score. " + textBox_protein_score.Text +
+                           " Please, re-enter Elution Window\n");
+                    return;
+                }
+
+                // peptideconsistency
+
+                double protienconsistency = 0;
+                if (textBox_protein_consistency.Text.Length > 0)
+                {
+                    try
+                    {
+                        protienconsistency = double.Parse(textBox_protein_consistency.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Invalid Protein Consistency. " + textBox_protein_consistency.Text +
+                            " Please, re-enter. Peptide Consistency value of 4 or higher is suggested\n");
+
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid Protein Consistency. " + textBox_peptideConsistency.Text +
+                            " Please, re-enter. Peptide Consistency value of 4 or higher is suggested\n");
+                    return;
+                }
+                //================================================================
+                //================================================================
+
                 // rate constant
                 int rate_constant_choice = 0;
 
@@ -276,13 +331,14 @@ namespace v2
 
                 string quantstatefile = string.Format(@"mass_accuracy =  {0:f1} ppm  // mass accuracy: either in ppm or Da 
 MS1_Type = {1}	// data type of MS1, 1 - centroid, 0 - profile  
-protein_score       = 40     //minimum protein score
+protein_score       = {6:f1}     //minimum protein score
 peptide_score =  {2:f1} 	// minimum peptide score, ion score in Mascot, default is 1
 peptide_expectation = 0.05     // maximum peptide expectation in Mascot
 elutiontimewindow   =   {3}  // time window  (mins) to search for elution peak. From the time that highest scoring MS2 was triggered
-protein_consistency = {4}  // minimum number of experiments for protein consistency
+protein_consistency = {7}  // minimum number of experiments for protein consistency
 peptide_consistency = {4}   //mininum number of experiments for a peptide consistency
-NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2", massaccuracy, MS1_Type, peptidescore, elutionwindow, peptideconsistency, rate_constant_choice);
+NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2", massaccuracy, MS1_Type, peptidescore,
+elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienconsistency);
 
                 TextWriter tw2 = new StreamWriter(path + "\\quant.state");
                 //TextWriter tw2 = new StreamWriter("quant.state");
@@ -831,7 +887,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
 
                 var new_k = computeRate(TimeCourseDates.ToList(), TimeCourseI0Isotope.ToList(), (double)selected_Io, (double)I0_AtAsymptote, pw, neh);
 
-                
+
 
                 Drawewpeptideplot(new_k, (double)selected_Io, (double)I0_AtAsymptote, neh, pw, TimeCourseDates.ToList());
 
@@ -852,7 +908,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                     double fDegradationConstant = Math.Exp(lbfgs.fParams[0]) / 60;
 
                     Console.WriteLine(nret.ToString() + "=======>" + fDegradationConstant.ToString());
-                    
+
 
                     //for (int i = 0; i < 2; i++)
                     //{
@@ -1004,7 +1060,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 if (x_val.Count > 0)
                 {
                     chart_peptide.ChartAreas[0].AxisX.Interval = (int)x_val.Max() / 10;
-                    chart_peptide.ChartAreas[0].AxisX.Maximum = proteinExperimentData.experiment_time.Max() + 10;
+                    chart_peptide.ChartAreas[0].AxisX.Maximum = proteinExperimentData.experiment_time.Max() + 0.1;
                 }
 
 
