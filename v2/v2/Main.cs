@@ -817,43 +817,56 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["PeptideSeq"].HeaderText = "Peptide";
             dataGridView_peptide.Columns["SeqMass"].HeaderText = "m/z";
             dataGridView_peptide.Columns["IsotopeDeviation"].HeaderText = "Isotope Deviation";
-            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].HeaderText = "Exchangeable \nHydrogens";
+            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].HeaderText = "Exchangeable Hydrogens";
             dataGridView_peptide.Columns["Rateconst"].HeaderText = "Rate \nconstant";
             dataGridView_peptide.Columns["RSquare"].HeaderText = "R" + "\u00B2";
             dataGridView_peptide.Columns["RMSE_value"].HeaderText = "RMSE";
 
+            // enable AutoSizeColumnsMode
+            //dataGridView_peptide.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
             //set size for the columns
             foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
             {
-                column.MinimumWidth = 70;
+                column.MinimumWidth = 55;
+                column.Width = 51;
             }
-            dataGridView_peptide.Columns["Charge"].Width = 50;
-            dataGridView_peptide.Columns["RSquare"].Width = 50;
-            dataGridView_peptide.Columns["RMSE_value"].Width = 50;
-            dataGridView_peptide.Columns["Rateconst"].Width = 90;
-            dataGridView_peptide.Columns["PeptideSeq"].MinimumWidth = 170;
-            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].MinimumWidth = 100;
+            //dataGridView_peptide.Columns["Charge"].Width = 55;
+            //dataGridView_peptide.Columns["RSquare"].Width = 55;
+            //dataGridView_peptide.Columns["RMSE_value"].Width = 55;
+            //dataGridView_peptide.Columns["Rateconst"].Width = 55;
+            dataGridView_peptide.Columns["PeptideSeq"].MinimumWidth = 200;
+            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].MinimumWidth = 80;
+            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Width = 81; 
 
             //set number formationg for the columns
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
-            dataGridView_peptide.Columns["RMSE_value"].DefaultCellStyle.Format = "#0.####";
+            dataGridView_peptide.Columns["RMSE_value"].DefaultCellStyle.Format = "#0.###";
+            dataGridView_peptide.Columns["SeqMass"].DefaultCellStyle.Format = "#0.###";
+            dataGridView_peptide.Columns["IsotopeDeviation"].DefaultCellStyle.Format = "#0.###";
 
-            // resizeable columns
-            dataGridView_peptide.AllowUserToResizeColumns = true;
-            dataGridView_peptide.ColumnHeadersHeightSizeMode =
-         DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            ////   // resizeable columns
+            ////   dataGridView_peptide.AllowUserToResizeColumns = true;
+            ////   dataGridView_peptide.ColumnHeadersHeightSizeMode =
+            ////DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
 
-            dataGridView_peptide.AllowUserToResizeRows = false;
-            dataGridView_peptide.RowHeadersWidthSizeMode =
-                DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            ////   dataGridView_peptide.AllowUserToResizeRows = false;
+            ////   dataGridView_peptide.RowHeadersWidthSizeMode =
+            ////       DataGridViewRowHeadersWidthSizeMode.DisableResizing;
 
             // column selected hightlight
             dataGridView_peptide.EnableHeadersVisualStyles = false;
+            dataGridView_peptide.Columns["PeptideSeq"].AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 
             foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
             {
                 column.HeaderCell.Style.SelectionBackColor = Color.White;
                 column.HeaderCell.Style.SelectionForeColor = Color.Black;
+            }
+            //set size for the columns
+            foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
+            { 
+                column.Width = 51;
             }
         }
         public unsafe void computation(RIA[] chart_data, string peptideSeq, int charge)
