@@ -1004,7 +1004,7 @@ NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1,
                 if (x_val.Count > 0)
                 {
                     chart_peptide.ChartAreas[0].AxisX.Interval = (int)x_val.Max() / 10;
-                    chart_peptide.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
+                    chart_peptide.ChartAreas[0].AxisX.Maximum = proteinExperimentData.experiment_time.Max() + 0.01;
                 }
 
 
