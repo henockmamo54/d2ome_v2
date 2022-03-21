@@ -375,7 +375,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt")
                 {
                     //RedirectStandardInput = true,
-                    UseShellExecute = false,
+                    UseShellExecute = true,
                     WorkingDirectory = textBox_outputfolderpath.Text
                 };
                 // event handlers for output & error
@@ -1060,7 +1060,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 if (x_val.Count > 0)
                 {
                     chart_peptide.ChartAreas[0].AxisX.Interval = (int)x_val.Max() / 10;
-                    chart_peptide.ChartAreas[0].AxisX.Maximum = proteinExperimentData.experiment_time.Max() + 0.1;
+                    chart_peptide.ChartAreas[0].AxisX.Maximum = proteinExperimentData.experiment_time.Max() + 0.01;
                 }
 
 
@@ -1765,5 +1765,6 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             inputdata = new List<MzMLmzIDFilePair>();
             inputdata = temp;
         }
+
     }
 }
