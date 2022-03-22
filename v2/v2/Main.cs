@@ -785,7 +785,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
             chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
-            chart_protein.ChartAreas[0].AxisY.Minimum = -1.5;
+            chart_protein.ChartAreas[0].AxisY.Minimum = -0.1;
             chart_protein.ChartAreas[0].AxisY.Maximum = 2;
 
 
@@ -845,14 +845,14 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["SeqMass"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["IsotopeDeviation"].DefaultCellStyle.Format = "#0.###";
 
-            ////   // resizeable columns
-            ////   dataGridView_peptide.AllowUserToResizeColumns = true;
-            ////   dataGridView_peptide.ColumnHeadersHeightSizeMode =
-            ////DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            // resizeable columns
+            dataGridView_peptide.AllowUserToResizeColumns = true;
+            dataGridView_peptide.ColumnHeadersHeightSizeMode =
+         DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
 
-            ////   dataGridView_peptide.AllowUserToResizeRows = false;
-            ////   dataGridView_peptide.RowHeadersWidthSizeMode =
-            ////       DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridView_peptide.AllowUserToResizeRows = false;
+            dataGridView_peptide.RowHeadersWidthSizeMode =
+                DataGridViewRowHeadersWidthSizeMode.DisableResizing;
 
             // column selected hightlight
             dataGridView_peptide.EnableHeadersVisualStyles = false;
