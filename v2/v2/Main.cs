@@ -844,6 +844,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["RMSE_value"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["SeqMass"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["IsotopeDeviation"].DefaultCellStyle.Format = "#0.###";
+            dataGridView_peptide.Columns["Abundance"].DefaultCellStyle.Format = "G2";
 
             // resizeable columns
             dataGridView_peptide.AllowUserToResizeColumns = true;
@@ -1382,6 +1383,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeRIAPerExperiment();
+            proteinExperimentData.computeAverageA0();
             proteinExperimentData.mergeMultipleRIAPerDay2();
             proteinExperimentData.computeTheoreticalCurvePoints();
             proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();

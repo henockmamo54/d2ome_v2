@@ -362,6 +362,22 @@ namespace v2
 
 
         }
+
+        public void computeAverageA0()
+        {
+            foreach (Peptide peptide in peptides)
+            {
+                var experimentRecordsPerPeptide = this.experimentRecords.Where(p => p.PeptideSeq == peptide.PeptideSeq
+                            & p.Charge == peptide.Charge & p.IonScore != 0 & p.I0 != null & p.I0 > 0).Select(x => x.I0).ToList();
+                if (experimentRecordsPerPeptide.Count() == 0) peptide.Abundance = 0;
+                else
+                {
+                    var average_value = experimentRecordsPerPeptide.Average().Value;
+                    peptide.Abundance = average_value;
+                }
+            }
+        }
+
         public void computeTheoreticalCurvePointsBasedOnExperimentalI0()
         {
             try
@@ -443,7 +459,7 @@ namespace v2
 
                     var temp_computedRIAValue = theoreticalI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
                     var temp_computedRIAValue_withexperimentalIO = theoreticalI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
-                     
+
 
                     if (temp_computedRIAValue_withexperimentalIO.Count == 0)
                     {
