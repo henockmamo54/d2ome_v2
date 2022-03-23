@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using v2.Helper;
 using v2.Model;
 using static v2.Helper.ReadFilesInfo_txt;
@@ -474,7 +472,9 @@ namespace v2
                         double ss = 0;
                         double rss = 0;
                         double RSquare = double.NaN;
-                        double diff = 0; 
+                        double diff = 0;
+                        double dn = 0;
+                        double IO_assymptot = (double)(r.M0 / 100 * Math.Pow((1 - (filecontents[filecontents.Count - 1].BWE / (1 - Helper.Constants.ph))), (double)r.Exchangeable_Hydrogens));
 
                         foreach (var p in temp_experimentalvalue)
                         {
@@ -484,19 +484,25 @@ namespace v2
                                 ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
                                 rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
                                 diff = computedRIAValue > 0 ? diff + Math.Abs((double)p.RIA_value - computedRIAValue) : diff;
+                                //dn = dn + Math.Pow(p.Time, 2) * Math.Pow((double)(p.RIA_value - IO_assymptot), 2);
+                                dn = dn + Math.Pow(p.Time, 2) * Math.Pow((double)(computedRIAValue - IO_assymptot), 2);
                             }
                         }
 
-                        if (r.Rateconst > 0.0006) RSquare = 1 - (rss / ss);
-                        else RSquare = 1 - (diff);
+                        //if (r.Rateconst > 0.0006) RSquare = 1 - (rss / ss);
+                        //else RSquare = 1 - (diff);
+
+                        RSquare = 1 - (rss / ss);
 
                         if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
                             RSquare = double.NaN;
 
 
+                        var std_k = dn == 0 ? double.NaN : Math.Sqrt(rss / temp_experimentalvalue.Count()) / (dn);
 
 
                         r.RSquare = RSquare;
+                        r.std_k = Math.Sqrt(std_k);
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
                         //temp_expectedI0Values.AddRange(temp_computedRIAValue);
                         foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
@@ -510,6 +516,15 @@ namespace v2
                         double RSquare = double.NaN;
                         double diff_mo = 0;
                         double diff_io = 0;
+
+                        double dn_mo = 0;
+                        double dn_io = 0;
+                        var io_experimental = temp_experimentalvalue.Where(x => x.Time == 0).Select(x => x.RIA_value).FirstOrDefault().Value;
+                        double IO_assymptot_mo = (double)(r.M0 / 100 * Math.Pow((1 - (filecontents[filecontents.Count - 1].BWE / (1 - Constants.ph))), (double)r.Exchangeable_Hydrogens));
+                        double IO_assymptot_io = (double)(io_experimental * Math.Pow((1 - (filecontents[filecontents.Count - 1].BWE / (1 - Constants.ph))), (double)r.Exchangeable_Hydrogens));
+
+
+
 
                         foreach (var p in temp_experimentalvalue)
                         {
@@ -525,26 +540,47 @@ namespace v2
                                 diff_mo = computedRIAValue_mo > 0 ? diff_mo + Math.Abs((double)p.RIA_value - computedRIAValue_mo) : diff_mo;
                                 diff_io = computedRIAValue_io > 0 ? diff_io + Math.Abs((double)p.RIA_value - computedRIAValue_io) : diff_io;
 
+                                //dn_io = dn_io + Math.Pow(p.Time, 2) * Math.Pow((double)(p.RIA_value - IO_assymptot_io), 2);
+                                //dn_mo = dn_mo + Math.Pow(p.Time, 2) * Math.Pow((double)(p.RIA_value - IO_assymptot_mo), 2);
+
+                                dn_io = dn_io + Math.Pow(p.Time, 2) * Math.Pow((double)(computedRIAValue_io - IO_assymptot_io), 2);
+                                dn_mo = dn_mo + Math.Pow(p.Time, 2) * Math.Pow((double)(computedRIAValue_mo - IO_assymptot_mo), 2);
+
                             }
                         }
 
-                        var rss = rss_mo < rss_io ? rss_mo : rss_io;
 
-                        if (r.Rateconst > 0.0006)
+                        //var rss = rss_mo < rss_io ? rss_mo : rss_io;
+                        double rss = double.NaN;
+                        double std_k = double.NaN;
+                        if (rss_mo < rss_io)
                         {
-                            RSquare = 1 - (rss / ss);
-                            if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
-                                RSquare = double.NaN;
-                            r.RSquare = RSquare;
-                            r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
+                            rss = rss_mo;
+                            std_k = dn_mo == 0 ? double.NaN : Math.Sqrt(rss / temp_experimentalvalue.Count()) / (dn_mo);
                         }
                         else
                         {
-                            var dif = rss_mo < rss_io ? diff_mo : diff_io;
-                            RSquare = 1 - dif;
+                            rss = rss_io;
+                            std_k = dn_io == 0 ? double.NaN : Math.Sqrt(rss / temp_experimentalvalue.Count()) / (dn_io);
                         }
 
+
+
+                        RSquare = 1 - (rss / ss);
+
+                        //if (r.Rateconst > 0.0006) 
+                        //    RSquare = 1 - (rss / ss); 
+                        //else
+                        //{
+                        //    var dif = rss_mo < rss_io ? diff_mo : diff_io;
+                        //    RSquare = 1 - dif;
+                        //}
+
+                        if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
+                            RSquare = double.NaN;
+
                         r.RSquare = RSquare;
+                        r.std_k = Math.Sqrt(std_k);
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
 
                         if (rss_mo < rss_io)

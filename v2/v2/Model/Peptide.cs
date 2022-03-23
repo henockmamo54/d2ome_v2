@@ -27,6 +27,7 @@ namespace v2.Model
         public int Order { get; set; }
         public double? Abundance { get; set; }
         public double? NDP { get; set; }
+        public double? std_k { get; set; }
 
     }
 }

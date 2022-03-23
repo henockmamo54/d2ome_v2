@@ -821,6 +821,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["Rateconst"].HeaderText = "Rate \nconstant";
             dataGridView_peptide.Columns["RSquare"].HeaderText = "R" + "\u00B2";
             dataGridView_peptide.Columns["RMSE_value"].HeaderText = "RMSE";
+            dataGridView_peptide.Columns["std_k"].HeaderText = "std(k)";
 
             // enable AutoSizeColumnsMode
             //dataGridView_peptide.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -829,7 +830,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
             {
                 column.MinimumWidth = 55;
-                column.Width = 51;
+                column.Width = 56;
             }
             //dataGridView_peptide.Columns["Charge"].Width = 55;
             //dataGridView_peptide.Columns["RSquare"].Width = 55;
@@ -839,6 +840,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].MinimumWidth = 80;
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Width = 81;
             dataGridView_peptide.Columns["Abundance"].MinimumWidth = 70;
+            dataGridView_peptide.Columns["std_k"].MinimumWidth = 70;
 
             //set number formationg for the columns
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
@@ -846,6 +848,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["SeqMass"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["IsotopeDeviation"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["Abundance"].DefaultCellStyle.Format = "G2";
+            dataGridView_peptide.Columns["std_k"].DefaultCellStyle.Format = "G2";
 
             // resizeable columns
             dataGridView_peptide.AllowUserToResizeColumns = true;
