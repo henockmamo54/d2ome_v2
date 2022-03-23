@@ -215,6 +215,9 @@ namespace v2
                     }
 
                 }
+                // add unique count of unique data points
+                var peptides = mergedRIAvalues.Select(x => new { peptideSeq = x.PeptideSeq, charge = x.Charge }).Distinct().ToList();
+                p.NDP = peptides.Count();
             }
 
 
@@ -303,6 +306,10 @@ namespace v2
                     mergedRIAvalues.Add(ria);
 
                 }
+
+                // add unique count of unique data points
+                var peptides = mergedRIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq && x.Charge == p.Charge && x.RIA_value >= 0).Distinct().ToList();
+                p.NDP = peptides.Count();
             }
 
 
@@ -466,20 +473,45 @@ namespace v2
 
                         double ss = 0;
                         double rss = 0;
+                        double RSquare = double.NaN;
 
-                        foreach (var p in temp_experimentalvalue)
+                        if (r.Rateconst > 0.0006)
                         {
-                            if (p.RIA_value != null)
+
+
+                            foreach (var p in temp_experimentalvalue)
                             {
-                                var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.Time).First().value;
-                                ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
-                                rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
+                                if (p.RIA_value != null)
+                                {
+                                    var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.Time).First().value;
+                                    ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
+                                    rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
+                                }
                             }
+
+                            RSquare = 1 - (rss / ss);
+                            if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
+                                RSquare = double.NaN;
+                        }
+                        else
+                        {
+                            double diff = 0;
+                            var availble_time_points = 0;
+                            foreach (var p in temp_experimentalvalue)
+                            {
+                                if (p.RIA_value != null)
+                                {
+                                    var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.Time).First().value;
+                                    diff = computedRIAValue > 0 ? diff + Math.Abs((double)p.RIA_value - computedRIAValue) : diff;
+                                    availble_time_points++;
+
+                                    rss = rss + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
+                                }
+                            }
+                            if (availble_time_points != 0)
+                                RSquare = 1 - (diff );
                         }
 
-                        double RSquare = 1 - (rss / ss);
-                        if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
-                            RSquare = double.NaN;
 
                         r.RSquare = RSquare;
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
@@ -492,39 +524,67 @@ namespace v2
                         double ss = 0;
                         double rss_mo = 0;
                         double rss_io = 0;
+                        double RSquare = double.NaN;
 
-                        foreach (var p in temp_experimentalvalue)
+                        if (r.Rateconst > 0.0006)
                         {
-                            if (p.RIA_value != null)
+                            foreach (var p in temp_experimentalvalue)
                             {
-                                var computedRIAValue_mo = temp_computedRIAValue.Where(x => x.time == p.Time).First().value;
-                                var computedRIAValue_io = temp_computedRIAValue_withexperimentalIO.Where(x => x.time == p.Time).First().value;
+                                if (p.RIA_value != null)
+                                {
+                                    var computedRIAValue_mo = temp_computedRIAValue.Where(x => x.time == p.Time).First().value;
+                                    var computedRIAValue_io = temp_computedRIAValue_withexperimentalIO.Where(x => x.time == p.Time).First().value;
 
-                                ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
-                                rss_mo = rss_mo + Math.Pow((double)(p.RIA_value - computedRIAValue_mo), 2);
-                                rss_io = rss_io + Math.Pow((double)(p.RIA_value - computedRIAValue_io), 2);
+                                    ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
+                                    rss_mo = rss_mo + Math.Pow((double)(p.RIA_value - computedRIAValue_mo), 2);
+                                    rss_io = rss_io + Math.Pow((double)(p.RIA_value - computedRIAValue_io), 2);
+                                }
                             }
-                        }
 
-                        var rss = rss_mo < rss_io ? rss_mo : rss_io;
-                        double RSquare = 1 - (rss / ss);
-                        if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
-                            RSquare = double.NaN;
-                        r.RSquare = RSquare;
-                        r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
+                            var rss = rss_mo < rss_io ? rss_mo : rss_io;
+                            RSquare = 1 - (rss / ss);
+                            if (RSquare == double.PositiveInfinity || RSquare == double.NegativeInfinity)
+                                RSquare = double.NaN;
+                            r.RSquare = RSquare;
+                            r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
 
-                        if (rss_mo < rss_io)
-                        {
-                            foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
-                            //temp_expectedI0Values.AddRange(temp_computedRIAValue);
+                            if (rss_mo < rss_io)
+                            {
+                                foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
+                                //temp_expectedI0Values.AddRange(temp_computedRIAValue);
+                            }
+                            else
+                            {
+                                //temp_expectedI0Values.AddRange(temp_computedRIAValue_withexperimentalIO);
+                                foreach (var x in temp_computedRIAValue_withexperimentalIO) temp_theoreticalI0Values.Add(x);
+                            }
                         }
                         else
                         {
-                            //temp_expectedI0Values.AddRange(temp_computedRIAValue_withexperimentalIO);
-                            foreach (var x in temp_computedRIAValue_withexperimentalIO) temp_theoreticalI0Values.Add(x);
+                            double diff = 0;
+                            var availble_time_points = 0;
+                            foreach (var p in temp_experimentalvalue)
+                            {
+                                if (p.RIA_value != null)
+                                {
+                                    var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.Time).First().value;
+                                    diff = computedRIAValue > 0 ? diff + Math.Abs((double)p.RIA_value - computedRIAValue) : diff;
+                                    availble_time_points++;
+
+                                    rss_io = rss_io + Math.Pow((double)(p.RIA_value - computedRIAValue), 2);
+                                }
+                            }
+                            if (availble_time_points != 0)
+                                RSquare = 1 - (diff);
+
+                            r.RSquare = RSquare;
+                            r.RMSE_value = Math.Sqrt(rss_io / temp_experimentalvalue.Count());
+                            //temp_expectedI0Values.AddRange(temp_computedRIAValue);
+                            foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
                         }
 
                     }
+
                 }
                 catch (Exception e)
                 {

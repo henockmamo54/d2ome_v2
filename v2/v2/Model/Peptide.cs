@@ -26,5 +26,7 @@ namespace v2.Model
         public double? RMSE_value { get; set; }
         public int Order { get; set; }
         public double? Abundance { get; set; }
+        public double? NDP { get; set; }
+
     }
 }

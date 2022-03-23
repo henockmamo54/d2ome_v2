@@ -837,7 +837,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             //dataGridView_peptide.Columns["Rateconst"].Width = 55;
             dataGridView_peptide.Columns["PeptideSeq"].MinimumWidth = 200;
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].MinimumWidth = 80;
-            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Width = 81; 
+            dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Width = 81;
+            dataGridView_peptide.Columns["Abundance"].MinimumWidth = 70;
 
             //set number formationg for the columns
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
@@ -864,11 +865,11 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 column.HeaderCell.Style.SelectionBackColor = Color.White;
                 column.HeaderCell.Style.SelectionForeColor = Color.Black;
             }
-            //set size for the columns
-            foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
-            { 
-                column.Width = 51;
-            }
+            ////set size for the columns
+            //foreach (DataGridViewColumn column in dataGridView_peptide.Columns)
+            //{ 
+            //    column.Width = 51;
+            //}
         }
         public unsafe void computation(RIA[] chart_data, string peptideSeq, int charge)
         {
