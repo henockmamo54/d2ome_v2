@@ -821,7 +821,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["Rateconst"].HeaderText = "Rate \nconstant";
             dataGridView_peptide.Columns["RSquare"].HeaderText = "R" + "\u00B2";
             dataGridView_peptide.Columns["RMSE_value"].HeaderText = "RMSE";
-            dataGridView_peptide.Columns["std_k"].HeaderText = "std(k)";
+            //dataGridView_peptide.Columns["std_k"].HeaderText = "std (k)";
+            dataGridView_peptide.Columns["std_k"].HeaderText = "\u03C3 (k)";
 
             // enable AutoSizeColumnsMode
             //dataGridView_peptide.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;

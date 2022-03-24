@@ -498,11 +498,11 @@ namespace v2
                             RSquare = double.NaN;
 
 
-                        var std_k = dn == 0 ? double.NaN : Math.Sqrt(rss / temp_experimentalvalue.Count()) / (dn);
+                        var var_k = dn == 0 ? double.NaN : (rss / temp_experimentalvalue.Count()) / (dn);
 
 
                         r.RSquare = RSquare;
-                        r.std_k = Math.Sqrt(std_k);
+                        r.std_k = Math.Sqrt(var_k);
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
                         //temp_expectedI0Values.AddRange(temp_computedRIAValue);
                         foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
@@ -552,16 +552,16 @@ namespace v2
 
                         //var rss = rss_mo < rss_io ? rss_mo : rss_io;
                         double rss = double.NaN;
-                        double std_k = double.NaN;
+                        double var_k = double.NaN;
                         if (rss_mo < rss_io)
                         {
                             rss = rss_mo;
-                            std_k = dn_mo == 0 ? double.NaN : Math.Sqrt(rss / temp_experimentalvalue.Count()) / (dn_mo);
+                            var_k = dn_mo == 0 ? double.NaN : (rss / temp_experimentalvalue.Count()) / (dn_mo);
                         }
                         else
                         {
                             rss = rss_io;
-                            std_k = dn_io == 0 ? double.NaN : Math.Sqrt(rss / temp_experimentalvalue.Count()) / (dn_io);
+                            var_k = dn_io == 0 ? double.NaN :(rss / temp_experimentalvalue.Count()) / (dn_io);
                         }
 
 
@@ -580,7 +580,7 @@ namespace v2
                             RSquare = double.NaN;
 
                         r.RSquare = RSquare;
-                        r.std_k = Math.Sqrt(std_k);
+                        r.std_k = Math.Sqrt(var_k);
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
 
                         if (rss_mo < rss_io)
