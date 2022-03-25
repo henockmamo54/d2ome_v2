@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend15 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series29 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series30 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend16 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series31 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series32 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -118,6 +118,15 @@
             this.label22_rsquarecountPerPeptide = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label22_stdcount = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label22_total = new System.Windows.Forms.Label();
+            this.label24_rate = new System.Windows.Forms.Label();
+            this.label25_std = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label24_totalperppetide = new System.Windows.Forms.Label();
+            this.label24_progress = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -816,28 +825,28 @@
             // chart_peptide
             // 
             this.chart_peptide.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            chartArea5.Name = "ChartArea1";
-            this.chart_peptide.ChartAreas.Add(chartArea5);
+            chartArea15.Name = "ChartArea1";
+            this.chart_peptide.ChartAreas.Add(chartArea15);
             this.chart_peptide.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Name = "Legend1";
-            this.chart_peptide.Legends.Add(legend5);
+            legend15.Name = "Legend1";
+            this.chart_peptide.Legends.Add(legend15);
             this.chart_peptide.Location = new System.Drawing.Point(3, 16);
             this.chart_peptide.Name = "chart_peptide";
-            series9.ChartArea = "ChartArea1";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series9.Legend = "Legend1";
-            series9.MarkerColor = System.Drawing.Color.Black;
-            series9.MarkerSize = 7;
-            series9.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series9.Name = "Series1";
-            series9.YValuesPerPoint = 2;
-            series10.ChartArea = "ChartArea1";
-            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series10.Color = System.Drawing.Color.Purple;
-            series10.Legend = "Legend1";
-            series10.Name = "Series3";
-            this.chart_peptide.Series.Add(series9);
-            this.chart_peptide.Series.Add(series10);
+            series29.ChartArea = "ChartArea1";
+            series29.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series29.Legend = "Legend1";
+            series29.MarkerColor = System.Drawing.Color.Black;
+            series29.MarkerSize = 7;
+            series29.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series29.Name = "Series1";
+            series29.YValuesPerPoint = 2;
+            series30.ChartArea = "ChartArea1";
+            series30.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series30.Color = System.Drawing.Color.Purple;
+            series30.Legend = "Legend1";
+            series30.Name = "Series3";
+            this.chart_peptide.Series.Add(series29);
+            this.chart_peptide.Series.Add(series30);
             this.chart_peptide.Size = new System.Drawing.Size(673, 340);
             this.chart_peptide.TabIndex = 0;
             this.chart_peptide.Text = "chart1";
@@ -899,28 +908,28 @@
             // 
             // chart_protein
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart_protein.ChartAreas.Add(chartArea6);
+            chartArea16.Name = "ChartArea1";
+            this.chart_protein.ChartAreas.Add(chartArea16);
             this.chart_protein.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend6.Name = "Legend1";
-            this.chart_protein.Legends.Add(legend6);
+            legend16.Name = "Legend1";
+            this.chart_protein.Legends.Add(legend16);
             this.chart_protein.Location = new System.Drawing.Point(3, 16);
             this.chart_protein.Name = "chart_protein";
-            series11.ChartArea = "ChartArea1";
-            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series11.Legend = "Legend1";
-            series11.MarkerColor = System.Drawing.Color.MidnightBlue;
-            series11.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
-            series11.Name = "Series1";
-            series11.YValuesPerPoint = 2;
-            series12.BorderWidth = 2;
-            series12.ChartArea = "ChartArea1";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series12.Color = System.Drawing.Color.Purple;
-            series12.Legend = "Legend1";
-            series12.Name = "Series2";
-            this.chart_protein.Series.Add(series11);
-            this.chart_protein.Series.Add(series12);
+            series31.ChartArea = "ChartArea1";
+            series31.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series31.Legend = "Legend1";
+            series31.MarkerColor = System.Drawing.Color.MidnightBlue;
+            series31.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
+            series31.Name = "Series1";
+            series31.YValuesPerPoint = 2;
+            series32.BorderWidth = 2;
+            series32.ChartArea = "ChartArea1";
+            series32.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series32.Color = System.Drawing.Color.Purple;
+            series32.Legend = "Legend1";
+            series32.Name = "Series2";
+            this.chart_protein.Series.Add(series31);
+            this.chart_protein.Series.Add(series32);
             this.chart_protein.Size = new System.Drawing.Size(673, 234);
             this.chart_protein.TabIndex = 0;
             this.chart_protein.Text = "chart1";
@@ -999,6 +1008,15 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label25);
+            this.groupBox2.Controls.Add(this.label24);
+            this.groupBox2.Controls.Add(this.label24_progress);
+            this.groupBox2.Controls.Add(this.label24_totalperppetide);
+            this.groupBox2.Controls.Add(this.label22);
+            this.groupBox2.Controls.Add(this.label25_std);
+            this.groupBox2.Controls.Add(this.label24_rate);
+            this.groupBox2.Controls.Add(this.label22_total);
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.label22_stdcount);
             this.groupBox2.Controls.Add(this.label23);
             this.groupBox2.Controls.Add(this.label22_rsquarecountPerPeptide);
@@ -1014,16 +1032,16 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(27, 23);
+            this.label21.Location = new System.Drawing.Point(37, 39);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(161, 13);
+            this.label21.Size = new System.Drawing.Size(89, 13);
             this.label21.TabIndex = 0;
-            this.label21.Text = "Rsquared >= 0.8 (for this protein)";
+            this.label21.Text = "Rsquared >= 0.8 ";
             // 
             // label22_rsquarecountPerPeptide
             // 
             this.label22_rsquarecountPerPeptide.AutoSize = true;
-            this.label22_rsquarecountPerPeptide.Location = new System.Drawing.Point(294, 24);
+            this.label22_rsquarecountPerPeptide.Location = new System.Drawing.Point(316, 39);
             this.label22_rsquarecountPerPeptide.Name = "label22_rsquarecountPerPeptide";
             this.label22_rsquarecountPerPeptide.Size = new System.Drawing.Size(13, 13);
             this.label22_rsquarecountPerPeptide.TabIndex = 1;
@@ -1032,20 +1050,103 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(24, 53);
+            this.label23.Location = new System.Drawing.Point(37, 58);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(272, 13);
+            this.label23.Size = new System.Drawing.Size(200, 13);
             this.label23.TabIndex = 2;
-            this.label23.Text = "0.4 < Rsquared < 0.8 and sd(k)/k < 30% (for this protein)";
+            this.label23.Text = "0.4 < Rsquared < 0.8 and sd(k)/k < 30% ";
             // 
             // label22_stdcount
             // 
             this.label22_stdcount.AutoSize = true;
-            this.label22_stdcount.Location = new System.Drawing.Point(294, 53);
+            this.label22_stdcount.Location = new System.Drawing.Point(316, 57);
             this.label22_stdcount.Name = "label22_stdcount";
             this.label22_stdcount.Size = new System.Drawing.Size(13, 13);
             this.label22_stdcount.TabIndex = 3;
             this.label22_stdcount.Text = "0";
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(598, 48);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Load All";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // label22_total
+            // 
+            this.label22_total.AutoSize = true;
+            this.label22_total.Location = new System.Drawing.Point(415, 21);
+            this.label22_total.Name = "label22_total";
+            this.label22_total.Size = new System.Drawing.Size(13, 13);
+            this.label22_total.TabIndex = 5;
+            this.label22_total.Text = "0";
+            // 
+            // label24_rate
+            // 
+            this.label24_rate.AutoSize = true;
+            this.label24_rate.Location = new System.Drawing.Point(415, 39);
+            this.label24_rate.Name = "label24_rate";
+            this.label24_rate.Size = new System.Drawing.Size(13, 13);
+            this.label24_rate.TabIndex = 6;
+            this.label24_rate.Text = "0";
+            // 
+            // label25_std
+            // 
+            this.label25_std.AutoSize = true;
+            this.label25_std.Location = new System.Drawing.Point(415, 58);
+            this.label25_std.Name = "label25_std";
+            this.label25_std.Size = new System.Drawing.Size(13, 13);
+            this.label25_std.TabIndex = 7;
+            this.label25_std.Text = "0";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(37, 21);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(61, 13);
+            this.label22.TabIndex = 8;
+            this.label22.Text = "Total count";
+            // 
+            // label24_totalperppetide
+            // 
+            this.label24_totalperppetide.AutoSize = true;
+            this.label24_totalperppetide.Location = new System.Drawing.Point(316, 21);
+            this.label24_totalperppetide.Name = "label24_totalperppetide";
+            this.label24_totalperppetide.Size = new System.Drawing.Size(13, 13);
+            this.label24_totalperppetide.TabIndex = 9;
+            this.label24_totalperppetide.Text = "0";
+            // 
+            // label24_progress
+            // 
+            this.label24_progress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label24_progress.AutoSize = true;
+            this.label24_progress.Location = new System.Drawing.Point(605, 32);
+            this.label24_progress.Name = "label24_progress";
+            this.label24_progress.Size = new System.Drawing.Size(0, 13);
+            this.label24_progress.TabIndex = 10;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(304, 8);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(59, 13);
+            this.label24.TabIndex = 11;
+            this.label24.Text = "Per Protein";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(408, 8);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(26, 13);
+            this.label25.TabIndex = 12;
+            this.label25.Text = "ALL";
             // 
             // Main
             // 
@@ -1175,5 +1276,14 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22_stdcount;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label25_std;
+        private System.Windows.Forms.Label label24_rate;
+        private System.Windows.Forms.Label label22_total;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label24_totalperppetide;
+        private System.Windows.Forms.Label label24_progress;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
     }
 }
