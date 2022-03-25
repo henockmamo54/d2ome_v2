@@ -800,6 +800,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             //dataGridView_peptide.DataSource = selected;
             dataGridView_peptide.DataSource = proteinExperimentData.peptides;
 
+            label22_rsquarecountPerPeptide.Text = proteinExperimentData.peptides.Where(x=>x.RSquare>=0.8).Count().ToString()+ "/"+ proteinExperimentData.peptides.Count().ToString();
+            label22_stdcount.Text=proteinExperimentData.peptides.Where(x=>x.Rateconst>0).Where((x)=>x.RSquare <0.8 && x.RSquare >0.4 && (10*x.std_k/x.Rateconst) <30).Count().ToString();
+
             //hide some columns from the datasource
             dataGridView_peptide.RowHeadersVisible = false; // hide row selector
             dataGridView_peptide.Columns["UniqueToProtein"].Visible = false;
