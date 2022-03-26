@@ -29,6 +29,12 @@ namespace v2.Helper
             double median = (size % 2 != 0) ? (double)sortedPNumbers[mid] : ((double)sortedPNumbers[mid] + (double)sortedPNumbers[mid - 1]) / 2;
             return median;
         }
+        public static double getStandardDeviation(this IEnumerable<double> values)
+        {
+            double avg = values.Average();
+            return Math.Sqrt(values.Average(v => Math.Pow(v - avg, 2)));
+        }
+
         public static string formatdoubletothreedecimalplace(double n)
         {
             var tempval = "";

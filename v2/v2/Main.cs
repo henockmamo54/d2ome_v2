@@ -790,8 +790,59 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
 
         }
+
+        public void computeNewProtienRateConstant()
+        {
+
+            label24_totalperppetide.Text = proteinExperimentData.peptides.Count().ToString();
+            //label22_rsquarecountPerPeptide.Text = proteinExperimentData.peptides.Where(x => x.RSquare >= 0.8).Count().ToString();
+            //label22_stdcount.Text = proteinExperimentData.peptides.Where(x => x.Rateconst > 0).Where((x) => x.RSquare < 0.8 && x.RSquare > 0.4 && (10 * x.std_k / x.Rateconst) < 30).Count().ToString();
+
+            var temp = proteinExperimentData.peptides.Where(x => x.NDP >= 4 && x.RMSE_value <= 0.05).ToList();
+            List<Peptide> filtered_peptidelist = new List<Peptide>();
+            var RSquaredThreshold = 0.75;
+
+            foreach (var peptide in temp)
+            {
+                var half_life = Math.Log(2) / proteinExperimentData.experiment_time[1];
+
+
+                if (peptide.Rateconst > 2 * half_life)
+                {
+                    if (peptide.RSquare >= RSquaredThreshold && peptide.RMSE_value <= 0.05) filtered_peptidelist.Add(peptide);
+                    //if (peptide.RSquare >= 0.4 && peptide.RMSE_value <= 0.05) filtered_peptidelist.Add(peptide);
+                }
+                else if (peptide.Rateconst < 0.1 * half_life)
+                {
+                    if (peptide.RMSE_value <= 0.04) filtered_peptidelist.Add(peptide);
+                }
+                else
+                {
+                    if ((peptide.RSquare >= RSquaredThreshold && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35) ||
+                        (peptide.RSquare <= RSquaredThreshold && peptide.RSquare >= 0.4 && peptide.std_k / peptide.Rateconst <= 0.35))
+                        filtered_peptidelist.Add(peptide);
+                }
+            }
+
+            label22_rsquarecountPerPeptide.Text = filtered_peptidelist.Count.ToString();
+
+            if (filtered_peptidelist.Count > 0)
+            {
+                var selected_k = filtered_peptidelist.Select(x => (double)x.Rateconst).ToList();
+                var median = BasicFunctions.getMedian(selected_k);
+                var sd = BasicFunctions.getStandardDeviation(selected_k);
+
+                label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
+            }
+            else
+                label22_stdcount.Text = "NA";
+
+
+        }
+
         public void loadDataGridView()
         {
+            computeNewProtienRateConstant();
 
             // update the datasource for the data gridview
             //var selected = (from u in proteinExperimentData.peptides
@@ -799,10 +850,6 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             //                select u).Distinct().ToList();
             //dataGridView_peptide.DataSource = selected;
             dataGridView_peptide.DataSource = proteinExperimentData.peptides;
-
-            label24_totalperppetide.Text = proteinExperimentData.peptides.Count().ToString();
-            label22_rsquarecountPerPeptide.Text = proteinExperimentData.peptides.Where(x => x.RSquare >= 0.8).Count().ToString();
-            label22_stdcount.Text = proteinExperimentData.peptides.Where(x => x.Rateconst > 0).Where((x) => x.RSquare < 0.8 && x.RSquare > 0.4 && (10 * x.std_k / x.Rateconst) < 30).Count().ToString();
 
             //hide some columns from the datasource
             dataGridView_peptide.RowHeadersVisible = false; // hide row selector
@@ -1897,13 +1944,13 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
 
 
-                    }
-                    //MessageBox.Show("Done exporting proteins!!");
-                    //progressBar_exportall.Invoke(new Action(() =>
-                    //     progressBar_exportall.Value = 0));
-
-
                 }
+                //MessageBox.Show("Done exporting proteins!!");
+                //progressBar_exportall.Invoke(new Action(() =>
+                //     progressBar_exportall.Value = 0));
+
+
             }
         }
     }
+}
