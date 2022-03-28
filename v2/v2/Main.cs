@@ -842,7 +842,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     string quant_csv_path = sourcePath + @"\" + proteinName + ".Quant.csv";
                     string RateConst_csv_path = sourcePath + @"\" + proteinName + ".RateConst.csv";
 
-                    var temppath = files_txt_path.Replace("files.txt", "files.centroid.txt");
+                    var temppath = files_txt_path.Replace("Protein,files.txt", "files.centroid.txt");
                     if (File.Exists(temppath)) files_txt_path = temppath;
 
 
@@ -870,7 +870,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     var gumbel_median = mynewproteinExperimentData.MeanRateConst;
                     var gumbe_std = mynewproteinExperimentData.StandDev_NumberPeptides_StandDev;
 
-                    file_content += fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "\n";
+                    file_content += proteinName + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "\n";
 
 
                 }
