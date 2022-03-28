@@ -791,7 +791,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
         }
 
-        public void computeNewProtienRateConstant()
+        public void computeNewProtienRateConstant(ProtienchartDataValues chartdata)
         {
 
             label24_totalperppetide.Text = proteinExperimentData.peptides.Count().ToString();
@@ -800,27 +800,36 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
             var temp = proteinExperimentData.peptides.Where(x => x.NDP >= 4 && x.RMSE_value <= 0.05).ToList();
             List<Peptide> filtered_peptidelist = new List<Peptide>();
+            List<Peptide> filtered_peptidelist_lowRsquared = new List<Peptide>();
+
             var RSquaredThreshold = 0.75;
 
             foreach (var peptide in temp)
             {
-                var half_life = Math.Log(2) / proteinExperimentData.experiment_time[1];
+                //var half_life = Math.Log(2) / proteinExperimentData.experiment_time[1];
 
 
-                if (peptide.Rateconst > 2 * half_life)
+                if (peptide.Rateconst > 2 * Math.Log(2) / proteinExperimentData.experiment_time[1])
                 {
                     if (peptide.RSquare >= RSquaredThreshold && peptide.RMSE_value <= 0.05) filtered_peptidelist.Add(peptide);
-                    //if (peptide.RSquare >= 0.4 && peptide.RMSE_value <= 0.05) filtered_peptidelist.Add(peptide);
+
+                    else if ((peptide.RSquare >= 0.16 && peptide.RMSE_value <= 0.05))
+                        filtered_peptidelist_lowRsquared.Add(peptide);
                 }
-                else if (peptide.Rateconst < 0.1 * half_life)
+                else if (peptide.Rateconst < 0.1 * Math.Log(2) / proteinExperimentData.experiment_time[proteinExperimentData.experiment_time.Count - 1])
                 {
                     if (peptide.RMSE_value <= 0.04) filtered_peptidelist.Add(peptide);
                 }
                 else
                 {
-                    if ((peptide.RSquare >= RSquaredThreshold && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35) ||
-                        (peptide.RSquare <= RSquaredThreshold && peptide.RSquare >= 0.4 && peptide.std_k / peptide.Rateconst <= 0.35))
+                    //if ((peptide.RSquare >= 0.85 && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35) ||
+                    //    (peptide.RSquare <= 0.85 && peptide.RSquare >= 0.5 && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35))
+                    if ((peptide.RSquare >= 0.5 && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35))
                         filtered_peptidelist.Add(peptide);
+
+                    else if ((peptide.RSquare >= 0.16 && peptide.std_k / peptide.Rateconst <= 0.35) ||
+                        (peptide.RSquare <= RSquaredThreshold && peptide.RSquare >= 0.5 && peptide.std_k / peptide.Rateconst <= 0.35))
+                        filtered_peptidelist_lowRsquared.Add(peptide);
                 }
             }
 
@@ -828,28 +837,83 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
             if (filtered_peptidelist.Count > 0)
             {
-                var selected_k = filtered_peptidelist.Select(x => (double)x.Rateconst).ToList();
-                var median = BasicFunctions.getMedian(selected_k);
-                var sd = BasicFunctions.getStandardDeviation(selected_k);
+                if (filtered_peptidelist.Where(x => x.RSquare >= 0.85).Count() >= 5)
+                {
+                    var selected_k = filtered_peptidelist.OrderByDescending(x => x.RSquare).Where(x => x.RSquare >= 0.8).Select(x => (double)x.Rateconst).Take(5).ToList();
+                    var median = BasicFunctions.getMedian(selected_k);
+                    var sd = BasicFunctions.getStandardDeviation(selected_k);
 
-                label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
+                    label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
+                }
+                else
+                {
+                    var selected_k = filtered_peptidelist.Select(x => (double)x.Rateconst).ToList();
+                    var median = BasicFunctions.getMedian(selected_k);
+                    var sd = BasicFunctions.getStandardDeviation(selected_k);
+
+                    label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
+                }
             }
             else
-                label22_stdcount.Text = "NA";
+            {
+                // if nothing passed, look for low rsquared values
+                if (filtered_peptidelist_lowRsquared.Count > 0)
+                {
+                    var selected_k = filtered_peptidelist_lowRsquared.OrderByDescending(x => x.RSquare).Select(x => (double)x.Rateconst).Take(3).ToList();
+                    var median = BasicFunctions.getMedian(selected_k);
+                    var sd = BasicFunctions.getStandardDeviation(selected_k);
+
+                    label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
+                }
+                else
+                    label22_stdcount.Text = "NA";
+            }
 
 
+            /*
+            // compute the median for each time point 
+            var median_value = new List<double>();
+            median_value.Add(0);
+
+            var ttt = chartdata.y.Select((value, index) => (value, chartdata.x[index])).ToList();
+
+
+            foreach (var t in proteinExperimentData.experiment_time.Where(x => x != 0).ToList())
+            {
+
+                //var _values = proteinExperimentData.mergedRIAvalues.Where(x => x.Time == t && x.RIA_value >= 0).Select(x => (double)x.RIA_value).OrderBy(x => x).ToList();
+                var _values = ttt.Where(x => x.Item2 == t).Select(x => (double)x.Item1).OrderBy(x => x).ToList();
+
+                median_value.Add(Helper.BasicFunctions.getMedian(_values));
+            }
+
+            if (chart_protein.Series.FindByName("new_k") != null)
+                chart_protein.Series.Remove(chart_protein.Series.FindByName("new_k"));
+
+            Series s1 = new Series();
+            s1.Name = "new_k";
+            //s1.Points.DataBindXY(proteinExperimentData.experiment_time, median_value);
+            for (int k = 0; k < median_value.Count; k++)
+            {
+                if (!double.IsNaN(median_value[k]))
+                    s1.Points.AddXY(proteinExperimentData.experiment_time[k], median_value[k]);
+            }
+            s1.ChartType = SeriesChartType.Line;
+            s1.Color = Color.Red;
+            s1.BorderWidth = 2;
+            chart_protein.Series.Add(s1);
+            */
         }
 
         public void loadDataGridView()
         {
-            computeNewProtienRateConstant();
 
             // update the datasource for the data gridview
             //var selected = (from u in proteinExperimentData.peptides
             //                where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
             //                select u).Distinct().ToList();
             //dataGridView_peptide.DataSource = selected;
-            dataGridView_peptide.DataSource = proteinExperimentData.peptides;
+            dataGridView_peptide.DataSource = proteinExperimentData.peptides.OrderByDescending(x => x.RSquare).ToList();
 
             //hide some columns from the datasource
             dataGridView_peptide.RowHeadersVisible = false; // hide row selector
@@ -1445,6 +1509,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
+
+            computeNewProtienRateConstant(chartdata);
             //preparedDataForBestPathSearch(chartdata);
             try
             {
@@ -1836,7 +1902,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             inputdata = new List<MzMLmzIDFilePair>();
             inputdata = temp;
         }
-
+        /*
         private void button1_Click_1(object sender, EventArgs e)
         {
             var there_l = new Thread(() => dummy(txt_source.Text));
@@ -1851,106 +1917,108 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             //mynewproteinExperimentData.computeRSquare();
         }
 
-        public void dummy(string sourcePath)
-        {
+        
+        //public void dummy(string sourcePath)
+        //{
 
-            int count_r = 0;
-            int count_s = 0;
-            int count_t = 0;
+        //    int count_r = 0;
+        //    int count_s = 0;
+        //    int count_t = 0;
 
-            string[] filePaths = Directory.GetFiles(sourcePath);
-            var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
+        //    string[] filePaths = Directory.GetFiles(sourcePath);
+        //    var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
 
-            if (csvfilePaths.Count == 0)
-            {
-                //MessageBox.Show("This directory doesn't contain the necessary files. Please select another directory.");
-            }
-            else
-            {
-                var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).Distinct().ToList();
+        //    if (csvfilePaths.Count == 0)
+        //    {
+        //        //MessageBox.Show("This directory doesn't contain the necessary files. Please select another directory.");
+        //    }
+        //    else
+        //    {
+        //        var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).Distinct().ToList();
 
-                int counter = 0;
+        //        int counter = 0;
 
-                //progressBar_exportall.Invoke(new Action(() =>
-                //  progressBar_exportall.Maximum = temp.Count));
+        //        //progressBar_exportall.Invoke(new Action(() =>
+        //        //  progressBar_exportall.Maximum = temp.Count));
 
-                //progressBar_exportall.Invoke(new Action(() =>
-                //  progressBar_exportall.Value = temp.Count));
+        //        //progressBar_exportall.Invoke(new Action(() =>
+        //        //  progressBar_exportall.Value = temp.Count));
 
-                //progressBar_exportall.Maximum = temp.Count;
-                //  progressBar_exportall.Value = 0;
+        //        //progressBar_exportall.Maximum = temp.Count;
+        //        //  progressBar_exportall.Value = 0;
 
-                // for each file prepare the datasource for ploting
-                foreach (string proteinName in temp)
-                {
-                    //progressBar_exportall.Invoke(new Action(() =>
-                    //  progressBar_exportall.Value = counter));
+        //        // for each file prepare the datasource for ploting
+        //        foreach (string proteinName in temp)
+        //        {
+        //            //progressBar_exportall.Invoke(new Action(() =>
+        //            //  progressBar_exportall.Value = counter));
 
-                    counter = counter + 1;
-                    try
-                    {
-                        label24_progress.Invoke(new Action(() => label24_progress.Text = counter.ToString() + "/" + temp.Count.ToString()));
-                    }
-                    catch (Exception ex) { }
+        //            counter = counter + 1;
+        //            try
+        //            {
+        //                label24_progress.Invoke(new Action(() => label24_progress.Text = counter.ToString() + "/" + temp.Count.ToString()));
+        //            }
+        //            catch (Exception ex) { }
 
-                    //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
-                    string files_txt_path = sourcePath + @"\files.txt";
-                    string quant_csv_path = sourcePath + @"\" + proteinName + ".Quant.csv";
-                    string RateConst_csv_path = sourcePath + @"\" + proteinName + ".RateConst.csv";
+        //            //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
+        //            string files_txt_path = sourcePath + @"\files.txt";
+        //            string quant_csv_path = sourcePath + @"\" + proteinName + ".Quant.csv";
+        //            string RateConst_csv_path = sourcePath + @"\" + proteinName + ".RateConst.csv";
 
-                    var temppath = files_txt_path.Replace("files.txt", "files.centroid.txt");
-                    if (File.Exists(temppath)) files_txt_path = temppath;
-
-
-                    if (!File.Exists(files_txt_path)) { MessageBox.Show("filex.txt is not available in the specified directory.", "Error"); continue; }
-                    else { try { string[] lines = System.IO.File.ReadAllLines(files_txt_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
-
-                    if (!File.Exists(quant_csv_path)) { MessageBox.Show(proteinName + ".Quant.csv" + " is not available in the specified directory.", "Error"); continue; }
-                    else { try { string[] lines = System.IO.File.ReadAllLines(quant_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
-
-                    if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); continue; }
-                    else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
-
-                    var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+        //            var temppath = files_txt_path.Replace("files.txt", "files.centroid.txt");
+        //            if (File.Exists(temppath)) files_txt_path = temppath;
 
 
-                    mynewproteinExperimentData.loadAllExperimentData();
-                    mynewproteinExperimentData.computeRIAPerExperiment();
-                    mynewproteinExperimentData.computeAverageA0();
-                    mynewproteinExperimentData.mergeMultipleRIAPerDay2();
-                    mynewproteinExperimentData.computeTheoreticalCurvePoints();
-                    mynewproteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
-                    mynewproteinExperimentData.computeRSquare();
+        //            if (!File.Exists(files_txt_path)) { MessageBox.Show("filex.txt is not available in the specified directory.", "Error"); continue; }
+        //            else { try { string[] lines = System.IO.File.ReadAllLines(files_txt_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
 
-                    // for each peptide draw the chart 
+        //            if (!File.Exists(quant_csv_path)) { MessageBox.Show(proteinName + ".Quant.csv" + " is not available in the specified directory.", "Error"); continue; }
+        //            else { try { string[] lines = System.IO.File.ReadAllLines(quant_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
 
-                    count_r += mynewproteinExperimentData.peptides.Where(x => x.RSquare >= 0.8).Count();
-                    count_t += mynewproteinExperimentData.peptides.Count();
-                    count_s += mynewproteinExperimentData.peptides.Where(x => x.Rateconst > 0).Where((x) => x.RSquare < 0.8 && x.RSquare > 0.4 && (10 * x.std_k / x.Rateconst) < 30).Count();
+        //            if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); continue; }
+        //            else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
 
-                    //progressBar_exportall.Value = progressBar_exportall.Value + 1;
-
-                    //label22_total.Text = count_t.ToString();
-                    //label24_rate.Text = count_r.ToString();
-                    //label25_std.Text = count_s.ToString();
-
-                    try
-                    {
-                        label22_total.Invoke(new Action(() => label22_total.Text = count_t.ToString()));
-                        label24_rate.Invoke(new Action(() => label24_rate.Text = count_r.ToString()));
-                        label25_std.Invoke(new Action(() => label25_std.Text = count_s.ToString()));
-                    }
-                    catch (Exception ex) { }
+        //            var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
 
 
+        //            mynewproteinExperimentData.loadAllExperimentData();
+        //            mynewproteinExperimentData.computeRIAPerExperiment();
+        //            mynewproteinExperimentData.computeAverageA0();
+        //            mynewproteinExperimentData.mergeMultipleRIAPerDay2();
+        //            mynewproteinExperimentData.computeTheoreticalCurvePoints();
+        //            mynewproteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
+        //            mynewproteinExperimentData.computeRSquare();
 
-                }
-                //MessageBox.Show("Done exporting proteins!!");
-                //progressBar_exportall.Invoke(new Action(() =>
-                //     progressBar_exportall.Value = 0));
+        //            // for each peptide draw the chart 
+
+        //            count_r += mynewproteinExperimentData.peptides.Where(x => x.RSquare >= 0.8).Count();
+        //            count_t += mynewproteinExperimentData.peptides.Count();
+        //            count_s += mynewproteinExperimentData.peptides.Where(x => x.Rateconst > 0).Where((x) => x.RSquare < 0.8 && x.RSquare > 0.4 && (10 * x.std_k / x.Rateconst) < 30).Count();
+
+        //            //progressBar_exportall.Value = progressBar_exportall.Value + 1;
+
+        //            //label22_total.Text = count_t.ToString();
+        //            //label24_rate.Text = count_r.ToString();
+        //            //label25_std.Text = count_s.ToString();
+
+        //            try
+        //            {
+        //                label22_total.Invoke(new Action(() => label22_total.Text = count_t.ToString()));
+        //                label24_rate.Invoke(new Action(() => label24_rate.Text = count_r.ToString()));
+        //                label25_std.Invoke(new Action(() => label25_std.Text = count_s.ToString()));
+        //            }
+        //            catch (Exception ex) { }
 
 
-            }
-        }
+
+        //        }
+        //        //MessageBox.Show("Done exporting proteins!!");
+        //        //progressBar_exportall.Invoke(new Action(() =>
+        //        //     progressBar_exportall.Value = 0));
+
+
+        //    }
+        //}
+        */
     }
 }
