@@ -827,20 +827,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 int counter = 0;
 
-                //progressBar_exportall.Invoke(new Action(() =>
-                //  progressBar_exportall.Maximum = temp.Count));
-
-                //progressBar_exportall.Invoke(new Action(() =>
-                //  progressBar_exportall.Value = temp.Count));
-
-                //progressBar_exportall.Maximum = temp.Count;
-                //  progressBar_exportall.Value = 0;
-
-                // for each file prepare the datasource for ploting
                 foreach (string proteinName in temp)
                 {
-                    //progressBar_exportall.Invoke(new Action(() =>
-                    //  progressBar_exportall.Value = counter));
 
                     counter = counter + 1;
                     try
@@ -878,20 +866,12 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     mynewproteinExperimentData.computeRSquare();
                     ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
-                    var fit_rates = computeNewProtienRateConstant(chartdata, mynewproteinExperimentData);
+                    var fit_rates = computeNewProtienRateConstant(chartdata, mynewproteinExperimentData, false);
                     var gumbel_median = mynewproteinExperimentData.MeanRateConst;
                     var gumbe_std = mynewproteinExperimentData.StandDev_NumberPeptides_StandDev;
 
                     file_content += fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "\n";
 
-
-                    //try
-                    //{
-                    //    label22_total.Invoke(new Action(() => label22_total.Text = count_t.ToString()));
-                    //    label24_rate.Invoke(new Action(() => label24_rate.Text = count_r.ToString()));
-                    //    label25_std.Invoke(new Action(() => label25_std.Text = count_s.ToString()));
-                    //}
-                    //catch (Exception ex) { } 
 
                 }
                 using (StreamWriter writer = new StreamWriter("compare.csv"))
@@ -899,20 +879,14 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     writer.WriteLine(file_content);
                 }
 
-                //MessageBox.Show("Done exporting proteins!!");
-
-
-
             }
         }
 
 
-        public List<double> computeNewProtienRateConstant(ProtienchartDataValues chartdata, ProteinExperimentDataReader proteinExperimentData)
+        public List<double> computeNewProtienRateConstant(ProtienchartDataValues chartdata, ProteinExperimentDataReader proteinExperimentData, bool verbose = true)
         {
-
-            //label24_totalperppetide.Text = proteinExperimentData.peptides.Count().ToString();
-            //label22_rsquarecountPerPeptide.Text = proteinExperimentData.peptides.Where(x => x.RSquare >= 0.8).Count().ToString();
-            //label22_stdcount.Text = proteinExperimentData.peptides.Where(x => x.Rateconst > 0).Where((x) => x.RSquare < 0.8 && x.RSquare > 0.4 && (10 * x.std_k / x.Rateconst) < 30).Count().ToString();
+            if (verbose)
+                label24_totalperppetide.Text = proteinExperimentData.peptides.Count().ToString();
 
             var temp = proteinExperimentData.peptides.Where(x => x.NDP >= 4 && x.RMSE_value <= 0.05).ToList();
             List<Peptide> filtered_peptidelist = new List<Peptide>();
@@ -925,8 +899,6 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
             foreach (var peptide in temp)
             {
-                //var half_life = Math.Log(2) / proteinExperimentData.experiment_time[1];
-
 
                 if (peptide.Rateconst > 2 * Math.Log(2) / proteinExperimentData.experiment_time[1])
                 {
@@ -941,8 +913,6 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 }
                 else
                 {
-                    //if ((peptide.RSquare >= 0.85 && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35) ||
-                    //    (peptide.RSquare <= 0.85 && peptide.RSquare >= 0.5 && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35))
                     if ((peptide.RSquare >= 0.5 && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35))
                         filtered_peptidelist.Add(peptide);
 
@@ -952,7 +922,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 }
             }
 
-            //label22_rsquarecountPerPeptide.Text = filtered_peptidelist.Count.ToString();
+            if (verbose)
+                label22_rsquarecountPerPeptide.Text = filtered_peptidelist.Count.ToString();
 
             if (filtered_peptidelist.Count > 0)
             {
@@ -962,7 +933,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     median = BasicFunctions.getMedian(selected_k);
                     sd = BasicFunctions.getStandardDeviation(selected_k);
 
-                    //label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
+                    if (verbose)
+                        label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
                 }
                 else
                 {
@@ -970,7 +942,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     median = BasicFunctions.getMedian(selected_k);
                     sd = BasicFunctions.getStandardDeviation(selected_k);
 
-                    //label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
+                    if (verbose)
+                        label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
                 }
             }
             else
@@ -982,8 +955,11 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     median = BasicFunctions.getMedian(selected_k);
                     sd = BasicFunctions.getStandardDeviation(selected_k);
 
-                    //label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
-                    //label22_rsquarecountPerPeptide.Text = filtered_peptidelist_lowRsquared.Count.ToString();
+                    if (verbose)
+                    {
+                        label22_stdcount.Text = median.ToString() + " +/- " + sd.ToString();
+                        label22_rsquarecountPerPeptide.Text = filtered_peptidelist_lowRsquared.Count.ToString();
+                    }
                 }
                 else
                 {
@@ -1039,7 +1015,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             //                where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
             //                select u).Distinct().ToList();
             //dataGridView_peptide.DataSource = selected;
-            dataGridView_peptide.DataSource = proteinExperimentData.peptides.OrderByDescending(x => x.RSquare).ToList();
+            dataGridView_peptide.DataSource = proteinExperimentData.peptides.ToList();
 
             //hide some columns from the datasource
             dataGridView_peptide.RowHeadersVisible = false; // hide row selector
