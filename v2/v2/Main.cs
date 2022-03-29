@@ -963,7 +963,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 }
                 else
                 {
-                    //label22_stdcount.Text = "NA";
+                    if (verbose)
+                        label22_stdcount.Text = "NA";
                 }
             }
 
