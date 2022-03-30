@@ -223,14 +223,36 @@ namespace v2
                         {
                             var exp_a1_a0 = exp_A1 / exp_A0;
                             var diff = theo_a1.Select((value, index) => Math.Abs((value / theo_a0[index]) - exp_a1_a0)).ToList();
-
                             double min_value = diff.Min();
                             int index_min_value = diff.IndexOf(min_value);
                             var selected_pxt = pxts[index_min_value];
-
-
                             er.I0_t_fromA1 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (selected_pxt / (1 - ph))), (double)NEH));
                         }
+
+                        // computre a2/a0
+                        if (exp_A0 > 0)
+                        {
+                            var exp_a2_a0 = exp_A2 / exp_A0;
+                            var diff = theo_a2.Select((value, index) => Math.Abs((value / theo_a0[index]) - exp_a2_a0)).ToList();
+                            double min_value = diff.Min();
+                            int index_min_value = diff.IndexOf(min_value);
+                            var selected_pxt = pxts[index_min_value];
+                            er.I0_t_fromA1A2 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (selected_pxt / (1 - ph))), (double)NEH));
+                        }
+
+
+                        // computre a2/a1
+                        if (exp_A0 > 0)
+                        {
+                            var exp_a2_a1 = exp_A2 / exp_A1;
+                            var diff = theo_a2.Select((value, index) => Math.Abs((value / theo_a1[index]) - exp_a2_a1)).ToList();
+                            double min_value = diff.Min();
+                            int index_min_value = diff.IndexOf(min_value);
+                            var selected_pxt = pxts[index_min_value];
+                            er.pX_greaterthanThreshold = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (selected_pxt / (1 - ph))), (double)NEH));
+                        }
+
+
                     }
 
 
