@@ -35,6 +35,7 @@ namespace v2
         // computed values
         List<RIA> RIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvalues = new List<RIA>();
+        public List<RIA> mergedRIAvaluesWithZeroIonScore = new List<RIA>();
         public List<TheoreticalI0Value> theoreticalI0Values = new List<TheoreticalI0Value>();
         public List<TheoreticalI0Value> theoreticalI0Values_withExperimentalIO = new List<TheoreticalI0Value>();
         public List<TheoreticalI0Value> temp_theoreticalI0Values = new List<TheoreticalI0Value>();
@@ -161,6 +162,7 @@ namespace v2
                     ria.RIA_value = er.I0 / sum_val;
                     ria.I0 = er.I0;
                     ria.Charge = er.Charge;
+                    ria.IonScore = er.IonScore;
 
                     //get the experiment time from files.txt values
                     var temp = filecontents.Where(x => x.experimentID == er.ExperimentName).Select(t => t.time).ToArray();
@@ -279,8 +281,12 @@ namespace v2
 
                 foreach (int t in this.experiment_time)
                 {
-                    //var temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.time == t).ToList();
                     List<RIA> temp_RIAvalues_pertime = temp_RIAvalues.Where(x => x.Time == t).ToList();
+
+                    // check the number of experiments with zero ion score
+                    int countOfNonZeroIonScore = temp_RIAvalues_pertime.Where(x => x.IonScore > 0).Count();
+                    if (countOfNonZeroIonScore > 0) temp_RIAvalues_pertime = temp_RIAvalues_pertime.Where(x => x.IonScore > 0).ToList();
+
 
                     RIA ria = new RIA();
                     ria.ExperimentNames = new List<string>();
@@ -299,6 +305,11 @@ namespace v2
                     ria.RIA_value = new_ria;
                     ria.ExperimentNames = temp_RIAvalues_pertime.Select(x => x.ExperimentName).ToList();
                     mergedRIAvalues.Add(ria);
+
+                    if (countOfNonZeroIonScore == 0)
+                    {
+                        mergedRIAvaluesWithZeroIonScore.Add(ria);
+                    }
 
                 }
 

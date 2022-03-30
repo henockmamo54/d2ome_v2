@@ -1275,11 +1275,21 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 // prepare the chart data
                 var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
                 chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
-
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
-                //chart_peptide.ChartAreas[0].AxisX.IsMarginVisible = false;
 
-                //computation(chart_data, peptideSeq, charge);
+                if (chart_peptide.Series.FindByName("Zero Ionscore") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("Zero Ionscore"));
+
+                Series s1 = new Series();
+                s1.Name = "Zero Ionscore";
+                var chart_data2 = proteinExperimentData.mergedRIAvaluesWithZeroIonScore.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
+                if (chart_data2.Length > 0)
+                    s1.Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
+
+                s1.ChartType = SeriesChartType.FastPoint; 
+                s1.Color = Color.Red;
+                s1.BorderWidth = 2;
+                chart_peptide.Series.Add(s1);
 
 
                 #endregion
