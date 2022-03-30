@@ -37,6 +37,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IsotopomerDynamics, Version=1.0.8031.26607, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\IsotopomerDynamics\x64\Debug\IsotopomerDynamics.dll</HintPath>
+    </Reference>
     <Reference Include="Labeling_Path, Version=1.0.8103.31029, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ProteinRateConstant\git\ProteinRateconstant\Run_Labeling_Path\x64\Debug\Labeling_Path.dll</HintPath>
