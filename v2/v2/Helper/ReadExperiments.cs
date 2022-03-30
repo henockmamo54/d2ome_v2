@@ -16,10 +16,12 @@ namespace v2.Helper
         public List<Peptide> peptides = new List<Peptide>();
         public List<ExperimentRecord> experimentRecords = new List<ExperimentRecord>();
         public List<string> experimentNames = new List<string>();
+        public List<int> experimentTimes = new List<int>();
 
-        public ReadExperiments(string path)
+        public ReadExperiments(string path, List<int> experiment_time)
         {
             this.path = path;
+            this.experimentTimes = experiment_time;
         }
 
         public void readExperimentCSVFile()
@@ -117,6 +119,7 @@ namespace v2.Helper
                     experimentRecord.PeptideSeq = p.PeptideSeq;
                     experimentRecord.Charge = p.Charge;
                     experimentRecord.ExperimentName = experimentNames[i];
+                    //experimentRecord.ExperimentTime = experimentTimes[i];
                     experimentRecords.Add(experimentRecord);
                 }
 
@@ -128,7 +131,7 @@ namespace v2.Helper
 
                 Console.WriteLine("error ==>" + e.Message);
 
-                MessageBox.Show("Error reading .Quant.csv ==> " + e.Message);
+                //MessageBox.Show("Error reading .Quant.csv ==> " + e.Message);
             }
 
         }

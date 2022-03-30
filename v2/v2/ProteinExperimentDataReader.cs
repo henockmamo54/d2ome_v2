@@ -52,12 +52,12 @@ namespace v2
             ReadFilesInfo_txt filesinfo = new ReadFilesInfo_txt(files_txt_path);
             filesinfo.readFile();
 
-            this.experiment_time = filesinfo.time;
+            this.experiment_time = filesinfo.experimentTimes;
             this.experimentIDs = filesinfo.experimentIDs;
             this.filecontents = filesinfo.filecontents;
 
             //Protein.Quant.csv reader
-            ReadExperiments experiInfoReader = new ReadExperiments(quant_csv_path);
+            ReadExperiments experiInfoReader = new ReadExperiments(quant_csv_path, filesinfo.experimentTimes_all);
             experiInfoReader.readExperimentCSVFile();
 
             this.peptides = experiInfoReader.peptides;
@@ -150,6 +150,7 @@ namespace v2
 
             foreach (ExperimentRecord er in experimentRecords)
             {
+
                 var tempsum = er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5;
                 double sum_val = tempsum != null ? (double)(er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5) : 0;
                 if (sum_val != 0)
@@ -165,7 +166,10 @@ namespace v2
                     var temp = filecontents.Where(x => x.experimentID == er.ExperimentName).Select(t => t.time).ToArray();
                     if (temp.Length > 0) ria.Time = temp[0];
 
-                    RIAvalues.Add(ria);
+                    var peptide_MO = (double)this.peptides.Where((x) => x.PeptideSeq == er.PeptideSeq && x.Charge == er.Charge).FirstOrDefault().M0 / 100;
+                    if (ria.Time != 0 && ria.RIA_value > peptide_MO) continue;
+                    else if (ria.Time == 0 && Math.Abs(peptide_MO - (double)ria.RIA_value) > 0.1) continue;
+                    else RIAvalues.Add(ria);
                 }
             }
 
@@ -264,15 +268,8 @@ namespace v2
         }
         public void mergeMultipleRIAPerDay2()
         {
-            //var peptides = RIAvalues.Select(x => new { peptideSeq = x.peptideSeq, charge = x.charge }).Distinct().ToList(); 
-
             foreach (Peptide p in this.peptides)
             {
-                //var temp_RIAvalues = RIAvalues.Where(x => x.peptideSeq == p.PeptideSeq & x.charge == p.Charge).ToList();
-                //var temp_RIAvalues = RIAvalues.Where(x => x.RIA_value != null);
-                //temp_RIAvalues = temp_RIAvalues.Where(x => x.peptideSeq == p.PeptideSeq);
-                //temp_RIAvalues = temp_RIAvalues.Where(x => x.charge == p.Charge);
-
                 List<RIA> temp_RIAvalues = new List<RIA>();
                 foreach (RIA r in RIAvalues)
                 {
@@ -561,7 +558,7 @@ namespace v2
                         else
                         {
                             rss = rss_io;
-                            var_k = dn_io == 0 ? double.NaN :(rss / temp_experimentalvalue.Count()) / (dn_io);
+                            var_k = dn_io == 0 ? double.NaN : (rss / temp_experimentalvalue.Count()) / (dn_io);
                         }
 
 

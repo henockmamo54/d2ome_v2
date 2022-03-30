@@ -12,14 +12,15 @@ namespace v2.Helper
     public class ReadFilesInfo_txt
     {
         public string path = @"";
-        public List<int> time = new List<int>(); //contains unique time values
+        public List<int> experimentTimes = new List<int>(); //contains unique time values
+        public List<int> experimentTimes_all = new List<int>(); //contains All time values for each experiment
         public List<string> experimentIDs = new List<string>();
         public List<FileContent> filecontents = new List<FileContent>();
 
         public ReadFilesInfo_txt(string path)
         {
             this.path = path;
-            time = new List<int>();
+            experimentTimes = new List<int>();
             experimentIDs = new List<string>();
             filecontents = new List<FileContent>();
         }
@@ -53,10 +54,10 @@ namespace v2.Helper
                         var rowvalues = temp.Split(' ');
 
                         FileContent fc = new FileContent(int.Parse(rowvalues[0]), rowvalues[1], rowvalues[2], double.Parse(rowvalues[3]), "");
-                        
+
 
                         // get the time
-                        time.Add(fc.time);
+                        experimentTimes_all.Add(fc.time);
 
                         // extract experiment id
                         var temp_id = fc.mzML_path.Trim().Split('\\');
@@ -67,8 +68,8 @@ namespace v2.Helper
                         filecontents.Add(fc);
                     }
 
-                    //extract distict time list
-                    time = time.Distinct().ToList();
+                    //extract distict time list 
+                    experimentTimes = experimentTimes_all.Distinct().ToList(); 
 
                 }
                 catch (Exception e)

@@ -9,6 +9,7 @@ namespace v2.Model
     public class ExperimentRecord
     {
         public string ExperimentName { get; set; }
+        public int ExperimentTime { get; set; }
         public string PeptideSeq { get; set; }
         public double? Charge { get; set; }
         public double SpecMass { get; set; }
