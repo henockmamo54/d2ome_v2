@@ -1277,6 +1277,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
 
+                // ionscore == 0 plot
                 if (chart_peptide.Series.FindByName("Zero Ionscore") != null)
                     chart_peptide.Series.Remove(chart_peptide.Series.FindByName("Zero Ionscore"));
 
@@ -1286,10 +1287,48 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 if (chart_data2.Length > 0)
                     s1.Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
 
-                s1.ChartType = SeriesChartType.FastPoint; 
+                s1.ChartType = SeriesChartType.FastPoint;
                 s1.Color = Color.Red;
                 s1.BorderWidth = 2;
                 chart_peptide.Series.Add(s1);
+
+                // new computation plot
+
+                if (chart_peptide.Series.FindByName("A1/A0") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A1/A0"));
+                if (chart_peptide.Series.FindByName("A2/A0 + A1/A0") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A0 + A1/A0"));
+                if (chart_peptide.Series.FindByName("pX(t) > 0.05") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("pX(t) > 0.05"));
+
+                Series s_A1 = new Series();
+                s_A1.Name = "A1/A0";
+                s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
+                s_A1.ChartType = SeriesChartType.FastPoint;
+                s_A1.Color = Color.Green;
+                s_A1.BorderWidth = 2;
+                chart_peptide.Series.Add(s_A1);
+
+                Series s_A2 = new Series();
+                s_A2.Name = "A2/A0 + A1/A0";
+                s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A2).ToArray());
+                s_A2.ChartType = SeriesChartType.FastPoint;
+                s_A2.Color = Color.BlueViolet; 
+                s_A2.BorderWidth = 2;
+                chart_peptide.Series.Add(s_A2);
+
+                Series s_pxt = new Series();
+                s_pxt.Name = "pX(t) > 0.05";
+                s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());
+                s_pxt.ChartType = SeriesChartType.FastPoint;
+                s_pxt.Color = Color.OrangeRed;
+                s_pxt.BorderWidth = 2;
+                chart_peptide.Series.Add(s_pxt);
+
+
+                //chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
+                //chart_peptide.Series["Series5"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());
+                //chart_peptide.Series["Series6"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A2).ToArray());
 
 
                 #endregion
@@ -1615,6 +1654,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
 
             proteinExperimentData.loadAllExperimentData();
+            proteinExperimentData.computeDeuteriumenrichmentInPeptide();
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.computeAverageA0();
             proteinExperimentData.mergeMultipleRIAPerDay2();

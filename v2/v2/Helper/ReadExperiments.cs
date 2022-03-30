@@ -119,7 +119,7 @@ namespace v2.Helper
                     experimentRecord.PeptideSeq = p.PeptideSeq;
                     experimentRecord.Charge = p.Charge;
                     experimentRecord.ExperimentName = experimentNames[i];
-                    //experimentRecord.ExperimentTime = experimentTimes[i];
+                    experimentRecord.ExperimentTime = experimentTimes[i];
                     experimentRecords.Add(experimentRecord);
                 }
 
