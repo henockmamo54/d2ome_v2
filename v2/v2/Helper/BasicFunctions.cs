@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LBFGS_Library_Call;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,60 @@ namespace v2.Helper
         {
             return i0 / (i0 + i1 + i2 + i3 + i4 + i5);
         }
+
+
+        public static unsafe void computation(List<double> chart_TimeCourseI0Isotope, List<int> chart_TimeCourseDates,
+            float M0, double pw, double neh)
+        {
+
+            try
+            {
+                var scale = 60;
+
+                float[] TimeCourseDates = chart_TimeCourseDates.Select(x => (float)(x)).ToArray();
+                float[] TimeCourseI0Isotope = chart_TimeCourseI0Isotope.Select(x => (float)(x)).ToArray();
+
+
+                var current_peptide_M0 = M0 / 100;
+                var experiment_peptide_I0 = chart_TimeCourseI0Isotope[0];
+
+                double selected_Io = 0;
+                if (!double.IsNaN(experiment_peptide_I0))
+                    selected_Io = (double)experiment_peptide_I0;
+                else
+                    selected_Io = (double)current_peptide_M0;
+
+                if ((!double.IsNaN(experiment_peptide_I0)) && Math.Abs((double)current_peptide_M0 - (double)experiment_peptide_I0) > 0.1)
+                    selected_Io = (double)current_peptide_M0;
+
+                var I0_AtAsymptote = selected_Io * Math.Pow((1 - (pw / 1 - Helper.Constants.ph)), neh);
+                float rkd, rks, fx1;
+
+
+                float[] new_TimeCourseDates = TimeCourseDates.Select(x => x / scale).ToArray();
+                fixed (float* ptr_TimeCourseDates = new_TimeCourseDates)
+                fixed (float* ptr_TimeCourseI0Isotope = TimeCourseI0Isotope)
+                {
+                    LBFGS lbfgs = new LBFGS(ptr_TimeCourseDates, TimeCourseDates.Count(), 1, "One_Compartment_exponential");
+                    lbfgs.InitializeTime();
+                    var nret = lbfgs.Optimize(ptr_TimeCourseI0Isotope, (float)I0_AtAsymptote, (float)(selected_Io - I0_AtAsymptote), &rkd, &rks, &fx1);
+                    double fDegradationConstant = Math.Exp(lbfgs.fParams[0]) / scale;
+
+                    Console.WriteLine(" new rate constant " + nret.ToString() + "=======>" + fDegradationConstant.ToString());
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+
+        }
+
 
         public static double computeRsquared(List<double> experimentalValue, List<double> fitvalue)
         {

@@ -1262,12 +1262,12 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
         }
 
-        public void findBestFits(List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA)
+        public void findBestFits(ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide, List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA)
         {
             try
             {
                 var selected_points = new List<double>();
-                for (int i = 0; i < this.proteinExperimentData.experiment_time.Count; i++)
+                for (int i = 0; i < proteinExperimentData.experiment_time.Count; i++)
                 {
                     var theoretical_val = (double)theoretical_RIA[i];
                     var candidate_points = new List<double>();
@@ -1301,14 +1301,24 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     chart_peptide.Series.Remove(chart_peptide.Series.FindByName("selected"));
                 Series s_pxt = new Series();
                 s_pxt.Name = "selected";
-                s_pxt.Points.DataBindXY(this.proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
+                s_pxt.Points.DataBindXY(proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
                 s_pxt.ChartType = SeriesChartType.FastPoint;
                 s_pxt.Color = Color.DodgerBlue;
                 s_pxt.MarkerSize = 12;
                 chart_peptide.Series.Add(s_pxt);
 
+                Console.WriteLine("===========================================================");
+                Console.WriteLine("===========================================================\n");
+
                 var rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
                 Console.WriteLine("test new rsquared => " + rsquared.ToString());
+
+                if (!double.IsNaN(rsquared))
+                {
+                    Helper.BasicFunctions.computation(selected_points, proteinExperimentData.experiment_time,
+                (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE, (float)current_peptide.Exchangeable_Hydrogens);
+                }
+
             }
             catch (Exception ex)
             {
@@ -1409,7 +1419,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 #region find best fit
 
-                findBestFits(chart_data.Select(x => x.I0_t_fromA1).ToList(),
+                var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
+
+                findBestFits(proteinExperimentData, current_peptide, chart_data.Select(x => x.I0_t_fromA1).ToList(),
                     chart_data.Select(x => x.I0_t_fromA1A2).ToList(),
                     chart_data.Select(x => x.pX_greaterthanThreshold).ToList(),
                     chart_data.Select(x => x.RIA_value).ToList(),
