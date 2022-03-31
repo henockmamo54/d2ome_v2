@@ -1262,6 +1262,61 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
         }
 
+        public void findBestFits(List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA)
+        {
+            try
+            {
+                var selected_points = new List<double>();
+                for (int i = 0; i < this.proteinExperimentData.experiment_time.Count; i++)
+                {
+                    var theoretical_val = (double)theoretical_RIA[i];
+                    var candidate_points = new List<double>();
+
+                    candidate_points.Add(a1ao[i] == null || double.IsNaN((double)a1ao[i]) ? double.MaxValue : Math.Abs((double)a1ao[i] - theoretical_val));
+                    candidate_points.Add(a2ao[i] == null || double.IsNaN((double)a2ao[i]) ? double.MaxValue : Math.Abs((double)a2ao[i] - theoretical_val));
+                    candidate_points.Add(a1a2[i] == null || double.IsNaN((double)a1a2[i]) ? double.MaxValue : Math.Abs((double)a1a2[i] - theoretical_val));
+                    candidate_points.Add(experimental_RIA[i] == null || double.IsNaN((double)experimental_RIA[i]) ? double.MaxValue : Math.Abs((double)experimental_RIA[i] - theoretical_val));
+
+                    // index of minimum point
+                    var min_val = candidate_points.Min();
+
+                    // add the minimum error point to the selected list for the specific time point
+                    if (min_val == double.MaxValue) selected_points.Add(double.NaN);
+                    else
+                    {
+                        var index_min_val = candidate_points.IndexOf(min_val);
+                        switch (index_min_val)
+                        {
+                            case 0: selected_points.Add((double)a1ao[i]); break;
+                            case 1: selected_points.Add((double)a2ao[i]); break;
+                            case 2: selected_points.Add((double)a1a2[i]); break;
+                            case 3: selected_points.Add((double)experimental_RIA[i]); break;
+                            default: selected_points.Add(double.NaN); break;
+                        }
+                    }
+                }
+
+
+                if (chart_peptide.Series.FindByName("selected") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("selected"));
+                Series s_pxt = new Series();
+                s_pxt.Name = "selected";
+                s_pxt.Points.DataBindXY(this.proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
+                s_pxt.ChartType = SeriesChartType.FastPoint;
+                s_pxt.Color = Color.DodgerBlue;
+                s_pxt.MarkerSize = 12;
+                chart_peptide.Series.Add(s_pxt);
+
+                var rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
+                Console.WriteLine("test new rsquared => " + rsquared.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+
+        }
 
         public void loadPeptideChart(string peptideSeq, int charge, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, double Rateconst = Double.NaN, double RSquare = Double.NaN)
         {
@@ -1349,6 +1404,16 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     chart_peptide.ChartAreas[0].AxisX.Maximum = proteinExperimentData.experiment_time.Max() + 0.01;
                 }
 
+
+                #endregion
+
+                #region find best fit
+
+                findBestFits(chart_data.Select(x => x.I0_t_fromA1).ToList(),
+                    chart_data.Select(x => x.I0_t_fromA1A2).ToList(),
+                    chart_data.Select(x => x.pX_greaterthanThreshold).ToList(),
+                    chart_data.Select(x => x.RIA_value).ToList(),
+                    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
 
                 #endregion
 

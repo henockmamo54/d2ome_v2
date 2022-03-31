@@ -13,6 +13,30 @@ namespace v2.Helper
             return i0 / (i0 + i1 + i2 + i3 + i4 + i5);
         }
 
+        public static double computeRsquared(List<double> experimentalValue, List<double> fitvalue)
+        {
+            var mean_exp = experimentalValue.Where(x => !double.IsNaN(x)).Average();
+            double rss = 0;
+            double ss = 0;
+            double rsquared = double.NaN;
+
+            for (int i = 0; i < experimentalValue.Count; i++)
+            {
+                if (!double.IsNaN(experimentalValue[i]))
+                {
+                    ss = ss + Math.Pow((double)(experimentalValue[i] - mean_exp), 2);
+                    rss = rss + Math.Pow((double)(experimentalValue[i] - fitvalue[i]), 2);
+                }
+            }
+
+            //if (r.Rateconst > 0.0006) RSquare = 1 - (rss / ss);
+            //else RSquare = 1 - (diff);
+
+            if (ss != 0)
+                rsquared = 1 - (rss / ss);
+
+            return rsquared;
+        }
         public static double getMedian(List<double> sourceNumbers)
         {
             //Framework 2.0 version of this method. there is an easier way in F4        
