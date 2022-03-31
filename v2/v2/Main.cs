@@ -857,7 +857,18 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                     var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
 
+                    //mynewproteinExperimentData.loadAllExperimentData();
+                    //mynewproteinExperimentData.computeRIAPerExperiment();
+                    //mynewproteinExperimentData.computeAverageA0();
+                    //mynewproteinExperimentData.mergeMultipleRIAPerDay2();
+                    //mynewproteinExperimentData.computeTheoreticalCurvePoints();
+                    //mynewproteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
+                    //mynewproteinExperimentData.computeRSquare();
+                    //ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
+
+
                     mynewproteinExperimentData.loadAllExperimentData();
+                    mynewproteinExperimentData.computeDeuteriumenrichmentInPeptide();
                     mynewproteinExperimentData.computeRIAPerExperiment();
                     mynewproteinExperimentData.computeAverageA0();
                     mynewproteinExperimentData.mergeMultipleRIAPerDay2();
@@ -866,11 +877,14 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     mynewproteinExperimentData.computeRSquare();
                     ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
+
                     var fit_rates = computeNewProtienRateConstant(chartdata, mynewproteinExperimentData, false);
                     var gumbel_median = mynewproteinExperimentData.MeanRateConst;
                     var gumbe_std = mynewproteinExperimentData.StandDev_NumberPeptides_StandDev;
 
                     file_content += proteinName + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "\n";
+
+                    calculateNewRsquaredForEachPeptidePerProtein(chartdata, mynewproteinExperimentData, mynewproteinExperimentData.temp_theoreticalI0Values, proteinName);
 
 
                 }
@@ -882,6 +896,34 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             }
         }
 
+        public void calculateNewRsquaredForEachPeptidePerProtein(ProtienchartDataValues chartdata, ProteinExperimentDataReader proteinExperimentData,
+            List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, string proteinName)
+        {
+            var peptidesList = proteinExperimentData.peptides;
+            string file_content = "peptideSeq,old_Rsquared,new_Rsquared,NDP\n";
+
+            foreach (var peptide in peptidesList)
+            {
+
+                // prepare the chart data
+                var chart_data = proteinExperimentData.mergedRIAvalues.Where(x => x.PeptideSeq == peptide.PeptideSeq & x.Charge == peptide.Charge).OrderBy(x => x.Time).ToArray();
+
+                var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptide.PeptideSeq & x.Charge == peptide.Charge).FirstOrDefault();
+
+                var newRsquared = findBestFits(proteinExperimentData, current_peptide, chart_data.Select(x => x.I0_t_fromA1).ToList(),
+                    chart_data.Select(x => x.I0_t_fromA1A2).ToList(),
+                    chart_data.Select(x => x.pX_greaterthanThreshold).ToList(),
+                    chart_data.Select(x => x.RIA_value).ToList(),
+                    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptide.PeptideSeq & x.charge == peptide.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList(),
+                    false);
+                file_content += current_peptide.PeptideSeq.ToString() + "," + current_peptide.RSquare + "," + newRsquared.ToString() + "," + current_peptide.NDP.ToString() + "\n";
+            }
+
+            using (StreamWriter writer = new StreamWriter(proteinName + ".csv"))
+            {
+                writer.WriteLine(file_content);
+            }
+        }
 
         public List<double> computeNewProtienRateConstant(ProtienchartDataValues chartdata, ProteinExperimentDataReader proteinExperimentData, bool verbose = true)
         {
@@ -1297,23 +1339,28 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 }
 
 
-                if (chart_peptide.Series.FindByName("selected") != null)
-                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("selected"));
-                Series s_pxt = new Series();
-                s_pxt.Name = "selected";
-                s_pxt.Points.DataBindXY(proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
-                s_pxt.ChartType = SeriesChartType.FastPoint;
-                s_pxt.Color = Color.DodgerBlue;
-                s_pxt.MarkerSize = 12;
-                chart_peptide.Series.Add(s_pxt);
-
                 Console.WriteLine("===========================================================");
                 Console.WriteLine("===========================================================\n");
 
                 var rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
+                var test = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
                 Console.WriteLine("test new rsquared => " + rsquared.ToString());
+
                 if (verbose)
+                {
                     label_newrsquared.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(rsquared);
+
+
+                    if (chart_peptide.Series.FindByName("selected") != null)
+                        chart_peptide.Series.Remove(chart_peptide.Series.FindByName("selected"));
+                    Series s_pxt = new Series();
+                    s_pxt.Name = "selected";
+                    s_pxt.Points.DataBindXY(proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
+                    s_pxt.ChartType = SeriesChartType.FastPoint;
+                    s_pxt.Color = Color.DodgerBlue;
+                    s_pxt.MarkerSize = 12;
+                    chart_peptide.Series.Add(s_pxt);
+                }
 
                 if (!double.IsNaN(rsquared))
                 {
