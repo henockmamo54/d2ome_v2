@@ -1262,7 +1262,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
         }
 
-        public void findBestFits(ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide, List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA)
+        public double findBestFits(ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide, List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA, bool verbose = true)
         {
             try
             {
@@ -1312,12 +1312,20 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 var rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
                 Console.WriteLine("test new rsquared => " + rsquared.ToString());
+                if (verbose)
+                    label_newrsquared.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(rsquared);
 
                 if (!double.IsNaN(rsquared))
                 {
-                    Helper.BasicFunctions.computation(selected_points, proteinExperimentData.experiment_time,
-                (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE, (float)current_peptide.Exchangeable_Hydrogens);
+                    var new_k = Helper.BasicFunctions.computeRateConstant(selected_points, proteinExperimentData.experiment_time,
+                 (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+                 (float)current_peptide.Exchangeable_Hydrogens);
+                    if (verbose)
+                        label_newk.Text = new_k.ToString();
+
                 }
+
+                return rsquared;
 
             }
             catch (Exception ex)
@@ -1325,7 +1333,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 Console.WriteLine(ex.ToString());
             }
 
-
+            return double.NaN;
         }
 
         public void loadPeptideChart(string peptideSeq, int charge, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, double Rateconst = Double.NaN, double RSquare = Double.NaN)

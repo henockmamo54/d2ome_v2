@@ -15,7 +15,7 @@ namespace v2.Helper
         }
 
 
-        public static unsafe void computation(List<double> chart_TimeCourseI0Isotope, List<int> chart_TimeCourseDates,
+        public static unsafe double computeRateConstant(List<double> chart_TimeCourseI0Isotope, List<int> chart_TimeCourseDates,
             float M0, double pw, double neh)
         {
 
@@ -53,7 +53,9 @@ namespace v2.Helper
                     double fDegradationConstant = Math.Exp(lbfgs.fParams[0]) / scale;
 
                     Console.WriteLine(" new rate constant " + nret.ToString() + "=======>" + fDegradationConstant.ToString());
-
+                    if (nret == 0)
+                        return fDegradationConstant;
+                    else return double.NaN;
 
                 }
 
@@ -64,7 +66,7 @@ namespace v2.Helper
                 Console.WriteLine(ex.ToString());
             }
 
-
+            return double.NaN;
         }
 
 
