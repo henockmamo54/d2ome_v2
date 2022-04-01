@@ -1367,8 +1367,15 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     var new_k = Helper.BasicFunctions.computeRateConstant(selected_points, proteinExperimentData.experiment_time,
                  (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
                  (float)current_peptide.Exchangeable_Hydrogens);
+
+                    var temp_k = Helper.BasicFunctions.computeRateConstant(experimental_RIA.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
+                 (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+                 (float)current_peptide.Exchangeable_Hydrogens);
+
+
                     if (verbose)
-                        label_newk.Text = new_k.ToString();
+                        //label_newk.Text = new_k.ToString();
+                        label_newk.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(new_k) + " || " + BasicFunctions.formatdoubletothreedecimalplace((double)temp_k);
 
                 }
 

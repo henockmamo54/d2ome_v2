@@ -69,6 +69,74 @@ namespace v2.Helper
             return double.NaN;
         }
 
+        public static double computeRate(List<int> TimeCourseDates, List<double> TimeCourseI0Isotope, double nature_Io,
+           double pw, double neh)
+        {
+            double ph = 1.5574E-4;
+            float rkd, rks, fx1;
+
+            double previous_teta = 0;
+            double teta = Math.Log(1E-5);
+            double fit_error = 1;
+
+
+            var current_peptide_M0 = nature_Io / 100;
+            var experiment_peptide_I0 = TimeCourseI0Isotope[0];
+
+            double selected_Io = 0;
+            if (!double.IsNaN(experiment_peptide_I0))
+                selected_Io = (double)experiment_peptide_I0;
+            else
+                selected_Io = (double)current_peptide_M0;
+
+            if ((!double.IsNaN(experiment_peptide_I0)) && Math.Abs((double)current_peptide_M0 - (double)experiment_peptide_I0) > 0.1)
+                selected_Io = (double)current_peptide_M0;
+
+            var I0_AtAsymptote = selected_Io * Math.Pow((1 - (pw / 1 - Helper.Constants.ph)), neh);
+
+
+
+            while (Math.Abs(teta - previous_teta) > 1E-8)
+            {
+                float k = (float)Math.Exp(teta);
+
+                // compute derivatives for each time point
+                List<double> y = new List<double>();
+                foreach (var t in TimeCourseDates)
+                {
+                    double temp = (double)((nature_Io - I0_AtAsymptote) * Math.Exp(-k * t) * (-t) * k);
+                    y.Add(temp);
+                }
+
+                //comute del y
+                List<double> del_y = new List<double>();
+                for (int i = 0; i < TimeCourseI0Isotope.Count; i++)
+                {
+                    var fit_value = I0_AtAsymptote + (nature_Io - I0_AtAsymptote) * Math.Exp(-k * TimeCourseDates[i]);
+                    del_y.Add((double)(TimeCourseI0Isotope[i] - fit_value));
+                }
+
+                // compute yT*y
+                double val_1 = y.Select(x => x * x).ToList().Sum();
+
+                //compute yT*del_y
+                double val_2 = 0;
+                for (int i = 0; i < del_y.Count; i++)
+                {
+                    val_2 = val_2 + (del_y[i] * y[i]);
+                }
+
+                double del_teta = val_2 / val_1;
+                previous_teta = teta;
+                teta = teta + 0.001 * del_teta;
+
+
+
+            }
+
+            return Math.Exp(teta);
+
+        }
 
         public static double computeRsquared(List<double> experimentalValue, List<double> fitvalue)
         {
