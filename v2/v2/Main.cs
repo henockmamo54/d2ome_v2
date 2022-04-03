@@ -910,9 +910,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptide.PeptideSeq & x.Charge == peptide.Charge).FirstOrDefault();
 
-                var newRsquared = findBestFits(proteinExperimentData, current_peptide, chart_data.Select(x => x.I0_t_fromA1).ToList(),
-                    chart_data.Select(x => x.I0_t_fromA1A2).ToList(),
-                    chart_data.Select(x => x.pX_greaterthanThreshold).ToList(),
+                var newRsquared = findBestFits(proteinExperimentData, current_peptide, chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
+                    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
                     chart_data.Select(x => x.RIA_value).ToList(),
                     theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptide.PeptideSeq & x.charge == peptide.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList(),
                     false);
@@ -1430,7 +1430,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 Series s_A1 = new Series();
                 s_A1.Name = "A1/A0";
-                s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
+                s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A0).ToArray());
                 s_A1.ChartType = SeriesChartType.FastPoint;
                 s_A1.Color = Color.Green;
                 s_A1.MarkerSize = 7;
@@ -1438,7 +1438,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 Series s_A2 = new Series();
                 s_A2.Name = "A2/A0";
-                s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A2).ToArray());
+                s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A0).ToArray());
                 s_A2.ChartType = SeriesChartType.FastPoint;
                 s_A2.Color = Color.BlueViolet;
                 s_A2.MarkerSize = 7;
@@ -1446,7 +1446,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 Series s_pxt = new Series();
                 s_pxt.Name = "A2/A1";
-                s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());
+                s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A1).ToArray());
                 s_pxt.ChartType = SeriesChartType.FastPoint;
                 s_pxt.Color = Color.OrangeRed;
                 s_pxt.MarkerSize = 7;
@@ -1483,9 +1483,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
 
-                findBestFits(proteinExperimentData, current_peptide, chart_data.Select(x => x.I0_t_fromA1).ToList(),
-                    chart_data.Select(x => x.I0_t_fromA1A2).ToList(),
-                    chart_data.Select(x => x.pX_greaterthanThreshold).ToList(),
+                findBestFits(proteinExperimentData, current_peptide, chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
+                    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
                     chart_data.Select(x => x.RIA_value).ToList(),
                     theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
 
@@ -1795,6 +1795,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             proteinExperimentData.loadAllExperimentData();
             proteinExperimentData.computeDeuteriumenrichmentInPeptide();
             proteinExperimentData.computeRIAPerExperiment();
+            proteinExperimentData.normalizeRIAValuesForAllPeptides();
             proteinExperimentData.computeAverageA0();
             proteinExperimentData.mergeMultipleRIAPerDay2();
             proteinExperimentData.computeTheoreticalCurvePoints();

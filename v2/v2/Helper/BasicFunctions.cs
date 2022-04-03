@@ -14,6 +14,33 @@ namespace v2.Helper
             return i0 / (i0 + i1 + i2 + i3 + i4 + i5);
         }
 
+        public static void NormalizeDataPoints(List<double> datapoints, double M0, double BWE, List<double> bweList,double NEH)
+        {            
+
+            ////select proper io
+            //double I0 = M0 / 100;
+            //var zeroTimePoint = datapoints[0];
+            //if (!double.IsNaN((double)zeroTimePoint))
+            //{
+            //    if (Math.Abs((double)zeroTimePoint - I0) < 0.1) { I0 = (double)zeroTimePoint; }
+            //}
+
+            //var IO_asymptote = I0 * (1 - (BWE / (1 - Helper.Constants.ph)) * NEH);
+
+            //// normalize each time point
+            //foreach (var d in datapoints)
+            //{
+            //    var BWE_t = filecontents.Where(x => x.time == d.Time).FirstOrDefault().BWE;
+            //    var IO_t_asymptote = I0 * (1 - (BWE_t / (1 - Helper.Constants.ph)) * p.Exchangeable_Hydrogens);
+
+            //    // compute the new value 
+            //    var I0_t = (d.Time != 0) ? IO_asymptote + (d.RIA_value - IO_t_asymptote) / (I0 - IO_t_asymptote) * (I0 - IO_asymptote) : d.RIA_value;
+
+            //    //update the value
+            //    d.RIA_value = I0_t;
+            //    normalizedRIAvalues.Add(d);
+            //}
+        }
 
         public static unsafe double computeRateConstant(List<double> chart_TimeCourseI0Isotope, List<int> chart_TimeCourseDates,
             float M0, double pw, double neh)

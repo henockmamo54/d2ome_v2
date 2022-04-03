@@ -30,9 +30,9 @@ namespace v2.Model
         public double? Net_Labeling { get; set; }
 
         public double? Deuteriumenrichment { get; set; } //pX(t) 
-        public double? I0_t_fromA1 { get; set; }
-        public double? I0_t_fromA1A2 { get; set; }
-        public double? pX_greaterthanThreshold { get; set; } //pX(t) > 0.05
+        public double? I0_t_fromA1A0 { get; set; }
+        public double? I0_t_fromA2A0 { get; set; }
+        public double? I0_t_fromA2A1 { get; set; }  
 
     }
 }
