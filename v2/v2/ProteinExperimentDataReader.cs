@@ -200,6 +200,7 @@ namespace v2
 
                     foreach (ExperimentRecord er in experimentRecordsPerPeptide)
                     {
+                        double experiment_BWE = filecontents.Where(x => x.experimentID == er.ExperimentName).Select(x => x.BWE).FirstOrDefault();
 
                         var experimentsAt_t = experimentRecordsPerPeptide.Where(t => t.ExperimentTime == er.ExperimentTime && t.I0 != null && t.I0 > 0 &&
                         (er.I0 + er.I1 + er.I2 + er.I3 + er.I4 + er.I5) > 0
@@ -227,6 +228,7 @@ namespace v2
                             int index_min_value = diff.IndexOf(min_value);
                             var selected_pxt = pxts[index_min_value];
                             er.I0_t_fromA1A0 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (selected_pxt / (1 - ph))), (double)NEH));
+                            //er.I0_t_fromA1A0_pxt = experiment_BWE;
                         }
 
                         // computre a2/a0
@@ -238,6 +240,7 @@ namespace v2
                             int index_min_value = diff.IndexOf(min_value);
                             var selected_pxt = pxts[index_min_value];
                             er.I0_t_fromA2A0 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (selected_pxt / (1 - ph))), (double)NEH));
+                            //er.I0_t_fromA2A0_pxt = experiment_BWE;
                         }
 
 
@@ -250,6 +253,7 @@ namespace v2
                             int index_min_value = diff.IndexOf(min_value);
                             var selected_pxt = pxts[index_min_value];
                             er.I0_t_fromA2A1 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (selected_pxt / (1 - ph))), (double)NEH));
+                            //er.I0_t_fromA2A1_pxt = experiment_BWE;
                         }
 
 
@@ -283,6 +287,11 @@ namespace v2
                     ria.I0_t_fromA2A0 = er.I0_t_fromA2A0;
                     ria.I0_t_fromA2A1 = er.I0_t_fromA2A1;
 
+
+                    //ria.I0_t_fromA1A0_pxt = er.I0_t_fromA1A0_pxt;
+                    //ria.I0_t_fromA2A0_pxt = er.I0_t_fromA2A0_pxt;
+                    //ria.I0_t_fromA2A1_pxt = er.I0_t_fromA2A1_pxt;
+
                     //get the experiment time from files.txt values
                     var temp = filecontents.Where(x => x.experimentID == er.ExperimentName).Select(t => t.time).ToArray();
                     if (temp.Length > 0) ria.Time = temp[0];
@@ -312,7 +321,7 @@ namespace v2
                     I0 = (double)zeroIimePoints.Select(x => x.RIA_value).Average();
                 if (Math.Abs(I0 - (double)p.M0 / 100) > 0.1) { I0 = (double)p.M0 / 100; }
 
-                var IO_asymptote = I0 * (1 - (filecontents[filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)) * p.Exchangeable_Hydrogens);
+                var IO_asymptote = I0 * Math.Pow(1 - (filecontents[filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)), (double)p.Exchangeable_Hydrogens);
                 //var fI0_Asymptote_final = I0 * (1 - (filecontents[filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)) * p.Exchangeable_Hydrogens);
 
 
@@ -321,14 +330,16 @@ namespace v2
                     var BWE_t = filecontents.Where(x => x.experimentID == datapoint.ExperimentName).Select(x => x.BWE).FirstOrDefault();
 
 
-                    var IO_t_asymptote = I0 * (1 - (BWE_t / (1 - Helper.Constants.ph)) * p.Exchangeable_Hydrogens);
-
-
+                    var IO_t_asymptote = I0 * Math.Pow(1 - (BWE_t / (1 - Helper.Constants.ph)), (double)p.Exchangeable_Hydrogens);
 
                     var I0_t = (datapoint.Time != 0) ? IO_asymptote + (datapoint.RIA_value - IO_t_asymptote) / (I0 - IO_t_asymptote) * (I0 - IO_asymptote) : datapoint.RIA_value;
-                    //var I0_t = (datapoint.Time != 0) ? fI0_Asymptote_final + (I0 - fI0_Asymptote_final) * (datapoint.RIA_value - IO_t_asymptote) * (I0 - IO_t_asymptote) : datapoint.RIA_value;
 
                     datapoint.RIA_value = I0_t;
+
+                    datapoint.I0_t_fromA1A0 = (datapoint.Time != 0) ? IO_asymptote + (datapoint.I0_t_fromA1A0 - IO_t_asymptote) / (I0 - IO_t_asymptote) * (I0 - IO_asymptote) : datapoint.I0_t_fromA1A0;
+                    datapoint.I0_t_fromA2A0 = (datapoint.Time != 0) ? IO_asymptote + (datapoint.I0_t_fromA2A0 - IO_t_asymptote) / (I0 - IO_t_asymptote) * (I0 - IO_asymptote) : datapoint.I0_t_fromA2A0;
+                    datapoint.I0_t_fromA2A1 = (datapoint.Time != 0) ? IO_asymptote + (datapoint.I0_t_fromA2A1 - IO_t_asymptote) / (I0 - IO_t_asymptote) * (I0 - IO_asymptote) : datapoint.I0_t_fromA2A1;
+
                     normalizedRIAvalues.Add(datapoint);
                     //fTempI0[i] = fI0_Asymptote_final + (I0_Natural - fI0_Asymptote_final) * (fTempI0[i] - fI0_Asymptote_Temp) / (I0_Natural - fI0_Asymptote_Temp);
                 }
@@ -470,6 +481,10 @@ namespace v2
                     ria.I0_t_fromA1A0 = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.Select(x => x.I0_t_fromA1A0).Average() : null;
                     ria.I0_t_fromA2A0 = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.Select(x => x.I0_t_fromA2A0).Average() : null;
                     ria.I0_t_fromA2A1 = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.Select(x => x.I0_t_fromA2A1).Average() : null;
+
+                    //ria.I0_t_fromA1A0_pxt = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.Select(x => x.I0_t_fromA1A0_pxt).Average() : null;
+                    //ria.I0_t_fromA2A0_pxt = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.Select(x => x.I0_t_fromA2A0_pxt).Average() : null;
+                    //ria.I0_t_fromA2A1_pxt = temp_RIAvalues_pertime.Count > 0 ? temp_RIAvalues_pertime.Select(x => x.I0_t_fromA2A1_pxt).Average() : null;
                     #endregion
 
                     ria.RIA_value = new_ria;

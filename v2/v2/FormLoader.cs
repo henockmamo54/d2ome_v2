@@ -16,8 +16,8 @@ namespace v2
 
         public static void startVisualizerForm(string sourcepath)
         {
-            Form1 visual = new Form1(sourcepath);
-            visual.Show();
+            //Form1 visual = new Form1(sourcepath);
+            //visual.Show();
         }
     }
 }

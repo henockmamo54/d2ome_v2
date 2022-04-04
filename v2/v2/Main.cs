@@ -867,15 +867,27 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     //ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
 
+                    //mynewproteinExperimentData.loadAllExperimentData();
+                    //mynewproteinExperimentData.computeDeuteriumenrichmentInPeptide();
+                    //mynewproteinExperimentData.computeRIAPerExperiment();
+                    //mynewproteinExperimentData.computeAverageA0();
+                    //mynewproteinExperimentData.mergeMultipleRIAPerDay2();
+                    //mynewproteinExperimentData.computeTheoreticalCurvePoints();
+                    //mynewproteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
+                    //mynewproteinExperimentData.computeRSquare();
+                    //ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
+
                     mynewproteinExperimentData.loadAllExperimentData();
                     mynewproteinExperimentData.computeDeuteriumenrichmentInPeptide();
                     mynewproteinExperimentData.computeRIAPerExperiment();
+                    mynewproteinExperimentData.normalizeRIAValuesForAllPeptides();
                     mynewproteinExperimentData.computeAverageA0();
                     mynewproteinExperimentData.mergeMultipleRIAPerDay2();
                     mynewproteinExperimentData.computeTheoreticalCurvePoints();
                     mynewproteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
                     mynewproteinExperimentData.computeRSquare();
                     ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
+
 
 
                     var fit_rates = computeNewProtienRateConstant(chartdata, mynewproteinExperimentData, false);
@@ -1304,6 +1316,142 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
         }
 
+
+        #region normalization tiral
+        //public List<double> NormalizeSelectedPoints(ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide,
+        //    List<double> selectedPoints, List<double> selectedpxtValues)
+        //{
+        //    List<double> normalizedValues = new List<double>();
+
+        //    var I0 = current_peptide.M0 / 100; // selectedPoints[0];
+        //    normalizedValues.Add(selectedPoints[0]);
+        //    //var IO_asymptote = I0 * (1 - (proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)) * current_peptide.Exchangeable_Hydrogens);
+        //    var IO_asymptote = I0 * Math.Pow(1 - (proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)), (double)current_peptide.Exchangeable_Hydrogens);
+        //    for (int i = 1; i < selectedPoints.Count; i++)
+        //    {
+        //        double BWE_t = selectedpxtValues[i];
+        //        if (double.IsNaN(BWE_t) || BWE_t == 0)
+        //        {
+        //            normalizedValues.Add(selectedPoints[i]);
+        //        }
+        //        else
+        //        {
+        //            var IO_t_asymptote = I0 * Math.Pow(1 - (BWE_t / (1 - Helper.Constants.ph)), (double)current_peptide.Exchangeable_Hydrogens);
+
+        //            double I0_t = (double)(IO_asymptote + (selectedPoints[i] - IO_t_asymptote) / (I0 - IO_t_asymptote) * (I0 - IO_asymptote));
+        //            normalizedValues.Add(I0_t);
+
+        //        }
+
+        //    }
+
+        //    return normalizedValues;
+
+        //}
+
+        //public double findBestFits(ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide, RIA[] chart_data, List<double> theoretical_RIA, bool verbose = true)
+        //{
+        //    List<double?> a1ao = chart_data.Select(x => x.I0_t_fromA1A0).ToList();
+        //    List<double?> a2ao = chart_data.Select(x => x.I0_t_fromA2A0).ToList();
+        //    List<double?> a1a2 = chart_data.Select(x => x.I0_t_fromA2A1).ToList();
+        //    List<double?> experimental_RIA = chart_data.Select(x => x.RIA_value).ToList();
+
+        //    List<double?> a1ao_pxt = chart_data.Select(x => x.I0_t_fromA1A0_pxt).ToList();
+        //    List<double?> a2ao_pxt = chart_data.Select(x => x.I0_t_fromA2A0_pxt).ToList();
+        //    List<double?> a1a2_pxt = chart_data.Select(x => x.I0_t_fromA2A1_pxt).ToList();
+
+
+        //    try
+        //    {
+        //        var selected_points = new List<double>();
+        //        var selected_pints_pxt = new List<double>();
+
+        //        for (int i = 0; i < proteinExperimentData.experiment_time.Count; i++)
+        //        {
+        //            var theoretical_val = (double)theoretical_RIA[i];
+        //            var candidate_points = new List<double>();
+
+        //            candidate_points.Add(a1ao[i] == null || double.IsNaN((double)a1ao[i]) ? double.MaxValue : Math.Abs((double)a1ao[i] - theoretical_val));
+        //            candidate_points.Add(a2ao[i] == null || double.IsNaN((double)a2ao[i]) ? double.MaxValue : Math.Abs((double)a2ao[i] - theoretical_val));
+        //            candidate_points.Add(a1a2[i] == null || double.IsNaN((double)a1a2[i]) ? double.MaxValue : Math.Abs((double)a1a2[i] - theoretical_val));
+        //            candidate_points.Add(experimental_RIA[i] == null || double.IsNaN((double)experimental_RIA[i]) ? double.MaxValue : Math.Abs((double)experimental_RIA[i] - theoretical_val));
+
+        //            // index of minimum point
+        //            var min_val = candidate_points.Min();
+
+        //            // add the minimum error point to the selected list for the specific time point
+        //            if (min_val == double.MaxValue) { selected_points.Add(double.NaN); selected_pints_pxt.Add(double.NaN); }
+        //            else
+        //            {
+        //                var index_min_val = candidate_points.IndexOf(min_val);
+        //                switch (index_min_val)
+        //                {
+        //                    case 0: { selected_points.Add((double)a1ao[i]); selected_pints_pxt.Add((double)a1ao_pxt[i]); break; }
+        //                    case 1: { selected_points.Add((double)a2ao[i]); selected_pints_pxt.Add((double)a2ao_pxt[i]); break; }
+        //                    case 2: { selected_points.Add((double)a1a2[i]); selected_pints_pxt.Add((double)a1a2_pxt[i]); break; }
+        //                    case 3: { selected_points.Add((double)experimental_RIA[i]); selected_pints_pxt.Add(double.NaN); break; }
+        //                    default: { selected_points.Add(double.NaN); selected_pints_pxt.Add(double.NaN); break; }
+        //                }
+        //            }
+        //        }
+
+
+        //        Console.WriteLine("===========================================================");
+        //        Console.WriteLine("===========================================================\n");
+
+        //        // normalize selected value
+
+        //        //selected_points = NormalizeSelectedPoints(proteinExperimentData, current_peptide, selected_points, selected_pints_pxt);
+
+        //        var rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
+        //        var test = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
+        //        Console.WriteLine("test new rsquared => " + rsquared.ToString());
+
+        //        if (verbose)
+        //        {
+        //            label_newrsquared.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(rsquared);
+
+
+        //            if (chart_peptide.Series.FindByName("selected") != null)
+        //                chart_peptide.Series.Remove(chart_peptide.Series.FindByName("selected"));
+        //            Series s_pxt = new Series();
+        //            s_pxt.Name = "selected";
+        //            s_pxt.Points.DataBindXY(proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
+        //            s_pxt.ChartType = SeriesChartType.FastPoint;
+        //            s_pxt.Color = Color.DodgerBlue;
+        //            s_pxt.MarkerSize = 12;
+        //            chart_peptide.Series.Add(s_pxt);
+        //        }
+
+        //        if (!double.IsNaN(rsquared))
+        //        {
+        //            var new_k = Helper.BasicFunctions.computeRateConstant(selected_points, proteinExperimentData.experiment_time,
+        //         (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+        //         (float)current_peptide.Exchangeable_Hydrogens);
+
+        //            var temp_k = Helper.BasicFunctions.computeRateConstant(experimental_RIA.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
+        //         (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+        //         (float)current_peptide.Exchangeable_Hydrogens);
+
+
+        //            if (verbose)
+        //                //label_newk.Text = new_k.ToString();
+        //                label_newk.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(new_k) + " || " + BasicFunctions.formatdoubletothreedecimalplace((double)temp_k);
+
+        //        }
+
+        //        return rsquared;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.ToString());
+        //    }
+
+        //    return double.NaN;
+        //}
+
+        #endregion
         public double findBestFits(ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide, List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA, bool verbose = true)
         {
             try
@@ -1483,11 +1631,15 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
 
-                findBestFits(proteinExperimentData, current_peptide, chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                findBestFits(proteinExperimentData, current_peptide,
+                    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
                     chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
                     chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
                     chart_data.Select(x => x.RIA_value).ToList(),
                     theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+
+                //findBestFits(proteinExperimentData, current_peptide,
+                //    chart_data, theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
 
                 #endregion
 
