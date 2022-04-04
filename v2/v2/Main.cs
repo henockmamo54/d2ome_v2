@@ -1491,6 +1491,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 Console.WriteLine("===========================================================\n");
 
                 var rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
+                var rsquaredw = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
+
                 var test = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
                 Console.WriteLine("test new rsquared => " + rsquared.ToString());
 
@@ -1516,15 +1518,38 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                  (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
                  (float)current_peptide.Exchangeable_Hydrogens);
 
-                    var temp_k = Helper.BasicFunctions.computeRateConstant(experimental_RIA.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
-                 (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
-                 (float)current_peptide.Exchangeable_Hydrogens);
+                    //   var temp_k = Helper.BasicFunctions.computeRateConstant(experimental_RIA.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
+                    //(float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+                    //(float)current_peptide.Exchangeable_Hydrogens);
+
+                    // compute rsquared based on the new points
+                    var io = (double)(current_peptide.M0 / 100);
+                    if (!double.IsNaN(selected_points[0]))
+                        io = Math.Abs(io - selected_points[0]) / io > 0.1 ? io : selected_points[0];
+
+                    var neh = (double)(current_peptide.Exchangeable_Hydrogens);
+                    var k = new_k;// (double)(current_peptide.Rateconst);
+                    var pw = (double)(proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE);
+
+                    List<double> new_theoretical_points = new List<double>();
+                    for (int i = 0; i < proteinExperimentData.experiment_time.Count; i++)
+                    {
+                        var val1 = io * Math.Pow(1 - (pw / (1 - Helper.Constants.ph)), neh);
+                        var val2 = io * Math.Pow(Math.E, -1 * k * proteinExperimentData.experiment_time[i]) * (1 - (Math.Pow(1 - (pw / (1 - Constants.ph)), neh)));
+                        new_theoretical_points.Add(val1 + val2);
+                    }
+
+                    var new_rsquared1 = Helper.BasicFunctions.computeRsquared(selected_points, new_theoretical_points);
 
 
                     if (verbose)
+                    {
                         //label_newk.Text = new_k.ToString();
-                        label_newk.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(new_k) + " || " + BasicFunctions.formatdoubletothreedecimalplace((double)temp_k);
+                        label_newk.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(new_k) + " || => R\u00B2 (new k) " + Helper.BasicFunctions.formatdoubletothreedecimalplace(new_rsquared1);
+                    }
 
+                    if (!double.IsNaN(new_rsquared1))
+                        return new_rsquared1;
                 }
 
                 return rsquared;

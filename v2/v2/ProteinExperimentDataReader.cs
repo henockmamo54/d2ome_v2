@@ -319,11 +319,11 @@ namespace v2
                 var zeroIimePoints = datapoints.Where(x => x.Time == 0 && x.RIA_value != null && x.RIA_value > 0).ToList();
                 if (zeroIimePoints.Count > 0)
                     I0 = (double)zeroIimePoints.Select(x => x.RIA_value).Average();
-                if (Math.Abs(I0 - (double)p.M0 / 100) > 0.1) { I0 = (double)p.M0 / 100; }
+
+                var temp_mo = (double)p.M0 / 100;
+                if (Math.Abs(I0 - temp_mo) / temp_mo > 0.1) { I0 = temp_mo; }
 
                 var IO_asymptote = I0 * Math.Pow(1 - (filecontents[filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)), (double)p.Exchangeable_Hydrogens);
-                //var fI0_Asymptote_final = I0 * (1 - (filecontents[filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)) * p.Exchangeable_Hydrogens);
-
 
                 foreach (var datapoint in datapoints)
                 {
@@ -652,8 +652,9 @@ namespace v2
                 {
                     var experimentalvalue = mergedRIAvalues.Where(x => x.Charge == r.Charge).ToList();
                     experimentalvalue = experimentalvalue.Where(x => x.PeptideSeq == r.PeptideSeq).ToList();
-                    var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
-                    var meanval_ria = temp_experimentalvalue.Average(x => x.RIA_value);
+                    //var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
+                    var temp_experimentalvalue = experimentalvalue.ToList();
+                    var meanval_ria = temp_experimentalvalue.Where(x=> !double.IsNaN((double)x.RIA_value)).Average(x => x.RIA_value);
 
                     var temp_computedRIAValue = theoreticalI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
                     var temp_computedRIAValue_withexperimentalIO = theoreticalI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
@@ -721,7 +722,7 @@ namespace v2
 
                         foreach (var p in temp_experimentalvalue)
                         {
-                            if (p.RIA_value != null)
+                            if (!double.IsNaN((double)p.RIA_value))
                             {
                                 var computedRIAValue_mo = temp_computedRIAValue.Where(x => x.time == p.Time).First().value;
                                 var computedRIAValue_io = temp_computedRIAValue_withexperimentalIO.Where(x => x.time == p.Time).First().value;
