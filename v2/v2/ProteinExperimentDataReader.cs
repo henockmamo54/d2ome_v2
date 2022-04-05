@@ -34,7 +34,7 @@ namespace v2
         public double? TotalIonCurrent;
 
         // computed values
-        List<RIA> RIAvalues = new List<RIA>();
+        public List<RIA> RIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvaluesWithZeroIonScore = new List<RIA>();
         public List<TheoreticalI0Value> theoreticalI0Values = new List<TheoreticalI0Value>();

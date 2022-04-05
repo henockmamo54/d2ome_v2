@@ -2378,19 +2378,125 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             var there_l = new Thread(() => dummy(txt_source.Text));
             there_l.Start();
         }
+
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+
+            string[] protienList = new[] { "CPSM_MOUSE" };
+            //string[] protienList = new[] { "GSTP1_MOUSE" };
+            var sourcePath = "C:/Users/hmdebern.UTMB-USERS-M/Desktop/UTMB_Liver_Male_0325_2022_FDR";
+            string[] filePaths = Directory.GetFiles(sourcePath);
+            var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
+
+            if (csvfilePaths.Count == 0)
+            {
+                //MessageBox.Show("This directory doesn't contain the necessary files. Please select another directory.");
+            }
+            else
+            {
+                var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).Distinct().ToList();
+
+                int counter = 0;
+
+                foreach (string proteinName in protienList)
+                {
+
+                    counter = counter + 1;
+                    try
+                    {
+                        label24_progress.Invoke(new Action(() => label24_progress.Text = counter.ToString() + "/" + temp.Count.ToString()));
+                    }
+                    catch (Exception ex) { }
+
+                    //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
+                    string files_txt_path = sourcePath + @"\files.txt";
+                    string quant_csv_path = sourcePath + @"\" + proteinName + ".Quant.csv";
+                    string RateConst_csv_path = sourcePath + @"\" + proteinName + ".RateConst.csv";
+
+                    var temppath = files_txt_path.Replace("Protein,files.txt", "files.centroid.txt");
+                    if (File.Exists(temppath)) files_txt_path = temppath;
+
+
+                    if (!File.Exists(files_txt_path)) { MessageBox.Show("filex.txt is not available in the specified directory.", "Error"); continue; }
+                    else { try { string[] lines = System.IO.File.ReadAllLines(files_txt_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
+
+                    if (!File.Exists(quant_csv_path)) { MessageBox.Show(proteinName + ".Quant.csv" + " is not available in the specified directory.", "Error"); continue; }
+                    else { try { string[] lines = System.IO.File.ReadAllLines(quant_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
+
+                    if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); continue; }
+                    else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
+
+                    var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+
+                    mynewproteinExperimentData.loadAllExperimentData();
+                    mynewproteinExperimentData.computeDeuteriumenrichmentInPeptide();
+                    mynewproteinExperimentData.computeRIAPerExperiment();
+                    mynewproteinExperimentData.normalizeRIAValuesForAllPeptides();
+                    mynewproteinExperimentData.computeAverageA0();
+                    mynewproteinExperimentData.mergeMultipleRIAPerDay2();
+                    mynewproteinExperimentData.computeTheoreticalCurvePoints();
+                    mynewproteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
+                    mynewproteinExperimentData.computeRSquare();
+                    ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
+
+                    var temp_peplist = mynewproteinExperimentData.peptides.Where(x => x.RSquare >= 0.95 && x.NDP == 9).OrderByDescending(x => x.RSquare).GroupBy(x => x.PeptideSeq).Select(g => g.First()).ToList().Take(10).ToList();
+
+
+                    //var selected_topPeptides = mynewproteinExperimentData.peptides.Where(x => x.RSquare >= 0.95 && x.NDP == 9).OrderByDescending(x => x.RSquare).Take(3).ToList();
+                    var selected_topPeptides = temp_peplist.GetRange(2, 4);
+                    var pep1_exps = mynewproteinExperimentData.RIAvalues.Where(x => x.PeptideSeq == selected_topPeptides[0].PeptideSeq && x.Charge == selected_topPeptides[0].Charge).ToList();
+                    var pep2_exps = mynewproteinExperimentData.RIAvalues.Where(x => x.PeptideSeq == selected_topPeptides[1].PeptideSeq && x.Charge == selected_topPeptides[1].Charge).ToList();
+
+
+                    var experiments_list = pep1_exps.Where(x => x.Time == 0).Select(x => x.ExperimentName).OrderBy(x => x).Distinct().ToList();
+
+                    double io1 = (double)pep1_exps.Where(x => x.Time == 0 && x.ExperimentName == experiments_list[0]).Select(x => x.RIA_value).FirstOrDefault();
+                    if (double.IsNaN(io1)) io1 = (double)selected_topPeptides[0].M0 / 100;
+
+                    double io2 = (double)pep2_exps.Where(x => x.Time == 0 && x.ExperimentName == experiments_list[0]).Select(x => x.RIA_value).FirstOrDefault();
+                    if (double.IsNaN(io2)) io2 = (double)selected_topPeptides[1].M0 / 100;
+
+                    var time = 6;
+                    experiments_list = pep1_exps.Where(x => x.Time == time).Select(x => x.ExperimentName).OrderBy(x => x).Distinct().ToList();
+                    double i_t_1 = (double)pep1_exps.Where(x => x.Time == time && x.ExperimentName == experiments_list[0]).Select(x => x.RIA_value).FirstOrDefault();
+                    double i_t_2 = (double)pep2_exps.Where(x => x.Time == time && x.ExperimentName == experiments_list[0]).Select(x => x.RIA_value).FirstOrDefault();
+
+
+                    var leftside = (io1 / io2) * ((io2 - i_t_2) / (io1 - i_t_1));
+
+                    List<double> dif_values = new List<double>();
+
+                    for (double i = 0.001; i < 0.05; i = i + 0.001)
+                    {
+                        var rigthside = ((1 - Math.Pow(1 - (i / 1 - Constants.ph), (double)selected_topPeptides[1].Exchangeable_Hydrogens)) /
+                            (1 - Math.Pow(1 - (i / 1 - Constants.ph), (double)selected_topPeptides[0].Exchangeable_Hydrogens)));
+
+                        dif_values.Add(Math.Abs(leftside - rigthside));
+                    }
+
+                    var computed_bwe = dif_values.IndexOf(dif_values.Min()) * 0.001;
+
+                    Console.WriteLine("computed _ bwe = " + computed_bwe.ToString());
+
+
+                }
+
+            }
+        }
         /*
 private void button1_Click_1(object sender, EventArgs e)
 {
-   var there_l = new Thread(() => dummy(txt_source.Text));
-   there_l.Start();
+var there_l = new Thread(() => dummy(txt_source.Text));
+there_l.Start();
 
-   //mynewproteinExperimentData.loadAllExperimentData();
-   //mynewproteinExperimentData.computeRIAPerExperiment();
-   //mynewproteinExperimentData.computeAverageA0();
-   //mynewproteinExperimentData.mergeMultipleRIAPerDay2();
-   //mynewproteinExperimentData.computeTheoreticalCurvePoints();
-   //mynewproteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
-   //mynewproteinExperimentData.computeRSquare();
+//mynewproteinExperimentData.loadAllExperimentData();
+//mynewproteinExperimentData.computeRIAPerExperiment();
+//mynewproteinExperimentData.computeAverageA0();
+//mynewproteinExperimentData.mergeMultipleRIAPerDay2();
+//mynewproteinExperimentData.computeTheoreticalCurvePoints();
+//mynewproteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
+//mynewproteinExperimentData.computeRSquare();
 }
 
 
