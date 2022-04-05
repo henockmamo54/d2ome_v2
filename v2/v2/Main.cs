@@ -1548,8 +1548,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         label_newk.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(new_k) + " || => R\u00B2 (new k) " + Helper.BasicFunctions.formatdoubletothreedecimalplace(new_rsquared1);
                     }
 
-                    if (!double.IsNaN(new_rsquared1))
-                        return new_rsquared1;
+                    //if (!double.IsNaN(new_rsquared1))
+                    //    return new_rsquared1;
                 }
 
                 return rsquared;
