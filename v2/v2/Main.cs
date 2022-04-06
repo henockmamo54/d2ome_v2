@@ -2457,7 +2457,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         {
                             var selected_topPeptides = temp_peplist[index];
                             //var selected_topPeptides2 = temp_peplist[index + 1];
-                            var selected_topPeptides2 = temp_peplist.Where(x => x.PeptideSeq != selected_topPeptides.PeptideSeq && x.Charge != selected_topPeptides.Charge && Math.Abs((double)x.Exchangeable_Hydrogens - (double)selected_topPeptides.Exchangeable_Hydrogens) > 5).FirstOrDefault();
+                            var selected_topPeptides2 = temp_peplist.Where(x => x.PeptideSeq != selected_topPeptides.PeptideSeq && x.Charge != selected_topPeptides.Charge).FirstOrDefault(); //&& Math.Abs((double)x.Exchangeable_Hydrogens - (double)selected_topPeptides.Exchangeable_Hydrogens) > 5
 
                             if (selected_topPeptides2 == null)
                             {
@@ -2481,7 +2481,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                 double io1 = (double)selected_topPeptides.M0 / 100;
                                 double io2 = (double)selected_topPeptides2.M0 / 100;
 
-                                var time = 21;
+                                var time = 2;
                                 experiments_list = pep1_exps.Where(x => x.Time == time).Select(x => x.ExperimentName).OrderBy(x => x).Distinct().ToList();
 
 
@@ -2496,7 +2496,6 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                         double i_t_1 = (double)pep1_exps.Where(x => x.Time == time && x.ExperimentName == experiment).Select(x => x.RIA_value).FirstOrDefault();
                                         double i_t_2 = (double)pep2_exps.Where(x => x.Time == time && x.ExperimentName == experiment).Select(x => x.RIA_value).FirstOrDefault();
 
-
                                         var ls = (io1 / io2) * ((io2 - i_t_2) / (io1 - i_t_1));
 
                                         List<double> dif_values = new List<double>();
@@ -2507,6 +2506,11 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                                             var rs = (1 - Math.Pow((1 - (pw / 1 - Constants.ph)), (double)selected_topPeptides2.Exchangeable_Hydrogens)) /
                                                 (1 - Math.Pow((1 - (pw / 1 - Constants.ph)), (double)selected_topPeptides.Exchangeable_Hydrogens));
+
+
+                                            //double i_t_1_theo = io1 * Math.Pow((1 - (pw / (1 - Constants.ph))), (double)selected_topPeptides.Exchangeable_Hydrogens);
+                                            //double i_t_2_theo = io2 * Math.Pow((1 - (pw / (1 - Constants.ph))), (double)selected_topPeptides2.Exchangeable_Hydrogens);
+                                            //var diff = (Math.Pow(i_t_1 - i_t_1_theo,2) + Math.Pow(i_t_2 - i_t_2_theo,2) ) / 2;
 
                                             var diff = ls - rs;
 
