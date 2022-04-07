@@ -2382,7 +2382,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            string[] protienList = new[] { "GSTP1_MOUSE", "CPSM_MOUSE", "FABPL_MOUSE" };
+            //string[] protienList = new[] { "GSTP1_MOUSE", "CPSM_MOUSE", "FABPL_MOUSE" };
+            string[] protienList = new[] { "CPSM_MOUSE" };
 
             List<string> computed_bwe = new List<string>();
             Dictionary<string, List<double>> exps = new Dictionary<string, List<double>>();
@@ -2435,9 +2436,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         mynewproteinExperimentData.computeRSquare();
                         ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
-                        var peptidesList = mynewproteinExperimentData.peptides.Where(x => x.RSquare >= 0.90
-                                                                                     && x.M0 > 40
-                                                                                     && x.Abundance > 1E6
+                        var peptidesList = mynewproteinExperimentData.peptides.Where(x => x.RSquare >= 0.95
+                                                                                     //&& x.M0 > 35
+                                                                                     //&& x.Abundance > 1E6
                                                                                      && x.NDP == 9).OrderByDescending(x => x.RSquare).ThenBy(x => x.PeptideSeq).GroupBy(x => x.PeptideSeq).Select(g => g.First()).ToList().ToList();
                         Random rnd = new Random();
                         peptidesList = peptidesList.OrderBy((item) => rnd.Next()).ToList();
@@ -2445,9 +2446,13 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         for (int index = 0; peptidesList.Count > 0;)
                         {
                             var selectedPeptide_1 = peptidesList[index];
-                            var selectedPeptide_2 = peptidesList.Where(x => x.PeptideSeq != selectedPeptide_1.PeptideSeq && x.Charge != selectedPeptide_1.Charge 
-                            //&& Math.Abs((double)x.Exchangeable_Hydrogens - (double)selectedPeptide_1.Exchangeable_Hydrogens) > 5
-                            ).FirstOrDefault(); //
+                            var selectedPeptide_2 = peptidesList.Where(x => x.PeptideSeq != selectedPeptide_1.PeptideSeq
+                            && (Math.Abs((double)selectedPeptide_1.Rateconst - (double)x.Rateconst) / Math.Max((double)selectedPeptide_1.Rateconst, (double)x.Rateconst)) <= 0.03
+                            && Math.Abs((double)x.Exchangeable_Hydrogens - (double)selectedPeptide_1.Exchangeable_Hydrogens) > 1
+                            ).FirstOrDefault();
+
+
+
 
                             if (selectedPeptide_2 == null)
                             {
@@ -2465,10 +2470,11 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                 var selectedPeptide_1_exps = mynewproteinExperimentData.RIAvalues.Where(x => x.PeptideSeq == selectedPeptide_1.PeptideSeq && x.Charge == selectedPeptide_1.Charge && x.IonScore > 0).ToList();
                                 var selectedPeptide_2_exps = mynewproteinExperimentData.RIAvalues.Where(x => x.PeptideSeq == selectedPeptide_2.PeptideSeq && x.Charge == selectedPeptide_2.Charge && x.IonScore > 0).ToList();
 
+
                                 double i0_1 = (double)selectedPeptide_1.M0 / 100;
                                 double i0_2 = (double)selectedPeptide_2.M0 / 100;
 
-                                var time = 2;
+                                var time = 3;
                                 var experiments_list = selectedPeptide_1_exps.Where(x => x.Time == time).Select(x => x.ExperimentName).OrderBy(x => x).Distinct().ToList();
 
 
@@ -2488,12 +2494,17 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                         List<double> dif_values = new List<double>();
                                         List<double> pws = new List<double>();
 
-                                        for (double pw = 0.01; pw < 0.05; pw = pw + 0.001)
+                                        for (double pw = 0.001; pw < 0.05; pw = pw + 0.001)
                                         {
-                                            var rs = (1 - Math.Pow((1 - (pw / 1 - Constants.ph)), (double)selectedPeptide_2.Exchangeable_Hydrogens)) /
-                                                (1 - Math.Pow((1 - (pw / 1 - Constants.ph)), (double)selectedPeptide_1.Exchangeable_Hydrogens));
+                                            //var rs = (1 - Math.Pow((1 - (pw / 1 - Constants.ph)), (double)selectedPeptide_2.Exchangeable_Hydrogens)) /
+                                            //    (1 - Math.Pow((1 - (pw / 1 - Constants.ph)), (double)selectedPeptide_1.Exchangeable_Hydrogens));
+                                            //var diff = ls - rs;
 
-                                            var diff = ls - rs;
+                                            //abs((1. - (1 - pw) ^ nh2) * I0_2 - (I0_2 - I0_2_t)) +
+                                            //abs((1. - (1 - pw) ^ nh1) * I0_1 - (I0_1 - I0_1_t) )
+                                            var diff = Math.Abs( ( (1 - Math.Pow(1 - pw, (double)selectedPeptide_2.Exchangeable_Hydrogens)) * i0_2) - (i0_2 - i_t_2));
+                                            diff += Math.Abs(((1 - Math.Pow(1 - pw, (double)selectedPeptide_1.Exchangeable_Hydrogens)) * i0_1) - (i0_1 - i_t_1));
+
 
                                             dif_values.Add(Math.Abs(diff));
                                             pws.Add(pw);
@@ -2505,6 +2516,11 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                                         computed_bwe.Add(experiment + "#" + selcted_pw);
                                         //Console.WriteLine("selected_topPeptides " + selected_topPeptides[0].PeptideSeq + " , " + selected_topPeptides[1].PeptideSeq + " Experiment" + experiments_list[0].ToString() + " computed _ bwe = " + computed_bwe.ToString());
+
+                                        Console.WriteLine(selectedPeptide_1.PeptideSeq + "\n" + selectedPeptide_2.PeptideSeq +"\n"+ experiment);
+                                        Console.WriteLine(" neh1 " + selectedPeptide_1.Exchangeable_Hydrogens.ToString() + " neh1 " + selectedPeptide_2.Exchangeable_Hydrogens.ToString() + " io_1 " + i0_1 + "io_2 " + i0_2 + " io_1_t " + i_t_1 + " io_2_t " + i_t_2);
+                                        Console.WriteLine("z1 " + selectedPeptide_1.Charge + " z2 " + selectedPeptide_2.Charge + " k1 " + selectedPeptide_1.Rateconst + " k2 " + selectedPeptide_2.Rateconst);
+
                                         Console.WriteLine(" computed _ bwe = " + selcted_pw.ToString());
                                         if (selcted_pw < 0.049 && selcted_pw > 0.01)
                                             exps[experiment].Add(selcted_pw);
@@ -2550,7 +2566,14 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
         private void button3_Click_1_test_mse(object sender, EventArgs e)
         {
-            string[] protienList = new[] { "GSTP1_MOUSE", "CPSM_MOUSE", "FABPL_MOUSE" };
+
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            //string[] protienList = new[] { "GSTP1_MOUSE", "CPSM_MOUSE", "FABPL_MOUSE" };
+            string[] protienList = new[] { "CPSM_MOUSE" };
 
             Dictionary<string, List<List<double>>> exps = new Dictionary<string, List<List<double>>>();
 
@@ -2604,7 +2627,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         mynewproteinExperimentData.computeRSquare();
                         ProtienchartDataValues chartdata = mynewproteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
-                        var temp_peplist = mynewproteinExperimentData.peptides.Where(x => x.RSquare >= 0.95 && x.M0 > 40
+                        var temp_peplist = mynewproteinExperimentData.peptides.Where(x => x.RSquare >= 0.95 && x.M0 > 50
                                                                                      && x.Abundance > 1E7 &&
                                                                                      x.NDP == 9).OrderByDescending(x => x.RSquare).ThenBy(x => x.PeptideSeq).GroupBy(x => x.PeptideSeq).Select(g => g.First()).ToList().ToList();
 
@@ -2644,7 +2667,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                             var i_t_1_theo2 = val1 + val2;
 
                                             //var diff = Math.Pow(i_t_1 - i_t_1_theo, 2);
-                                            var diff = i_t_1 - i_t_1_theo2;
+                                            var diff = (i_t_1 - i_t_1_theo2) / i_t_1;
 
                                             dif_values.Add(Math.Abs(diff));
                                         }
@@ -2674,6 +2697,10 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                         var finals = new double[49];
 
+                        Dictionary<double, List<double>> pws = new Dictionary<double, List<double>>();
+                        for (int i = 0; i < 49; i++)
+                            pws[i] = new List<double>();
+
                         var vals_perExperiment = exps[key].ToList();
 
                         for (int i = 0; i < vals_perExperiment.Count; i++)
@@ -2681,13 +2708,20 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                             var pw_errorvals = vals_perExperiment[i];
                             for (int j = 0; j < pw_errorvals.Count; j++)
                             {
-                                finals[j] += pw_errorvals[j];
+                                pws[j].Add(pw_errorvals[j]);
                             }
                         }
 
-                        var finals2 = finals.Select(x => x / 49).ToList();
-                        var selectedpw = 0.001 * finals2.IndexOf(finals2.Min()) + 0.001;
+                        foreach (var key1 in pws.Keys)
+                        {
+                            //finals[(int)key1] = BasicFunctions.getMedian(pws[key1]);
+                            finals[(int)key1] = pws[key1].Average();
+                        }
 
+                        //var finals2 = finals.Select(x => x / 49).ToList();
+                        var selectedpw = 0.001 * finals.ToList().IndexOf(finals.Min()) + 0.001;
+
+                        Console.WriteLine("median_value => " + key + " => " + selectedpw);
 
 
 
@@ -2704,7 +2738,6 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             //{
             //    Console.WriteLine("median_value => " + key + " => " + BasicFunctions.getMedian(exps[key].OrderBy(x => x).ToList()));
             //}
-
         }
 
 
