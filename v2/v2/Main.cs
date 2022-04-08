@@ -282,7 +282,7 @@ namespace v2
                     return;
                 }
 
-                // peptideconsistency
+                // protein_consistency
 
                 double protienconsistency = 0;
                 if (textBox_protein_consistency.Text.Length > 0)
@@ -294,7 +294,7 @@ namespace v2
                     catch (Exception ex)
                     {
                         MessageBox.Show("Invalid Protein Consistency. " + textBox_protein_consistency.Text +
-                            " Please, re-enter. Peptide Consistency value of 4 or higher is suggested\n");
+                            " Please, re-enter Protein Consistency.\n");
 
                         return;
                     }
@@ -302,7 +302,31 @@ namespace v2
                 else
                 {
                     MessageBox.Show("Invalid Protein Consistency. " + textBox_peptideConsistency.Text +
-                            " Please, re-enter. Peptide Consistency value of 4 or higher is suggested\n");
+                            " Please, re-enter Protein Consistency.\n");
+                    return;
+                }
+
+                // peptide_expectation
+
+                double peptide_expectation = 0;
+                if (textBox_peptide_expectation.Text.Length > 0)
+                {
+                    try
+                    {
+                        peptide_expectation = double.Parse(textBox_peptide_expectation.Text);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Invalid Peptide Expectation. " + textBox_peptide_expectation.Text +
+                            " Please, re-enter Peptide Expectation value\n");
+
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid Peptide Expectation. " + textBox_peptide_expectation.Text +
+                            " Please, re-enter Peptide Expectation value\n");
                     return;
                 }
                 //================================================================
@@ -333,12 +357,12 @@ namespace v2
 MS1_Type = {1}	// data type of MS1, 1 - centroid, 0 - profile  
 protein_score       = {6:f1}     //minimum protein score
 peptide_score =  {2:f1} 	// minimum peptide score, ion score in Mascot, default is 1
-peptide_expectation = 0.05     // maximum peptide expectation in Mascot
+peptide_expectation = {8:f2}     // maximum peptide expectation in Mascot
 elutiontimewindow   =   {3}  // time window  (mins) to search for elution peak. From the time that highest scoring MS2 was triggered
 protein_consistency = {7}  // minimum number of experiments for protein consistency
 peptide_consistency = {4}   //mininum number of experiments for a peptide consistency
 NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2", massaccuracy, MS1_Type, peptidescore,
-elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienconsistency);
+elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienconsistency, peptide_expectation);
 
                 TextWriter tw2 = new StreamWriter(path + "\\quant.state");
                 //TextWriter tw2 = new StreamWriter("quant.state");
