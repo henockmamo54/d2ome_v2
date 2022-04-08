@@ -912,7 +912,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, string proteinName)
         {
             var peptidesList = proteinExperimentData.peptides;
-            string file_content = "peptideSeq,old_Rsquared,new_Rsquared,NDP\n";
+            string file_content = "proteinName,peptideSeq,old_Rsquared,new_Rsquared,NDP\n";
 
             foreach (var peptide in peptidesList)
             {
@@ -928,7 +928,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     chart_data.Select(x => x.RIA_value).ToList(),
                     theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptide.PeptideSeq & x.charge == peptide.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList(),
                     false);
-                file_content += current_peptide.PeptideSeq.ToString() + "," + current_peptide.RSquare + "," + newRsquared.ToString() + "," + current_peptide.NDP.ToString() + "\n";
+                file_content += proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.RSquare + "," + newRsquared.ToString() + "," + current_peptide.NDP.ToString() + "\n";
             }
 
             using (StreamWriter writer = new StreamWriter(proteinName + ".csv"))

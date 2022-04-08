@@ -654,7 +654,7 @@ namespace v2
                     experimentalvalue = experimentalvalue.Where(x => x.PeptideSeq == r.PeptideSeq).ToList();
                     //var temp_experimentalvalue = experimentalvalue.Where(x => x.RIA_value >= 0).ToList();
                     var temp_experimentalvalue = experimentalvalue.ToList();
-                    var meanval_ria = temp_experimentalvalue.Where(x=> !double.IsNaN((double)x.RIA_value)).Average(x => x.RIA_value);
+                    var meanval_ria = temp_experimentalvalue.Where(x => !double.IsNaN((double)x.RIA_value)).Average(x => x.RIA_value);
 
                     var temp_computedRIAValue = theoreticalI0Values.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
                     var temp_computedRIAValue_withexperimentalIO = theoreticalI0Values_withExperimentalIO.Where(x => x.peptideseq == r.PeptideSeq & x.charge == r.Charge).ToList();
@@ -672,7 +672,7 @@ namespace v2
 
                         foreach (var p in temp_experimentalvalue)
                         {
-                            if (p.RIA_value != null)
+                            if (!double.IsNaN((double)p.RIA_value))
                             {
                                 var computedRIAValue = temp_computedRIAValue.Where(x => x.time == p.Time).First().value;
                                 ss = ss + Math.Pow((double)(p.RIA_value - meanval_ria), 2);
