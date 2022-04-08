@@ -2474,7 +2474,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                 double i0_1 = (double)selectedPeptide_1.M0 / 100;
                                 double i0_2 = (double)selectedPeptide_2.M0 / 100;
 
-                                var time = 3;
+                                var time = 2;
                                 var experiments_list = selectedPeptide_1_exps.Where(x => x.Time == time).Select(x => x.ExperimentName).OrderBy(x => x).Distinct().ToList();
 
 
@@ -2502,7 +2502,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                                             //abs((1. - (1 - pw) ^ nh2) * I0_2 - (I0_2 - I0_2_t)) +
                                             //abs((1. - (1 - pw) ^ nh1) * I0_1 - (I0_1 - I0_1_t) )
-                                            var diff = Math.Abs( ( (1 - Math.Pow(1 - pw, (double)selectedPeptide_2.Exchangeable_Hydrogens)) * i0_2) - (i0_2 - i_t_2));
+                                            var diff = Math.Abs(((1 - Math.Pow(1 - pw, (double)selectedPeptide_2.Exchangeable_Hydrogens)) * i0_2) - (i0_2 - i_t_2));
                                             diff += Math.Abs(((1 - Math.Pow(1 - pw, (double)selectedPeptide_1.Exchangeable_Hydrogens)) * i0_1) - (i0_1 - i_t_1));
 
 
@@ -2517,13 +2517,13 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                         computed_bwe.Add(experiment + "#" + selcted_pw);
                                         //Console.WriteLine("selected_topPeptides " + selected_topPeptides[0].PeptideSeq + " , " + selected_topPeptides[1].PeptideSeq + " Experiment" + experiments_list[0].ToString() + " computed _ bwe = " + computed_bwe.ToString());
 
-                                        Console.WriteLine(selectedPeptide_1.PeptideSeq + "\n" + selectedPeptide_2.PeptideSeq +"\n"+ experiment);
+                                        Console.WriteLine(selectedPeptide_1.PeptideSeq + "\n" + selectedPeptide_2.PeptideSeq + "\n" + experiment);
                                         Console.WriteLine(" neh1 " + selectedPeptide_1.Exchangeable_Hydrogens.ToString() + " neh1 " + selectedPeptide_2.Exchangeable_Hydrogens.ToString() + " io_1 " + i0_1 + "io_2 " + i0_2 + " io_1_t " + i_t_1 + " io_2_t " + i_t_2);
                                         Console.WriteLine("z1 " + selectedPeptide_1.Charge + " z2 " + selectedPeptide_2.Charge + " k1 " + selectedPeptide_1.Rateconst + " k2 " + selectedPeptide_2.Rateconst);
 
                                         Console.WriteLine(" computed _ bwe = " + selcted_pw.ToString());
-                                        if (selcted_pw < 0.049 && selcted_pw > 0.01)
-                                            exps[experiment].Add(selcted_pw);
+                                        //if (selcted_pw < 0.049 && selcted_pw > 0.01)
+                                        exps[experiment].Add(selcted_pw);
                                     }
                                     catch (Exception ex) { }
                                 }
@@ -2666,8 +2666,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                                 (double)selected_topPeptides.Exchangeable_Hydrogens)));
                                             var i_t_1_theo2 = val1 + val2;
 
-                                            //var diff = Math.Pow(i_t_1 - i_t_1_theo, 2);
-                                            var diff = (i_t_1 - i_t_1_theo2) / i_t_1;
+                                            var diff = Math.Pow(i_t_1 - i_t_1_theo, 2);
+                                            //var diff = (i_t_1 - i_t_1_theo2) / i_t_1;
 
                                             dif_values.Add(Math.Abs(diff));
                                         }
