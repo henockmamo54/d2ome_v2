@@ -1087,6 +1087,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
             //rename column name
             dataGridView_peptide.Columns["PeptideSeq"].HeaderText = "Peptide";
+            dataGridView_peptide.Columns["Charge"].HeaderText = "z";
             dataGridView_peptide.Columns["SeqMass"].HeaderText = "m/z";
             dataGridView_peptide.Columns["IsotopeDeviation"].HeaderText = "Isotope Deviation";
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].HeaderText = "Exchangeable Hydrogens";
@@ -1114,6 +1115,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Width = 81;
             dataGridView_peptide.Columns["Abundance"].MinimumWidth = 70;
             dataGridView_peptide.Columns["std_k"].MinimumWidth = 70;
+            dataGridView_peptide.Columns["Charge"].MinimumWidth = 30;
 
             //set number formationg for the columns
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
