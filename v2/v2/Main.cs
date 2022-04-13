@@ -936,7 +936,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, string proteinName)
         {
             var peptidesList = proteinExperimentData.peptides;
-            string file_content = "proteinName,peptideSeq,old_Rsquared,new_Rsquared,NDP\n";
+            string file_content = "proteinName,peptideSeq,old_Rsquared,new_Rsquared,NDP,rateconstant,sigma,Abundance,MassToCharge,RMSE\n";
 
             foreach (var peptide in peptidesList)
             {
@@ -952,7 +952,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     chart_data.Select(x => x.RIA_value).ToList(),
                     theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptide.PeptideSeq & x.charge == peptide.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList(),
                     false);
-                file_content += proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.RSquare + "," + newRsquared.ToString() + "," + current_peptide.NDP.ToString() + "\n";
+                file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.RSquare + "," + newRsquared.ToString()
+                    + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.std_k + "," +
+                    current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "\n");
             }
 
             using (StreamWriter writer = new StreamWriter(proteinName + ".csv"))
@@ -2101,7 +2103,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
 
                 s.ChartType = SeriesChartType.Line;
-                chart_protein.Series.Add(s);
+                //chart_protein.Series.Add(s);
 
             }
 
@@ -2109,7 +2111,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
 
             #region median calculation
-            var medialdata = new List<double>();
+            var mediandata = new List<double>();
             var experimenttime_withdata = new List<int>();
 
             foreach (int t in experimentTime)
@@ -2124,23 +2126,26 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 var computed_median = temp.Median(); // Helper.BasicFunctions.getMedian(temp);
                 if (!double.IsNaN(computed_median))
                 {
-                    medialdata.Add(computed_median);
+                    mediandata.Add(computed_median);
                     experimenttime_withdata.Add(t);
                 }
                 else if (t == 0)
                 {
-                    medialdata.Add(0);
+                    mediandata.Add(0);
                     experimenttime_withdata.Add(0);
                 }
             }
 
             Series s1 = new Series();
             s1.Name = "Median";
-            s1.Points.DataBindXY(experimenttime_withdata, medialdata);
+            s1.Points.DataBindXY(experimenttime_withdata, mediandata);
             s1.ChartType = SeriesChartType.Line;
             s1.Color = Color.Red;
             s1.BorderWidth = 4;
             chart_protein.Series.Add(s1);
+
+            //// compute new rate constant
+            //var new_k_val = BasicFunctions.computeRateConstant(mediandata, experimenttime_withdata,currentp);
 
             #endregion
         }
