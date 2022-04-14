@@ -836,7 +836,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             int count_s = 0;
             int count_t = 0;
 
-            string file_content = "new_Median,new_sd,gumbel_Median,gumbel _sd\n";
+            string file_content = "Portien,rateconst,new_Median,new_sd,gumbel_Median,gumbel _sd\n";
 
             string[] filePaths = Directory.GetFiles(sourcePath);
             var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
@@ -918,7 +918,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     var gumbel_median = mynewproteinExperimentData.MeanRateConst;
                     var gumbe_std = mynewproteinExperimentData.StandDev_NumberPeptides_StandDev;
 
-                    file_content += proteinName + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "\n";
+                    file_content += proteinName + "," + mynewproteinExperimentData.MeanRateConst + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "\n";
 
                     calculateNewRsquaredForEachPeptidePerProtein(chartdata, mynewproteinExperimentData, mynewproteinExperimentData.temp_theoreticalI0Values, proteinName);
 
