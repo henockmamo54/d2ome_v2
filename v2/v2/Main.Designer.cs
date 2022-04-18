@@ -128,6 +128,8 @@
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.comboBox_labelingtimeunit = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -203,6 +205,8 @@
             // 
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.comboBox_labelingtimeunit);
+            this.groupBox5.Controls.Add(this.label27);
             this.groupBox5.Controls.Add(this.textBox_peptide_expectation);
             this.groupBox5.Controls.Add(this.label26);
             this.groupBox5.Controls.Add(this.textBox_protein_consistency);
@@ -1156,6 +1160,26 @@
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(848, 70);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(89, 13);
+            this.label27.TabIndex = 20;
+            this.label27.Text = "Labeling time unit";
+            // 
+            // comboBox_labelingtimeunit
+            // 
+            this.comboBox_labelingtimeunit.FormattingEnabled = true;
+            this.comboBox_labelingtimeunit.Items.AddRange(new object[] {
+            "Days",
+            "Hours"});
+            this.comboBox_labelingtimeunit.Location = new System.Drawing.Point(954, 65);
+            this.comboBox_labelingtimeunit.Name = "comboBox_labelingtimeunit";
+            this.comboBox_labelingtimeunit.Size = new System.Drawing.Size(100, 21);
+            this.comboBox_labelingtimeunit.TabIndex = 21;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1294,5 +1318,7 @@
         private System.Windows.Forms.Label label_newrsquared;
         private System.Windows.Forms.TextBox textBox_peptide_expectation;
         private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.ComboBox comboBox_labelingtimeunit;
+        private System.Windows.Forms.Label label27;
     }
 }

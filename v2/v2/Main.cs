@@ -111,6 +111,7 @@ namespace v2
             comboBox_Enrichment.SelectedIndex = 0;
             comboBox_MS1Data.SelectedIndex = 0;
             comboBox_Rate_Constant_Method.SelectedIndex = 0;
+            comboBox_labelingtimeunit.SelectedIndex = 0;
             textBox_massAccuracy.Text = "20.0";
             textBox_ElutionWindow.Text = "1.0";
             textBox_peptideConsistency.Text = "4";
