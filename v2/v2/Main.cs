@@ -118,7 +118,7 @@ namespace v2
             textBox_peptideScore.Text = "20";
             textBox_protein_score.Text = "40";
             textBox_protein_consistency.Text = "4";
-
+            textBox_peptide_expectation.Text = "0.05";
             comboBox_Enrichment.Enabled = false;
 
         }
@@ -347,6 +347,9 @@ namespace v2
                     return;
                 }
 
+                // labeling_time_unit
+                string labeling_time_unit = comboBox_labelingtimeunit.Text;
+
                 double MS1_Type = 0;
                 if (comboBox_MS1Data.Text == "Profile")
                     MS1_Type = 0;
@@ -362,8 +365,10 @@ peptide_expectation = {8:f2}     // maximum peptide expectation in Mascot
 elutiontimewindow   =   {3}  // time window  (mins) to search for elution peak. From the time that highest scoring MS2 was triggered
 protein_consistency = {7}  // minimum number of experiments for protein consistency
 peptide_consistency = {4}   //mininum number of experiments for a peptide consistency
-NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2", massaccuracy, MS1_Type, peptidescore,
-elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienconsistency, peptide_expectation);
+NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2
+Labeling_time_unit = {9}
+", massaccuracy, MS1_Type, peptidescore,
+elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienconsistency, peptide_expectation, labeling_time_unit);
 
                 TextWriter tw2 = new StreamWriter(path + "\\quant.state");
                 //TextWriter tw2 = new StreamWriter("quant.state");
