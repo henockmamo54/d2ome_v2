@@ -307,6 +307,7 @@
             // 
             // comboBox_Rate_Constant_Method
             // 
+            this.comboBox_Rate_Constant_Method.Enabled = false;
             this.comboBox_Rate_Constant_Method.FormattingEnabled = true;
             this.comboBox_Rate_Constant_Method.Items.AddRange(new object[] {
             "One Parameter",
