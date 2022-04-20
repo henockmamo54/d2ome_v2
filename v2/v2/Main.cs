@@ -348,7 +348,20 @@ namespace v2
                 }
 
                 // labeling_time_unit
-                string labeling_time_unit = comboBox_labelingtimeunit.Text;
+                //string labeling_time_unit = comboBox_labelingtimeunit.Text;
+                double labeling_time_unit = 0;
+
+                if (comboBox_labelingtimeunit.Text == "Days")
+                    labeling_time_unit = 1;
+                else if (comboBox_labelingtimeunit.Text == "Hours")
+                    labeling_time_unit = 1 / 24.0;
+                else
+                {
+                    MessageBox.Show("Invalid labeling time unit. " + comboBox_labelingtimeunit +
+                        "  Please, re-enter labeling time unit\n");
+                    return;
+                }
+
 
                 double MS1_Type = 0;
                 if (comboBox_MS1Data.Text == "Profile")
@@ -366,7 +379,7 @@ elutiontimewindow   =   {3}  // time window  (mins) to search for elution peak. 
 protein_consistency = {7}  // minimum number of experiments for protein consistency
 peptide_consistency = {4}   //mininum number of experiments for a peptide consistency
 NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2
-Labeling_time_unit = {9}
+Labeling_time_unit = {9}  // 1 = Days, 0.0416666666666667 = Hours (1/24)
 ", massaccuracy, MS1_Type, peptidescore,
 elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienconsistency, peptide_expectation, labeling_time_unit);
 

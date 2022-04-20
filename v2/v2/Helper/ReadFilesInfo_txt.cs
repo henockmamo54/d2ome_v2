@@ -60,8 +60,8 @@ namespace v2.Helper
                         experimentTimes_all.Add(fc.time);
 
                         // extract experiment id
-                        var temp_id = fc.mzML_path.Trim().Split('\\');
-                        var e_id = temp_id[temp_id.Length - 1].Replace(".mzML", string.Empty);
+                        var temp_id = fc.mzid_path.Trim().Split('\\');
+                        var e_id = temp_id[temp_id.Length - 1].Replace(".mzid", string.Empty);
                         experimentIDs.Add(e_id);
 
                         fc.experimentID=e_id;
