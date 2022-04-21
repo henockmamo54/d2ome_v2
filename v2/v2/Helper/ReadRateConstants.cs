@@ -57,20 +57,20 @@ namespace v2.Helper
                         if (line.Contains("MeanRateConst/CorrCutOff"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) MeanRateConst = double.Parse(columns[1].Trim());
-                            if (columns[2].Trim().Length > 0) MeanRateConst_CorrCutOff = double.Parse(columns[2].Trim());
+                            if (columns[1].Trim().Length > 0) MeanRateConst = double.TryParse(columns[1].Trim(),out double result)? result : double.NaN;
+                            if (columns[2].Trim().Length > 0) MeanRateConst_CorrCutOff = double.TryParse(columns[2].Trim(), out double result) ? result : double.NaN;
                         }
                         else if (line.Contains("MedianRateConst/RMSSCutOff"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) MedianRateConst = double.Parse(columns[1].Trim());
-                            if (columns[2].Trim().Length > 0) MedianRateConst_RMSSCutOff = double.Parse(columns[2].Trim());
+                            if (columns[1].Trim().Length > 0) MedianRateConst = double.TryParse(columns[1].Trim(), out double result) ? result : double.NaN;
+                            if (columns[2].Trim().Length > 0) MedianRateConst_RMSSCutOff = double.TryParse(columns[2].Trim(), out double result) ? result : double.NaN;
                         }
                         else if (line.Contains("StandDev/NumberPeptides"))
                         {
                             var columns = line.Split(',');
-                            if (columns[1].Trim().Length > 0) StandDev_NumberPeptides_StandDev = double.Parse(columns[1].Trim());
-                            if (columns[2].Trim().Length > 0) StandDev_NumberPeptides_NumberPeptides = double.Parse(columns[2].Trim());
+                            if (columns[1].Trim().Length > 0) StandDev_NumberPeptides_StandDev = double.TryParse(columns[1].Trim(), out double result) ? result : double.NaN;
+                            if (columns[2].Trim().Length > 0) StandDev_NumberPeptides_NumberPeptides = double.TryParse(columns[2].Trim(), out double result) ? result : double.NaN;
                         }
                         else if (line.Contains("TotalIonCurrent"))
                         {
