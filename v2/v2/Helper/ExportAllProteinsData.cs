@@ -173,7 +173,7 @@ namespace v2.Helper
             chart2.Legends[0].Position.X = 65;
             chart2.Legends[0].Position.Y = 10;
             chart2.Legends[0].Position.Width = 30;
-            chart2.Legends[0].Position.Height = 15;
+            chart2.Legends[0].Position.Height = 20;
 
 
             // cahrt font
