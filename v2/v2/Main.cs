@@ -937,7 +937,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     var gumbel_median = mynewproteinExperimentData.MeanRateConst;
                     var gumbe_std = mynewproteinExperimentData.StandDev_NumberPeptides_StandDev;
 
-                    file_content += proteinName + "," + mynewproteinExperimentData.MeanRateConst + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "\n";
+                    file_content += proteinName + "," + mynewproteinExperimentData.MeanRateConst + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "," + mynewproteinExperimentData.TotalIonCurrent + "\n";
 
                     calculateNewRsquaredForEachPeptidePerProtein(chartdata, mynewproteinExperimentData, mynewproteinExperimentData.temp_theoreticalI0Values, proteinName);
 
@@ -1623,7 +1623,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             return null;
         }
 
-        public void loadPeptideChart(string peptideSeq, int charge, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, double Rateconst = Double.NaN, double RSquare = Double.NaN)
+        public void loadPeptideChart(string peptideSeq, int charge, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, double Rateconst = Double.NaN, double RSquare = Double.NaN, double Sigma_k = Double.NaN)
         {
             try
             {
@@ -1758,7 +1758,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         default: chargestring = ""; break;
                     }
 
-                    title.Text = peptideSeq + " (k\u207A" + chargestring + " = " + formatdoubletothreedecimalplace(Rateconst) + " \u00B1 " + RSquare.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
+                    title.Text = peptideSeq + " (k\u207A" + chargestring + " = " + formatdoubletothreedecimalplace(Rateconst) + " \u00B1 " + Sigma_k.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
                 }
                 else
                 {
@@ -2077,7 +2077,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 button_exportAllPeptideChart.Text = "Export " + proteinName;
 
                 var p = proteinExperimentData.peptides.First();
-                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, (double)p.Rateconst, (double)p.RSquare);
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, (double)p.Rateconst, (double)p.RSquare, (double)p.std_k);
             }
             catch (Exception xe)
             {
@@ -2254,8 +2254,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                             //var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
                             //var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
                             var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
+                            var sigma_k = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[19].Value.ToString());
 
-                            loadPeptideChart(temp, charge, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
+                            loadPeptideChart(temp, charge, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, sigma_k);
                         }
                         else
                         {
@@ -2264,8 +2265,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                             var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
                             var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
                             var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
+                            var sigma_k = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[19].Value.ToString());
 
-                            loadPeptideChart(temp, charge, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, rateconst, rsquare);
+                            loadPeptideChart(temp, charge, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, rateconst, rsquare, sigma_k);
                         }
 
                     }
