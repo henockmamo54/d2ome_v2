@@ -78,7 +78,7 @@ namespace v2
             chart_peptide.Legends[0].Position.X = 65;
             chart_peptide.Legends[0].Position.Y = 10;
             chart_peptide.Legends[0].Position.Width = 30;
-            chart_peptide.Legends[0].Position.Height = 15;
+            chart_peptide.Legends[0].Position.Height = 20;
 
             chart_protein.Legends[0].Position.Auto = false;
             chart_protein.Legends[0].Position.X = 65;
@@ -1878,26 +1878,17 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         var chart_data2 = proteinExperimentData.mergedRIAvaluesWithZeroIonScore.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
 
                         if (chart2.Series.FindByName("Zero Ion score") != null)
-                        {
-                            //chart2.Series.Remove(chart_peptide.Series.FindByName("Zero Ion score"));
-                            chart2.Series["Zero Ion score"].Points.Clear();
-                            if (chart_data2.Length > 0)
-                                chart2.Series["Zero Ion score"].Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
-                        }
+                            chart2.Series.Remove(chart2.Series.FindByName("Zero Ion score"));
 
-                        else
-                        {
-                            chart2.Series.Remove(chart_peptide.Series.FindByName("Zero Ion score"));
-                            Series s1 = new Series();
-                            s1.Name = "Zero Ion score";
-                            if (chart_data2.Length > 0)
-                                s1.Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
+                        Series s1 = new Series();
+                        s1.Name = "Zero Ion score";
+                        if (chart_data2.Length > 0)
+                            s1.Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
 
-                            s1.ChartType = SeriesChartType.FastPoint;
-                            s1.Color = Color.Red;
-                            s1.MarkerSize = 4;
-                            chart2.Series.Add(s1);
-                        }
+                        s1.ChartType = SeriesChartType.FastPoint;
+                        s1.Color = Color.Red;
+                        s1.MarkerSize = 4;
+                        chart2.Series.Add(s1);
 
                         #endregion
 

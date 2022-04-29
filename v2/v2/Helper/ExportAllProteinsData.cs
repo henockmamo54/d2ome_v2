@@ -76,9 +76,11 @@ namespace v2.Helper
 
                     var proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
 
-
                     proteinExperimentData.loadAllExperimentData();
+                    proteinExperimentData.computeDeuteriumenrichmentInPeptide();
                     proteinExperimentData.computeRIAPerExperiment();
+                    proteinExperimentData.normalizeRIAValuesForAllPeptides();
+                    proteinExperimentData.computeAverageA0();
                     proteinExperimentData.mergeMultipleRIAPerDay2();
                     proteinExperimentData.computeTheoreticalCurvePoints();
                     proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
@@ -180,9 +182,9 @@ namespace v2.Helper
             // chartline tension
             chart2.Series["Series3"]["LineTension"] = "0.1";
 
-            chart2.Series["Series3"].BorderWidth = 1;
+            chart2.Series["Series3"].BorderWidth = 2;
 
-            chart2.Series["Series3"].Color = Color.Navy;
+            chart2.Series["Series3"].Color = Color.Purple;
 
             chart2.ChartAreas[0].AxisX.Minimum = 0;
 
@@ -197,10 +199,6 @@ namespace v2.Helper
                 {
 
                     Chart chart2 = preppare_chart();
-
-                    //var selected = (from u in proteinExperimentData.peptides
-                    //                where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
-                    //                select u).Distinct().ToList();
                     var selected = proteinExperimentData.peptides;
 
                     int count = 1;
@@ -216,30 +214,38 @@ namespace v2.Helper
                         var chart_data = proteinExperimentData.mergedRIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
                         chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
+                        // ion score == 0 plot
+                        var chart_data2 = proteinExperimentData.mergedRIAvaluesWithZeroIonScore.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
+
+                        if (chart2.Series.FindByName("Zero Ion score") != null)
+                            chart2.Series.Remove(chart2.Series.FindByName("Zero Ion score"));
+
+                        Series s1 = new Series();
+                        s1.Name = "Zero Ion score";
+                        if (chart_data2.Length > 0)
+                            s1.Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
+
+                        s1.ChartType = SeriesChartType.FastPoint;
+                        s1.Color = Color.Red;
+                        s1.MarkerSize = 4;
+                        chart2.Series.Add(s1);
+
                         #endregion
 
                         #region expected data plot 
 
-                        var expected_chart_data = proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
+                        var theoretical_chart_data = proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).OrderBy(x => x.time).ToArray();
                         //
-                        List<double> x_val = expected_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
-                        List<double> y_val = expected_chart_data.Select(x => x.value).ToList();
+                        List<double> x_val = theoretical_chart_data.Select(x => x.time).ToList().ConvertAll(x => (double)x);
+                        List<double> y_val = theoretical_chart_data.Select(x => x.value).ToList();
 
+                        chart2.Series["Series3"].Points.DataBindXY(theoretical_chart_data.Select(x => x.time).ToArray(), theoretical_chart_data.Select(x => x.value).ToArray());
 
-
+                        // set x axis chart interval
+                        if (x_val.Count > 0)
                         {
-                            chart2.Series["Series3"].Points.DataBindXY(expected_chart_data.Select(x => x.time).ToArray(), expected_chart_data.Select(x => x.value).ToArray());
-
-                            // set x axis chart interval
-                            if (x_val.Count > 0)
-                            {
-                                chart2.ChartAreas[0].AxisX.Interval = (int)expected_chart_data.Select(x => x.time).ToArray().Max() / 10;
-                                chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
-                            }
-
-                            //chart2.ChartAreas[0].AxisY.Interval = expected_chart_data.Select(x => x.value).ToArray().Max() / 5;
-                            //chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-
+                            chart2.ChartAreas[0].AxisX.Interval = (int)theoretical_chart_data.Select(x => x.time).ToArray().Max() / 10;
+                            chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
                         }
 
 
@@ -247,33 +253,39 @@ namespace v2.Helper
                         #endregion
 
 
-                        // chart title
-                        //chart2.Titles.Add(p.PeptideSeq + "(K=" + p.Rateconst.ToString() + ", " + ")");
+
                         Title title = new Title();
-                        title.Font = new Font(chart2.Legends[0].Font.FontFamily, 8, System.Drawing.FontStyle.Bold);
-                        //title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
-                        //title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
-                        try
+                        title.Font = new Font(chart2.Legends[0].Font.FontFamily, 9, System.Drawing.FontStyle.Regular);
+
+                        var chargestring = "";
+                        switch (p.Charge)
                         {
-                            if (p.Rateconst != null)
-                            {
-                                title.Text = p.PeptideSeq + " (k = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
-                            }
-                            else
-                            {
-                                title.Text = p.PeptideSeq + " (m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
-                            }
-                        }
-                        catch (Exception fex)
-                        {
-                            Console.WriteLine(fex.Message);
+                            case 0: chargestring = "\u2070"; break;
+                            case 1: chargestring = ""; break;
+                            case 2: chargestring = "\u00B2"; break;
+                            case 3: chargestring = "\u00B3"; break;
+                            case 4: chargestring = "\u2074"; break;
+                            case 5: chargestring = "\u2075"; break;
+                            case 6: chargestring = "\u2076"; break;
+                            case 7: chargestring = "\u2077"; break;
+                            case 8: chargestring = "\u2078"; break;
+                            case 9: chargestring = "\u2079"; break;
+                            default: chargestring = ""; break;
                         }
 
+                        if (p.Rateconst != double.NaN)
+                        {
+
+                            title.Text = p.PeptideSeq + " (k\u207A" + chargestring + " = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
+                        }
+                        else
+                        {
+                            title.Text = p.PeptideSeq + " (m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
+
+                        }
+                        //clear chart title
+                        chart2.Titles.Clear();
                         chart2.Titles.Add(title);
-
-                        //chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
-                        //chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
-                        //chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         var max_y_list = new List<double>();
                         foreach (var series in chart2.Series)
@@ -285,8 +297,8 @@ namespace v2.Helper
                                     max_y_list.Add(maxvalue.YValues[0]);
                             }
                         }
-                        chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
 
+                        chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
                         chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
@@ -304,7 +316,7 @@ namespace v2.Helper
                                     chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
                                     im.Save(outputpath + @"\" + count.ToString() + "_" + p.PeptideSeq + "_" + p.Charge.ToString() + ".jpeg");
                                 }
-                                catch (ThreadAbortException e)
+                                catch (Exception e)
                                 { }
                             }
 
