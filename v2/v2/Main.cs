@@ -1732,11 +1732,27 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 //chart_peptide.Titles.Add(peptideSeq);    
 
                 Title title = new Title();
-                title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
+                title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 9, FontStyle.Regular);
                 //title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ")";
                 if (Rateconst != double.NaN)
                 {
-                    title.Text = peptideSeq + " (k = " + formatdoubletothreedecimalplace(Rateconst) + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ", z = " + charge.ToString() + ")";
+                    var chargestring = "";
+                    switch (charge)
+                    {
+                        case 0: chargestring = "\u2070"; break;
+                        case 1: chargestring = ""; break;
+                        case 2: chargestring = "\u00B2"; break;
+                        case 3: chargestring = "\u00B3"; break;
+                        case 4: chargestring = "\u2074"; break;
+                        case 5: chargestring = "\u2075"; break;
+                        case 6: chargestring = "\u2076"; break;
+                        case 7: chargestring = "\u2077"; break;
+                        case 8: chargestring = "\u2078"; break;
+                        case 9: chargestring = "\u2079"; break;
+                        default: chargestring = ""; break;
+                    }
+
+                    title.Text = peptideSeq + " (k\u207A" + chargestring + " = " + formatdoubletothreedecimalplace(Rateconst) + " \u00B1 " + RSquare.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
                 }
                 else
                 {
