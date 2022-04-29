@@ -855,7 +855,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             int count_s = 0;
             int count_t = 0;
 
-            string file_content = "Portien,rateconst,new_Median,new_sd,gumbel_Median,gumbel _sd\n";
+            string file_content = "Portien,rateconst,new_Median,new_sd,gumbel_Median,gumbel _sd,Abundance\n";
 
             string[] filePaths = Directory.GetFiles(sourcePath);
             var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
