@@ -1848,8 +1848,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 FolderBrowserDialog dialog = new FolderBrowserDialog();
                 if (DialogResult.OK == dialog.ShowDialog())
                 {
-                    //string path = dialog.SelectedPath;
                     string path = dialog.SelectedPath + "\\" + comboBox_proteinNameSelector.SelectedValue.ToString();
+
                     //copy chart1
                     System.IO.MemoryStream myStream = new System.IO.MemoryStream();
                     Chart chart2 = new Chart();
@@ -1862,19 +1862,42 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     var selected = proteinExperimentData.peptides;
 
                     int count = 1;
-                    //foreach (Peptide p in proteinExperimentData.peptides)
+
                     foreach (Peptide p in selected)
                     {
-                        //clear chart area
-                        chart2.Titles.Clear();
 
-                        Console.WriteLine(p.PeptideSeq);
 
                         #region experimental data plot
 
                         // prepare the chart data
                         var chart_data = this.proteinExperimentData.mergedRIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
                         chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
+
+                        // ion score == 0 plot
+
+                        var chart_data2 = proteinExperimentData.mergedRIAvaluesWithZeroIonScore.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
+
+                        if (chart2.Series.FindByName("Zero Ion score") != null)
+                        {
+                            //chart2.Series.Remove(chart_peptide.Series.FindByName("Zero Ion score"));
+                            chart2.Series["Zero Ion score"].Points.Clear();
+                            if (chart_data2.Length > 0)
+                                chart2.Series["Zero Ion score"].Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
+                        }
+
+                        else
+                        {
+                            chart2.Series.Remove(chart_peptide.Series.FindByName("Zero Ion score"));
+                            Series s1 = new Series();
+                            s1.Name = "Zero Ion score";
+                            if (chart_data2.Length > 0)
+                                s1.Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
+
+                            s1.ChartType = SeriesChartType.FastPoint;
+                            s1.Color = Color.Red;
+                            s1.MarkerSize = 4;
+                            chart2.Series.Add(s1);
+                        }
 
                         #endregion
 
@@ -1894,40 +1917,44 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                             chart2.ChartAreas[0].AxisX.Maximum = x_val.Max() + 0.01;
                         }
 
-                        //chart2.ChartAreas[0].AxisY.Interval = theoretical_chart_data.Select(x => x.value).ToArray().Max() / 5;
-                        //chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-
-
-
                         #endregion
 
 
-                        // chart title
-                        //chart2.Titles.Add(p.PeptideSeq + "(K=" + p.Rateconst.ToString() + ", " + ")");
+                        // chart title                        
+
                         Title title = new Title();
-                        title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 8, FontStyle.Bold);
-                        //title.Text = p.PeptideSeq + " (K = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ")";
-                        //title.Text = p.PeptideSeq + " (k = " + p.Rateconst.ToString() + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
-                        try
+                        title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 9, FontStyle.Regular);
+
+                        var chargestring = "";
+                        switch (p.Charge)
                         {
-                            if (p.Rateconst != null)
-                            {
-                                title.Text = p.PeptideSeq + " (k = " + formatdoubletothreedecimalplace((double)p.Rateconst) + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
-                            }
-                            else
-                            {
-                                title.Text = p.PeptideSeq + " (m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
-                            }
+                            case 0: chargestring = "\u2070"; break;
+                            case 1: chargestring = ""; break;
+                            case 2: chargestring = "\u00B2"; break;
+                            case 3: chargestring = "\u00B3"; break;
+                            case 4: chargestring = "\u2074"; break;
+                            case 5: chargestring = "\u2075"; break;
+                            case 6: chargestring = "\u2076"; break;
+                            case 7: chargestring = "\u2077"; break;
+                            case 8: chargestring = "\u2078"; break;
+                            case 9: chargestring = "\u2079"; break;
+                            default: chargestring = ""; break;
                         }
-                        catch (Exception fex)
+
+                        if (p.Rateconst != double.NaN)
                         {
-                            Console.WriteLine(fex.Message);
+
+                            title.Text = p.PeptideSeq + " (k\u207A" + chargestring + " = " + formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
                         }
+                        else
+                        {
+                            title.Text = p.PeptideSeq + " (m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
+
+                        }
+                        //clear chart title
+                        chart2.Titles.Clear();
                         chart2.Titles.Add(title);
 
-                        //chart2.ChartAreas[0].AxisY.Maximum = Math.Max((double)y_val.Max(), (double)chart_data.Select(x => x.RIA_value).Max()) + 0.07;
-                        //chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
-                        //chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
                         var max_y_list = new List<double>();
                         foreach (var series in chart2.Series)
@@ -1939,8 +1966,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                                     max_y_list.Add(maxvalue.YValues[0]);
                             }
                         }
-                        chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
 
+                        chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
                         chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
