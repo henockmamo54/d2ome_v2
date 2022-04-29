@@ -41,6 +41,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.comboBox_labelingtimeunit = new System.Windows.Forms.ComboBox();
+            this.label27 = new System.Windows.Forms.Label();
             this.textBox_peptide_expectation = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.textBox_protein_consistency = new System.Windows.Forms.TextBox();
@@ -128,8 +130,6 @@
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.comboBox_labelingtimeunit = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -232,6 +232,26 @@
             this.groupBox5.Size = new System.Drawing.Size(1188, 94);
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
+            // 
+            // comboBox_labelingtimeunit
+            // 
+            this.comboBox_labelingtimeunit.FormattingEnabled = true;
+            this.comboBox_labelingtimeunit.Items.AddRange(new object[] {
+            "Days",
+            "Hours"});
+            this.comboBox_labelingtimeunit.Location = new System.Drawing.Point(954, 65);
+            this.comboBox_labelingtimeunit.Name = "comboBox_labelingtimeunit";
+            this.comboBox_labelingtimeunit.Size = new System.Drawing.Size(100, 21);
+            this.comboBox_labelingtimeunit.TabIndex = 21;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(848, 70);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(89, 13);
+            this.label27.TabIndex = 20;
+            this.label27.Text = "Labeling time unit";
             // 
             // textBox_peptide_expectation
             // 
@@ -1031,6 +1051,7 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary";
+            this.groupBox2.Visible = false;
             // 
             // label_newk
             // 
@@ -1159,26 +1180,6 @@
             this.label1.Size = new System.Drawing.Size(689, 312);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(848, 70);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(89, 13);
-            this.label27.TabIndex = 20;
-            this.label27.Text = "Labeling time unit";
-            // 
-            // comboBox_labelingtimeunit
-            // 
-            this.comboBox_labelingtimeunit.FormattingEnabled = true;
-            this.comboBox_labelingtimeunit.Items.AddRange(new object[] {
-            "Days",
-            "Hours"});
-            this.comboBox_labelingtimeunit.Location = new System.Drawing.Point(954, 65);
-            this.comboBox_labelingtimeunit.Name = "comboBox_labelingtimeunit";
-            this.comboBox_labelingtimeunit.Size = new System.Drawing.Size(100, 21);
-            this.comboBox_labelingtimeunit.TabIndex = 21;
             // 
             // Main
             // 

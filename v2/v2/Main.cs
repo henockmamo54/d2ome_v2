@@ -1652,44 +1652,50 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 s1.MarkerSize = 4;
                 chart_peptide.Series.Add(s1);
 
-                // new computation plot
+                //////==============================================================================
+                //////====================Removed for release=======================================
+                //////==============================================================================
+                ////// new computation plot
 
-                if (chart_peptide.Series.FindByName("A1/A0") != null)
-                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A1/A0"));
-                if (chart_peptide.Series.FindByName("A2/A0") != null)
-                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A0"));
-                if (chart_peptide.Series.FindByName("A2/A1") != null)
-                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A1"));
+                ////if (chart_peptide.Series.FindByName("A1/A0") != null)
+                ////    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A1/A0"));
+                ////if (chart_peptide.Series.FindByName("A2/A0") != null)
+                ////    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A0"));
+                ////if (chart_peptide.Series.FindByName("A2/A1") != null)
+                ////    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A1"));
 
-                Series s_A1 = new Series();
-                s_A1.Name = "A1/A0";
-                s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A0).ToArray());
-                s_A1.ChartType = SeriesChartType.FastPoint;
-                s_A1.Color = Color.Green;
-                s_A1.MarkerSize = 7;
-                chart_peptide.Series.Add(s_A1);
+                ////Series s_A1 = new Series();
+                ////s_A1.Name = "A1/A0";
+                ////s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A0).ToArray());
+                ////s_A1.ChartType = SeriesChartType.FastPoint;
+                ////s_A1.Color = Color.Green;
+                ////s_A1.MarkerSize = 7;
+                ////chart_peptide.Series.Add(s_A1);
 
-                Series s_A2 = new Series();
-                s_A2.Name = "A2/A0";
-                s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A0).ToArray());
-                s_A2.ChartType = SeriesChartType.FastPoint;
-                s_A2.Color = Color.BlueViolet;
-                s_A2.MarkerSize = 7;
-                chart_peptide.Series.Add(s_A2);
+                ////Series s_A2 = new Series();
+                ////s_A2.Name = "A2/A0";
+                ////s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A0).ToArray());
+                ////s_A2.ChartType = SeriesChartType.FastPoint;
+                ////s_A2.Color = Color.BlueViolet;
+                ////s_A2.MarkerSize = 7;
+                ////chart_peptide.Series.Add(s_A2);
 
-                Series s_pxt = new Series();
-                s_pxt.Name = "A2/A1";
-                s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A1).ToArray());
-                s_pxt.ChartType = SeriesChartType.FastPoint;
-                s_pxt.Color = Color.OrangeRed;
-                s_pxt.MarkerSize = 7;
-                chart_peptide.Series.Add(s_pxt);
+                ////Series s_pxt = new Series();
+                ////s_pxt.Name = "A2/A1";
+                ////s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A1).ToArray());
+                ////s_pxt.ChartType = SeriesChartType.FastPoint;
+                ////s_pxt.Color = Color.OrangeRed;
+                ////s_pxt.MarkerSize = 7;
+                ////chart_peptide.Series.Add(s_pxt);
 
 
-                //chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
-                //chart_peptide.Series["Series5"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());
-                //chart_peptide.Series["Series6"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A2).ToArray());
+                //////chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
+                //////chart_peptide.Series["Series5"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());
+                //////chart_peptide.Series["Series6"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A2).ToArray());
 
+                //////==============================================================================
+                //////==============================================================================
+                //////==============================================================================
 
                 #endregion
 
@@ -1714,17 +1720,17 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 #region find best fit
 
-                var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
+                ////var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
 
-                findBestFits(proteinExperimentData, current_peptide,
-                    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
-                    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
-                    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
-                    chart_data.Select(x => x.RIA_value).ToList(),
-                    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+                ////findBestFits(proteinExperimentData, current_peptide,
+                ////    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                ////    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
+                ////    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
+                ////    chart_data.Select(x => x.RIA_value).ToList(),
+                ////    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
 
-                //findBestFits(proteinExperimentData, current_peptide,
-                //    chart_data, theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+                //////findBestFits(proteinExperimentData, current_peptide,
+                //////    chart_data, theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
 
                 #endregion
 
