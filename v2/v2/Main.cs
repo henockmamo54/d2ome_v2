@@ -1638,11 +1638,11 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
 
                 // ionscore == 0 plot
-                if (chart_peptide.Series.FindByName("Zero Ionscore") != null)
-                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("Zero Ionscore"));
+                if (chart_peptide.Series.FindByName("Zero Ion score") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("Zero Ion score"));
 
                 Series s1 = new Series();
-                s1.Name = "Zero Ionscore";
+                s1.Name = "Zero Ion score";
                 var chart_data2 = proteinExperimentData.mergedRIAvaluesWithZeroIonScore.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
                 if (chart_data2.Length > 0)
                     s1.Points.DataBindXY(chart_data2.Select(x => x.Time).ToArray(), chart_data2.Select(x => x.RIA_value).ToArray());
