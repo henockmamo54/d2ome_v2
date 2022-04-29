@@ -219,7 +219,7 @@ namespace v2
                         double sum_A0_r_t = experimentsAt_t.Sum(x => (x.I0 * (x.I0 / (x.I0 + x.I1 + x.I2 + x.I3 + x.I4 + x.I5)))).Value;
                         double exp_A0 = sum_A0_r_t / sum_A0_t;
 
-                        // computre al/a0
+                        // compute al/a0
                         if (exp_A0 > 0)
                         {
                             var exp_a1_a0 = exp_A1 / exp_A0;
@@ -231,7 +231,7 @@ namespace v2
                             //er.I0_t_fromA1A0_pxt = experiment_BWE;
                         }
 
-                        // computre a2/a0
+                        // compute a2/a0
                         if (exp_A0 > 0)
                         {
                             var exp_a2_a0 = exp_A2 / exp_A0;
@@ -244,7 +244,7 @@ namespace v2
                         }
 
 
-                        // computre a2/a1
+                        // compute a2/a1
                         if (exp_A0 > 0)
                         {
                             var exp_a2_a1 = exp_A2 / exp_A1;

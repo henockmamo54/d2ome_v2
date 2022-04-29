@@ -955,7 +955,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, string proteinName)
         {
             var peptidesList = proteinExperimentData.peptides;
-            string file_content = "proteinName,peptideSeq,old_Rsquared,new_Rsquared,NDP,rateconstant,sigma,Abundance,MassToCharge,RMSE\n";
+            string file_content = "proteinName,peptideSeq,old_Rsquared,new_Rsquared,NDP,rateconstant,sigma,Abundance,MassToCharge,RMSE,selected_A1A0_count, selected_A2A0_count, selected_A2A1_count\n";
 
             foreach (var peptide in peptidesList)
             {
@@ -971,9 +971,16 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     chart_data.Select(x => x.RIA_value).ToList(),
                     theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptide.PeptideSeq & x.charge == peptide.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList(),
                     false);
-                file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.RSquare + "," + newRsquared.ToString()
+                if (newRsquared == null)
+                    file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.RSquare + "," + double.NaN //newRsquared.ToString()
                     + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.std_k + "," +
-                    current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "\n");
+                    current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
+                        double.NaN + "," + double.NaN + "," + double.NaN + "\n");
+                else
+                    file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.RSquare + "," + newRsquared[0].ToString()
+                        + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.std_k + "," +
+                        current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
+                        newRsquared[1].ToString() + "," + newRsquared[2].ToString() + "," + newRsquared[3].ToString() + "\n");
             }
 
             using (StreamWriter writer = new StreamWriter(proteinName + ".csv"))
@@ -1499,11 +1506,14 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
         //}
 
         #endregion
-        public double findBestFits(ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide, List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA, bool verbose = true)
+        public List<double> findBestFits(ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide, List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA, bool verbose = true)
         {
             try
             {
                 var selected_points = new List<double>();
+                var selected_A1A0_count = 0;
+                var selected_A2A0_count = 0;
+                var selected_A2A1_count = 0;
                 for (int i = 0; i < proteinExperimentData.experiment_time.Count; i++)
                 {
                     var theoretical_val = (double)theoretical_RIA[i];
@@ -1524,9 +1534,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         var index_min_val = candidate_points.IndexOf(min_val);
                         switch (index_min_val)
                         {
-                            case 0: selected_points.Add((double)a1ao[i]); break;
-                            case 1: selected_points.Add((double)a2ao[i]); break;
-                            case 2: selected_points.Add((double)a1a2[i]); break;
+                            case 0: selected_points.Add((double)a1ao[i]); selected_A1A0_count += 1; break;
+                            case 1: selected_points.Add((double)a2ao[i]); selected_A2A0_count += 1; break;
+                            case 2: selected_points.Add((double)a1a2[i]); selected_A2A1_count += 1; break;
                             case 3: selected_points.Add((double)experimental_RIA[i]); break;
                             default: selected_points.Add(double.NaN); break;
                         }
@@ -1534,6 +1544,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 }
 
 
+                Console.WriteLine("===========================================================");
+                Console.WriteLine("===========================================================\n");
+                Console.WriteLine(selected_A1A0_count.ToString() + "," + selected_A2A0_count.ToString() + "," + selected_A2A1_count.ToString() + ",");
                 Console.WriteLine("===========================================================");
                 Console.WriteLine("===========================================================\n");
 
@@ -1599,7 +1612,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     //    return new_rsquared1;
                 }
 
-                return rsquared;
+                return new List<double> { rsquared, selected_A1A0_count, selected_A2A0_count, selected_A2A1_count };
 
             }
             catch (Exception ex)
@@ -1607,7 +1620,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 Console.WriteLine(ex.ToString());
             }
 
-            return double.NaN;
+            return null;
         }
 
         public void loadPeptideChart(string peptideSeq, int charge, double masstocharge, List<RIA> mergedRIAvalues, List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, double Rateconst = Double.NaN, double RSquare = Double.NaN)
