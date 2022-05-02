@@ -1649,7 +1649,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 s1.ChartType = SeriesChartType.FastPoint;
                 s1.Color = Color.Red;
-                s1.MarkerSize = 4;
+                s1.MarkerSize = 7;
+                s1.MarkerStyle = MarkerStyle.Circle;
                 chart_peptide.Series.Add(s1);
 
                 //////==============================================================================
@@ -1887,7 +1888,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                         s1.ChartType = SeriesChartType.FastPoint;
                         s1.Color = Color.Red;
-                        s1.MarkerSize = 4;
+                        s1.MarkerSize = 7;
+                        s1.MarkerStyle = MarkerStyle.Circle;
                         chart2.Series.Add(s1);
 
                         #endregion

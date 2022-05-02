@@ -227,7 +227,8 @@ namespace v2.Helper
 
                         s1.ChartType = SeriesChartType.FastPoint;
                         s1.Color = Color.Red;
-                        s1.MarkerSize = 4;
+                        s1.MarkerSize = 7;
+                        s1.MarkerStyle = MarkerStyle.Circle;
                         chart2.Series.Add(s1);
 
                         #endregion
