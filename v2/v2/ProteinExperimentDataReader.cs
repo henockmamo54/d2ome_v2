@@ -13,6 +13,7 @@ namespace v2
         string files_txt_path = @"";
         string quant_csv_path = @"";
         string RateConst_csv_path = @"";
+        string quant_state_file_path = @"";
 
         // propperites from Protein.files.txt
         public List<int> experiment_time = new List<int>(); //contains unique time values
@@ -40,12 +41,14 @@ namespace v2
         public List<TheoreticalI0Value> theoreticalI0Values = new List<TheoreticalI0Value>();
         public List<TheoreticalI0Value> theoreticalI0Values_withExperimentalIO = new List<TheoreticalI0Value>();
         public List<TheoreticalI0Value> temp_theoreticalI0Values = new List<TheoreticalI0Value>();
+        public string labelingDuration = "Labeling Duration";
 
-        public ProteinExperimentDataReader(string files_txt_path, string quant_csv_path, string RateConst_csv_path)
+        public ProteinExperimentDataReader(string files_txt_path, string quant_csv_path, string RateConst_csv_path, String quant_state_file_path)
         {
             this.files_txt_path = files_txt_path;
             this.quant_csv_path = quant_csv_path;
             this.RateConst_csv_path = RateConst_csv_path;
+            this.quant_state_file_path = quant_state_file_path;
         }
         public void loadAllExperimentData()
         {
@@ -57,6 +60,11 @@ namespace v2
             this.experiment_time = filesinfo.experimentTimes;
             this.experimentIDs = filesinfo.experimentIDs;
             this.filecontents = filesinfo.filecontents;
+
+            //qunat.state reader
+
+            ReadQuantState quantstatereader = new ReadQuantState(quant_state_file_path);
+            this.labelingDuration = quantstatereader.getLabelingDuration();
 
             //Protein.Quant.csv reader
             ReadExperiments experiInfoReader = new ReadExperiments(quant_csv_path, filesinfo.experimentTimes_all);

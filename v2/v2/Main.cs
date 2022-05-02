@@ -831,6 +831,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             chart_protein.ChartAreas[0].AxisY.Minimum = -0.1;
             chart_protein.ChartAreas[0].AxisY.Maximum = 2;
 
+            chart_protein.ChartAreas[0].AxisX.Title = "Time (" + this.proteinExperimentData.labelingDuration + ")";
 
         }
 
@@ -882,6 +883,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                     //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
                     string files_txt_path = sourcePath + @"\files.txt";
+                    string quant_state_file_path = sourcePath + @"\quant.state";
                     string quant_csv_path = sourcePath + @"\" + proteinName + ".Quant.csv";
                     string RateConst_csv_path = sourcePath + @"\" + proteinName + ".RateConst.csv";
 
@@ -898,7 +900,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); continue; }
                     else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
 
-                    var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+                    var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path, quant_state_file_path);
 
                     //mynewproteinExperimentData.loadAllExperimentData();
                     //mynewproteinExperimentData.computeRIAPerExperiment();
@@ -1784,7 +1786,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 chart_peptide.ChartAreas[0].AxisY.Interval = chart_peptide.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
                 chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
-
+                chart_peptide.ChartAreas[0].AxisX.Title = "Time (" + this.proteinExperimentData.labelingDuration + ")";
 
             }
             catch (Exception e)
@@ -1963,6 +1965,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
                         chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+                        chart2.ChartAreas[0].AxisX.Title = "Time (" + this.proteinExperimentData.labelingDuration + ")";
 
 
                         bool exists = System.IO.Directory.Exists(path);
@@ -2053,6 +2056,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
             //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
             string files_txt_path = txt_source.Text + @"\files.txt";
+            string quant_state_file_path = txt_source.Text + @"\quant.state";
             string quant_csv_path = txt_source.Text + @"\" + proteinName + ".Quant.csv";
             string RateConst_csv_path = txt_source.Text + @"\" + proteinName + ".RateConst.csv";
 
@@ -2068,7 +2072,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); return; }
             else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); return; } }
 
-            proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+            proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path, quant_state_file_path);
 
 
             proteinExperimentData.loadAllExperimentData();
@@ -2515,6 +2519,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                         //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
                         string files_txt_path = sourcePath + @"\files.txt";
+                        string quant_state_file_path = sourcePath + @"\quant.state";
                         string quant_csv_path = sourcePath + @"\" + proteinName + ".Quant.csv";
                         string RateConst_csv_path = sourcePath + @"\" + proteinName + ".RateConst.csv";
 
@@ -2531,7 +2536,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); continue; }
                         else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
 
-                        var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+                        var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path, quant_state_file_path);
                         mynewproteinExperimentData.loadAllExperimentData();
                         mynewproteinExperimentData.computeDeuteriumenrichmentInPeptide();
                         mynewproteinExperimentData.computeRIAPerExperiment();
@@ -2705,6 +2710,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     foreach (string proteinName in protienList)
                     {
                         string files_txt_path = sourcePath + @"\files.txt";
+                        string quant_state_file_path = sourcePath + @"\quant.state";
                         string quant_csv_path = sourcePath + @"\" + proteinName + ".Quant.csv";
                         string RateConst_csv_path = sourcePath + @"\" + proteinName + ".RateConst.csv";
 
@@ -2721,7 +2727,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); continue; }
                         else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
 
-                        var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+                        var mynewproteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path, quant_state_file_path);
 
                         mynewproteinExperimentData.loadAllExperimentData();
                         mynewproteinExperimentData.computeDeuteriumenrichmentInPeptide();

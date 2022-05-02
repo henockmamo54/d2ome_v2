@@ -109,6 +109,7 @@
     <Compile Include="Helper\ExportAllProteinsData.cs" />
     <Compile Include="Helper\ReadExperiments.cs" />
     <Compile Include="Helper\ReadFilesInfo_txt.cs" />
+    <Compile Include="Helper\ReadQuantState.cs" />
     <Compile Include="Helper\ReadRateConstants.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>

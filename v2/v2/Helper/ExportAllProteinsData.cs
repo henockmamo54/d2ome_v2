@@ -58,6 +58,7 @@ namespace v2.Helper
 
                     //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
                     string files_txt_path = sourcePath + @"\files.txt";
+                    string quant_state_file_path = sourcePath + @"\quant.state";
                     string quant_csv_path = sourcePath + @"\" + proteinName + ".Quant.csv";
                     string RateConst_csv_path = sourcePath + @"\" + proteinName + ".RateConst.csv";
 
@@ -74,7 +75,7 @@ namespace v2.Helper
                     if (!File.Exists(RateConst_csv_path)) { MessageBox.Show(proteinName + ".RateConst.csv" + "filex.txt is not available in the specified directory.", "Error"); continue; }
                     else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); continue; } }
 
-                    var proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path);
+                    var proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path, quant_state_file_path);
 
                     proteinExperimentData.loadAllExperimentData();
                     proteinExperimentData.computeDeuteriumenrichmentInPeptide();
@@ -301,7 +302,7 @@ namespace v2.Helper
                         chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
                         chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-
+                        chart2.ChartAreas[0].AxisX.Title = "Time (" + proteinExperimentData.labelingDuration + ")";
 
 
                         bool exists = System.IO.Directory.Exists(outputpath);
