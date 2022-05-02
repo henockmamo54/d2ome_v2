@@ -2278,9 +2278,9 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                             //var rateconst = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[2].Value.ToString());
                             //var rsquare = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[3].Value.ToString());
                             var masstocharge = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[5].Value.ToString());
-                            var sigma_k = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[19].Value.ToString());
+                            //var sigma_k = double.Parse(dataGridView_peptide.Rows[indexofselctedrow].Cells[19].Value.ToString());
 
-                            loadPeptideChart(temp, charge, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, sigma_k);
+                            loadPeptideChart(temp, charge, masstocharge, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values);
                         }
                         else
                         {
