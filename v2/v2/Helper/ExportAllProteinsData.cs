@@ -260,23 +260,22 @@ namespace v2.Helper
                         var chargestring = "";
                         switch (p.Charge)
                         {
-                            case 0: chargestring = "\u2070"; break;
-                            case 1: chargestring = ""; break;
-                            case 2: chargestring = "\u00B2"; break;
-                            case 3: chargestring = "\u00B3"; break;
-                            case 4: chargestring = "\u2074"; break;
-                            case 5: chargestring = "\u2075"; break;
-                            case 6: chargestring = "\u2076"; break;
-                            case 7: chargestring = "\u2077"; break;
-                            case 8: chargestring = "\u2078"; break;
-                            case 9: chargestring = "\u2079"; break;
+                            case 0: chargestring = "\u207A\u2070"; break;
+                            case 1: chargestring = "\u207A\u2071"; break;
+                            case 2: chargestring = "\u207A\u00B2"; break;
+                            case 3: chargestring = "\u207A\u00B3"; break;
+                            case 4: chargestring = "\u207A\u2074"; break;
+                            case 5: chargestring = "\u207A\u2075"; break;
+                            case 6: chargestring = "\u207A\u2076"; break;
+                            case 7: chargestring = "\u207A\u2077"; break;
+                            case 8: chargestring = "\u207A\u2078"; break;
+                            case 9: chargestring = "\u207A\u2079"; break;
                             default: chargestring = ""; break;
                         }
 
                         if (p.Rateconst != double.NaN)
                         {
-
-                            title.Text = p.PeptideSeq + " (k\u207A" + chargestring + " = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
+                            title.Text = p.PeptideSeq + chargestring + " (k = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
                         }
                         else
                         {

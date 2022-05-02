@@ -1738,27 +1738,27 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 //chart_peptide.Titles.Add(peptideSeq);    
 
                 Title title = new Title();
-                title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 9, FontStyle.Regular);
+                title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 10, FontStyle.Regular);
                 //title.Text = peptideSeq + " (K = " + Rateconst.ToString() + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ")";
                 if (Rateconst != double.NaN)
                 {
                     var chargestring = "";
                     switch (charge)
                     {
-                        case 0: chargestring = "\u2070"; break;
-                        case 1: chargestring = ""; break;
-                        case 2: chargestring = "\u00B2"; break;
-                        case 3: chargestring = "\u00B3"; break;
-                        case 4: chargestring = "\u2074"; break;
-                        case 5: chargestring = "\u2075"; break;
-                        case 6: chargestring = "\u2076"; break;
-                        case 7: chargestring = "\u2077"; break;
-                        case 8: chargestring = "\u2078"; break;
-                        case 9: chargestring = "\u2079"; break;
+                        case 0: chargestring = "\u207A\u2070"; break;
+                        case 1: chargestring = "\u207A\u2071"; break;
+                        case 2: chargestring = "\u207A\u00B2"; break;
+                        case 3: chargestring = "\u207A\u00B3"; break;
+                        case 4: chargestring = "\u207A\u2074"; break;
+                        case 5: chargestring = "\u207A\u2075"; break;
+                        case 6: chargestring = "\u207A\u2076"; break;
+                        case 7: chargestring = "\u207A\u2077"; break;
+                        case 8: chargestring = "\u207A\u2078"; break;
+                        case 9: chargestring = "\u207A\u2079"; break;
                         default: chargestring = ""; break;
                     }
 
-                    title.Text = peptideSeq + " (k\u207A" + chargestring + " = " + formatdoubletothreedecimalplace(Rateconst) + " \u00B1 " + Sigma_k.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
+                    title.Text = peptideSeq + chargestring + " (k = " + formatdoubletothreedecimalplace(Rateconst) + " \u00B1 " + Sigma_k.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
                 }
                 else
                 {
@@ -1919,23 +1919,23 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         var chargestring = "";
                         switch (p.Charge)
                         {
-                            case 0: chargestring = "\u2070"; break;
-                            case 1: chargestring = ""; break;
-                            case 2: chargestring = "\u00B2"; break;
-                            case 3: chargestring = "\u00B3"; break;
-                            case 4: chargestring = "\u2074"; break;
-                            case 5: chargestring = "\u2075"; break;
-                            case 6: chargestring = "\u2076"; break;
-                            case 7: chargestring = "\u2077"; break;
-                            case 8: chargestring = "\u2078"; break;
-                            case 9: chargestring = "\u2079"; break;
+                            case 0: chargestring = "\u207A\u2070"; break;
+                            case 1: chargestring = "\u207A\u2071"; break;
+                            case 2: chargestring = "\u207A\u00B2"; break;
+                            case 3: chargestring = "\u207A\u00B3"; break;
+                            case 4: chargestring = "\u207A\u2074"; break;
+                            case 5: chargestring = "\u207A\u2075"; break;
+                            case 6: chargestring = "\u207A\u2076"; break;
+                            case 7: chargestring = "\u207A\u2077"; break;
+                            case 8: chargestring = "\u207A\u2078"; break;
+                            case 9: chargestring = "\u207A\u2079"; break;
                             default: chargestring = ""; break;
                         }
 
                         if (p.Rateconst != double.NaN)
                         {
 
-                            title.Text = p.PeptideSeq + " (k\u207A" + chargestring + " = " + formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
+                            title.Text = p.PeptideSeq + chargestring + " (k = " + formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
                         }
                         else
                         {
