@@ -138,7 +138,7 @@ namespace v2.Helper
             series2.Name = "Series3";
             chart2.Series.Add(series1);
             chart2.Series.Add(series2);
-            chart2.Size = new System.Drawing.Size(662, 316);
+            chart2.Size = new System.Drawing.Size((int)(662 * 1.5), (int)(316 * 1.5));
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
 
