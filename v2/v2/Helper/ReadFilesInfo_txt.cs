@@ -61,7 +61,7 @@ namespace v2.Helper
 
                         // extract experiment id
                         var temp_id = fc.mzid_path.Trim().Split('\\');
-                        var e_id = temp_id[temp_id.Length - 1].Replace(".mzid", string.Empty);
+                        var e_id = temp_id[temp_id.Length - 1].Replace(".mzid", string.Empty).Replace(".mzID", string.Empty); 
                         experimentIDs.Add(e_id);
 
                         fc.experimentID=e_id;

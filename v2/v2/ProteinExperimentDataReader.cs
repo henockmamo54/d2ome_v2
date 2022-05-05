@@ -285,6 +285,7 @@ namespace v2
                 {
                     RIA ria = new RIA();
                     ria.ExperimentName = er.ExperimentName;
+                    ria.Time = er.ExperimentTime;
                     ria.PeptideSeq = er.PeptideSeq;
                     ria.RIA_value = er.I0 / sum_val;
                     ria.I0 = er.I0;
@@ -336,6 +337,8 @@ namespace v2
                 foreach (var datapoint in datapoints)
                 {
                     var BWE_t = filecontents.Where(x => x.experimentID == datapoint.ExperimentName).Select(x => x.BWE).FirstOrDefault();
+
+                    if (datapoint.Time != 0 && BWE_t == 0) continue;
 
 
                     var IO_t_asymptote = I0 * Math.Pow(1 - (BWE_t / (1 - Helper.Constants.ph)), (double)p.Exchangeable_Hydrogens);

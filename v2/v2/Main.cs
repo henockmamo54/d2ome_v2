@@ -856,7 +856,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             int count_s = 0;
             int count_t = 0;
 
-            string file_content = "Portien,rateconst,new_Median,new_sd,gumbel_Median,gumbel _sd,Abundance\n";
+            string file_content = "Portien,rateconst,new_Median,new_sd,gumbel_Median,gumbel _sd,Abundance,PeptideCount\n";
 
             string[] filePaths = Directory.GetFiles(sourcePath);
             var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
@@ -939,7 +939,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     var gumbel_median = mynewproteinExperimentData.MeanRateConst;
                     var gumbe_std = mynewproteinExperimentData.StandDev_NumberPeptides_StandDev;
 
-                    file_content += proteinName + "," + mynewproteinExperimentData.MeanRateConst + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "," + mynewproteinExperimentData.TotalIonCurrent + "\n";
+                    file_content += proteinName + "," + mynewproteinExperimentData.MeanRateConst + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "," + mynewproteinExperimentData.TotalIonCurrent + "," + mynewproteinExperimentData.peptides.Count().ToString() + "\n";
 
                     calculateNewRsquaredForEachPeptidePerProtein(chartdata, mynewproteinExperimentData, mynewproteinExperimentData.temp_theoreticalI0Values, proteinName);
 
@@ -1635,7 +1635,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 #region experimental data plot
 
                 // prepare the chart data
-                var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge).OrderBy(x => x.Time).ToArray();
+                var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge & x.RIA_value != double.PositiveInfinity & x.RIA_value != double.NegativeInfinity).OrderBy(x => x.Time).ToArray();
                 chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
 
@@ -1781,7 +1781,11 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                             max_y_list.Add(maxvalue.YValues[0]);
                     }
                 }
-                chart_peptide.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
+
+                if (max_y_list.Max() != double.PositiveInfinity && max_y_list.Max() != double.NegativeInfinity)
+                    chart_peptide.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
+                else
+                    chart_peptide.ChartAreas[0].AxisY.Maximum = 1;
 
                 chart_peptide.ChartAreas[0].AxisY.Interval = chart_peptide.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
                 chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
