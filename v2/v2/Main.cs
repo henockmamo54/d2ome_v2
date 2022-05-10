@@ -1142,7 +1142,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             //rename column name
             dataGridView_peptide.Columns["PeptideSeq"].HeaderText = "Peptide";
             dataGridView_peptide.Columns["Charge"].HeaderText = "z";
-            dataGridView_peptide.Columns["SeqMass"].HeaderText = "m/z";
+            dataGridView_peptide.Columns["SeqMass"].HeaderText = "m/z \nPrecursor";
             dataGridView_peptide.Columns["IsotopeDeviation"].HeaderText = "Isotope Deviation";
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].HeaderText = "Exchangeable Hydrogens";
             dataGridView_peptide.Columns["Rateconst"].HeaderText = "Rate \nconstant";
