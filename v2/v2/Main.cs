@@ -857,6 +857,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             int count_t = 0;
 
             string file_content = "Portien,rateconst,new_Median,new_sd,gumbel_Median,gumbel _sd,Abundance,PeptideCount\n";
+            string abundance_file_content = "Portien";
 
             string[] filePaths = Directory.GetFiles(sourcePath);
             var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
@@ -925,6 +926,39 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     mynewproteinExperimentData.loadAllExperimentData();
                     mynewproteinExperimentData.computeDeuteriumenrichmentInPeptide();
                     mynewproteinExperimentData.computeRIAPerExperiment();
+                    //====================================================================
+                    //====================================================================
+                    // hadel abundance values
+
+                    var experiment_names = mynewproteinExperimentData.filecontents.Select(x => x.experimentID).ToList();
+                    List<RIA> all_abundancedata = new List<RIA>();
+
+                    if (abundance_file_content == "Portien")
+                    {
+                        foreach (var experiment in experiment_names)
+                            abundance_file_content += "," + experiment;
+                        abundance_file_content += '\n';
+                    }
+
+
+                    string abundance_string = proteinName;
+                    foreach (var experiment in experiment_names)
+                    {
+                        double temp_sum = 0;
+                        var temp_points = mynewproteinExperimentData.RIAvalues.AsParallel().Where(x => x.ExperimentName == experiment).ToList();
+                        if (temp_points.Count > 0)
+                            temp_sum += (double)temp_points.Sum(x => x.Abundance_sum);
+                        abundance_string += "," + temp_sum;
+                    }
+                    abundance_file_content += abundance_string + '\n';
+
+                    //foreach (var p in mynewproteinExperimentData.peptides)
+                    //{
+                    //    all_abundancedata.AddRange( mynewproteinExperimentData.RIAvalues.AsParallel().Where(x => x.PeptideSeq == p.PeptideSeq && x.Charge == p.Charge).ToList());
+                    //}
+
+                    //====================================================================
+                    //====================================================================
                     mynewproteinExperimentData.normalizeRIAValuesForAllPeptides();
                     mynewproteinExperimentData.computeAverageA0();
                     mynewproteinExperimentData.mergeMultipleRIAPerDay2();
@@ -948,6 +982,11 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 using (StreamWriter writer = new StreamWriter("compare.csv"))
                 {
                     writer.WriteLine(file_content);
+                }
+
+                using (StreamWriter writer = new StreamWriter("abundance_file_content.csv"))
+                {
+                    writer.WriteLine(abundance_file_content);
                 }
 
             }

@@ -296,6 +296,8 @@ namespace v2
                     ria.I0_t_fromA2A0 = er.I0_t_fromA2A0;
                     ria.I0_t_fromA2A1 = er.I0_t_fromA2A1;
 
+                    ria.Abundance_sum = sum_val;
+
 
                     //ria.I0_t_fromA1A0_pxt = er.I0_t_fromA1A0_pxt;
                     //ria.I0_t_fromA2A0_pxt = er.I0_t_fromA2A0_pxt;

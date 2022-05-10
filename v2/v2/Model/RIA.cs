@@ -19,6 +19,7 @@ namespace v2.Model
         public double? I0_t_fromA1A0 { get; set; }
         public double? I0_t_fromA2A0 { get; set; }
         public double? I0_t_fromA2A1 { get; set; }
+        public double? Abundance_sum { get; set; }
         //public double? I0_t_fromA1A0_pxt { get; set; }
         //public double? I0_t_fromA2A0_pxt { get; set; }
         //public double? I0_t_fromA2A1_pxt { get; set; }

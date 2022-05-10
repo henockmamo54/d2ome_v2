@@ -1051,7 +1051,6 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary";
-            this.groupBox2.Visible = false;
             // 
             // label_newk
             // 
