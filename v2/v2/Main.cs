@@ -856,7 +856,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             int count_s = 0;
             int count_t = 0;
 
-            string file_content = "Portien,rateconst,new_Median,new_sd,gumbel_Median,gumbel _sd,Abundance,PeptideCount\n";
+            //string file_content = "Portien,rateconst,new_Median,new_sd,gumbel_Median,gumbel _sd,Abundance,PeptideCount\n";
+            string file_content = "Portien,rateconst,Abundance,PeptideCount\n";
 
             string[] filePaths = Directory.GetFiles(sourcePath);
             var csvfilePaths = filePaths.Where(x => x.Contains(".csv") & (x.Contains(".Quant.csv") || x.Contains(".RateConst.csv"))).ToList();
@@ -939,7 +940,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     var gumbel_median = mynewproteinExperimentData.MeanRateConst;
                     var gumbe_std = mynewproteinExperimentData.StandDev_NumberPeptides_StandDev;
 
-                    file_content += proteinName + "," + mynewproteinExperimentData.MeanRateConst + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "," + mynewproteinExperimentData.TotalIonCurrent + "," + mynewproteinExperimentData.peptides.Count().ToString() + "\n";
+                    //file_content += proteinName + "," + mynewproteinExperimentData.MeanRateConst + "," + fit_rates[0] + "," + fit_rates[1] + "," + gumbel_median + "," + gumbe_std + "," + mynewproteinExperimentData.TotalIonCurrent + "," + mynewproteinExperimentData.peptides.Count().ToString() + "\n";
+                    file_content += proteinName + "," + mynewproteinExperimentData.MeanRateConst + "," + mynewproteinExperimentData.TotalIonCurrent + "," + mynewproteinExperimentData.peptides.Count().ToString() + "\n";
 
                     calculateNewRsquaredForEachPeptidePerProtein(chartdata, mynewproteinExperimentData, mynewproteinExperimentData.temp_theoreticalI0Values, proteinName);
 
@@ -1570,7 +1572,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                     s_pxt.Points.DataBindXY(proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
                     s_pxt.ChartType = SeriesChartType.FastPoint;
                     s_pxt.Color = Color.DodgerBlue;
-                    s_pxt.MarkerSize = 12;
+                    s_pxt.MarkerSize = 9;
+                    s_pxt.MarkerStyle = MarkerStyle.Cross;
                     chart_peptide.Series.Add(s_pxt);
                 }
 
@@ -1658,7 +1661,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 //////==============================================================================
                 //////====================Removed for release=======================================
                 //////==============================================================================
-                ////// new computation plot
+                // new computation plot
 
                 ////if (chart_peptide.Series.FindByName("A1/A0") != null)
                 ////    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A1/A0"));
@@ -1723,17 +1726,17 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 #region find best fit
 
-                ////var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
-
-                ////findBestFits(proteinExperimentData, current_peptide,
-                ////    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
-                ////    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
-                ////    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
-                ////    chart_data.Select(x => x.RIA_value).ToList(),
-                ////    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+                //////var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
 
                 //////findBestFits(proteinExperimentData, current_peptide,
-                //////    chart_data, theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+                //////    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                //////    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
+                //////    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
+                //////    chart_data.Select(x => x.RIA_value).ToList(),
+                //////    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+
+                ////////findBestFits(proteinExperimentData, current_peptide,
+                ////////    chart_data, theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
 
                 #endregion
 
@@ -2096,7 +2099,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             {
 
 
-                label4_proteinRateConstantValue.Text = formatdoubletothreedecimalplace((double)proteinExperimentData.MeanRateConst) + " \u00B1 " + formatdoubletothreedecimalplace((double)proteinExperimentData.StandDev_NumberPeptides_StandDev);
+                label4_proteinRateConstantValue.Text = formatdoubletothreedecimalplace((double)proteinExperimentData.MedianRateConst) + " \u00B1 " + formatdoubletothreedecimalplace((double)proteinExperimentData.StandDev_NumberPeptides_StandDev);
                 label5_Ic.Text = ((double)proteinExperimentData.TotalIonCurrent).ToString("G2");
                 loadDataGridView();
 
@@ -2855,6 +2858,13 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             //{
             //    Console.WriteLine("median_value => " + key + " => " + BasicFunctions.getMedian(exps[key].OrderBy(x => x).ToList()));
             //}
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var data = proteinExperimentData.peptides.ToList();
+            data = data.Where(x => x.RSquare >= 85 || x.RMSE_value <= 0.05).ToList();
+            Helper.BasicFunctions.CreateCSV(data, "./_tryp.csv");
         }
 
 

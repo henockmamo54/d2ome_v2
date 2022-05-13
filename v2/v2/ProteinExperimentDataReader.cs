@@ -28,7 +28,7 @@ namespace v2
         public List<RateConstant> rateConstants = new List<RateConstant>();
         public double? MeanRateConst;
         double? MeanRateConst_CorrCutOff;
-        double? MedianRateConst;
+        public double? MedianRateConst;
         double? MedianRateConst_RMSSCutOff;
         public double? StandDev_NumberPeptides_StandDev;
         double? StandDev_NumberPeptides_NumberPeptides;
