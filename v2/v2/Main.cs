@@ -56,7 +56,7 @@ namespace v2
             chart_peptide.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
 
             chart_peptide.ChartAreas[0].AxisY.Title = "Relative abundance \n of monoisotope";
-            chart_protein.ChartAreas[0].AxisY.Title = "Fractional protein \n synthesis";
+            chart_protein.ChartAreas[0].AxisY.Title = "Protein fractional\n synthesis";
             chart_peptide.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
 
             chart_protein.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart_peptide.Legends[0].Font.FontFamily, 10);
@@ -825,8 +825,8 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             chart_protein.ChartAreas[0].AxisX.Interval = (int)temp_maxval / 10;
             chart_protein.ChartAreas[0].AxisX.Maximum = temp_maxval + 0.01;
 
-            chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
-            chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+            //chart_peptide.ChartAreas[0].AxisY.Interval = yval.Max() / 5;
+            //chart_peptide.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
 
             chart_protein.ChartAreas[0].AxisY.Minimum = -0.1;
             chart_protein.ChartAreas[0].AxisY.Maximum = 2;
@@ -1174,6 +1174,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
             dataGridView_peptide.Columns["Charge"].MinimumWidth = 30;
 
             //set number formationg for the columns
+            dataGridView_peptide.Columns["Rateconst"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["RSquare"].DefaultCellStyle.Format = "#0.#0";
             dataGridView_peptide.Columns["RMSE_value"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["SeqMass"].DefaultCellStyle.Format = "#0.###";
@@ -1764,7 +1765,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         default: chargestring = ""; break;
                     }
 
-                    title.Text = peptideSeq + chargestring + " (k = " + formatdoubletothreedecimalplace(Rateconst) + " \u00B1 " + Sigma_k.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
+                    title.Text = peptideSeq + chargestring + " (k = " + (Rateconst.ToString("#0.###")) + " \u00B1 " + Sigma_k.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
                 }
                 else
                 {
@@ -1946,7 +1947,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                         if (p.Rateconst != double.NaN)
                         {
 
-                            title.Text = p.PeptideSeq + chargestring + " (k = " + formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
+                            title.Text = p.PeptideSeq + chargestring + " (k = " + ((double)p.Rateconst).ToString("#0.###") + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
                         }
                         else
                         {
