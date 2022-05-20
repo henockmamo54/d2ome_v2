@@ -76,9 +76,9 @@ namespace v2
             // chart legend size
             chart_peptide.Legends[0].Position.Auto = false;
             chart_peptide.Legends[0].Position.X = 65;
-            chart_peptide.Legends[0].Position.Y = 10;
+            chart_peptide.Legends[0].Position.Y = 5;
             chart_peptide.Legends[0].Position.Width = 30;
-            chart_peptide.Legends[0].Position.Height = 20;
+            chart_peptide.Legends[0].Position.Height = 15;
 
             chart_protein.Legends[0].Position.Auto = false;
             chart_protein.Legends[0].Position.X = 65;
@@ -2865,7 +2865,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
         {
             var data = proteinExperimentData.peptides.ToList();
             data = data.Where(x => x.RSquare >= 85 || x.RMSE_value <= 0.05).ToList();
-            Helper.BasicFunctions.CreateCSV(data, "./_tryp.csv");
+            Helper.BasicFunctions.CreateCSV(data, "./_"+comboBox_proteinNameSelector.Text+".csv");
         }
 
 
