@@ -112,6 +112,7 @@ namespace v2
             comboBox_MS1Data.SelectedIndex = 0;
             comboBox_Rate_Constant_Method.SelectedIndex = 0;
             comboBox_labelingtimeunit.SelectedIndex = 0;
+            comboBox_Enrichment_estimation.SelectedIndex = 0;
             textBox_massAccuracy.Text = "20.0";
             textBox_ElutionWindow.Text = "1.0";
             textBox_peptideConsistency.Text = "4";
@@ -347,8 +348,7 @@ namespace v2
                     return;
                 }
 
-                // labeling_time_unit
-                //string labeling_time_unit = comboBox_labelingtimeunit.Text;
+                // labeling_time_unit 
                 string labeling_time_unit = "Days";
 
                 if (comboBox_labelingtimeunit.Text == "Days")
@@ -357,12 +357,30 @@ namespace v2
                     labeling_time_unit = "Hours";
                 else
                 {
-                    MessageBox.Show("Invalid labeling time unit. " + comboBox_labelingtimeunit +
+                    MessageBox.Show("Invalid labeling time unit. " + comboBox_labelingtimeunit.Text +
                         "  Please, re-enter labeling time unit\n");
                     return;
                 }
 
 
+                //Complete isotope profiles
+                //Two mass isotopomers
+
+                // labeling_time_unit 
+                string enrichment_estimation = "Complete isotope profiles";
+
+                if (comboBox_Enrichment_estimation.Text == "Complete isotope profiles")
+                    enrichment_estimation = "Complete_isotope_profiles";
+                else if (comboBox_Enrichment_estimation.Text == "Two mass isotopomers")
+                    enrichment_estimation = "Two_mass_isotopomers";
+                else
+                {
+                    MessageBox.Show("Invalid enrichment estimation. " + comboBox_Enrichment_estimation.Text +
+                        "  Please, re-enter enrichment estimation\n");
+                    return;
+                }
+
+                // MS1_Type
                 double MS1_Type = 0;
                 if (comboBox_MS1Data.Text == "Profile")
                     MS1_Type = 0;
@@ -380,8 +398,10 @@ protein_consistency = {7}  // minimum number of experiments for protein consiste
 peptide_consistency = {4}   //mininum number of experiments for a peptide consistency
 NParam_RateConst_Fit = {5}	// The model for fitting rate constant. Values are 1, and 2
 Labeling_time_unit = {9}  // Labeling time unit  Days or Hours  
+Enrichment_estimation = {10}  // Enrichment_estimation  Complete_isotope_profiles or Two_mass_isotopomers  
 ", massaccuracy, MS1_Type, peptidescore,
-elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienconsistency, peptide_expectation, labeling_time_unit);
+elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienconsistency, peptide_expectation,
+labeling_time_unit, enrichment_estimation);
 
                 TextWriter tw2 = new StreamWriter(path + "\\quant.state");
                 //TextWriter tw2 = new StreamWriter("quant.state");
@@ -1664,36 +1684,36 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
                 //////==============================================================================
                 // new computation plot
 
-                ////if (chart_peptide.Series.FindByName("A1/A0") != null)
-                ////    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A1/A0"));
-                ////if (chart_peptide.Series.FindByName("A2/A0") != null)
-                ////    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A0"));
-                ////if (chart_peptide.Series.FindByName("A2/A1") != null)
-                ////    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A1"));
+                if (chart_peptide.Series.FindByName("A1/A0") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A1/A0"));
+                if (chart_peptide.Series.FindByName("A2/A0") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A0"));
+                if (chart_peptide.Series.FindByName("A2/A1") != null)
+                    chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A1"));
 
-                ////Series s_A1 = new Series();
-                ////s_A1.Name = "A1/A0";
-                ////s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A0).ToArray());
-                ////s_A1.ChartType = SeriesChartType.FastPoint;
-                ////s_A1.Color = Color.Green;
-                ////s_A1.MarkerSize = 7;
-                ////chart_peptide.Series.Add(s_A1);
+                Series s_A1 = new Series();
+                s_A1.Name = "A1/A0";
+                s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A0).ToArray());
+                s_A1.ChartType = SeriesChartType.FastPoint;
+                s_A1.Color = Color.Green;
+                s_A1.MarkerSize = 7;
+                chart_peptide.Series.Add(s_A1);
 
-                ////Series s_A2 = new Series();
-                ////s_A2.Name = "A2/A0";
-                ////s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A0).ToArray());
-                ////s_A2.ChartType = SeriesChartType.FastPoint;
-                ////s_A2.Color = Color.BlueViolet;
-                ////s_A2.MarkerSize = 7;
-                ////chart_peptide.Series.Add(s_A2);
+                Series s_A2 = new Series();
+                s_A2.Name = "A2/A0";
+                s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A0).ToArray());
+                s_A2.ChartType = SeriesChartType.FastPoint;
+                s_A2.Color = Color.BlueViolet;
+                s_A2.MarkerSize = 7;
+                chart_peptide.Series.Add(s_A2);
 
-                ////Series s_pxt = new Series();
-                ////s_pxt.Name = "A2/A1";
-                ////s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A1).ToArray());
-                ////s_pxt.ChartType = SeriesChartType.FastPoint;
-                ////s_pxt.Color = Color.OrangeRed;
-                ////s_pxt.MarkerSize = 7;
-                ////chart_peptide.Series.Add(s_pxt);
+                Series s_pxt = new Series();
+                s_pxt.Name = "A2/A1";
+                s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A1).ToArray());
+                s_pxt.ChartType = SeriesChartType.FastPoint;
+                s_pxt.Color = Color.OrangeRed;
+                s_pxt.MarkerSize = 7;
+                chart_peptide.Series.Add(s_pxt);
 
 
                 //////chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
@@ -1727,14 +1747,14 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
 
                 #region find best fit
 
-                //////var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
+                var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
 
-                //////findBestFits(proteinExperimentData, current_peptide,
-                //////    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
-                //////    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
-                //////    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
-                //////    chart_data.Select(x => x.RIA_value).ToList(),
-                //////    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+                findBestFits(proteinExperimentData, current_peptide,
+                    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
+                    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
+                    chart_data.Select(x => x.RIA_value).ToList(),
+                    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
 
                 ////////findBestFits(proteinExperimentData, current_peptide,
                 ////////    chart_data, theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
@@ -2865,7 +2885,7 @@ elutionwindow, peptideconsistency, rate_constant_choice, protienscore, protienco
         {
             var data = proteinExperimentData.peptides.ToList();
             data = data.Where(x => x.RSquare >= 85 || x.RMSE_value <= 0.05).ToList();
-            Helper.BasicFunctions.CreateCSV(data, "./_"+comboBox_proteinNameSelector.Text+".csv");
+            Helper.BasicFunctions.CreateCSV(data, "./_" + comboBox_proteinNameSelector.Text + ".csv");
         }
 
 
