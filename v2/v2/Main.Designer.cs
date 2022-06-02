@@ -28,19 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.comboBox_Enrichment_estimation = new System.Windows.Forms.ComboBox();
+            this.label28 = new System.Windows.Forms.Label();
             this.comboBox_labelingtimeunit = new System.Windows.Forms.ComboBox();
             this.label27 = new System.Windows.Forms.Label();
             this.textBox_peptide_expectation = new System.Windows.Forms.TextBox();
@@ -131,8 +133,10 @@
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox_Enrichment_estimation = new System.Windows.Forms.ComboBox();
-            this.label28 = new System.Windows.Forms.Label();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.textBox_configfiles_source = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.button_browseconfigfiles = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -155,6 +159,7 @@
             this.groupBox6.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -237,6 +242,26 @@
             this.groupBox5.Size = new System.Drawing.Size(1188, 94);
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
+            // 
+            // comboBox_Enrichment_estimation
+            // 
+            this.comboBox_Enrichment_estimation.FormattingEnabled = true;
+            this.comboBox_Enrichment_estimation.Items.AddRange(new object[] {
+            "Complete isotope profiles",
+            "Two mass isotopomers"});
+            this.comboBox_Enrichment_estimation.Location = new System.Drawing.Point(975, 65);
+            this.comboBox_Enrichment_estimation.Name = "comboBox_Enrichment_estimation";
+            this.comboBox_Enrichment_estimation.Size = new System.Drawing.Size(156, 21);
+            this.comboBox_Enrichment_estimation.TabIndex = 23;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(859, 69);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(110, 13);
+            this.label28.TabIndex = 22;
+            this.label28.Text = "Enrichment estimation";
             // 
             // comboBox_labelingtimeunit
             // 
@@ -459,6 +484,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl2.Controls.Add(this.tabPage4);
             this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Controls.Add(this.tabPage6);
             this.tabControl2.Location = new System.Drawing.Point(3, 103);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
@@ -874,28 +900,28 @@
             // chart_peptide
             // 
             this.chart_peptide.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            chartArea3.Name = "ChartArea1";
-            this.chart_peptide.ChartAreas.Add(chartArea3);
+            chartArea1.Name = "ChartArea1";
+            this.chart_peptide.ChartAreas.Add(chartArea1);
             this.chart_peptide.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chart_peptide.Legends.Add(legend3);
+            legend1.Name = "Legend1";
+            this.chart_peptide.Legends.Add(legend1);
             this.chart_peptide.Location = new System.Drawing.Point(3, 16);
             this.chart_peptide.Name = "chart_peptide";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series5.Legend = "Legend1";
-            series5.MarkerColor = System.Drawing.Color.Black;
-            series5.MarkerSize = 7;
-            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series5.Name = "Series1";
-            series5.YValuesPerPoint = 2;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series6.Color = System.Drawing.Color.Purple;
-            series6.Legend = "Legend1";
-            series6.Name = "Series3";
-            this.chart_peptide.Series.Add(series5);
-            this.chart_peptide.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series1.Legend = "Legend1";
+            series1.MarkerColor = System.Drawing.Color.Black;
+            series1.MarkerSize = 7;
+            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series1.Name = "Series1";
+            series1.YValuesPerPoint = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Color = System.Drawing.Color.Purple;
+            series2.Legend = "Legend1";
+            series2.Name = "Series3";
+            this.chart_peptide.Series.Add(series1);
+            this.chart_peptide.Series.Add(series2);
             this.chart_peptide.Size = new System.Drawing.Size(673, 340);
             this.chart_peptide.TabIndex = 0;
             this.chart_peptide.Text = "chart1";
@@ -957,28 +983,28 @@
             // 
             // chart_protein
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart_protein.ChartAreas.Add(chartArea4);
+            chartArea2.Name = "ChartArea1";
+            this.chart_protein.ChartAreas.Add(chartArea2);
             this.chart_protein.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend4.Name = "Legend1";
-            this.chart_protein.Legends.Add(legend4);
+            legend2.Name = "Legend1";
+            this.chart_protein.Legends.Add(legend2);
             this.chart_protein.Location = new System.Drawing.Point(3, 16);
             this.chart_protein.Name = "chart_protein";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series7.Legend = "Legend1";
-            series7.MarkerColor = System.Drawing.Color.MidnightBlue;
-            series7.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
-            series7.Name = "Series1";
-            series7.YValuesPerPoint = 2;
-            series8.BorderWidth = 2;
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series8.Color = System.Drawing.Color.Purple;
-            series8.Legend = "Legend1";
-            series8.Name = "Series2";
-            this.chart_protein.Series.Add(series7);
-            this.chart_protein.Series.Add(series8);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series3.Legend = "Legend1";
+            series3.MarkerColor = System.Drawing.Color.MidnightBlue;
+            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
+            series3.Name = "Series1";
+            series3.YValuesPerPoint = 2;
+            series4.BorderWidth = 2;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Color = System.Drawing.Color.Purple;
+            series4.Legend = "Legend1";
+            series4.Name = "Series2";
+            this.chart_protein.Series.Add(series3);
+            this.chart_protein.Series.Add(series4);
             this.chart_protein.Size = new System.Drawing.Size(673, 234);
             this.chart_protein.TabIndex = 0;
             this.chart_protein.Text = "chart1";
@@ -1196,25 +1222,44 @@
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
-            // comboBox_Enrichment_estimation
+            // tabPage6
             // 
-            this.comboBox_Enrichment_estimation.FormattingEnabled = true;
-            this.comboBox_Enrichment_estimation.Items.AddRange(new object[] {
-            "Complete isotope profiles",
-            "Two mass isotopomers"});
-            this.comboBox_Enrichment_estimation.Location = new System.Drawing.Point(975, 65);
-            this.comboBox_Enrichment_estimation.Name = "comboBox_Enrichment_estimation";
-            this.comboBox_Enrichment_estimation.Size = new System.Drawing.Size(156, 21);
-            this.comboBox_Enrichment_estimation.TabIndex = 23;
+            this.tabPage6.Controls.Add(this.textBox_configfiles_source);
+            this.tabPage6.Controls.Add(this.label29);
+            this.tabPage6.Controls.Add(this.button_browseconfigfiles);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1180, 72);
+            this.tabPage6.TabIndex = 2;
+            this.tabPage6.Text = "Load configs";
+            this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // label28
+            // textBox_configfiles_source
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(859, 69);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(110, 13);
-            this.label28.TabIndex = 22;
-            this.label28.Text = "Enrichment estimation";
+            this.textBox_configfiles_source.Location = new System.Drawing.Point(62, 29);
+            this.textBox_configfiles_source.Name = "textBox_configfiles_source";
+            this.textBox_configfiles_source.Size = new System.Drawing.Size(234, 20);
+            this.textBox_configfiles_source.TabIndex = 26;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(17, 32);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(41, 13);
+            this.label29.TabIndex = 25;
+            this.label29.Text = "Source";
+            // 
+            // button_browseconfigfiles
+            // 
+            this.button_browseconfigfiles.Location = new System.Drawing.Point(302, 27);
+            this.button_browseconfigfiles.Name = "button_browseconfigfiles";
+            this.button_browseconfigfiles.Size = new System.Drawing.Size(75, 23);
+            this.button_browseconfigfiles.TabIndex = 27;
+            this.button_browseconfigfiles.Text = "Browse";
+            this.button_browseconfigfiles.UseVisualStyleBackColor = true;
+            this.button_browseconfigfiles.Click += new System.EventHandler(this.button_browsefils_txt_Click);
             // 
             // Main
             // 
@@ -1257,6 +1302,8 @@
             this.groupBox2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1359,5 +1406,9 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox comboBox_Enrichment_estimation;
         private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TextBox textBox_configfiles_source;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Button button_browseconfigfiles;
     }
 }

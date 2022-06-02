@@ -14,6 +14,7 @@ using static v2.ProteinExperimentDataReader;
 using Labeling_Path;
 using MathNet.Numerics.Statistics;
 using LBFGS_Library_Call;
+using System.Text.RegularExpressions;
 
 namespace v2
 {
@@ -2887,6 +2888,146 @@ labeling_time_unit, enrichment_estimation);
             data = data.Where(x => x.RSquare >= 85 || x.RMSE_value <= 0.05).ToList();
             Helper.BasicFunctions.CreateCSV(data, "./_" + comboBox_proteinNameSelector.Text + ".csv");
         }
+
+        private void button_browsefils_txt_Click(object sender, EventArgs e)
+        {
+
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (textBox_configfiles_source.Text.Length > 0 & Directory.Exists(textBox_configfiles_source.Text))
+                dialog.SelectedPath = textBox_configfiles_source.Text;
+
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                string path = dialog.SelectedPath;
+
+                textBox_configfiles_source.Text = path;
+
+                string files_txt_path = path + @"\files.txt";
+                string quant_state_file_path = path + @"\quant.state";
+
+                if (!File.Exists(files_txt_path) || !File.Exists(quant_state_file_path))
+                {
+                    MessageBox.Show("The folder does not contain the required files (files.txt and quant.state files)", "Error");
+                    return;
+                }
+                readQuantState_updateValues(quant_state_file_path);
+                inputdata = readFiles_txt(files_txt_path);
+                inputdata = inputdata.OrderBy(x => x.Time).ToList();
+                dataGridView1_mzMLmzIDData.DataSource = inputdata;
+            }
+
+        }
+
+        public List<MzMLmzIDFilePair> readFiles_txt(string path)
+        {
+            //Extracts the information from files.txt
+
+            //check if the file exists
+            //string path = this.path;
+
+            List<MzMLmzIDFilePair> inputdata = new List<MzMLmzIDFilePair>();
+            if (File.Exists(path))
+            {
+                Console.WriteLine("==> file found");
+
+                try
+                {
+                    //read all the lines
+                    string[] lines = System.IO.File.ReadAllLines(path);
+                    lines = lines.Where(x => x.Length > 0).ToArray();
+                    foreach (string line in lines)
+                    {
+                        // remove all extra spaces from the text file.
+                        // the assumption is that the text file is one space separted to indicate each column
+                        var temp = line.Trim();
+                        temp = Regex.Replace(temp, @"\s+", " ");
+                        var rowvalues = temp.Split(' ');
+
+                        MzMLmzIDFilePair fc = new MzMLmzIDFilePair(int.Parse(rowvalues[0]), rowvalues[1], rowvalues[2], double.Parse(rowvalues[3]));
+                        inputdata.Add(fc);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("error ==>" + e.Message);
+                    MessageBox.Show("Error reading files.txt ==> " + e.Message);
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("***> file not found");
+                MessageBox.Show("Error reading files.txt ==> File Not found!!");
+            }
+            return inputdata;
+        }
+
+
+        public void readQuantState_updateValues(string path)
+        {
+            //Extracts the information from quant.state
+
+            //check if the file exists
+            //string path = this.path;
+
+            if (File.Exists(path))
+            {
+                Console.WriteLine("==> file found");
+
+                try
+                {
+                    //read all the lines
+                    string[] lines = System.IO.File.ReadAllLines(path);
+                    lines = lines.Where(x => x.Length > 0).ToArray();
+                    foreach (string line in lines)
+                    {
+                        // remove all extra spaces from the text file.
+                        // the assumption is that the text file is one space separted to indicate each column
+                        var temp = line.Trim();
+                        temp = Regex.Replace(temp, @"\s+", " ");
+                        var rowvalues = temp.Split('=');
+
+                        var paramtername = rowvalues[0].Trim();
+                        var value = (rowvalues[1].Replace("//", "/").Split('/')[0]).Trim();
+
+                        switch (paramtername)
+                        {
+                            case "mass_accuracy": textBox_massAccuracy.Text = value.Replace("ppm", "").Trim(); break;
+                            case "MS1_Type":
+                                {
+                                    if (int.Parse(value) == 1) comboBox_MS1Data.Text = "Centroid";
+                                    else comboBox_MS1Data.Text = "Profile";
+                                    break;
+                                }
+                            case "protein_score": textBox_protein_score.Text = value; break;
+                            case "peptide_score": textBox_peptideScore.Text = value; break;
+                            case "peptide_expectation": textBox_peptide_expectation.Text = value; break;
+                            case "elutiontimewindow": textBox_ElutionWindow.Text = value; break;
+                            case "protein_consistency": textBox_protein_consistency.Text = value; break;
+                            case "peptide_consistency": textBox_peptideConsistency.Text = value; break;
+                            //case "NParam_RateConst_Fit":  break;
+                            case "Labeling_time_unit": comboBox_labelingtimeunit.Text = value; break;
+                            case "Enrichment_estimation": comboBox_Enrichment_estimation.Text = value.Replace("_", " "); break;
+                        }
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("error ==>" + e.Message);
+                    MessageBox.Show("Error reading quant.state ==> " + e.Message);
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("***> file not found");
+                MessageBox.Show("Error reading quant.state ==> File Not found!!");
+            }
+
+        }
+
 
 
         /*
