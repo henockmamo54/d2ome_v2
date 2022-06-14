@@ -1684,7 +1684,7 @@ labeling_time_unit, enrichment_estimation);
                 //////====================Removed for release=======================================
                 //////==============================================================================
                 // new computation plot
-
+                /*
                 if (chart_peptide.Series.FindByName("A1/A0") != null)
                     chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A1/A0"));
                 if (chart_peptide.Series.FindByName("A2/A0") != null)
@@ -1697,7 +1697,7 @@ labeling_time_unit, enrichment_estimation);
                 s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A0).ToArray());
                 s_A1.ChartType = SeriesChartType.FastPoint;
                 s_A1.Color = Color.Green;
-                s_A1.MarkerSize = 7;
+                s_A1.MarkerSize = 10;
                 chart_peptide.Series.Add(s_A1);
 
                 Series s_A2 = new Series();
@@ -1705,7 +1705,7 @@ labeling_time_unit, enrichment_estimation);
                 s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A0).ToArray());
                 s_A2.ChartType = SeriesChartType.FastPoint;
                 s_A2.Color = Color.BlueViolet;
-                s_A2.MarkerSize = 7;
+                s_A2.MarkerSize = 10;
                 chart_peptide.Series.Add(s_A2);
 
                 Series s_pxt = new Series();
@@ -1713,9 +1713,9 @@ labeling_time_unit, enrichment_estimation);
                 s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A1).ToArray());
                 s_pxt.ChartType = SeriesChartType.FastPoint;
                 s_pxt.Color = Color.OrangeRed;
-                s_pxt.MarkerSize = 7;
+                s_pxt.MarkerSize = 10;
                 chart_peptide.Series.Add(s_pxt);
-
+                */
 
                 //////chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
                 //////chart_peptide.Series["Series5"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());

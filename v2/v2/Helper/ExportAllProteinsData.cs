@@ -35,25 +35,15 @@ namespace v2.Helper
             }
             else
             {
-                var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).Distinct().ToList();
-
                 int counter = 0;
-
-                progressBar_exportall.Invoke(new Action(() =>
-                  progressBar_exportall.Maximum = temp.Count));
-
-                progressBar_exportall.Invoke(new Action(() =>
-                  progressBar_exportall.Value = temp.Count));
-
-                //progressBar_exportall.Maximum = temp.Count;
-                //  progressBar_exportall.Value = 0;
+                var temp = csvfilePaths.Select(x => x.Split('\\').Last().Replace(".Quant.csv", "").Replace(".RateConst.csv", "")).Distinct().ToList();
+                progressBar_exportall.Invoke(new Action(() => progressBar_exportall.Maximum = temp.Count));
+                progressBar_exportall.Invoke(new Action(() => progressBar_exportall.Value = temp.Count));
 
                 // for each file prepare the datasource for ploting
                 foreach (string proteinName in temp)
                 {
-                    progressBar_exportall.Invoke(new Action(() =>
-                      progressBar_exportall.Value = counter));
-
+                    progressBar_exportall.Invoke(new Action(() => progressBar_exportall.Value = counter));
                     counter = counter + 1;
 
                     //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
@@ -111,38 +101,39 @@ namespace v2.Helper
             Legend legend1 = new Legend();
             Series series1 = new Series();
             Series series2 = new Series();
-            //ChartArea chartArea2 = new ChartArea();
-            //Legend legend2 = new Legend();
-            //Series series3 = new Series();
-            //Series series4 = new Series();
 
             chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
             chartArea1.Name = "ChartArea1";
             chart2.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            chart2.Legends.Add(legend1);
+            ////legend1.Name = "Legend1";
+            ////chart2.Legends.Add(legend1);
             chart2.Location = new System.Drawing.Point(6, 16);
             chart2.Name = "chart_peptide";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series1.Legend = "Legend1";
+            ////series1.Legend = "Legend1";
             series1.MarkerColor = System.Drawing.Color.Black;
-            series1.MarkerSize = 7;
+            series1.MarkerSize = 50;
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series1.Name = "Series1";
             series1.YValuesPerPoint = 2;
-            series2.BorderWidth = 2;
+            series2.BorderWidth = 9;
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series2.Color = System.Drawing.Color.Purple;
-            series2.Legend = "Legend1";
+            ////series2.Legend = "Legend1";
             series2.Name = "Series3";
             chart2.Series.Add(series1);
             chart2.Series.Add(series2);
-            chart2.Size = new System.Drawing.Size((int)(662 * 1.5), (int)(316 * 1.5));
+            chart2.Size = new System.Drawing.Size((int)(562 * 6), (int)(310 * 6));
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
 
+            //chart2.Series[0].Font = new Font(chart2.Font.FontFamily, 32, System.Drawing.FontStyle.Bold);
+
+
+            // chartline tension
+            chart2.Series["Series3"]["LineTension"] = "0.1";
 
             // remove grid lines
             chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
@@ -150,24 +141,25 @@ namespace v2.Helper
             chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
             chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
-
-
-
             // chart labels added  
             chart2.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
+            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisX.LineWidth = 3;
+            chart2.ChartAreas[0].AxisX.LabelStyle.Font = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisX.Minimum = 0;
+
 
             chart2.ChartAreas[0].AxisY.Title = "Relative abundance \n of monoisotope";
+            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Font.FontFamily, 72);
             chart2.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
-
-            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Legends[0].Font.FontFamily, 10);
-            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Legends[0].Font.FontFamily, 10);
-
+            chart2.ChartAreas[0].AxisY.LineWidth = 3;
+            chart2.ChartAreas[0].AxisY.LabelStyle.Font = new Font(chart2.Font.FontFamily, 72);
 
 
+            /*
             // chart add legend
             chart2.Series["Series3"].LegendText = "Theoretical fit";
             chart2.Series["Series1"].LegendText = "Experimental value";
-
 
             // chart legend size
             chart2.Legends[0].Position.Auto = false;
@@ -176,18 +168,11 @@ namespace v2.Helper
             chart2.Legends[0].Position.Width = 30;
             chart2.Legends[0].Position.Height = 20;
 
-
             // cahrt font
-            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, 9);
+            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, 14); */
 
-            // chartline tension
-            chart2.Series["Series3"]["LineTension"] = "0.1";
-
-            chart2.Series["Series3"].BorderWidth = 2;
-
-            chart2.Series["Series3"].Color = Color.Purple;
-
-            chart2.ChartAreas[0].AxisX.Minimum = 0;
+            //chart2.Series["Series3"].BorderWidth = 8;
+            //chart2.Series["Series3"].Color = Color.Purple;
 
             return chart2;
         }
@@ -201,6 +186,8 @@ namespace v2.Helper
 
                     Chart chart2 = preppare_chart();
                     var selected = proteinExperimentData.peptides;
+                    var temp = outputpath.Split('\\');
+                    var protein_name = temp[temp.Length - 1];
 
                     int count = 1;
                     //foreach (Peptide p in proteinExperimentData.peptides)
@@ -215,6 +202,8 @@ namespace v2.Helper
                         var chart_data = proteinExperimentData.mergedRIAvalues.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
                         chart2.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
 
+                        #region zero ion score
+                        /*
                         // ion score == 0 plot
                         var chart_data2 = proteinExperimentData.mergedRIAvaluesWithZeroIonScore.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
 
@@ -231,6 +220,8 @@ namespace v2.Helper
                         s1.MarkerSize = 7;
                         s1.MarkerStyle = MarkerStyle.Circle;
                         chart2.Series.Add(s1);
+                        */
+                        #endregion
 
                         #endregion
 
@@ -256,8 +247,42 @@ namespace v2.Helper
 
 
 
+                        var max_y_list = new List<double>();
+                        foreach (var series in chart2.Series)
+                        {
+                            if (series.Points.Count > 0)
+                            {
+                                var maxvalue = series.Points.FindMaxByValue();
+                                if (maxvalue != null)
+                                    max_y_list.Add(maxvalue.YValues[0]);
+                            }
+                        }
+
+                        chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
+                        chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
+                        chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
+                        chart2.ChartAreas[0].AxisX.Title = "Time (" + proteinExperimentData.labelingDuration + ")";
+
+
+                        #region find best fit
+
+                        var current_peptide = p;
+
+                        double new_RS = findBestFits(chart2, proteinExperimentData, current_peptide,
+                            chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                            chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
+                            chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
+                            chart_data.Select(x => x.RIA_value).ToList(),
+                            proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+
+                        if ( (double.IsNaN(new_RS) || new_RS < 0.9) || (p.RSquare > 0.9)) continue;
+
+                        #endregion
+
+
+                        #region update chart title
                         Title title = new Title();
-                        title.Font = new Font(chart2.Legends[0].Font.FontFamily, 9, System.Drawing.FontStyle.Regular);
+                        title.Font = new Font(chart2.Font.FontFamily, 72, System.Drawing.FontStyle.Regular);
 
                         var chargestring = "";
                         switch (p.Charge)
@@ -277,33 +302,17 @@ namespace v2.Helper
 
                         if (p.Rateconst != double.NaN)
                         {
-                            title.Text = p.PeptideSeq + chargestring + " (k = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
+                            title.Text = protein_name + ":" + p.PeptideSeq + chargestring + " (k = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + " : " + ((double)new_RS).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
                         }
                         else
                         {
-                            title.Text = p.PeptideSeq + " (m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
+                            title.Text = protein_name + ":" + p.PeptideSeq + " (m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
 
                         }
                         //clear chart title
                         chart2.Titles.Clear();
                         chart2.Titles.Add(title);
-
-                        var max_y_list = new List<double>();
-                        foreach (var series in chart2.Series)
-                        {
-                            if (series.Points.Count > 0)
-                            {
-                                var maxvalue = series.Points.FindMaxByValue();
-                                if (maxvalue != null)
-                                    max_y_list.Add(maxvalue.YValues[0]);
-                            }
-                        }
-
-                        chart2.ChartAreas[0].AxisY.Maximum = max_y_list.Max() + 0.08;
-                        chart2.ChartAreas[0].AxisY.Interval = chart2.ChartAreas[0].AxisY.Maximum / 5 - 0.005;
-                        chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
-                        chart2.ChartAreas[0].AxisX.Title = "Time (" + proteinExperimentData.labelingDuration + ")";
-
+                        #endregion
 
                         bool exists = System.IO.Directory.Exists(outputpath);
                         if (!exists)
@@ -341,5 +350,72 @@ namespace v2.Helper
                 //MessageBox.Show(ex.Message, "Error"); 
             }
         }
+
+        public double findBestFits(Chart chart2, ProteinExperimentDataReader proteinExperimentData, Peptide current_peptide, List<double?> a1ao, List<double?> a2ao, List<double?> a1a2, List<double?> experimental_RIA, List<double> theoretical_RIA, bool verbose = true)
+        {
+            try
+            {
+                var selected_points = new List<double>();
+                var selected_A1A0_count = 0;
+                var selected_A2A0_count = 0;
+                var selected_A2A1_count = 0;
+                for (int i = 0; i < proteinExperimentData.experiment_time.Count; i++)
+                {
+                    var theoretical_val = (double)theoretical_RIA[i];
+                    var candidate_points = new List<double>();
+
+                    candidate_points.Add(a1ao[i] == null || double.IsNaN((double)a1ao[i]) ? double.MaxValue : Math.Abs((double)a1ao[i] - theoretical_val));
+                    candidate_points.Add(a2ao[i] == null || double.IsNaN((double)a2ao[i]) ? double.MaxValue : Math.Abs((double)a2ao[i] - theoretical_val));
+                    candidate_points.Add(a1a2[i] == null || double.IsNaN((double)a1a2[i]) ? double.MaxValue : Math.Abs((double)a1a2[i] - theoretical_val));
+                    candidate_points.Add(experimental_RIA[i] == null || double.IsNaN((double)experimental_RIA[i]) ? double.MaxValue : Math.Abs((double)experimental_RIA[i] - theoretical_val));
+
+                    // index of minimum point
+                    var min_val = candidate_points.Min();
+
+                    // add the minimum error point to the selected list for the specific time point
+                    if (min_val == double.MaxValue) selected_points.Add(double.NaN);
+                    else
+                    {
+                        var index_min_val = candidate_points.IndexOf(min_val);
+                        switch (index_min_val)
+                        {
+                            case 0: selected_points.Add((double)a1ao[i]); selected_A1A0_count += 1; break;
+                            case 1: selected_points.Add((double)a2ao[i]); selected_A2A0_count += 1; break;
+                            case 2: selected_points.Add((double)a1a2[i]); selected_A2A1_count += 1; break;
+                            case 3: selected_points.Add((double)experimental_RIA[i]); break;
+                            default: selected_points.Add(double.NaN); break;
+                        }
+                    }
+                }
+
+
+                var rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
+                var rsquaredw = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
+
+                var test = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
+                Console.WriteLine("test new rsquared => " + rsquared.ToString());
+
+                if (chart2.Series.FindByName("selected") != null)
+                    chart2.Series.Remove(chart2.Series.FindByName("selected"));
+                Series s_pxt = new Series();
+                s_pxt.Name = "selected";
+                s_pxt.Points.DataBindXY(proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
+                s_pxt.ChartType = SeriesChartType.FastPoint;
+                s_pxt.Color = Color.DodgerBlue;
+                s_pxt.MarkerSize = 50;
+                s_pxt.MarkerStyle = MarkerStyle.Cross;
+                chart2.Series.Add(s_pxt);
+
+                return rsquared;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            return double.NaN;
+        }
+
     }
 }
