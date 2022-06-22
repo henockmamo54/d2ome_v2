@@ -1,6 +1,7 @@
 ﻿using IsotopomerDynamics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using v2.Helper;
 using v2.Model;
@@ -156,6 +157,80 @@ namespace v2
             //}
         }
 
+        public void Comparison_of_Theoretical_And_Experimental_Spectrum(ProteinExperimentDataReader proteinExperimentDataReader, string protein)
+        {
+            string filecontent = "Protein,Peptide,charge,time,RSS,theta\n";
+            foreach (var er in proteinExperimentDataReader.experimentRecords)
+            {
+                try
+                {
+                    var peptide = proteinExperimentDataReader.peptides.Where(x => x.PeptideSeq == er.PeptideSeq && x.Charge == er.Charge).FirstOrDefault();
+                    if (peptide != null)
+                    {
+                        double[] theoretical_vals = { (double)peptide.M0/100, (double)peptide.M1/100, (double)peptide.M2/100, (double)peptide.M3/100,
+                        (double)peptide.M4/100, (double)peptide.M5/100 };
+
+                        double[] experimental_vals = {(double)(er.I0/(er.I0+er.I1+er.I2+er.I3+er.I4+er.I5)),
+                    (double)(er.I1/(er.I0+er.I1+er.I2+er.I3+er.I4+er.I5)),
+                    (double)(er.I2/(er.I0+er.I1+er.I2+er.I3+er.I4+er.I5)),
+                    (double)(er.I3/(er.I0+er.I1+er.I2+er.I3+er.I4+er.I5)),
+                    (double)(er.I4/(er.I0+er.I1+er.I2+er.I3+er.I4+er.I5)),
+                    (double)(er.I5/(er.I0+er.I1+er.I2+er.I3+er.I4+er.I5)) };
+
+                        #region compute theoretical spectrum values for time t and px_t
+
+                        float[] fNatIsotopes = new float[10];
+                        float[] fLabIsotopes = new float[10];
+                        fNatIsotopes[0] = (float)((double)peptide.M0 / 100);
+                        fNatIsotopes[1] = (float)((double)peptide.M1 / 100);
+                        fNatIsotopes[2] = (float)((double)peptide.M2 / 100);
+                        fNatIsotopes[3] = (float)((double)peptide.M3 / 100);
+                        fNatIsotopes[4] = (float)((double)peptide.M4 / 100);
+                        fNatIsotopes[5] = (float)((double)peptide.M5 / 100);
+                        MassIsotopomers MIDyn = new MassIsotopomers();
+                        var bwe = (float)filecontents.Where(x => x.experimentID == er.ExperimentName).Select(x => x.BWE).FirstOrDefault();
+                        int Nall_Hyd = MIDyn.NumberOfHydrogens(peptide.PeptideSeq);
+                        MIDyn.CalculateMIDynamics(fNatIsotopes, fLabIsotopes, bwe, (float)peptide.Exchangeable_Hydrogens, Nall_Hyd);
+
+                        double[] theoretical_vals_at_t = { fLabIsotopes[0], fLabIsotopes[1], fLabIsotopes[2], fLabIsotopes[3],
+                        fLabIsotopes[4], fLabIsotopes[5] };
+
+                        double min_rss = 100;
+                        double min_theta = double.NaN;
+
+                        for (double i = 0; i < 1; i = i + 0.01)
+                        {
+                            var temp_t = theoretical_vals_at_t.Select(x => x * i).ToList();
+                            var temp = theoretical_vals.Select(x => x * (1 - i)).ToList();
+                            double error = 0;
+                            for (int j = 0; j < 3; j++)
+                            {
+                                error += Math.Pow(temp_t[j] + temp[j] - experimental_vals[j], 2);
+                            }
+                            if (error < min_rss)
+                            {
+                                min_rss = error/3;
+                                min_theta = i;
+                            }
+
+
+                        }
+                        Console.WriteLine(er.PeptideSeq + " c" + er.Charge + " t = " + er.ExperimentTime.ToString() + " RSS = " + min_rss + " theta" + min_theta);
+
+                        //filecontent = "Protein,Peptide,charge,time,RSS,theta";
+                        filecontent += protein + "," + er.PeptideSeq + "," + er.Charge + "," + er.ExperimentTime + "," + min_rss + "," + min_theta + "\n";
+                        #endregion
+                    }
+
+                }
+                catch (Exception ex) { continue; }
+            }
+            using (StreamWriter writer = new StreamWriter("_compare" + protein + ".csv"))
+            {
+                writer.WriteLine(filecontent);
+            }
+        }
+
         public void computeDeuteriumenrichmentInPeptide()
         {
             // this function computes pX(t)
@@ -176,12 +251,12 @@ namespace v2
                     float[] fNatIsotopes = new float[10];
                     float[] fLabIsotopes = new float[10];
 
-                    fNatIsotopes[0] = (float)((double)peptide.M0);
-                    fNatIsotopes[1] = (float)((double)peptide.M1);
-                    fNatIsotopes[2] = (float)((double)peptide.M2);
-                    fNatIsotopes[3] = (float)((double)peptide.M3);
-                    fNatIsotopes[4] = (float)((double)peptide.M4);
-                    fNatIsotopes[5] = (float)((double)peptide.M5);
+                    fNatIsotopes[0] = (float)((double)peptide.M0 / 100);
+                    fNatIsotopes[1] = (float)((double)peptide.M1 / 100);
+                    fNatIsotopes[2] = (float)((double)peptide.M2 / 100);
+                    fNatIsotopes[3] = (float)((double)peptide.M3 / 100);
+                    fNatIsotopes[4] = (float)((double)peptide.M4 / 100);
+                    fNatIsotopes[5] = (float)((double)peptide.M5 / 100);
                     MassIsotopomers MIDyn = new MassIsotopomers();
                     int Nall_Hyd = MIDyn.NumberOfHydrogens(peptide.PeptideSeq);
 

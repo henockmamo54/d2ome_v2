@@ -1053,7 +1053,7 @@
             // 
             // button2_cancelled
             // 
-            this.button2_cancelled.BackgroundImage = global::v2.Properties.Resources.x1;
+            this.button2_cancelled.BackgroundImage = global::d2ome_SetUp_GUI.Properties.Resources.x1;
             this.button2_cancelled.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button2_cancelled.Location = new System.Drawing.Point(405, 43);
             this.button2_cancelled.Name = "button2_cancelled";

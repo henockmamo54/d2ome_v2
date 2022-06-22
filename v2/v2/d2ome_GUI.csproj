@@ -7,8 +7,8 @@
     <ProjectGuid>{0C747F04-432D-48DB-AA55-DB5D75CB97BB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>v2</RootNamespace>
-    <AssemblyName>v2</AssemblyName>
+    <RootNamespace>d2ome_SetUp_GUI</RootNamespace>
+    <AssemblyName>d2ome_SetUp_GUI</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -68,9 +68,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IsotopomerDynamics, Version=1.0.8031.26607, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="IsotopomerDynamics, Version=1.0.8145.28963, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\IsotopomerDynamics\x64\Debug\IsotopomerDynamics.dll</HintPath>
+      <HintPath>..\..\..\IsotopomerDynamics\output_debug\IsotopomerDynamics.dll</HintPath>
     </Reference>
     <Reference Include="Labeling_Path, Version=1.0.8103.31029, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
