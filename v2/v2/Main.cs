@@ -944,7 +944,7 @@ labeling_time_unit, enrichment_estimation);
 
                     calculateNewRsquaredForEachPeptidePerProtein(chartdata, mynewproteinExperimentData, mynewproteinExperimentData.temp_theoreticalI0Values, proteinName);
 
-                    proteinExperimentData.Comparison_of_Theoretical_And_Experimental_Spectrum(mynewproteinExperimentData, proteinName);
+                    //proteinExperimentData.Comparison_of_Theoretical_And_Experimental_Spectrum(mynewproteinExperimentData, proteinName);
 
 
                 }
@@ -961,7 +961,8 @@ labeling_time_unit, enrichment_estimation);
             List<TheoreticalI0Value> theoreticalI0Valuespassedvalue, string proteinName)
         {
             var peptidesList = proteinExperimentData.peptides;
-            string file_content = "proteinName,peptideSeq,charge,old_Rsquared,new_Rsquared,NDP,rateconstant,sigma,Abundance,MassToCharge,RMSE,selected_A1A0_count, selected_A2A0_count, selected_A2A1_count,improved_timePoints\n";
+            string file_content = "proteinName,peptideSeq,charge,old_Rsquared,new_Rsquared,NDP,rateconstant,sigma,Abundance,MassToCharge,RMSE," +
+                "selected_A1A0_count, selected_A2A0_count, selected_A2A1_count,improved_timePoints,new_k,I0_percentatediffI0_percentatediff\n";
 
             foreach (var peptide in peptidesList)
             {
@@ -981,12 +982,12 @@ labeling_time_unit, enrichment_estimation);
                     file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.Charge.ToString() + "," + current_peptide.RSquare + "," + double.NaN //newRsquared.ToString()
                     + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.std_k + "," +
                     current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
-                        double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + "\n");
+                        double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + double.NaN + "," + double.NaN + "\n");
                 else
                     file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.Charge.ToString() + "," + current_peptide.RSquare + "," + newRsquared[0].ToString()
                         + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.std_k + "," +
                         current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
-                        newRsquared[1].ToString() + "," + newRsquared[2].ToString() + "," + newRsquared[3].ToString()+","+ String.Join(", ", newRsquared[4] ) + "\n");
+                        newRsquared[1].ToString() + "," + newRsquared[2].ToString() + "," + newRsquared[3].ToString() + "," + String.Join(", ", newRsquared[4]) + "," + newRsquared[5].ToString() + "," + newRsquared[6].ToString() + "\n");
             }
 
             using (StreamWriter writer = new StreamWriter(proteinName + ".csv"))
@@ -1521,7 +1522,7 @@ labeling_time_unit, enrichment_estimation);
                 var selected_A1A0_count = 0;
                 var selected_A2A0_count = 0;
                 var selected_A2A1_count = 0;
-                var improved_TimePoints= new List<double>();
+                var improved_TimePoints = new List<double>();
 
                 for (int i = 0; i < proteinExperimentData.experiment_time.Count; i++)
                 {
@@ -1555,19 +1556,21 @@ labeling_time_unit, enrichment_estimation);
 
                 Console.WriteLine("===========================================================");
                 Console.WriteLine("===========================================================\n");
-                Console.WriteLine(selected_A1A0_count.ToString() + "," + selected_A2A0_count.ToString() + "," + selected_A2A1_count.ToString() + ","+ String.Join(", ", improved_TimePoints.ToArray()) );
+                Console.WriteLine(selected_A1A0_count.ToString() + "," + selected_A2A0_count.ToString() + "," + selected_A2A1_count.ToString() + "," + String.Join(", ", improved_TimePoints.ToArray()));
                 Console.WriteLine("===========================================================");
                 Console.WriteLine("===========================================================\n");
 
-                var rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
+                var new_rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
                 var rsquaredw = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
 
                 var test = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
-                Console.WriteLine("test new rsquared => " + rsquared.ToString());
+                Console.WriteLine("test new rsquared => " + new_rsquared.ToString());
+
+                var new_k = double.NaN;
 
                 if (verbose)
                 {
-                    label_newrsquared.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(rsquared);
+                    label_newrsquared.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(new_rsquared);
 
 
                     if (chart_peptide.Series.FindByName("selected") != null)
@@ -1582,9 +1585,9 @@ labeling_time_unit, enrichment_estimation);
                     chart_peptide.Series.Add(s_pxt);
                 }
 
-                if (!double.IsNaN(rsquared))
+                if (!double.IsNaN(new_rsquared))
                 {
-                    var new_k = Helper.BasicFunctions.computeRateConstant(selected_points, proteinExperimentData.experiment_time,
+                    new_k = Helper.BasicFunctions.computeRateConstant(selected_points, proteinExperimentData.experiment_time,
                  (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
                  (float)current_peptide.Exchangeable_Hydrogens);
 
@@ -1622,7 +1625,47 @@ labeling_time_unit, enrichment_estimation);
                     //    return new_rsquared1;
                 }
 
-                return new List<Object> { rsquared, selected_A1A0_count, selected_A2A0_count, selected_A2A1_count, String.Join("| ", improved_TimePoints.ToArray()) };
+                #region for paper io - io_new comparions
+
+                var count = 0;
+                double I0_percentatediff = 0;
+                for (int i = 0; i < experimental_RIA.Count; i++)
+                {
+                    if (experimental_RIA[i] != null && experimental_RIA[i] != 0 && 
+                        (experimental_RIA[i] - selected_points[i] != 0)
+                        && (Math.Abs((double)(experimental_RIA[i] - theoretical_RIA[i])) / theoretical_RIA[i] < 0.05))
+                    {
+                        I0_percentatediff += ((double)experimental_RIA[i] - selected_points[i]) / (double)experimental_RIA[i];
+                        count++;
+                    }
+                }
+                I0_percentatediff = I0_percentatediff / count;
+
+
+                /*
+                double I0_percentatediff = double.NaN;
+                var index_k = 1;
+                if (!double.IsNaN((double)experimental_RIA[index_k])
+                    && (Math.Abs((double)(experimental_RIA[index_k] - theoretical_RIA[index_k])) / experimental_RIA[index_k] < 0.1)
+                    && (Math.Abs((double)(a1ao[index_k] - theoretical_RIA[index_k])) / experimental_RIA[index_k] < 0.1)
+                    && (Math.Abs((double)(a1ao[index_k] - experimental_RIA[index_k]))/ experimental_RIA[index_k] < 0.1))
+                {
+                    I0_percentatediff = (double)((experimental_RIA[index_k] - a1ao[index_k]) / experimental_RIA[index_k]);
+                }
+
+                var temp = experimental_RIA.Select(x => (double)x).ToList();
+                temp[index_k] = (double)a1ao[index_k];
+
+                new_rsquared = Helper.BasicFunctions.computeRsquared(temp, theoretical_RIA);                
+                new_k = Helper.BasicFunctions.computeRateConstant(temp, proteinExperimentData.experiment_time,
+                 (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+                 (float)current_peptide.Exchangeable_Hydrogens);
+
+                */
+                #endregion
+
+                return new List<Object> { new_rsquared, selected_A1A0_count, selected_A2A0_count, selected_A2A1_count,
+                    String.Join("| ", improved_TimePoints.ToArray()), new_k,I0_percentatediff };
 
             }
             catch (Exception ex)
@@ -1667,7 +1710,7 @@ labeling_time_unit, enrichment_estimation);
                 //////====================Removed for release=======================================
                 //////==============================================================================
                 // new computation plot
-                /*
+
                 if (chart_peptide.Series.FindByName("A1/A0") != null)
                     chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A1/A0"));
                 if (chart_peptide.Series.FindByName("A2/A0") != null)
@@ -1698,7 +1741,6 @@ labeling_time_unit, enrichment_estimation);
                 s_pxt.Color = Color.OrangeRed;
                 s_pxt.MarkerSize = 10;
                 chart_peptide.Series.Add(s_pxt);
-                */
 
                 //////chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
                 //////chart_peptide.Series["Series5"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());

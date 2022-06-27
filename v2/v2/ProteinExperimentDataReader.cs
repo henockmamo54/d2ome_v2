@@ -203,7 +203,7 @@ namespace v2
                             var temp_t = theoretical_vals_at_t.Select(x => x * i).ToList();
                             var temp = theoretical_vals.Select(x => x * (1 - i)).ToList();
                             double error = 0;
-                            for (int j = 0; j < 3; j++)
+                            for (int j = 0; j < 6; j++)
                             {
                                 error += Math.Pow(temp_t[j] + temp[j] - experimental_vals[j], 2);
                             }
