@@ -1629,12 +1629,15 @@ labeling_time_unit, enrichment_estimation);
 
                 var count = 0;
                 double I0_percentatediff = 0;
+                string I0_percentatediff_string = "";
                 for (int i = 0; i < experimental_RIA.Count; i++)
                 {
-                    if (experimental_RIA[i] != null && experimental_RIA[i] != 0 && 
+                    if (experimental_RIA[i] != null && experimental_RIA[i] != 0 &&
                         (experimental_RIA[i] - selected_points[i] != 0)
                         && (Math.Abs((double)(experimental_RIA[i] - theoretical_RIA[i])) / theoretical_RIA[i] < 0.05))
                     {
+                        var val = ((double)experimental_RIA[i] - selected_points[i]) / (double)experimental_RIA[i]; ;
+                        I0_percentatediff_string += val.ToString() + "|";
                         I0_percentatediff += ((double)experimental_RIA[i] - selected_points[i]) / (double)experimental_RIA[i];
                         count++;
                     }
@@ -1665,7 +1668,7 @@ labeling_time_unit, enrichment_estimation);
                 #endregion
 
                 return new List<Object> { new_rsquared, selected_A1A0_count, selected_A2A0_count, selected_A2A1_count,
-                    String.Join("| ", improved_TimePoints.ToArray()), new_k,I0_percentatediff };
+                    String.Join("| ", improved_TimePoints.ToArray()), new_k,I0_percentatediff_string };
 
             }
             catch (Exception ex)
@@ -1689,6 +1692,7 @@ labeling_time_unit, enrichment_estimation);
                 var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == peptideSeq & x.Charge == charge & x.RIA_value != double.PositiveInfinity & x.RIA_value != double.NegativeInfinity).OrderBy(x => x.Time).ToArray();
                 chart_peptide.Series["Series1"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.RIA_value).ToArray());
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
+                chart_peptide.Series["Series1"].MarkerSize = 11;
 
                 // ionscore == 0 plot
                 if (chart_peptide.Series.FindByName("Zero Ion score") != null)
@@ -1811,6 +1815,7 @@ labeling_time_unit, enrichment_estimation);
                         default: chargestring = ""; break;
                     }
 
+                    //title.Text = peptideSeq + chargestring + " (k = " + (Rateconst.ToString("#0.###")) + " \u00B1 " + Sigma_k.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
                     title.Text = peptideSeq + chargestring + " (k = " + (Rateconst.ToString("#0.###")) + " \u00B1 " + Sigma_k.ToString("G2") + ", R" + "\u00B2" + " = " + RSquare.ToString("#0.#0") + ", m/z = " + masstocharge.ToString("#0.###") + ")";
                 }
                 else

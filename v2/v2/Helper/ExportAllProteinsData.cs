@@ -266,16 +266,18 @@ namespace v2.Helper
 
                         #region find best fit
 
-                        var current_peptide = p;
+                        if (p.std_k >= 0.05) continue;
 
-                        double new_RS = findBestFits(chart2, proteinExperimentData, current_peptide,
-                            chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
-                            chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
-                            chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
-                            chart_data.Select(x => x.RIA_value).ToList(),
-                            proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+                        //var current_peptide = p;
 
-                        if ( (double.IsNaN(new_RS) || new_RS < 0.9) || (p.RSquare > 0.9)) continue;
+                        //double new_RS = findBestFits(chart2, proteinExperimentData, current_peptide,
+                        //    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                        //    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
+                        //    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
+                        //    chart_data.Select(x => x.RIA_value).ToList(),
+                        //    proteinExperimentData.theoreticalI0Values.Where(x => x.peptideseq == p.PeptideSeq & x.charge == p.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+
+                        //if ( (double.IsNaN(new_RS) || new_RS < 0.9) || (p.RSquare > 0.9)) continue;
 
                         #endregion
 
@@ -302,7 +304,8 @@ namespace v2.Helper
 
                         if (p.Rateconst != double.NaN)
                         {
-                            title.Text = protein_name + ":" + p.PeptideSeq + chargestring + " (k = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + " : " + ((double)new_RS).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
+                            //title.Text = protein_name + ":" + p.PeptideSeq + chargestring + " (k = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + " : " + ((double)new_RS).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
+                            title.Text = protein_name + ":" + p.PeptideSeq + chargestring + " (k = " + BasicFunctions.formatdoubletothreedecimalplace((double)p.Rateconst) + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
                         }
                         else
                         {
