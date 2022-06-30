@@ -209,7 +209,7 @@ namespace v2
                             }
                             if (error < min_rss)
                             {
-                                min_rss = error/3;
+                                min_rss = error / 3;
                                 min_theta = i;
                             }
 
@@ -266,7 +266,8 @@ namespace v2
                     List<double> pxts = new List<double>();
 
                     // compute theoretical values
-                    for (double bwe = 0.0001; bwe < 0.05; bwe = bwe + 0.0005)
+                    //for (double bwe = 0.0001; bwe < 0.05; bwe = bwe + 0.0005)
+                    for (double bwe = -0.01; bwe < 0.05; bwe = bwe + 0.0001)
                     {
                         MIDyn.CalculateMIDynamics(fNatIsotopes, fLabIsotopes, (float)bwe, (float)NEH, Nall_Hyd);
 
@@ -278,6 +279,8 @@ namespace v2
                         theo_a1.Add(new_a1_t);
                         theo_a0.Add(new_a0_t);
                         pxts.Add(bwe);
+
+                        //Console.WriteLine(bwe.ToString());
                     }
 
 
@@ -305,13 +308,27 @@ namespace v2
                         // compute al/a0
                         if (exp_A0 > 0)
                         {
+
                             var exp_a1_a0 = exp_A1 / exp_A0;
+                            /*//original
                             var diff = theo_a1.Select((value, index) => Math.Abs((value / theo_a0[index]) - exp_a1_a0)).ToList();
                             double min_value = diff.Min();
                             int index_min_value = diff.IndexOf(min_value);
                             var selected_pxt = pxts[index_min_value];
                             er.I0_t_fromA1A0 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (selected_pxt / (1 - ph))), (double)NEH));
                             //er.I0_t_fromA1A0_pxt = experiment_BWE;
+                            */
+                            var newpxt = 0.0;
+                            var theorteical_al_a0 = (double)(peptide.M1 / peptide.M0);
+                            newpxt = (exp_a1_a0 - theorteical_al_a0) * (1 - Helper.Constants.ph) * (1 - Helper.Constants.ph);
+                            newpxt = newpxt / ((double)peptide.Exchangeable_Hydrogens + (1 - Helper.Constants.ph) * (exp_a1_a0 - theorteical_al_a0));
+                            er.I0_t_fromA1A0 = (double)((peptide.M0 / 100.0) * Math.Pow((double)(1 - (newpxt / (1 - ph))), (double)NEH));
+
+                            if (newpxt < 0)
+                            {
+                                Console.WriteLine("<0 pxt");
+                            }
+                            else Console.WriteLine("new pxt", newpxt);
                         }
 
                         // compute a2/a0
@@ -366,6 +383,7 @@ namespace v2
                     ria.I0 = er.I0;
                     ria.Charge = er.Charge;
                     ria.IonScore = er.IonScore;
+
 
                     ria.I0_t_fromA1A0 = er.I0_t_fromA1A0;
                     ria.I0_t_fromA2A0 = er.I0_t_fromA2A0;

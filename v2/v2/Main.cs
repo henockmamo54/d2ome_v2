@@ -946,6 +946,26 @@ labeling_time_unit, enrichment_estimation);
 
                     //proteinExperimentData.Comparison_of_Theoretical_And_Experimental_Spectrum(mynewproteinExperimentData, proteinName);
 
+                    #region to generate data for io(t) value from the three ratios
+
+                    string io_t_vals_from_rations = "protien,peptide,charge,rsquared,rateconstant,mo,io_e,io_a1a0,io_a2a0,io_a2a1\n";
+                    foreach (var riavals in mynewproteinExperimentData.RIAvalues.Where(x => x.IonScore > 0 && x.Time == 0 && x.RIA_value != 0))
+                    {
+                        var cp =
+                        io_t_vals_from_rations += (proteinName + "," + riavals.PeptideSeq + "," + riavals.Charge + "," +
+                        mynewproteinExperimentData.peptides.Where(x => x.PeptideSeq == riavals.PeptideSeq && x.Charge == riavals.Charge).Select(x => x.RSquare).First() + "," +
+                        mynewproteinExperimentData.peptides.Where(x => x.PeptideSeq == riavals.PeptideSeq && x.Charge == riavals.Charge).Select(x => x.Rateconst).First() + "," +
+                        mynewproteinExperimentData.peptides.Where(x => x.PeptideSeq == riavals.PeptideSeq && x.Charge == riavals.Charge).Select(x => x.M0 / 100).First() + "," +
+                            riavals.RIA_value + "," + riavals.I0_t_fromA1A0 + "," + riavals.I0_t_fromA2A0 + "," + riavals.I0_t_fromA2A1 + "\n");
+                    }
+
+                    using (StreamWriter writer = new StreamWriter("io_t_" + proteinName + ".csv"))
+                    {
+                        writer.WriteLine(io_t_vals_from_rations);
+                    }
+
+                    #endregion
+
 
                 }
                 using (StreamWriter writer = new StreamWriter("compare.csv"))
