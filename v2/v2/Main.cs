@@ -1665,6 +1665,7 @@ labeling_time_unit, enrichment_estimation);
                 I0_percentatediff = I0_percentatediff / count;
 
 
+
                 /*
                 double I0_percentatediff = double.NaN;
                 var index_k = 1;
@@ -1685,6 +1686,26 @@ labeling_time_unit, enrichment_estimation);
                  (float)current_peptide.Exchangeable_Hydrogens);
 
                 */
+                #endregion
+
+                #region for paper io for ratios and new k's 
+                /*
+                var new_k_ala0 = Helper.BasicFunctions.computeRateConstant(a1ao.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
+                 (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+                 (float)current_peptide.Exchangeable_Hydrogens);
+
+                var new_k_a2a0 = Helper.BasicFunctions.computeRateConstant(a2ao.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
+                 (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+                 (float)current_peptide.Exchangeable_Hydrogens);
+
+                var new_k_a2a1 = Helper.BasicFunctions.computeRateConstant(a1a2.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
+                 (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+                 (float)current_peptide.Exchangeable_Hydrogens);
+
+                var new_k_experimental_RIA = Helper.BasicFunctions.computeRateConstant(experimental_RIA.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
+                 (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
+                 (float)current_peptide.Exchangeable_Hydrogens); */
+
                 #endregion
 
                 return new List<Object> { new_rsquared, selected_A1A0_count, selected_A2A0_count, selected_A2A1_count,
