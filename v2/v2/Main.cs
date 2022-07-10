@@ -1689,7 +1689,7 @@ labeling_time_unit, enrichment_estimation);
                 #endregion
 
                 #region for paper io for ratios and new k's 
-                /*
+             
                 var new_k_ala0 = Helper.BasicFunctions.computeRateConstant(a1ao.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
                  (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
                  (float)current_peptide.Exchangeable_Hydrogens);
@@ -1704,7 +1704,7 @@ labeling_time_unit, enrichment_estimation);
 
                 var new_k_experimental_RIA = Helper.BasicFunctions.computeRateConstant(experimental_RIA.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
                  (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
-                 (float)current_peptide.Exchangeable_Hydrogens); */
+                 (float)current_peptide.Exchangeable_Hydrogens);  
 
                 #endregion
 
