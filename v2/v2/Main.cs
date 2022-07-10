@@ -2195,8 +2195,8 @@ labeling_time_unit, enrichment_estimation);
             proteinExperimentData.computeRSquare();
             ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
-            computeNewProtienRateConstant(chartdata, proteinExperimentData);
-            //preparedDataForBestPathSearch(chartdata);
+            //computeNewProtienRateConstant(chartdata, proteinExperimentData);
+            ////preparedDataForBestPathSearch(chartdata);
 
             // compute the new rsquared
             if (proteinExperimentData.isotope_profiles == "Two_mass_isotopomers")

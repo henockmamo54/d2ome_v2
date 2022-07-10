@@ -83,6 +83,10 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.textBox_T = new System.Windows.Forms.TextBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.textBox_configfiles_source = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.button_browseconfigfiles = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBox_outputfolderpath = new System.Windows.Forms.TextBox();
             this.button_browseoutputfolder = new System.Windows.Forms.Button();
@@ -133,10 +137,6 @@
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.textBox_configfiles_source = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.button_browseconfigfiles = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -145,6 +145,7 @@
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -159,7 +160,6 @@
             this.groupBox6.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -645,6 +645,45 @@
             this.textBox_T.Size = new System.Drawing.Size(38, 20);
             this.textBox_T.TabIndex = 13;
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.textBox_configfiles_source);
+            this.tabPage6.Controls.Add(this.label29);
+            this.tabPage6.Controls.Add(this.button_browseconfigfiles);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1180, 72);
+            this.tabPage6.TabIndex = 2;
+            this.tabPage6.Text = "Load configs";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // textBox_configfiles_source
+            // 
+            this.textBox_configfiles_source.Location = new System.Drawing.Point(62, 29);
+            this.textBox_configfiles_source.Name = "textBox_configfiles_source";
+            this.textBox_configfiles_source.Size = new System.Drawing.Size(234, 20);
+            this.textBox_configfiles_source.TabIndex = 26;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(17, 32);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(41, 13);
+            this.label29.TabIndex = 25;
+            this.label29.Text = "Source";
+            // 
+            // button_browseconfigfiles
+            // 
+            this.button_browseconfigfiles.Location = new System.Drawing.Point(302, 27);
+            this.button_browseconfigfiles.Name = "button_browseconfigfiles";
+            this.button_browseconfigfiles.Size = new System.Drawing.Size(75, 23);
+            this.button_browseconfigfiles.TabIndex = 27;
+            this.button_browseconfigfiles.Text = "Browse";
+            this.button_browseconfigfiles.UseVisualStyleBackColor = true;
+            this.button_browseconfigfiles.Click += new System.EventHandler(this.button_browsefils_txt_Click);
+            // 
             // groupBox4
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1032,6 +1071,7 @@
             this.button3.TabIndex = 23;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // progressBar_exportall
@@ -1093,6 +1133,7 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary";
+            this.groupBox2.Visible = false;
             // 
             // label_newk
             // 
@@ -1222,45 +1263,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.textBox_configfiles_source);
-            this.tabPage6.Controls.Add(this.label29);
-            this.tabPage6.Controls.Add(this.button_browseconfigfiles);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(1180, 72);
-            this.tabPage6.TabIndex = 2;
-            this.tabPage6.Text = "Load configs";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // textBox_configfiles_source
-            // 
-            this.textBox_configfiles_source.Location = new System.Drawing.Point(62, 29);
-            this.textBox_configfiles_source.Name = "textBox_configfiles_source";
-            this.textBox_configfiles_source.Size = new System.Drawing.Size(234, 20);
-            this.textBox_configfiles_source.TabIndex = 26;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(17, 32);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(41, 13);
-            this.label29.TabIndex = 25;
-            this.label29.Text = "Source";
-            // 
-            // button_browseconfigfiles
-            // 
-            this.button_browseconfigfiles.Location = new System.Drawing.Point(302, 27);
-            this.button_browseconfigfiles.Name = "button_browseconfigfiles";
-            this.button_browseconfigfiles.Size = new System.Drawing.Size(75, 23);
-            this.button_browseconfigfiles.TabIndex = 27;
-            this.button_browseconfigfiles.Text = "Browse";
-            this.button_browseconfigfiles.UseVisualStyleBackColor = true;
-            this.button_browseconfigfiles.Click += new System.EventHandler(this.button_browsefils_txt_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1284,6 +1286,8 @@
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -1302,8 +1306,6 @@
             this.groupBox2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage6.PerformLayout();
             this.ResumeLayout(false);
 
         }
