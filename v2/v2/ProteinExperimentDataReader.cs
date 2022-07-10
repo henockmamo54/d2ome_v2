@@ -39,10 +39,12 @@ namespace v2
         public List<RIA> RIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvalues = new List<RIA>();
         public List<RIA> mergedRIAvaluesWithZeroIonScore = new List<RIA>();
+        public List<float> bestFitSelectedRIA = new List<float>();
         public List<TheoreticalI0Value> theoreticalI0Values = new List<TheoreticalI0Value>();
         public List<TheoreticalI0Value> theoreticalI0Values_withExperimentalIO = new List<TheoreticalI0Value>();
         public List<TheoreticalI0Value> temp_theoreticalI0Values = new List<TheoreticalI0Value>();
         public string labelingDuration = "Labeling Duration";
+        public string isotope_profiles = "Complete_isotope_profiles";
 
         public ProteinExperimentDataReader(string files_txt_path, string quant_csv_path, string RateConst_csv_path, String quant_state_file_path)
         {
@@ -66,6 +68,7 @@ namespace v2
 
             ReadQuantState quantstatereader = new ReadQuantState(quant_state_file_path);
             this.labelingDuration = quantstatereader.getLabelingDuration();
+            this.isotope_profiles = quantstatereader.getEnrichment_estimation();
 
             //Protein.Quant.csv reader
             ReadExperiments experiInfoReader = new ReadExperiments(quant_csv_path, filesinfo.experimentTimes_all);
@@ -91,7 +94,7 @@ namespace v2
             // add rate constant values to peptied list
             foreach (Peptide p in peptides)
             {
-                var rateconst = rateConstants.Where(x => x.PeptideSeq == p.PeptideSeq).ToList();
+                var rateconst = rateConstants.Where(x => x.PeptideSeq == p.PeptideSeq && x.Charge == p.Charge).ToList();
                 if (rateconst.Count == 1)
                 {
                     p.Rateconst = rateconst[0].RateConstant_value;
@@ -117,45 +120,74 @@ namespace v2
 
 
                 }
+
             }
-            //for (int i = 0; i < peptides.Count; i++)
-            //{
 
 
-
-            //    Console.WriteLine(i.ToString());
-
-            //    var p = peptides[i];
-            //    var rateconst = rateConstants.Where(x => x.PeptideSeq == p.PeptideSeq).ToList();
-
-            //    Console.WriteLine(p.PeptideSeq + rateconst.Count.ToString());
-
-            //    if (p.Rateconst == null & rateconst.Count > 0)
-            //    {
-            //        int countofRC = rateconst.Count();
-            //        double AbsoluteIsotopeError = 0;
-            //        for (int j = 0; j < countofRC; j++)
-            //        {
-            //            try
-            //            {
-            //                p = peptides[i + j];
-            //                p.Rateconst = rateconst[j].RateConstant_value;
-
-            //                AbsoluteIsotopeError = (double)rateconst[j].AbsoluteIsotopeError;
-            //                if (AbsoluteIsotopeError == -100) p.IsotopeDeviation = 1.0;
-            //                else p.IsotopeDeviation = AbsoluteIsotopeError;
-            //            }
-            //            catch { }
-
-            //        }
-
-
-
-            //        Console.WriteLine(i.ToString());
-            //    }
-
-            //}
         }
+
+        public void findBestRsqaure(ProteinExperimentDataReader proteinExperimentData)
+        {
+            foreach (Peptide current_peptide in proteinExperimentData.peptides)
+            {
+                try
+                {
+                    var chart_data = mergedRIAvalues.Where(x => x.PeptideSeq == current_peptide.PeptideSeq & x.Charge == current_peptide.Charge & x.RIA_value != double.PositiveInfinity & x.RIA_value != double.NegativeInfinity).OrderBy(x => x.Time).ToArray();
+                    List<double?> a1ao = chart_data.Select(x => x.I0_t_fromA1A0).ToList();
+                    List<double?> a2ao = chart_data.Select(x => x.I0_t_fromA2A0).ToList();
+                    List<double?> a1a2 = chart_data.Select(x => x.I0_t_fromA2A1).ToList();
+                    List<double?> experimental_RIA = chart_data.Select(x => x.RIA_value).ToList();
+
+                    var theoretical_RIA = this.temp_theoreticalI0Values.Where(x => x.peptideseq == current_peptide.PeptideSeq & x.charge == current_peptide.Charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList();
+
+                    var selected_points = new List<double>();
+                    var selected_A1A0_count = 0;
+                    var selected_A2A0_count = 0;
+                    var selected_A2A1_count = 0;
+                    var improved_TimePoints = new List<double>();
+
+                    for (int i = 0; i < proteinExperimentData.experiment_time.Count; i++)
+                    {
+                        var theoretical_val = (double)theoretical_RIA[i];
+                        var candidate_points = new List<double>();
+
+                        candidate_points.Add(a1ao[i] == null || double.IsNaN((double)a1ao[i]) ? double.MaxValue : Math.Abs((double)a1ao[i] - theoretical_val));
+                        candidate_points.Add(a2ao[i] == null || double.IsNaN((double)a2ao[i]) ? double.MaxValue : Math.Abs((double)a2ao[i] - theoretical_val));
+                        candidate_points.Add(a1a2[i] == null || double.IsNaN((double)a1a2[i]) ? double.MaxValue : Math.Abs((double)a1a2[i] - theoretical_val));
+                        candidate_points.Add(experimental_RIA[i] == null || double.IsNaN((double)experimental_RIA[i]) ? double.MaxValue : Math.Abs((double)experimental_RIA[i] - theoretical_val));
+
+                        //index of minimum point
+                        var min_val = candidate_points.Min();
+
+                        //add the minimum error point to the selected list for the specific time point
+                        if (min_val == double.MaxValue) selected_points.Add(double.NaN);
+                        else
+                        {
+                            var index_min_val = candidate_points.IndexOf(min_val);
+                            switch (index_min_val)
+                            {
+                                case 0: selected_points.Add((double)a1ao[i]); selected_A1A0_count += 1; improved_TimePoints.Add(proteinExperimentData.experiment_time[i]); break;
+                                case 1: selected_points.Add((double)a2ao[i]); selected_A2A0_count += 1; improved_TimePoints.Add(proteinExperimentData.experiment_time[i]); break;
+                                case 2: selected_points.Add((double)a1a2[i]); selected_A2A1_count += 1; improved_TimePoints.Add(proteinExperimentData.experiment_time[i]); break;
+                                case 3: selected_points.Add((double)experimental_RIA[i]); break;
+                                default: selected_points.Add(double.NaN); break;
+                            }
+                        }
+                    }
+
+                    var new_rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
+
+                    current_peptide.RSquare = new_rsquared;
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+        }
+
+
 
         public void Comparison_of_Theoretical_And_Experimental_Spectrum(ProteinExperimentDataReader proteinExperimentDataReader, string protein)
         {
@@ -800,7 +832,7 @@ namespace v2
 
 
                         r.RSquare = RSquare;
-                        r.std_k = Math.Sqrt(var_k);
+                        r.Sigma = Math.Sqrt(var_k);
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
                         //temp_expectedI0Values.AddRange(temp_computedRIAValue);
                         foreach (var x in temp_computedRIAValue) temp_theoreticalI0Values.Add(x);
@@ -878,7 +910,7 @@ namespace v2
                             RSquare = double.NaN;
 
                         r.RSquare = RSquare;
-                        r.std_k = Math.Sqrt(var_k);
+                        r.Sigma = Math.Sqrt(var_k);
                         r.RMSE_value = Math.Sqrt(rss / temp_experimentalvalue.Count());
 
                         if (rss_mo < rss_io)

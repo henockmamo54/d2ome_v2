@@ -1000,12 +1000,12 @@ labeling_time_unit, enrichment_estimation);
                     false);
                 if (newRsquared == null)
                     file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.Charge.ToString() + "," + current_peptide.RSquare + "," + double.NaN //newRsquared.ToString()
-                    + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.std_k + "," +
+                    + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.Sigma + "," +
                     current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
                         double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + double.NaN + "," + double.NaN + "\n");
                 else
                     file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.Charge.ToString() + "," + current_peptide.RSquare + "," + newRsquared[0].ToString()
-                        + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.std_k + "," +
+                        + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.Sigma + "," +
                         current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
                         newRsquared[1].ToString() + "," + newRsquared[2].ToString() + "," + newRsquared[3].ToString() + "," + String.Join(", ", newRsquared[4]) + "," + newRsquared[5].ToString() + "," + newRsquared[6].ToString() + "\n");
             }
@@ -1046,11 +1046,11 @@ labeling_time_unit, enrichment_estimation);
                 }
                 else
                 {
-                    if ((peptide.RSquare >= 0.5 && peptide.RMSE_value <= 0.05 && peptide.std_k / peptide.Rateconst <= 0.35))
+                    if ((peptide.RSquare >= 0.5 && peptide.RMSE_value <= 0.05 && peptide.Sigma / peptide.Rateconst <= 0.35))
                         filtered_peptidelist.Add(peptide);
 
-                    else if ((peptide.RSquare >= 0.16 && peptide.std_k / peptide.Rateconst <= 0.35) ||
-                        (peptide.RSquare <= RSquaredThreshold && peptide.RSquare >= 0.5 && peptide.std_k / peptide.Rateconst <= 0.35))
+                    else if ((peptide.RSquare >= 0.16 && peptide.Sigma / peptide.Rateconst <= 0.35) ||
+                        (peptide.RSquare <= RSquaredThreshold && peptide.RSquare >= 0.5 && peptide.Sigma / peptide.Rateconst <= 0.35))
                         filtered_peptidelist_lowRsquared.Add(peptide);
                 }
             }
@@ -1174,7 +1174,7 @@ labeling_time_unit, enrichment_estimation);
             dataGridView_peptide.Columns["RSquare"].HeaderText = "R" + "\u00B2";
             dataGridView_peptide.Columns["RMSE_value"].HeaderText = "RMSE";
             //dataGridView_peptide.Columns["std_k"].HeaderText = "std (k)";
-            dataGridView_peptide.Columns["std_k"].HeaderText = "\u03C3 (k)";
+            dataGridView_peptide.Columns["Sigma"].HeaderText = "\u03C3 (k)";
 
             // enable AutoSizeColumnsMode
             //dataGridView_peptide.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -1193,7 +1193,7 @@ labeling_time_unit, enrichment_estimation);
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].MinimumWidth = 80;
             dataGridView_peptide.Columns["Exchangeable_Hydrogens"].Width = 81;
             dataGridView_peptide.Columns["Abundance"].MinimumWidth = 70;
-            dataGridView_peptide.Columns["std_k"].MinimumWidth = 70;
+            dataGridView_peptide.Columns["Sigma"].MinimumWidth = 70;
             dataGridView_peptide.Columns["Charge"].MinimumWidth = 30;
 
             //set number formationg for the columns
@@ -1203,7 +1203,7 @@ labeling_time_unit, enrichment_estimation);
             dataGridView_peptide.Columns["SeqMass"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["IsotopeDeviation"].DefaultCellStyle.Format = "#0.###";
             dataGridView_peptide.Columns["Abundance"].DefaultCellStyle.Format = "G2";
-            dataGridView_peptide.Columns["std_k"].DefaultCellStyle.Format = "G2";
+            dataGridView_peptide.Columns["Sigma"].DefaultCellStyle.Format = "G2";
 
             // resizeable columns
             dataGridView_peptide.AllowUserToResizeColumns = true;
@@ -1592,7 +1592,7 @@ labeling_time_unit, enrichment_estimation);
                 {
                     label_newrsquared.Text = Helper.BasicFunctions.formatdoubletothreedecimalplace(new_rsquared);
 
-
+                    /*
                     if (chart_peptide.Series.FindByName("selected") != null)
                         chart_peptide.Series.Remove(chart_peptide.Series.FindByName("selected"));
                     Series s_pxt = new Series();
@@ -1603,6 +1603,9 @@ labeling_time_unit, enrichment_estimation);
                     s_pxt.MarkerSize = 9;
                     s_pxt.MarkerStyle = MarkerStyle.Cross;
                     chart_peptide.Series.Add(s_pxt);
+                    */
+
+                    chart_peptide.Series["Series1"].Points.DataBindXY(proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
                 }
 
                 if (!double.IsNaN(new_rsquared))
@@ -1689,7 +1692,7 @@ labeling_time_unit, enrichment_estimation);
                 #endregion
 
                 #region for paper io for ratios and new k's 
-             
+
                 var new_k_ala0 = Helper.BasicFunctions.computeRateConstant(a1ao.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
                  (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
                  (float)current_peptide.Exchangeable_Hydrogens);
@@ -1704,7 +1707,7 @@ labeling_time_unit, enrichment_estimation);
 
                 var new_k_experimental_RIA = Helper.BasicFunctions.computeRateConstant(experimental_RIA.Select(x => (double)x).ToList(), proteinExperimentData.experiment_time,
                  (float)current_peptide.M0, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE,
-                 (float)current_peptide.Exchangeable_Hydrogens);  
+                 (float)current_peptide.Exchangeable_Hydrogens);
 
                 #endregion
 
@@ -1735,6 +1738,7 @@ labeling_time_unit, enrichment_estimation);
                 chart_peptide.ChartAreas[0].AxisX.Minimum = 0;
                 chart_peptide.Series["Series1"].MarkerSize = 11;
 
+                /*
                 // ionscore == 0 plot
                 if (chart_peptide.Series.FindByName("Zero Ion score") != null)
                     chart_peptide.Series.Remove(chart_peptide.Series.FindByName("Zero Ion score"));
@@ -1750,6 +1754,7 @@ labeling_time_unit, enrichment_estimation);
                 s1.MarkerSize = 7;
                 s1.MarkerStyle = MarkerStyle.Circle;
                 chart_peptide.Series.Add(s1);
+                */
 
                 //////==============================================================================
                 //////====================Removed for release=======================================
@@ -1762,30 +1767,30 @@ labeling_time_unit, enrichment_estimation);
                     chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A0"));
                 if (chart_peptide.Series.FindByName("A2/A1") != null)
                     chart_peptide.Series.Remove(chart_peptide.Series.FindByName("A2/A1"));
+                /*
+                                Series s_A1 = new Series();
+                                s_A1.Name = "A1/A0";
+                                s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A0).ToArray());
+                                s_A1.ChartType = SeriesChartType.FastPoint;
+                                s_A1.Color = Color.Green;
+                                s_A1.MarkerSize = 10;
+                                chart_peptide.Series.Add(s_A1);
 
-                Series s_A1 = new Series();
-                s_A1.Name = "A1/A0";
-                s_A1.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1A0).ToArray());
-                s_A1.ChartType = SeriesChartType.FastPoint;
-                s_A1.Color = Color.Green;
-                s_A1.MarkerSize = 10;
-                chart_peptide.Series.Add(s_A1);
+                                Series s_A2 = new Series();
+                                s_A2.Name = "A2/A0";
+                                s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A0).ToArray());
+                                s_A2.ChartType = SeriesChartType.FastPoint;
+                                s_A2.Color = Color.BlueViolet;
+                                s_A2.MarkerSize = 10;
+                                chart_peptide.Series.Add(s_A2);
 
-                Series s_A2 = new Series();
-                s_A2.Name = "A2/A0";
-                s_A2.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A0).ToArray());
-                s_A2.ChartType = SeriesChartType.FastPoint;
-                s_A2.Color = Color.BlueViolet;
-                s_A2.MarkerSize = 10;
-                chart_peptide.Series.Add(s_A2);
-
-                Series s_pxt = new Series();
-                s_pxt.Name = "A2/A1";
-                s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A1).ToArray());
-                s_pxt.ChartType = SeriesChartType.FastPoint;
-                s_pxt.Color = Color.OrangeRed;
-                s_pxt.MarkerSize = 10;
-                chart_peptide.Series.Add(s_pxt);
+                                Series s_pxt = new Series();
+                                s_pxt.Name = "A2/A1";
+                                s_pxt.Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA2A1).ToArray());
+                                s_pxt.ChartType = SeriesChartType.FastPoint;
+                                s_pxt.Color = Color.OrangeRed;
+                                s_pxt.MarkerSize = 10;
+                                chart_peptide.Series.Add(s_pxt);*/
 
                 //////chart_peptide.Series["Series4"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.I0_t_fromA1).ToArray());
                 //////chart_peptide.Series["Series5"].Points.DataBindXY(chart_data.Select(x => x.Time).ToArray(), chart_data.Select(x => x.pX_greaterthanThreshold).ToArray());
@@ -1818,15 +1823,18 @@ labeling_time_unit, enrichment_estimation);
 
                 #region find best fit
 
-                var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
+                if (proteinExperimentData.isotope_profiles == "Two_mass_isotopomers")
+                {
 
-                findBestFits(proteinExperimentData, current_peptide,
-                    chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
-                    chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
-                    chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
-                    chart_data.Select(x => x.RIA_value).ToList(),
-                    theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+                    var current_peptide = proteinExperimentData.peptides.Where(x => x.PeptideSeq == peptideSeq && x.Charge == charge).FirstOrDefault();
 
+                    findBestFits(proteinExperimentData, current_peptide,
+                        chart_data.Select(x => x.I0_t_fromA1A0).ToList(),
+                        chart_data.Select(x => x.I0_t_fromA2A0).ToList(),
+                        chart_data.Select(x => x.I0_t_fromA2A1).ToList(),
+                        chart_data.Select(x => x.RIA_value).ToList(),
+                        theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
+                }
                 ////////findBestFits(proteinExperimentData, current_peptide,
                 ////////    chart_data, theoreticalI0Valuespassedvalue.Where(x => x.peptideseq == peptideSeq & x.charge == charge).Select(x => x.value).Take(proteinExperimentData.experiment_time.Count).ToList());
 
@@ -2039,7 +2047,7 @@ labeling_time_unit, enrichment_estimation);
                         if (p.Rateconst != double.NaN)
                         {
 
-                            title.Text = p.PeptideSeq + chargestring + " (k = " + ((double)p.Rateconst).ToString("#0.###") + " \u00B1 " + ((double)p.std_k).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
+                            title.Text = p.PeptideSeq + chargestring + " (k = " + ((double)p.Rateconst).ToString("#0.###") + " \u00B1 " + ((double)p.Sigma).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
                         }
                         else
                         {
@@ -2176,7 +2184,7 @@ labeling_time_unit, enrichment_estimation);
 
 
             proteinExperimentData.loadAllExperimentData();
-            proteinExperimentData.Comparison_of_Theoretical_And_Experimental_Spectrum(proteinExperimentData, proteinName);
+            //proteinExperimentData.Comparison_of_Theoretical_And_Experimental_Spectrum(proteinExperimentData, proteinName);
             proteinExperimentData.computeDeuteriumenrichmentInPeptide();
             proteinExperimentData.computeRIAPerExperiment();
             proteinExperimentData.normalizeRIAValuesForAllPeptides();
@@ -2189,6 +2197,11 @@ labeling_time_unit, enrichment_estimation);
 
             computeNewProtienRateConstant(chartdata, proteinExperimentData);
             //preparedDataForBestPathSearch(chartdata);
+
+            // compute the new rsquared
+            if (proteinExperimentData.isotope_profiles == "Two_mass_isotopomers")
+                proteinExperimentData.findBestRsqaure(proteinExperimentData);
+
             try
             {
 
@@ -2202,7 +2215,7 @@ labeling_time_unit, enrichment_estimation);
                 button_exportAllPeptideChart.Text = "Export " + proteinName;
 
                 var p = proteinExperimentData.peptides.First();
-                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, (double)p.Rateconst, (double)p.RSquare, (double)p.std_k);
+                loadPeptideChart(p.PeptideSeq, (int)p.Charge, (double)p.SeqMass, proteinExperimentData.mergedRIAvalues, proteinExperimentData.temp_theoreticalI0Values, (double)p.Rateconst, (double)p.RSquare, (double)p.Sigma);
             }
             catch (Exception xe)
             {

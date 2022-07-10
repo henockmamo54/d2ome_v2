@@ -74,5 +74,52 @@ namespace v2.Helper
         }
 
 
+        public string getEnrichment_estimation()
+        {
+
+            if (File.Exists(path))
+            {
+                Console.WriteLine("==> file found");
+
+                try
+                {                  
+
+                    //read all the lines
+                    string[] lines = System.IO.File.ReadAllLines(path);
+                    lines = lines.Where(x => x.Length > 0).ToArray();
+
+                    if (lines.Length > 9)
+                    {
+                        try
+                        {
+                            return (lines[10].Split('/')[0]).Split('=')[1].Trim();
+                        }
+                        catch { return "Complete_isotope_profiles"; }
+                    }
+                    else
+                    {
+                        return "Complete_isotope_profiles";
+                    }
+
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("error ==>" + e.Message);
+                    MessageBox.Show("Error reading quant.state ==> " + e.Message);
+                    return "Labeling Duration";
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("***> file not found");
+                MessageBox.Show("Error reading quant.state ==> File Not found!!");
+                return "Labeling Duration";
+            }
+
+        }
+
+
     }
 }
