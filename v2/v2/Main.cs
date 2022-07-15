@@ -1007,7 +1007,7 @@ labeling_time_unit, enrichment_estimation);
                     file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.Charge.ToString() + "," + current_peptide.RSquare + "," + newRsquared[0].ToString()
                         + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.Sigma + "," +
                         current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
-                        newRsquared[1].ToString() + "," + newRsquared[2].ToString() + "," + newRsquared[3].ToString() + "," + String.Join(", ", newRsquared[4]) + "," + newRsquared[5].ToString() + "," + newRsquared[6].ToString() + "," + newRsquared[7].ToString() + "," + newRsquared[8].ToString() + "," + newRsquared[9].ToString() +"\n");
+                        newRsquared[1].ToString() + "," + newRsquared[2].ToString() + "," + newRsquared[3].ToString() + "," + String.Join(", ", newRsquared[4]) + "," + newRsquared[5].ToString() + "," + newRsquared[6].ToString() + "," + newRsquared[7].ToString() + "," + newRsquared[8].ToString() + "," + newRsquared[9].ToString() + "\n");
             }
 
             using (StreamWriter writer = new StreamWriter(proteinName + ".csv"))
@@ -1911,8 +1911,100 @@ labeling_time_unit, enrichment_estimation);
             }
 
         }
+
+        private Chart CloneChart(Chart chart)
+        {
+            MemoryStream stream = new MemoryStream();
+            Chart clonedChart = chart;
+            clonedChart.Serializer.Save(stream);
+            clonedChart = new Chart();
+            clonedChart.Serializer.Load(stream);
+            return clonedChart;
+        }
+
+        public Chart updateChartPropForExport(Chart inputchart)
+        {
+
+
+            Chart chart2 = inputchart;
+            //ChartArea chartArea1 = new ChartArea();
+            //Legend legend1 = new Legend();
+            //Series series1 = new Series();
+            //Series series2 = new Series();
+
+            chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
+            //chartArea1.Name = "ChartArea1";
+            //chart2.ChartAreas.Add(chartArea1);
+            ////legend1.Name = "Legend1";
+            ////chart2.Legends.Add(legend1);
+            chart2.Location = new System.Drawing.Point(6, 16);
+            //chart2.Name = "chart_peptide";
+            //series1.ChartArea = "ChartArea1";
+            //series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            ////series1.Legend = "Legend1";
+            chart2.Series["Series1"].MarkerColor = System.Drawing.Color.Black;
+            chart2.Series["Series1"].MarkerSize = 50;
+            chart2.Series["Series1"].MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+
+            chart2.Series["Series1"].YValuesPerPoint = 2;
+            chart2.Series["Series3"].BorderWidth = 9;
+
+            chart2.Series["Series3"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart2.Series["Series3"].Color = System.Drawing.Color.Purple;
+            ////series2.Legend = "Legend1"; 
+
+            chart2.Size = new System.Drawing.Size((int)(562 * 6), (int)(310 * 6));
+            chart2.TabIndex = 0;
+            chart2.Text = "chart1";
+
+            var titletext = chart2.Titles[0].Text;
+            Title title = new Title();
+            title.Font = new Font(chart2.Font.FontFamily, 72, System.Drawing.FontStyle.Regular);
+            title.Text = titletext;
+            chart2.Titles.Clear();
+            chart2.Titles.Add(title);
+             
+            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, 40);
+            chart2.Legends[0].Position.Auto = false;
+            chart2.Legends[0].Position.X = 65;
+            chart2.Legends[0].Position.Y = 10;
+            chart2.Legends[0].Position.Width = 30;
+            chart2.Legends[0].Position.Height = 20;
+
+            //chart2.Series[0].Font = new Font(chart2.Font.FontFamily, 32, System.Drawing.FontStyle.Bold);
+
+
+            // chartline tension
+            chart2.Series["Series3"]["LineTension"] = "0.1";
+
+            // remove grid lines
+            chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+
+            // chart labels added  
+            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisX.LineWidth = 3;
+            chart2.ChartAreas[0].AxisX.LabelStyle.Font = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisX.Minimum = 0;
+
+
+            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
+            chart2.ChartAreas[0].AxisY.LineWidth = 3;
+            chart2.ChartAreas[0].AxisY.LabelStyle.Font = new Font(chart2.Font.FontFamily, 72);
+
+
+            chart2.Update();
+
+            return chart2;
+        }
         public bool exportChart(string path, string name)
         {
+            var chart = updateChartPropForExport(CloneChart(chart_peptide));
+            //var chart = chart_peptide;
+
 
             name = name.Replace("/", "");
 
@@ -1922,9 +2014,9 @@ labeling_time_unit, enrichment_estimation);
 
             try
             {
-                using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
+                using (Bitmap im = new Bitmap(chart.Width, chart.Height))
                 {
-                    chart_peptide.DrawToBitmap(im, new Rectangle(0, 0, chart_peptide.Width, chart_peptide.Height));
+                    chart.DrawToBitmap(im, new Rectangle(0, 0, chart.Width, chart.Height));
 
                     im.Save(path + @"\" + name + ".jpeg");
                 }
