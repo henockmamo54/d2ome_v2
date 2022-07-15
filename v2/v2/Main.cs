@@ -1966,9 +1966,9 @@ labeling_time_unit, enrichment_estimation);
              
             chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, 40);
             chart2.Legends[0].Position.Auto = false;
-            chart2.Legends[0].Position.X = 65;
+            chart2.Legends[0].Position.X = 70;
             chart2.Legends[0].Position.Y = 10;
-            chart2.Legends[0].Position.Width = 30;
+            chart2.Legends[0].Position.Width = 60;
             chart2.Legends[0].Position.Height = 20;
 
             //chart2.Series[0].Font = new Font(chart2.Font.FontFamily, 32, System.Drawing.FontStyle.Bold);
