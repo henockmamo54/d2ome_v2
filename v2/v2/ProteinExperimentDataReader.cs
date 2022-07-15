@@ -458,7 +458,7 @@ namespace v2
                 if (Math.Abs(I0 - temp_mo) / temp_mo > 0.1) { I0 = temp_mo; }
 
                 var IO_asymptote = I0 * Math.Pow(1 - (filecontents[filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)), (double)p.Exchangeable_Hydrogens);
-
+                
                 foreach (var datapoint in datapoints)
                 {
                     var BWE_t = filecontents.Where(x => x.experimentID == datapoint.ExperimentName).Select(x => x.BWE).FirstOrDefault();
