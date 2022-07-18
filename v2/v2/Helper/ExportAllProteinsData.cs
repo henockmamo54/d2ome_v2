@@ -279,7 +279,7 @@ namespace v2.Helper
 
                         //if ((double.IsNaN(new_RS) || new_RS < 0.9) || (p.RSquare > 0.9)) continue;
 
-                        if ((double.IsNaN(new_RS) || new_RS < 0.95) || (p.RSquare > 0.75) || (p.NDP<4)) continue;
+                        //if ((double.IsNaN(new_RS) || new_RS < 0.95) || (p.RSquare > 0.75) || (p.NDP<4)) continue;
 
                         #endregion
 
@@ -331,7 +331,7 @@ namespace v2.Helper
                                 try
                                 {
                                     chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
-                                    outputpath = @"C:\Workplace\Python\AnalysisForThePaper\AnalysisForThePaperProtein_Turnover\SampleImprovementplots_suppmaterial\plots";
+                                    //outputpath = @"C:\Workplace\Python\AnalysisForThePaper\AnalysisForThePaperProtein_Turnover\SampleImprovementplots_suppmaterial\plots";
                                     im.Save(outputpath + @"\" + count.ToString() + "_" + p.PeptideSeq + "_" + p.Charge.ToString() + ".jpeg");
                                 }
                                 catch (Exception e)
