@@ -266,8 +266,8 @@ namespace v2
         public void computeDeuteriumenrichmentInPeptide()
         {
             // this function computes pX(t)
-            // which is the deuterium enrichment in a peptide from the heavy water at the
-            // labeling duration time t
+            // which is the deuterium enrichment in a peptide from the heavy water at the labeling duration time t
+            // this function searches the closest px(t) and computes new io(t) based on the select px(t) for each monoisotope
 
             double ph = Helper.Constants.ph;
 

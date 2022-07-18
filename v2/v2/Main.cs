@@ -1958,18 +1958,20 @@ labeling_time_unit, enrichment_estimation);
             chart2.Text = "chart1";
 
             var titletext = chart2.Titles[0].Text;
+
+
             Title title = new Title();
             title.Font = new Font(chart2.Font.FontFamily, 72, System.Drawing.FontStyle.Regular);
             title.Text = titletext;
             chart2.Titles.Clear();
             chart2.Titles.Add(title);
-             
+
             chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, 40);
             chart2.Legends[0].Position.Auto = false;
-            chart2.Legends[0].Position.X = 70;
+            chart2.Legends[0].Position.X = 97;
             chart2.Legends[0].Position.Y = 10;
-            chart2.Legends[0].Position.Width = 60;
-            chart2.Legends[0].Position.Height = 20;
+            chart2.Legends[0].Position.Width = 40;
+            chart2.Legends[0].Position.Height = 10;
 
             //chart2.Series[0].Font = new Font(chart2.Font.FontFamily, 32, System.Drawing.FontStyle.Bold);
 
@@ -2061,17 +2063,15 @@ labeling_time_unit, enrichment_estimation);
                 {
                     string path = dialog.SelectedPath + "\\" + comboBox_proteinNameSelector.SelectedValue.ToString();
 
-                    //copy chart1
-                    System.IO.MemoryStream myStream = new System.IO.MemoryStream();
-                    Chart chart2 = new Chart();
-                    chart_peptide.Serializer.Save(myStream);
-                    chart2.Serializer.Load(myStream);
+                    ////copy chart1
+                    //System.IO.MemoryStream myStream = new System.IO.MemoryStream();
+                    //Chart chart2 = new Chart();
+                    //chart_peptide.Serializer.Save(myStream);
+                    //chart2.Serializer.Load(myStream);
 
-                    //var selected = (from u in proteinExperimentData.peptides
-                    //                where proteinExperimentData.rateConstants.Select(x => x.PeptideSeq).ToList().Contains(u.PeptideSeq)
-                    //                select u).Distinct().ToList();
+                    Chart chart2 = updateChartPropForExport(CloneChart(chart_peptide));
+
                     var selected = proteinExperimentData.peptides;
-
                     int count = 1;
 
                     foreach (Peptide p in selected)
@@ -2088,9 +2088,10 @@ labeling_time_unit, enrichment_estimation);
 
                         var chart_data2 = proteinExperimentData.mergedRIAvaluesWithZeroIonScore.Where(x => x.PeptideSeq == p.PeptideSeq & x.Charge == p.Charge).OrderBy(x => x.Time).ToArray();
 
+                        /*
                         if (chart2.Series.FindByName("Zero Ion score") != null)
                             chart2.Series.Remove(chart2.Series.FindByName("Zero Ion score"));
-
+                        
                         Series s1 = new Series();
                         s1.Name = "Zero Ion score";
                         if (chart_data2.Length > 0)
@@ -2101,6 +2102,7 @@ labeling_time_unit, enrichment_estimation);
                         s1.MarkerSize = 7;
                         s1.MarkerStyle = MarkerStyle.Circle;
                         chart2.Series.Add(s1);
+                        */
 
                         #endregion
 
@@ -2126,7 +2128,7 @@ labeling_time_unit, enrichment_estimation);
                         // chart title                        
 
                         Title title = new Title();
-                        title.Font = new Font(chart_peptide.Legends[0].Font.FontFamily, 9, FontStyle.Regular);
+                        title.Font = new Font(chart2.Font.FontFamily, 72, System.Drawing.FontStyle.Regular);
 
                         var chargestring = "";
                         switch (p.Charge)
@@ -2146,13 +2148,11 @@ labeling_time_unit, enrichment_estimation);
 
                         if (p.Rateconst != double.NaN)
                         {
-
                             title.Text = p.PeptideSeq + chargestring + " (k = " + ((double)p.Rateconst).ToString("#0.###") + " \u00B1 " + ((double)p.Sigma).ToString("G2") + ", R" + "\u00B2" + " = " + ((double)p.RSquare).ToString("#0.#0") + ", m/z = " + ((double)p.SeqMass).ToString("#0.###") + ")";
                         }
                         else
                         {
                             title.Text = p.PeptideSeq + " (m/z = " + ((double)p.SeqMass).ToString("#0.###") + ", z = " + ((double)p.Charge).ToString() + ")";
-
                         }
                         //clear chart title
                         chart2.Titles.Clear();
@@ -2181,7 +2181,7 @@ labeling_time_unit, enrichment_estimation);
                             System.IO.Directory.CreateDirectory(path);
                         try
                         {
-                            using (Bitmap im = new Bitmap(chart_peptide.Width, chart_peptide.Height))
+                            using (Bitmap im = new Bitmap(chart2.Width, chart2.Height))
                             {
                                 chart2.DrawToBitmap(im, new Rectangle(0, 0, chart2.Width, chart2.Height));
 
@@ -2258,10 +2258,10 @@ labeling_time_unit, enrichment_estimation);
         }
         private void comboBox_proteinNameSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //MessageBox.Show(comboBox_proteinNameSelector.SelectedValue.ToString());
-            // plot chart inofrormation for the selected protien
+            // get selected protein name
             string proteinName = comboBox_proteinNameSelector.SelectedValue.ToString();
 
+            #region get files name to read
             //string files_txt_path = txt_source.Text + @"\files.centroid.txt"; 
             string files_txt_path = txt_source.Text + @"\files.txt";
             string quant_state_file_path = txt_source.Text + @"\quant.state";
@@ -2281,24 +2281,24 @@ labeling_time_unit, enrichment_estimation);
             else { try { string[] lines = System.IO.File.ReadAllLines(RateConst_csv_path); } catch (Exception ex) { MessageBox.Show(ex.Message); return; } }
 
             proteinExperimentData = new ProteinExperimentDataReader(files_txt_path, quant_csv_path, RateConst_csv_path, quant_state_file_path);
+            #endregion
 
-
-            proteinExperimentData.loadAllExperimentData();
-            //proteinExperimentData.Comparison_of_Theoretical_And_Experimental_Spectrum(proteinExperimentData, proteinName);
-            proteinExperimentData.computeDeuteriumenrichmentInPeptide();
-            proteinExperimentData.computeRIAPerExperiment();
-            proteinExperimentData.normalizeRIAValuesForAllPeptides();
-            proteinExperimentData.computeAverageA0();
-            proteinExperimentData.mergeMultipleRIAPerDay2();
-            proteinExperimentData.computeTheoreticalCurvePoints();
-            proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0();
+            proteinExperimentData.loadAllExperimentData(); // read all the *.Quantcsv,*.Rateconstant.csv,files.txt and quant.state files
+            //proteinExperimentData.Comparison_of_Theoretical_And_Experimental_Spectrum(proteinExperimentData, proteinName); // this function was used to generate spectrum error data for ploting
+            proteinExperimentData.computeDeuteriumenrichmentInPeptide(); // this function searches the closest px(t) and computes new io(t) based on the select px(t) for each monoisotop
+            proteinExperimentData.computeRIAPerExperiment(); // this function computes RIA for each experiment per peptide
+            proteinExperimentData.normalizeRIAValuesForAllPeptides(); // this function normalizes the RIA values using the BWE values from files.txt
+            proteinExperimentData.computeAverageA0(); //
+            proteinExperimentData.mergeMultipleRIAPerDay2(); // this function merges multiple experiment to a single data for each time point
+            proteinExperimentData.computeTheoreticalCurvePoints(); // this function generate the theoretical fit data using rate constant (k), NEH and the theoretical MO
+            proteinExperimentData.computeTheoreticalCurvePointsBasedOnExperimentalI0(); // this function generate the theoretical fit data using rate constant (k), NEH and the Experimental I0(t)
             proteinExperimentData.computeRSquare();
-            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
+            ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2(); // this function generates points to smooth the curve of protein rate constant plot
 
             //computeNewProtienRateConstant(chartdata, proteinExperimentData);
             ////preparedDataForBestPathSearch(chartdata);
 
-            // compute the new rsquared
+            // check if the application is running for partial isotopes computation and find the best fitting points
             if (proteinExperimentData.isotope_profiles == "Two_mass_isotopomers")
                 proteinExperimentData.findBestRsqaure(proteinExperimentData);
 

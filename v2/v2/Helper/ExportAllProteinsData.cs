@@ -78,11 +78,12 @@ namespace v2.Helper
                     proteinExperimentData.computeRSquare();
                     ProtienchartDataValues chartdata = proteinExperimentData.computeValuesForEnhancedPerProtienPlot2();
 
+                    // check if the application is running for partial isotopes computation and find the best fitting points
+                    if (proteinExperimentData.isotope_profiles == "Two_mass_isotopomers")
+                        proteinExperimentData.findBestRsqaure(proteinExperimentData);
+
                     // for each peptide draw the chart 
                     draw_peptideChart(proteinExperimentData, outputPath + "\\" + proteinName);
-
-                    //progressBar_exportall.Value = progressBar_exportall.Value + 1;
-
 
                 }
                 MessageBox.Show("Done exporting proteins!!");
@@ -403,6 +404,7 @@ namespace v2.Helper
                 var test = Helper.BasicFunctions.computeRsquared(experimental_RIA.Select(x => (double)x).ToList(), theoretical_RIA);
                 Console.WriteLine("test new rsquared => " + rsquared.ToString());
 
+                /*
                 if (chart2.Series.FindByName("selected") != null)
                     chart2.Series.Remove(chart2.Series.FindByName("selected"));
                 Series s_pxt = new Series();
@@ -413,6 +415,8 @@ namespace v2.Helper
                 s_pxt.MarkerSize = 70;
                 s_pxt.MarkerStyle = MarkerStyle.Cross;
                 chart2.Series.Add(s_pxt);
+                */
+                chart2.Series["Series1"].Points.DataBindXY(proteinExperimentData.experiment_time.ToArray(), selected_points.ToArray());
 
                 return rsquared;
 
