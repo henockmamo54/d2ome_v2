@@ -1928,11 +1928,13 @@ labeling_time_unit, enrichment_estimation);
             var titlefontsize = 72;
             var legendfontsize = 40;
             var axislablesFont = 72;
+            var MarkerSize = 50;
 
             if (resolution.Height > 1080 || resolution.Width > 1920) {
                 titlefontsize = 36;
                 legendfontsize = 20;
                 axislablesFont = 36;
+                MarkerSize = 25;
             }
 
 
@@ -1942,7 +1944,7 @@ labeling_time_unit, enrichment_estimation);
             chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
             chart2.Location = new System.Drawing.Point(6, 16);
             chart2.Series["Series1"].MarkerColor = System.Drawing.Color.Black;
-            chart2.Series["Series1"].MarkerSize = 50;
+            chart2.Series["Series1"].MarkerSize = MarkerSize;
             chart2.Series["Series1"].MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
 
             chart2.Series["Series1"].YValuesPerPoint = 2;

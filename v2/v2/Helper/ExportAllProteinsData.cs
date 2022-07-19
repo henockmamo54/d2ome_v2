@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows; 
 using System.Windows.Forms.DataVisualization.Charting;
 using v2.Model;
 using static v2.ProteinExperimentDataReader;
@@ -95,9 +95,21 @@ namespace v2.Helper
 
         public Chart preppare_chart()
         {
+            Rectangle resolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
+            var titlefontsize = 72;
+            var legendfontsize = 40;
+            var axislablesFont = 72;
+            var MarkerSize = 50;
+
+            if (resolution.Height > 1080 || resolution.Width > 1920)
+            {
+                titlefontsize = 36;
+                legendfontsize = 20;
+                axislablesFont = 36;
+                MarkerSize = 25;
+            }
 
             Chart chart2 = new Chart();
-
             ChartArea chartArea1 = new ChartArea();
             Legend legend1 = new Legend();
             Series series1 = new Series();
@@ -106,15 +118,14 @@ namespace v2.Helper
             chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
             chartArea1.Name = "ChartArea1";
             chart2.ChartAreas.Add(chartArea1);
-            ////legend1.Name = "Legend1";
-            ////chart2.Legends.Add(legend1);
+             
             chart2.Location = new System.Drawing.Point(6, 16);
             chart2.Name = "chart_peptide";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            ////series1.Legend = "Legend1";
+             
             series1.MarkerColor = System.Drawing.Color.Black;
-            series1.MarkerSize = 50;
+            series1.MarkerSize = MarkerSize;
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series1.Name = "Series1";
             series1.YValuesPerPoint = 2;
@@ -129,9 +140,7 @@ namespace v2.Helper
             chart2.Size = new System.Drawing.Size((int)(562 * 6), (int)(310 * 6));
             chart2.TabIndex = 0;
             chart2.Text = "chart1";
-
-            //chart2.Series[0].Font = new Font(chart2.Font.FontFamily, 32, System.Drawing.FontStyle.Bold);
-
+             
 
             // chartline tension
             chart2.Series["Series3"]["LineTension"] = "0.1";
@@ -144,17 +153,17 @@ namespace v2.Helper
 
             // chart labels added  
             chart2.ChartAreas[0].AxisX.Title = "Time (labeling duration)";
-            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Font.FontFamily, axislablesFont);
             chart2.ChartAreas[0].AxisX.LineWidth = 3;
-            chart2.ChartAreas[0].AxisX.LabelStyle.Font = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisX.LabelStyle.Font = new Font(chart2.Font.FontFamily, axislablesFont);
             chart2.ChartAreas[0].AxisX.Minimum = 0;
 
 
             chart2.ChartAreas[0].AxisY.Title = "Relative abundance \n of monoisotope";
-            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Font.FontFamily, axislablesFont);
             chart2.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
             chart2.ChartAreas[0].AxisY.LineWidth = 3;
-            chart2.ChartAreas[0].AxisY.LabelStyle.Font = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisY.LabelStyle.Font = new Font(chart2.Font.FontFamily, axislablesFont);
 
 
             /*
@@ -286,8 +295,20 @@ namespace v2.Helper
 
 
                         #region update chart title
+
+                        Rectangle resolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
+                        var titlefontsize = 72;
+                        var legendfontsize = 40; 
+
+                        if (resolution.Height > 1080 || resolution.Width > 1920)
+                        {
+                            titlefontsize = 36;
+                            legendfontsize = 20; 
+                        }
+
                         Title title = new Title();
-                        title.Font = new Font(chart2.Font.FontFamily, 72, System.Drawing.FontStyle.Regular);
+                        title.Font = new Font(chart2.Font.FontFamily, titlefontsize, System.Drawing.FontStyle.Regular);
+                        chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, legendfontsize);
 
                         var chargestring = "";
                         switch (p.Charge)
