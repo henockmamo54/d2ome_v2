@@ -1995,6 +1995,7 @@ labeling_time_unit, enrichment_estimation);
             chart2.ChartAreas[0].AxisY.LineWidth = 3;
             chart2.ChartAreas[0].AxisY.LabelStyle.Font = new Font(chart2.Font.FontFamily, axislablesFont);
 
+            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, legendfontsize);
 
             chart2.Update();
 
@@ -2123,6 +2124,15 @@ labeling_time_unit, enrichment_estimation);
                         #endregion
 
 
+                        Rectangle resolution = Screen.PrimaryScreen.Bounds;
+                        var titlefontsize = 72;
+                        var legendfontsize = 40; 
+
+                        if (resolution.Height > 1080 || resolution.Width > 1920)
+                        {
+                            titlefontsize = 36;
+                            legendfontsize = 20; 
+                        }
                         // chart title                        
 
                         Title title = new Title();
@@ -2173,6 +2183,7 @@ labeling_time_unit, enrichment_estimation);
                         chart2.ChartAreas[0].AxisY.LabelStyle.Format = "0.00";
                         chart2.ChartAreas[0].AxisX.Title = "Time (" + this.proteinExperimentData.labelingDuration + ")";
 
+                        chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, legendfontsize);
 
                         bool exists = System.IO.Directory.Exists(path);
                         if (!exists)
