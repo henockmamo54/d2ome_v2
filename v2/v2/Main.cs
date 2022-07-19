@@ -1924,24 +1924,23 @@ labeling_time_unit, enrichment_estimation);
 
         public Chart updateChartPropForExport(Chart inputchart)
         {
+            Rectangle resolution = Screen.PrimaryScreen.Bounds;
+            var titlefontsize = 72;
+            var legendfontsize = 40;
+            var axislablesFont = 72;
+
+            if (resolution.Height > 1080 || resolution.Width > 1920) {
+                titlefontsize = 36;
+                legendfontsize = 20;
+                axislablesFont = 36;
+            }
 
 
-            Chart chart2 = inputchart;
-            //ChartArea chartArea1 = new ChartArea();
-            //Legend legend1 = new Legend();
-            //Series series1 = new Series();
-            //Series series2 = new Series();
+
+                Chart chart2 = inputchart;
 
             chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            //chartArea1.Name = "ChartArea1";
-            //chart2.ChartAreas.Add(chartArea1);
-            ////legend1.Name = "Legend1";
-            ////chart2.Legends.Add(legend1);
             chart2.Location = new System.Drawing.Point(6, 16);
-            //chart2.Name = "chart_peptide";
-            //series1.ChartArea = "ChartArea1";
-            //series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            ////series1.Legend = "Legend1";
             chart2.Series["Series1"].MarkerColor = System.Drawing.Color.Black;
             chart2.Series["Series1"].MarkerSize = 50;
             chart2.Series["Series1"].MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
@@ -1951,7 +1950,6 @@ labeling_time_unit, enrichment_estimation);
 
             chart2.Series["Series3"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             chart2.Series["Series3"].Color = System.Drawing.Color.Purple;
-            ////series2.Legend = "Legend1"; 
 
             chart2.Size = new System.Drawing.Size((int)(562 * 6), (int)(310 * 6));
             chart2.TabIndex = 0;
@@ -1961,19 +1959,17 @@ labeling_time_unit, enrichment_estimation);
 
 
             Title title = new Title();
-            title.Font = new Font(chart2.Font.FontFamily, 72, System.Drawing.FontStyle.Regular);
+            title.Font = new Font(chart2.Font.FontFamily, titlefontsize, System.Drawing.FontStyle.Regular);
             title.Text = titletext;
             chart2.Titles.Clear();
             chart2.Titles.Add(title);
 
-            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, 40);
+            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, legendfontsize);
             chart2.Legends[0].Position.Auto = false;
             chart2.Legends[0].Position.X = 97;
             chart2.Legends[0].Position.Y = 10;
             chart2.Legends[0].Position.Width = 40;
             chart2.Legends[0].Position.Height = 10;
-
-            //chart2.Series[0].Font = new Font(chart2.Font.FontFamily, 32, System.Drawing.FontStyle.Bold);
 
 
             // chartline tension
@@ -1986,16 +1982,16 @@ labeling_time_unit, enrichment_estimation);
             chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
 
             // chart labels added  
-            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Font.FontFamily, axislablesFont);
             chart2.ChartAreas[0].AxisX.LineWidth = 3;
-            chart2.ChartAreas[0].AxisX.LabelStyle.Font = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisX.LabelStyle.Font = new Font(chart2.Font.FontFamily, axislablesFont);
             chart2.ChartAreas[0].AxisX.Minimum = 0;
 
 
-            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Font.FontFamily, axislablesFont);
             chart2.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
             chart2.ChartAreas[0].AxisY.LineWidth = 3;
-            chart2.ChartAreas[0].AxisY.LabelStyle.Font = new Font(chart2.Font.FontFamily, 72);
+            chart2.ChartAreas[0].AxisY.LabelStyle.Font = new Font(chart2.Font.FontFamily, axislablesFont);
 
 
             chart2.Update();
