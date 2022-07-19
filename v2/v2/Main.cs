@@ -2136,7 +2136,7 @@ labeling_time_unit, enrichment_estimation);
                         // chart title                        
 
                         Title title = new Title();
-                        title.Font = new Font(chart2.Font.FontFamily, 72, System.Drawing.FontStyle.Regular);
+                        title.Font = new Font(chart2.Font.FontFamily, titlefontsize, System.Drawing.FontStyle.Regular);
 
                         var chargestring = "";
                         switch (p.Charge)
