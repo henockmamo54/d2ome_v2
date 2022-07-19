@@ -2131,7 +2131,7 @@ labeling_time_unit, enrichment_estimation);
                         if (resolution.Height > 1080 || resolution.Width > 1920)
                         {
                             titlefontsize = 36;
-                            legendfontsize = 20; 
+                            legendfontsize = 30; 
                         }
                         // chart title                        
 

@@ -308,7 +308,7 @@ namespace v2.Helper
 
                         Title title = new Title();
                         title.Font = new Font(chart2.Font.FontFamily, titlefontsize, System.Drawing.FontStyle.Regular);
-                        chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, legendfontsize);
+                        //chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, legendfontsize);
 
                         var chargestring = "";
                         switch (p.Charge)
