@@ -431,12 +431,12 @@ labeling_time_unit, enrichment_estimation);
         {
             var sExecsFolder = Directory.GetCurrentDirectory();
             Console.WriteLine(sExecsFolder);
-            var sCommandFile = sExecsFolder + "\\d2ome.exe " + "files.txt";
+            var sCommandFile = sExecsFolder + "\\d2ome+.exe " + "files.txt";
 
             using (Process p = new Process())
             {
                 // set start info
-                p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome.exe ", textBox_outputfolderpath.Text + "\\files.txt")
+                p.StartInfo = new ProcessStartInfo(sExecsFolder + "\\d2ome+.exe ", textBox_outputfolderpath.Text + "\\files.txt")
                 {
                     //RedirectStandardInput = true,
                     UseShellExecute = true,
@@ -1930,7 +1930,8 @@ labeling_time_unit, enrichment_estimation);
             var axislablesFont = 72;
             var MarkerSize = 50;
 
-            if (resolution.Height > 1080 || resolution.Width > 1920) {
+            if (resolution.Height > 1080 || resolution.Width > 1920)
+            {
                 titlefontsize = 36;
                 legendfontsize = 20;
                 axislablesFont = 36;
@@ -1939,7 +1940,7 @@ labeling_time_unit, enrichment_estimation);
 
 
 
-                Chart chart2 = inputchart;
+            Chart chart2 = inputchart;
 
             chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
             chart2.Location = new System.Drawing.Point(6, 16);
@@ -1976,6 +1977,84 @@ labeling_time_unit, enrichment_estimation);
 
             // chartline tension
             chart2.Series["Series3"]["LineTension"] = "0.1";
+
+            // remove grid lines
+            chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+
+            // chart labels added  
+            chart2.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font(chart2.Font.FontFamily, axislablesFont);
+            chart2.ChartAreas[0].AxisX.LineWidth = 3;
+            chart2.ChartAreas[0].AxisX.LabelStyle.Font = new Font(chart2.Font.FontFamily, axislablesFont);
+            chart2.ChartAreas[0].AxisX.Minimum = 0;
+
+
+            chart2.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font(chart2.Font.FontFamily, axislablesFont);
+            chart2.ChartAreas[0].AxisY.LabelAutoFitStyle = LabelAutoFitStyles.WordWrap;
+            chart2.ChartAreas[0].AxisY.LineWidth = 3;
+            chart2.ChartAreas[0].AxisY.LabelStyle.Font = new Font(chart2.Font.FontFamily, axislablesFont);
+
+            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, legendfontsize);
+
+            chart2.Update();
+
+            return chart2;
+        }
+        public Chart updateProteinChartPropForExport(Chart inputchart)
+        {
+            Rectangle resolution = Screen.PrimaryScreen.Bounds;
+            var titlefontsize = 72;
+            var legendfontsize = 40;
+            var axislablesFont = 72;
+            var MarkerSize = 25;
+
+            if (resolution.Height > 1080 || resolution.Width > 1920) {
+                titlefontsize = 36;
+                legendfontsize = 20;
+                axislablesFont = 36;
+                MarkerSize = 15;
+            }
+
+
+
+                Chart chart2 = inputchart;
+
+            chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
+            chart2.Location = new System.Drawing.Point(6, 16);
+            chart2.Series["Series1"].MarkerColor = System.Drawing.Color.Black;
+            chart2.Series["Series1"].MarkerSize = MarkerSize;
+            chart2.Series["Series1"].MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+
+            chart2.Series["Series1"].YValuesPerPoint = 2;
+            chart2.Series["Series2"].BorderWidth = 9;
+
+            chart2.Series["Series2"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart2.Series["Series2"].Color = System.Drawing.Color.Purple;
+
+            chart2.Size = new System.Drawing.Size((int)(562 * 6), (int)(310 * 6));
+            chart2.TabIndex = 0;
+            chart2.Text = "chart1";
+
+            /*
+            var titletext = chart2.Titles[0].Text;
+            Title title = new Title();
+            title.Font = new Font(chart2.Font.FontFamily, titlefontsize, System.Drawing.FontStyle.Regular);
+            title.Text = titletext;
+            chart2.Titles.Clear();
+            chart2.Titles.Add(title);*/
+
+            chart2.Legends[0].Font = new Font(chart2.Legends[0].Font.FontFamily, legendfontsize);
+            chart2.Legends[0].Position.Auto = false;
+            chart2.Legends[0].Position.X = 97;
+            chart2.Legends[0].Position.Y = 10;
+            chart2.Legends[0].Position.Width = 40;
+            chart2.Legends[0].Position.Height = 10;
+
+
+            // chartline tension
+            chart2.Series["Series2"]["LineTension"] = "0.1";
 
             // remove grid lines
             chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
@@ -2538,9 +2617,10 @@ labeling_time_unit, enrichment_estimation);
 
                     try
                     {
-                        using (Bitmap im = new Bitmap(chart_protein.Width, chart_protein.Height))
+                        var chart = updateProteinChartPropForExport(CloneChart(chart_protein));
+                        using (Bitmap im = new Bitmap(chart.Width, chart.Height))
                         {
-                            chart_protein.DrawToBitmap(im, new Rectangle(0, 0, chart_protein.Width, chart_protein.Height));
+                            chart.DrawToBitmap(im, new Rectangle(0, 0, chart.Width, chart.Height));
 
                             im.Save(path + @"\" + comboBox_proteinNameSelector.SelectedValue.ToString() + ".jpeg");
                         }
@@ -2549,7 +2629,7 @@ labeling_time_unit, enrichment_estimation);
                     }
                     catch (Exception exx)
                     {
-                        MessageBox.Show("! file not genrated");
+                        MessageBox.Show("file not genrated!");
                     }
 
                 }
