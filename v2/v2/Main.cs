@@ -982,7 +982,7 @@ labeling_time_unit, enrichment_estimation);
         {
             var peptidesList = proteinExperimentData.peptides;
             string file_content = "proteinName,peptideSeq,charge,old_Rsquared,new_Rsquared,NDP,rateconstant,sigma,Abundance,MassToCharge,RMSE," +
-                "selected_A1A0_count, selected_A2A0_count, selected_A2A1_count,improved_timePoints,new_k,I0_percentatediffI0_percentatediff,selected_io_t,i0,I0_asymptote\n";
+                "selected_A1A0_count, selected_A2A0_count, selected_A2A1_count,improved_timePoints,new_k,I0_percentatediffI0_percentatediff,selected_io_t,i0,I0_asymptote,new_rmse\n";
 
             foreach (var peptide in peptidesList)
             {
@@ -1002,12 +1002,12 @@ labeling_time_unit, enrichment_estimation);
                     file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.Charge.ToString() + "," + current_peptide.RSquare + "," + double.NaN //newRsquared.ToString()
                     + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.Sigma + "," +
                     current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
-                        double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + "\n");
+                        double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + "," + double.NaN + "\n");
                 else
                     file_content += (proteinName + "," + current_peptide.PeptideSeq.ToString() + "," + current_peptide.Charge.ToString() + "," + current_peptide.RSquare + "," + newRsquared[0].ToString()
                         + "," + current_peptide.NDP.ToString() + "," + current_peptide.Rateconst + "," + current_peptide.Sigma + "," +
                         current_peptide.Abundance + "," + current_peptide.SeqMass + "," + current_peptide.RMSE_value + "," +
-                        newRsquared[1].ToString() + "," + newRsquared[2].ToString() + "," + newRsquared[3].ToString() + "," + String.Join(", ", newRsquared[4]) + "," + newRsquared[5].ToString() + "," + newRsquared[6].ToString() + "," + newRsquared[7].ToString() + "," + newRsquared[8].ToString() + "," + newRsquared[9].ToString() + "\n");
+                        newRsquared[1].ToString() + "," + newRsquared[2].ToString() + "," + newRsquared[3].ToString() + "," + String.Join(", ", newRsquared[4]) + "," + newRsquared[5].ToString() + "," + newRsquared[6].ToString() + "," + newRsquared[7].ToString() + "," + newRsquared[8].ToString() + "," + newRsquared[9].ToString() + "," + newRsquared[10].ToString() + "\n");
             }
 
             using (StreamWriter writer = new StreamWriter(proteinName + ".csv"))
@@ -1719,8 +1719,21 @@ labeling_time_unit, enrichment_estimation);
                 if (Math.Abs(I0 - temp_mo) / temp_mo > 0.1) { I0 = temp_mo; }
                 var IO_asymptote = I0 * Math.Pow(1 - (proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE / (1 - Helper.Constants.ph)), (double)current_peptide.Exchangeable_Hydrogens);
 
+                #region new rmse
+                double rss = 0;
+                //selected_points, theoretical_RIA
+                for (int i = 0; i < selected_points.Count(); i++)
+                {
+                    if (!double.IsNaN((double)(selected_points[i])))
+                    {
+                        rss = rss + Math.Pow((double)(selected_points[i] - theoretical_RIA[i]), 2);
+                    }
+                }
+                var rmse = Math.Sqrt(rss / selected_points.Count());
+                #endregion
+
                 return new List<Object> { new_rsquared, selected_A1A0_count, selected_A2A0_count, selected_A2A1_count,
-                    String.Join("| ", improved_TimePoints.ToArray()), new_k,I0_percentatediff_string,String.Join("| ", selected_points.ToArray()),I0,IO_asymptote};
+                    String.Join("| ", improved_TimePoints.ToArray()), new_k,I0_percentatediff_string,String.Join("| ", selected_points.ToArray()),I0,IO_asymptote,rmse};
 
             }
             catch (Exception ex)
@@ -2008,18 +2021,19 @@ labeling_time_unit, enrichment_estimation);
             var titlefontsize = 72;
             var legendfontsize = 40;
             var axislablesFont = 72;
-            var MarkerSize = 25;
+            var MarkerSize = 20;
 
-            if (resolution.Height > 1080 || resolution.Width > 1920) {
+            if (resolution.Height > 1080 || resolution.Width > 1920)
+            {
                 titlefontsize = 36;
                 legendfontsize = 20;
                 axislablesFont = 36;
-                MarkerSize = 15;
+                MarkerSize = 10;
             }
 
 
 
-                Chart chart2 = inputchart;
+            Chart chart2 = inputchart;
 
             chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
             chart2.Location = new System.Drawing.Point(6, 16);
@@ -2205,12 +2219,12 @@ labeling_time_unit, enrichment_estimation);
 
                         Rectangle resolution = Screen.PrimaryScreen.Bounds;
                         var titlefontsize = 72;
-                        var legendfontsize = 40; 
+                        var legendfontsize = 40;
 
                         if (resolution.Height > 1080 || resolution.Width > 1920)
                         {
                             titlefontsize = 36;
-                            legendfontsize = 30; 
+                            legendfontsize = 30;
                         }
                         // chart title                        
 
