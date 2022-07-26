@@ -301,6 +301,20 @@ namespace v2.Helper
             return best_path;
         }
 
+        public static double RMSE(List<double> selected_points, List<double> theoretical_points)
+        {
+            double rss = 0;
+            //selected_points, theoretical_RIA
+            for (int i = 0; i < selected_points.Count(); i++)
+            {
+                if (!double.IsNaN((double)(selected_points[i])))
+                {
+                    rss = rss + Math.Pow((double)(selected_points[i] - theoretical_points[i]), 2);
+                }
+            }
+            var rmse = Math.Sqrt(rss / selected_points.Count());
+            return rmse;
+        }
 
         public static void CreateCSV<T>(List<T> list, string filePath)
         {
