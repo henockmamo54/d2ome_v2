@@ -316,6 +316,31 @@ namespace v2.Helper
             return rmse;
         }
 
+        public static double sigma(List<double> selected_points, List<double> theoretical_points, Model.Peptide currentPeptide,
+            double bwe, List<int> experimentTime)
+        {
+            double rss = 0;
+            double dn = 0;
+            double IO_assymptot = (double)(currentPeptide.M0 / 100 * Math.Pow((1 - (bwe / (1 - Constants.ph))), (double)currentPeptide.Exchangeable_Hydrogens));
+            var meanval_ria = selected_points.Where(x => !double.IsNaN((double)x)).Average(x => x);
+
+            for (int i = 0; i < selected_points.Count(); i++)
+            {
+                if (!double.IsNaN((double)selected_points[i]))
+                {
+                    var computedRIAValue = theoretical_points[i];
+                    rss = rss + Math.Pow((double)(selected_points[i] - computedRIAValue), 2);
+                    dn = dn + Math.Pow(experimentTime[i], 2) * Math.Pow((double)(computedRIAValue - IO_assymptot), 2);
+                }
+            }
+
+            var var_k = dn == 0 ? double.NaN : (rss / selected_points.Where(x => !double.IsNaN((double)x)).Count()) / (dn);
+            var Sigma = Math.Sqrt(var_k);
+
+            return Sigma;
+
+        }
+
         public static void CreateCSV<T>(List<T> list, string filePath)
         {
             using (StreamWriter sw = new StreamWriter(filePath))

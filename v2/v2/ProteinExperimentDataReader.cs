@@ -177,9 +177,11 @@ namespace v2
 
                     var new_rsquared = Helper.BasicFunctions.computeRsquared(selected_points, theoretical_RIA);
                     var new_rmse = BasicFunctions.RMSE(selected_points, theoretical_RIA);
+                    var new_sigma = BasicFunctions.sigma(selected_points, theoretical_RIA, current_peptide, proteinExperimentData.filecontents[proteinExperimentData.filecontents.Count - 1].BWE, proteinExperimentData.experiment_time);
 
                     current_peptide.RSquare = new_rsquared;
                     current_peptide.RMSE_value = new_rmse;
+                    current_peptide.Sigma = new_sigma;
 
                 }
                 catch (Exception ex)
